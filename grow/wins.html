@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wins &amp; Evidence Log · SRE Leader's Field Guide</title>
+  <meta name="description" content="A running record of your saves, decisions, and improvements, with impact. It feeds weekly updates, self-reviews, and promotion cases.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="grow-wins">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <div class="eyebrow">Become the SRE Leader · Tool</div>
+      <h1>Wins &amp; Evidence Log</h1>
+
+      <div class="box use-when"><span class="box-label">Use This When</span>
+        <p>Something went right because of you or your team: a save, a decision, a fix, a runbook that finally works. Log it the same day, while you still remember the numbers.</p>
+      </div>
+
+      <div id="wins-app">
+        <form class="tool" id="win-form" autocomplete="off">
+          <h2 id="add" data-notoc style="margin-top:0;font-size:20px">Log a Win</h2>
+          <div class="form-grid">
+            <label class="field wide">What happened<input type="text" name="title" required placeholder="Cut the timeout alert from 40 pages a week to 3"></label>
+            <label class="field wide">Impact (numbers if you have them)<input type="text" name="impact" placeholder="~6 on-call hours a week back; no more 3 a.m. pages for the offshore shift"></label>
+            <label class="field">Date<input type="date" name="date"></label>
+            <label class="field">Type<select name="category"></select></label>
+            <label class="field">Credit (who did the work)<input type="text" name="credit" placeholder="Sam, Priya"></label>
+            <label class="field">Evidence (link, ticket, doc)<input type="text" name="evidence" placeholder="Review doc, dashboard screenshot"></label>
+          </div>
+          <div class="btn-row"><button class="btn primary" type="submit">Log Win</button></div>
+        </form>
+
+        <div class="tabs" id="win-filters" role="group" aria-label="Filter wins"></div>
+        <div class="btn-row"><button class="btn" type="button" id="copy-review">Copy This View as Bullets</button><button class="btn" type="button" id="export-wins">Export CSV</button></div>
+        <div id="win-list"></div>
+      </div>
+
+      <h2>Why This Matters More for You</h2>
+      <p>Engineers have commits and designs to show for their work. Your work, like a fire that didn't spread, a pod that finally owned its alert, or an offshore team that stopped mis-escalating, leaves no trace unless you write it down. Without a record, people who don't see the work will judge you on how you come across.</p>
+
+      <div class="box example"><span class="box-label">Example in Practice</span>
+        <p><strong>Weak entry:</strong> "Helped with alerts."</p>
+        <p><strong>Strong entry:</strong> "Got the Assistant pod to own the timeout alert (it paged 40 times a week). Agreed on a fix date in pod sync, followed up twice. Now 3 pages a week. That's about 6 on-call hours a week back. Credit: Priya (fix), Sam (data)."</p>
+        <p>In other words: what changed, what it was worth, and who did it. That third part matters. Crediting your team by name builds trust with them, and shows leadership you're the one who makes things happen.</p>
+      </div>
+
+      <div class="box reality"><span class="box-label">What Actually Happens</span>
+        <dl>
+          <dt>You forget to log wins during firefighting weeks, which are exactly the weeks with the best stories.</dt>
+          <dd>Counter: Friday's checklist on Today includes "log at least one win." On Fire Days, a single line is enough. Fill in the impact later.</dd>
+          <dt>Someone else presents your team's win as theirs.</dt>
+          <dd>Counter: a dated entry with evidence is your record. Mention the win in your weekly update first, with names, so the story is told your way before anyone else tells it.</dd>
+          <dt>At review time, your manager remembers the last two weeks and the one bad incident.</dt>
+          <dd>Counter: "Copy This View as Bullets" for the quarter, and send it before your review is written, not after.</dd>
+        </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/data.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/wins.js"></script>
+</body>
+</html>

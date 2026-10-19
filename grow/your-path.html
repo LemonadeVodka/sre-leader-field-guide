@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Path: IT Ops to SRE Leader · SRE Leader's Field Guide</title>
+  <meta name="description" content="What carries over from IT Operations, what to unlearn, where your background is an advantage, and what an SRE leader is and isn't expected to know.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="grow-path">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <div class="eyebrow">Become the SRE Leader</div>
+      <h1>Your Path: IT Ops → SRE Leader</h1>
+
+      <div class="box use-when"><span class="box-label">Use This When</span>
+        <p>You're in a room full of engineers and wondering whether you belong there. Or someone has said, out loud or not, "they're not really technical." This page is the honest answer to both.</p>
+      </div>
+
+      <div class="box do-this"><span class="box-label">The Short Version</span>
+        <p>An SRE leader's job isn't to be the best engineer. It's to make the system and the team more reliable over time: decide what matters, get it owned, protect the people doing the work, and tell the story to leadership with data. Most of that is operations leadership, which you already know. What you need to add is fluency: enough to follow the conversation, ask the question that changes it, and not be bluffed.</p>
+      </div>
+
+      <h2>What Carries Over</h2>
+      <p>You've been doing a version of SRE for years under different names. Use the translations below, because engineers respond to their own vocabulary.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>You know it as (IT Ops)</th><th>SRE calls it</th><th>What changes</th></tr></thead>
+        <tbody>
+          <tr><td>Incident management (ITIL)</td><td>Incident response, incident command</td><td>Same discipline. More emphasis on stopping the bleeding first and on blameless reviews afterwards.</td></tr>
+          <tr><td>Problem management</td><td>Post-incident reviews, repeat offenders</td><td>Root cause is less of a single thing. SRE looks for "contributing factors" and tracks whether actions actually get done.</td></tr>
+          <tr><td>Change management, CAB</td><td>Release engineering, canaries, feature flags, error budgets</td><td>Safety comes from small, frequent, reversible changes, not from approval meetings. (Big difference. See Unlearn below.)</td></tr>
+          <tr><td>SLAs</td><td>SLOs and error budgets</td><td>An SLA is a promise to customers with penalties. An SLO is an internal target that sits tighter than the SLA, so you get warned before you break the promise.</td></tr>
+          <tr><td>NOC monitoring, thresholds</td><td>Observability, alerting on symptoms</td><td>Alert on what users feel (slow, failing, wrong), not on every CPU spike. Fewer, better pages.</td></tr>
+          <tr><td>Runbooks, SOPs</td><td>Runbooks, then automation</td><td>A runbook step someone does by hand every week is "toil." SRE's instinct is to automate it away.</td></tr>
+          <tr><td>CMDB, asset ownership</td><td>Service catalog, service ownership</td><td>Every service has an owning team that carries the consequences, ideally including the pager.</td></tr>
+          <tr><td>Vendor management</td><td>Dependency management (e.g., the model provider)</td><td>Same skill: know what you depend on, what the contract says, and what happens when they fail.</td></tr>
+          <tr><td>24x7 shift operations</td><td>On-call rotations, follow-the-sun</td><td>Same logistics. SRE adds a hard focus on on-call load and burnout as a reliability risk.</td></tr>
+          <tr><td>Capacity planning</td><td>Capacity planning, load management</td><td>Almost identical. In the cloud it shows up as cost as much as hardware.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>What to Unlearn</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Old instinct</th><th>SRE instinct</th><th>Why it matters for you</th></tr></thead>
+        <tbody>
+          <tr><td>"The goal is 100% uptime."</td><td>"The goal is the right amount of reliability, and the rest is budget for change."</td><td>Arguing for 100% makes you look like you don't understand the trade-off. Arguing for an error budget makes you a partner.</td></tr>
+          <tr><td>"Approvals make change safe."</td><td>"Small, tested, reversible changes make change safe."</td><td>Proposing a CAB to engineers is the fastest way to get labeled "old-school IT." Ask about rollback and canaries instead.</td></tr>
+          <tr><td>"Tickets closed = success."</td><td>"The same problem not coming back = success."</td><td>Measure recurrence and pages, not ticket counts.</td></tr>
+          <tr><td>"Ops runs it, dev builds it."</td><td>"Whoever builds it shares responsibility for running it."</td><td>Your leverage with pods depends on this principle. Learn to say it calmly and often.</td></tr>
+          <tr><td>"Monitor everything, alert on thresholds."</td><td>"Alert on user pain; dashboards are for investigating."</td><td>Noisy alerts burn out your offshore team and your SREs. Fewer alerts is a win, not a risk.</td></tr>
+          <tr><td>"The hero who fixes it at 3 a.m. is the best engineer."</td><td>"The engineer who makes 3 a.m. pages stop is the best engineer."</td><td>Reward prevention visibly, or your team will optimize for heroics.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Your Unfair Advantages</h2>
+      <ul>
+        <li><strong>Calm in the fire.</strong> Many engineers have never run a major incident. You've run hundreds. Running the room (impact, roles, comms, escalation) is a skill most of them don't have.</li>
+        <li><strong>The user's view.</strong> You came up through support. You know what an outage feels like to the person on the other end, and that is exactly what SLOs try to measure.</li>
+        <li><strong>Process that actually runs.</strong> Shift handoffs, escalation paths, runbooks people follow. Engineers often design processes that work on paper and nowhere else.</li>
+        <li><strong>Running a 24x7 operation.</strong> Scheduling, coverage, fatigue, offshore coordination. This is a real discipline, and it's yours.</li>
+        <li><strong>Translating for the business.</strong> You can turn "p99 latency regression" into "1 in 100 customers waited 20 seconds," which is the version leadership acts on.</li>
+      </ul>
+
+      <h2>What You Are and Aren't Expected to Know</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>You need to be able to…</th><th>You don't need to be able to…</th></tr></thead>
+        <tbody>
+          <tr><td>Explain how a request flows through your product, at whiteboard level</td><td>Read or write the code</td></tr>
+          <tr><td>Read the main dashboard and say healthy / not healthy / why</td><td>Build the dashboard or write the queries</td></tr>
+          <tr><td>Tell a fix from a workaround and ask who owns the fix</td><td>Debug the issue yourself</td></tr>
+          <tr><td>Explain SLOs and error budgets to an exec in 2 minutes</td><td>Do the math for burn-rate alerts</td></tr>
+          <tr><td>Ask how a design fails, how you'd know, and how you'd roll back</td><td>Judge whether the architecture is optimal</td></tr>
+          <tr><td>Say "I don't know, walk me through it" without losing the room</td><td>Pretend you know</td></tr>
+        </tbody>
+      </table></div>
+      <p>The <a href="skills-map.html">Skills Map</a> turns the left column into concrete things to practice.</p>
+
+      <div class="box example"><span class="box-label">Example in Practice</span>
+        <p><strong>The moment:</strong> in a design review, a senior engineer says, a little impatiently, "It's an async retry with exponential backoff, it's fine."</p>
+        <p><strong>The bluffing response:</strong> nodding along. You've lost the room and learned nothing.</p>
+        <p><strong>The defensive response:</strong> "Well, I've been running ops for 15 years…" You've lost the room and made an enemy.</p>
+        <p><strong>The leader's response:</strong> "Help me with the failure case. If the model provider is down for 20 minutes, what do users see, and does the retrying make the recovery harder?" In other words, you didn't need to know what exponential backoff is. You asked what happens to users and whether the fix makes things worse. Half the time, the room goes quiet because nobody had thought about it.</p>
+      </div>
+
+      <div class="box reality"><span class="box-label">What Actually Happens</span>
+        <dl>
+          <dt>Some engineers will test you early with jargon.</dt>
+          <dd>Counter: don't play their game. Ask about outcomes and failure modes, which is a game they can't win by being more technical. After two or three good questions, the testing usually stops.</dd>
+          <dt>The "not technical" label gets used against you by a peer when it's convenient.</dt>
+          <dd>Counter: don't argue the label. Make it irrelevant with results and data. "Sure. Here's what the last quarter's numbers say." Make sure your boss hears your wins directly, every week, so the label doesn't define you in rooms you're not in. (Play the Real Game covers this in depth when it ships.)</dd>
+          <dt>You'll be tempted to overcompensate by learning to code.</dt>
+          <dd>Counter: a little scripting literacy is fine if you enjoy it, but it's the slowest route to credibility as a leader. The fluency skills on the Skills Map pay off ten times faster.</dd>
+          <dt>Your IT Ops background gets you pigeonholed as "just the ops person."</dt>
+          <dd>Counter: lead with SRE vocabulary (SLOs, error budgets, toil, ownership) and data. People can't keep calling you "just ops" when you're the one showing what reliability costs the business.</dd>
+        </dl>
+      </div>
+
+      <div class="box this-week"><span class="box-label">Do It This Week</span>
+        <ul>
+          <li>Rate yourself on the <a href="skills-map.html">Skills Map</a>.</li>
+          <li>In one meeting, use one SRE term from the "SRE calls it" column instead of the IT Ops term.</li>
+          <li>Ask one "how does it fail, and what do users see?" question in a technical conversation.</li>
+        </ul>
+      </div>
+
+      <div class="box go-deeper"><span class="box-label">Go Deeper</span>
+        <ul>
+          <li><a href="https://sre.google/sre-book/introduction/" target="_blank" rel="noopener">SRE Book, Ch. 1: Introduction ↗</a>. Why SRE exists and how it differs from traditional ops. Read it with this page's tables next to it.</li>
+          <li><a href="https://sre.google/workbook/how-sre-relates/" target="_blank" rel="noopener">Workbook, Ch. 1: How SRE Relates to DevOps ↗</a>. The vocabulary engineers will use with you.</li>
+          <li><a href="https://sre.google/sre-book/embracing-risk/" target="_blank" rel="noopener">SRE Book, Ch. 3: Embracing Risk ↗</a>. The source of "100% is the wrong target."</li>
+        </ul>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
