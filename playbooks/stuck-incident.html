@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>When an Incident Is Stuck · SRE Leader's Field Guide</title>
-  <meta name="description" content="A playbook for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.">
+  <meta name="description" content="The deep dive for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/style.css">
   <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
@@ -18,12 +18,25 @@
     <article class="prose">
       <nav class="crumbs" id="crumbs"></nav>
       <h1>When an Incident Is Stuck</h1>
-      <p class="summary">A playbook for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.</p>
+      <p class="summary">The deep dive for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Stuck and Nobody Here Can Fix It</h2>
+      <ol>
+      <li><strong>Declare and scope:</strong> "What are users seeing, how many, since when?"</li>
+      <li><strong>Get the owner in:</strong> page the owning team in PagerDuty with the escalation packet below.</li>
+      <li><strong>Escalate on a clock:</strong> T+15 no acknowledgement, PagerDuty escalates. T+30 no progress, call their manager. T+60, director level.</li>
+      <li><strong>Pull a pre-approved lever</strong> if one exists: failover, rollback, feature flag, rate limit.</li>
+      <li><strong>Own the comms</strong> every 15 minutes so the fixers can work.</li>
+      </ol>
+      <p>Need the questions? Use <a href="incident-driver.html">Move a Stuck Incident</a>.</p>
+      </section>
+
       <div class="callout"><p class="callout-title">Use This When</p>
       <p>An incident is open, users are affected, and nobody on the bridge can diagnose or fix it. Your team can see the problem and raise it, but the access, tools, and knowledge to fix it sit with a pod, a platform team, or a vendor. This is common for central SRE teams early on. This page is how to lead well inside that constraint, and how to get out of it.</p>
       </div>
 
+      <section class="fold">
       <h2>Your Real Job When You Can't Fix It</h2>
+      <div class="fold-body">
       <p>"We can't fix it" is a normal state for a surface-only team today. It's not a personal failure. What you <em>can</em> own, and should be excellent at:</p>
       <ul>
       <li><strong>Detect and declare early.</strong> Open the PagerDuty incident against the written severity criteria. Don't wait for certainty.</li>
@@ -35,7 +48,11 @@
       </ul>
       <p>Done well, this is visible, valued work. Engineers will remember who handed them a clean escalation packet at 3 a.m.</p>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>The Stuck Clock</h2>
+      <div class="fold-body">
       <p>An escalation ladder with time triggers, so nobody has to decide in the moment whether it's "time to escalate." Agree these times with pod leadership <em>before</em> the next incident, and build the first steps into PagerDuty escalation policies.</p>
       <div class="table-wrap agenda"><table>
       <thead><tr><th>Minutes since declared</th><th>Action</th><th>How</th></tr></thead>
@@ -49,7 +66,11 @@
       </table></div>
       <p class="go-deeper">The times are starting points. A Sev 1 might compress them, and a Sev 3 might skip the last two steps.</p>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Surface So Well They Can Start Immediately</h2>
+      <div class="fold-body">
       <p>When you can't fix it, the quality of your hand-off is your contribution. Post this packet in the incident channel and attach it to the PagerDuty incident before you page anyone.</p>
       <div class="code-card"><div class="code-head">Escalation packet</div><pre>ESCALATION: [service / feature]   Sev [x]   PagerDuty: [link]
 
@@ -63,7 +84,11 @@ Ruled out:  [what we checked and how]
 On bridge:  [names, roles]   Incident lead: [name]
 Need from you: [the specific ask, e.g. "confirm whether yesterday's prompt change can be rolled back"]</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Mitigation Without Writing Code: Pre-Approved Levers</h2>
+      <div class="fold-body">
       <p>Most stuck time is spent waiting for permission, not for a fix. Agree in advance, per critical service, which levers SRE (or the NOC, with a runbook) may pull without waiting for the pod:</p>
       <div class="table-wrap"><table>
       <thead><tr><th>Lever</th><th>What it does</th><th>Who usually provides it</th></tr></thead>
@@ -89,7 +114,11 @@ The pod will: keep the runbooks current and test each lever once a quarter.
 
 Signed: [pod manager]  [SRE manager]</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>When Nobody Can Fix It Yet</h2>
+      <div class="fold-body">
       <ul>
       <li><strong>Decide the degraded mode.</strong> What's the best experience you can give users now: a shorter answer, no tools, a clear "try again later"?</li>
       <li><strong>Communicate outward.</strong> Brief support, and decide on a status page update. Use the <a href="../questions/incidents.html#inc-comms">exec comms questions</a>.</li>
@@ -98,7 +127,11 @@ Signed: [pod manager]  [SRE manager]</pre></div>
       <li><strong>Protect people.</strong> Rotate whoever has been on the bridge longest. See <a href="../questions/incidents.html#inc-long">long-running incidents</a>.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Getting Out of Surface-Only: A 90-Day Plan</h2>
+      <div class="fold-body">
       <p>The full program, with the Workbook background, pitches, and templates, is in <a href="../implement/ownership-engagement.html">Implementation: Ownership, On-Call &amp; Engagement</a>.</p>
       <div class="table-wrap"><table>
       <thead><tr><th>When</th><th>Do this</th></tr></thead>
@@ -119,7 +152,11 @@ Signed: [pod manager]  [SRE manager]</pre></div>
       </div>
       <p>Those two numbers are your case for change. "Last month, 6 of 9 incidents stalled an average of 34 minutes waiting for an owner, and in 4 we had no access to the telemetry" is an argument leadership can act on. See <a href="../questions/credibility.html#cred-story">Owning the Reliability Story</a>.</p>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Copy-Ready Messages</h2>
+      <div class="fold-body">
       <div class="code-card"><div class="code-head">Manager to manager (T+30)</div><pre>Hi [name], we have a Sev [x] on [service] affecting [impact] since [time]. Your on-call was paged at [time] via PagerDuty and we haven't got [an acknowledgement / a path forward] yet.
 SRE can see the problem but can't change [component]. Can you get someone with access onto the bridge in the next 10 minutes? Bridge: [link]. Escalation packet is pinned in [channel].</pre></div>
       <div class="code-card"><div class="code-head">Exec update for a stuck incident (T+60)</div><pre>Sev [x]: [service]. Status: STUCK, owner engaged [yes/no]
@@ -154,6 +191,8 @@ Next update: [time].</pre></div>
       </div>
 
       <div class="go-deeper-box"><p class="go-deeper"><strong>Related:</strong> <a href="../questions/incidents.html#inc-stuck">When It's Stuck questions</a> · <a href="../concepts/alerting-incidents.html#on-call">On-call and escalation policies</a> · <a href="../rca/day-one.html">RCA Day One</a>. <strong>Go deeper:</strong> <a href="https://sre.google/sre-book/operational-overload/" target="_blank" rel="noopener">SRE Book, Ch. 30: Recovering from Operational Overload<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/engagement-model/" target="_blank" rel="noopener">Workbook, Ch. 18: SRE Engagement Model<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://support.pagerduty.com/main/docs/escalation-policies" target="_blank" rel="noopener">PagerDuty: Escalation Policies<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+      </div>
+      </section>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>

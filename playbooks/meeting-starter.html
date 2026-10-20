@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting Starter · SRE Leader's Field Guide</title>
+  <meta name="description" content="Set an agenda in 60 seconds, open with ground rules people respect, and hold the room so every meeting ends with decisions and owners.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-starter" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Meeting Starter</h1>
+      <p class="summary">Set an agenda in 60 seconds, open with ground rules people respect, and hold the room so every meeting ends with decisions and owners.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Open Any Meeting in 60 Seconds</h2>
+      <ol>
+      <li><strong>Purpose:</strong> "We're here to [decide / unblock / review] [X]."</li>
+      <li><strong>Time:</strong> "We have [30] minutes. I'll keep us to time."</li>
+      <li><strong>Ground rules:</strong> pick the set for this meeting below and say it out loud.</li>
+      <li><strong>Ask:</strong> "Anything that must be covered today?" Park the rest.</li>
+      <li><strong>Close at minus 5 minutes:</strong> "What did we decide, who owns what, by when?"</li>
+      </ol>
+      </section>
+
+      <section class="fold">
+      <h2 id="agenda-fast">Agenda in 60 Seconds</h2>
+      <div class="fold-body">
+      <p>Fill in four lines and you have an agenda people respect. Put the decision first: if there's no decision or unblock needed, it may be an email.</p>
+      <div class="code-card"><div class="code-head">60-second agenda</div><pre>[Meeting name]: [date], [length] min
+Purpose:   [one line: what this meeting is for]
+Decision:  [the one decision or unblock we need today]
+
+[N] min   [Block 1: context, the shortest possible]
+[N] min   [Block 2: discussion of options]
+[N] min   [Block 3: decide, owners, dates]
+
+Notes and owners: [name]   Parking lot: end of notes</pre></div>
+      <p>Rule of thumb for minutes: about <strong>20% context, 50% discussion, 30% decisions and owners.</strong> For 30 minutes that's 5, 15, and 10.</p>
+      <p>Ready-made agendas, already in minutes: <a href="../meetings/sre-daily.html#the-agenda">SRE Daily (30)</a> · <a href="../meetings/performance-engineering.html#the-agenda">Performance Engineering (30)</a> · <a href="postmortem-meeting.html#the-45-minute-agenda-with-your-script">Postmortem (45)</a> · <a href="running-a-task.html#kickoff">Task kickoff (15)</a> · <a href="vendor-demo.html">Vendor demo (45)</a> · <a href="where-are-we.html#weekly-sweep">Weekly status sweep (10)</a></p>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="ground-rules">Ground Rules to Say Out Loud</h2>
+      <div class="fold-body">
+      <p>Ground rules work when you say them at the start, every time, in the same words. Copy the set for your meeting.</p>
+      <div class="code-card" id="rules-postmortem"><div class="code-head">Postmortem ground rules</div><pre>Before we start, three rules:
+1. Blameless. We're looking at how our system let this happen, not who did it.
+   Everyone did what made sense with what they knew at the time.
+2. Facts first. If we're not sure, we say "not sure" and someone checks.
+3. We leave with a few actions, each with one owner, a date, and what done means.
+If anyone hears blame, including from me, say so.</pre></div>
+      <div class="code-card" id="rules-bridge"><div class="code-head">Incident bridge ground rules</div><pre>Quick rules for this bridge:
+1. [Name] is incident commander. The IC decides; everyone else advises.
+2. One conversation at a time. Side discussions go to a thread.
+3. Say what you're doing before you change anything in production.
+4. I'm handling exec and stakeholder updates, every 15 minutes.</pre></div>
+      <div class="code-card" id="rules-daily"><div class="code-head">SRE Daily ground rules</div><pre>Same rules as always:
+1. Decisions and blockers, not status. Status lives in the board.
+2. Anything over 2 minutes goes to the parking lot or a follow-up.
+3. We end on time, or early.</pre></div>
+      <div class="code-card" id="rules-perf"><div class="code-head">Performance Engineering ground rules</div><pre>Ground rules for today:
+1. We start with the user-facing number, against target.
+2. Every regression gets a suspected cause and an owner before we move on.
+3. We leave with one owned fix, not a list of "we should."</pre></div>
+      <div class="code-card" id="rules-vendor"><div class="code-head">Vendor demo ground rules (say to the vendor)</div><pre>Thanks for coming. So we use the time well:
+1. We'll start with our problem and criteria, 5 minutes.
+2. Please demo on our scenario, not the standard demo.
+3. We'll save 10 minutes to see failure cases and 10 for questions on fit, cost, and risk.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="hold-the-room">Holding the Room</h2>
+      <div class="fold-body">
+      <p>These lines let you steer without sounding defensive. Say them calmly, then move on.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Say</th></tr></thead>
+      <tbody>
+      <tr><td>Someone is rambling</td><td>"Let me pause you there. What's the one thing you need from this group?"</td></tr>
+      <tr><td>A tangent takes over</td><td>"That's important. Let's park it and give it proper time. Who owns following up?"</td></tr>
+      <tr><td>Someone quiet knows more</td><td>"[Name], you've been close to this. What are we missing?"</td></tr>
+      <tr><td>Blame starts</td><td>"Let's look at what the system allowed, not who did it. What made that easy to get wrong?"</td></tr>
+      <tr><td>Nobody will decide</td><td>"Who's the decision-maker here? If not today, what do you need, and by when?"</td></tr>
+      <tr><td>You don't understand the detail</td><td>"Help me with the impact: what does this mean for users, and what do you need from me?"</td></tr>
+      <tr><td>Running out of time</td><td>"We've got 5 minutes. Let's capture decisions and owners now."</td></tr>
+      <tr><td>A senior person derails</td><td>"Great point. I want to give it the time it deserves. Can we take it as the first item next time?"</td></tr>
+      </tbody></table></div>
+      <p>More on this: <a href="postmortem-meeting.html#handling-the-room">handling a postmortem room</a> and <a href="../guides/saying-i-dont-know.html">saying "I don't know"</a>.</p>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="close">Close Every Meeting the Same Way</h2>
+      <div class="fold-body">
+      <div class="code-card"><div class="code-head">Meeting notes (post within the hour)</div><pre>[Meeting], [date]
+Decided:   [decision 1], [decision 2]
+Actions:   [owner]: [action], by [date]
+           [owner]: [action], by [date]
+Parked:    [topic], owner [name], next step [what]
+Next:      [date of next meeting or check-in]</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
+      <div data-qsit="room"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="example">Example in Practice</h2>
+      <div class="fold-body">
+      <div class="callout example"><p class="callout-title">A Postmortem That Started Going Sideways</p>
+      <p>Ten minutes into a postmortem, a pod lead says "the NOC should have caught this." The NOC analyst goes quiet. You say: "Let's look at what the system allowed, not who did it. What would have made this easy to catch?" The answer: the alert fired into a channel nobody watches overnight. That becomes the top action, owned by the pod lead, with a date.</p>
+      <p>Because you said the ground rules at the start, steering back felt fair, not personal.</p>
+      </div>
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>Ground rules feel awkward the first three times.</strong> By the fourth, people expect them and start enforcing them for you.</li>
+      <li><strong>Someone senior will test the rules.</strong> Hold the line politely once, in the room. Then talk to them afterwards.</li>
+      <li><strong>Agendas without a decision line drift into status.</strong> If you can't write the decision line, ask if the meeting is needed.</li>
+      <li><strong>Notes that come a day late don't get read.</strong> Post within the hour, even if they're rough.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

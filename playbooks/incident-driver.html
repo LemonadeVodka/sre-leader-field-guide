@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Move a Stuck Incident · SRE Leader's Field Guide</title>
+  <meta name="description" content="Questions that keep an incident moving when the NOC can't, organized by how it's stuck. You don't need to know the fix; you need to know what to ask next.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-driver" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Move a Stuck Incident</h1>
+      <p class="summary">Questions that keep an incident moving when the NOC can't, organized by how it's stuck. You don't need to know the fix; you need to know what to ask next.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Take the Wheel in 60 Seconds</h2>
+      <ol>
+      <li><strong>"Who's leading this?"</strong> If nobody: "I'll lead until the owning team takes over."</li>
+      <li><strong>"What are users seeing, since when, and is it getting worse?"</strong></li>
+      <li><strong>"What have we ruled out, and what's our best guess?"</strong></li>
+      <li><strong>"What's the safest thing we can do in the next 15 minutes?"</strong></li>
+      <li><strong>"Who are we waiting on, and who's next if they don't answer in 10 minutes?"</strong></li>
+      </ol>
+      <p>Then every 15 minutes: <em>what changed, what's next, who owns it.</em> Find the stuck pattern below and open it.</p>
+      </section>
+
+      <div class="table-wrap"><table>
+      <caption class="visually-hidden">Stuck patterns and the first question to ask</caption>
+      <thead><tr><th>How it's stuck</th><th>You'll notice</th><th>Ask first</th></tr></thead>
+      <tbody>
+      <tr><td><a href="#inc-owner">Nobody owns it</a></td><td>Everyone is "looking into it"</td><td>"Who is incident commander right now?"</td></tr>
+      <tr><td><a href="#inc-impact">Impact is unclear</a></td><td>Arguing about severity</td><td>"What are users seeing, in one sentence?"</td></tr>
+      <tr><td><a href="#inc-circles">Going in circles</a></td><td>The same checks, again</td><td>"What have we ruled out, and how?"</td></tr>
+      <tr><td><a href="#inc-hypothesis">No theory yet</a></td><td>Staring at dashboards</td><td>"If you had to bet, where is it?"</td></tr>
+      <tr><td><a href="#inc-waiting">Waiting on someone</a></td><td>"We pinged them"</td><td>"Who exactly, when, and did they acknowledge?"</td></tr>
+      <tr><td><a href="#inc-act">Afraid to act</a></td><td>A fix exists, nobody pulls it</td><td>"What's worse: acting and being wrong, or waiting?"</td></tr>
+      <tr><td><a href="#inc-noc">The NOC is lost</a></td><td>Relaying without understanding</td><td>"In your own words, what have you seen?"</td></tr>
+      <tr><td><a href="#inc-exec">Exec heat</a></td><td>Leaders asking engineers directly</td><td>"I'll take the exec updates. Team, keep working."</td></tr>
+      </tbody></table></div>
+
+      <section class="fold">
+      <h2 id="inc-owner">Nobody Owns It</h2>
+      <div class="fold-body">
+      <p>Five people investigating with nobody deciding is the most common reason an incident stays stuck. Naming a leader is the single highest-value thing you can do, and it needs no technical knowledge.</p>
+      <div data-qsit="inc-owner"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-impact">Impact Is Unclear</h2>
+      <div class="fold-body">
+      <p>If nobody can say who is affected, the team can't judge urgency, pick a severity, or tell whether a change helped.</p>
+      <div data-qsit="inc-impact"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-circles">Going in Circles</h2>
+      <div class="fold-body">
+      <p>Write down what's ruled out, so it stops being re-checked. Then turn the next check into a decision: "if we see X, we do Y."</p>
+      <div data-qsit="inc-circles"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-hypothesis">No Theory Yet</h2>
+      <div class="fold-body">
+      <p>A wrong theory you test beats no theory at all. Ask for a bet, and what would prove it wrong.</p>
+      <div data-qsit="inc-hypothesis"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-waiting">Waiting on Someone</h2>
+      <div class="fold-body">
+      <p>A Slack message is not a page. Get a name, a time, an acknowledgement, and a backup with a deadline. Escalate on a clock, not on a feeling.</p>
+      <div data-qsit="inc-waiting"></div>
+      <div class="code-card"><div class="code-head">Manager-to-manager escalation (send at the deadline)</div><pre>Hi [name], we have a Sev [x] on [service] affecting [impact] since [time].
+Your on-call was paged at [time] and we don't have [an acknowledgement / a path forward] yet.
+Can you get someone from your team on the bridge in the next 10 minutes? Link: [bridge / channel]</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-act">Afraid to Act</h2>
+      <div class="fold-body">
+      <p>Teams freeze because acting feels risky and waiting feels safe. Make the cost of waiting visible, then get a decision made by the right person.</p>
+      <div data-qsit="inc-act"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-noc">The NOC Is Lost</h2>
+      <div class="fold-body">
+      <p>When the NOC is relaying messages they don't understand, slow down for one minute: get what they've actually seen and done, then give one clear next step. Kind, specific, and firm.</p>
+      <div data-qsit="inc-noc"></div>
+      <div class="code-card"><div class="code-head">One clear instruction to the NOC</div><pre>[Name], here's your next step:
+1. Page [team] on-call in PagerDuty now.
+2. Paste this in the incident channel: impact, start time, what you've tried, link to the graph.
+3. Tell me on the bridge when they acknowledge.
+Don't restart anything else until the owning team joins.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="inc-exec">Exec Heat</h2>
+      <div class="fold-body">
+      <p>Take the comms so the engineers can keep fixing. One person, on a schedule, with honest uncertainty.</p>
+      <div data-qsit="inc-exec"></div>
+      <div class="code-card"><div class="code-head">15-minute exec update</div><pre>[Service] Sev [x]: [what users are seeing], since [time].
+Now: [what we're trying]. Owner: [team / name].
+Confidence: [low / medium / high] that this fixes it.
+Next update: [time], or sooner if it changes.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="rhythm">The 15-Minute Rhythm</h2>
+      <div class="fold-body">
+      <p>Once it's moving, keep it moving. Every 15 minutes, out loud on the bridge:</p>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>1 min</td><td><strong>What changed?</strong> Better, worse, or flat since the last check.</td></tr>
+      <tr><td>1 min</td><td><strong>What's next?</strong> One action, one owner, and when we'll know.</td></tr>
+      <tr><td>1 min</td><td><strong>Who are we waiting on?</strong> Anyone past their deadline gets escalated now.</td></tr>
+      <tr><td>1 min</td><td><strong>Is the severity still right,</strong> and is the exec update sent?</td></tr>
+      </tbody>
+      <tfoot><tr><td>4 min</td><td>Total, every 15 minutes</td></tr></tfoot>
+      </table></div>
+      <p>If nothing has improved for 60 minutes, it's a business decision, not a technical one. Use the <a href="stuck-incident.html">Stuck Incident deep dive</a> for escalation packets, pre-approved levers, and getting your team out of surface-only.</p>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="example">Example in Practice</h2>
+      <div class="fold-body">
+      <div class="callout example"><p class="callout-title">Twenty Minutes of Nothing, Then Movement</p>
+      <p>The assistant is timing out for about a third of users. The NOC opened the incident and is relaying alert text. Four engineers are on the bridge, all looking at the same dashboard.</p>
+      <p>You ask who's leading. Silence. "OK, I'll lead until the platform team joins." You ask what users are seeing: "a third of requests fail, since 09:40, getting worse." You ask for a bet: "the model provider; our servers look fine." You ask who's checking it: nobody. One engineer takes it. You ask who we're waiting on: platform was "pinged in Slack." You page them properly and set a 10-minute deadline. At 09:58 platform joins, confirms provider throttling, and switches traffic to the backup region. You send the exec update and hand over IC.</p>
+      <p>You didn't diagnose anything. You named a leader, got the impact clear, turned a guess into a check, and escalated on a clock.</p>
+      </div>
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>People will wait for you to fix it.</strong> Don't try. Keep asking who owns the next step.</li>
+      <li><strong>Someone will say "we're close" for an hour.</strong> Ask what result would prove it, and set a time.</li>
+      <li><strong>The NOC will go quiet when you take over.</strong> Give them a job (watching the error graph, posting updates) so they stay involved and learn.</li>
+      <li><strong>An engineer may push back on you leading.</strong> "Great, take IC. I'll handle comms." Either way, someone now leads.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

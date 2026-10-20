@@ -24,16 +24,40 @@
     return out;
   }
 
-  function item(q, terms) {
-    var m = /^\((To [^)]+)\)\s*/.exec(q.q), who = m ? m[1] : "", text = m ? q.q.slice(m[0].length) : q.q;
-    return '<li class="qitem"><p class="q-text">' + (who ? '<span class="q-who">' + esc(who) + ': </span>' : "") + mark(text, terms) + '</p>' +
-      '<p class="q-next"><strong>Ask next:</strong> ' + mark(q.next, terms) + '</p>' +
+  /* Each card: the question, why it builds credibility (always visible), what to ask next, then coaching notes. */
+  function item(q, terms, extra) {
+    var m = /^\(((?:To|On|Opening|Weekly)[^)]*)\)\s*/.exec(q.q), who = m ? m[1] : "", text = m ? q.q.slice(m[0].length) : q.q;
+    return '<li class="qitem"' + (extra ? " hidden" : "") + '><p class="q-text">' + (who ? '<span class="q-who">' + esc(who) + ': </span>' : "") + mark(text, terms) + '</p>' +
+      '<p class="q-why"><span class="q-why-label">Builds credibility:</span> ' + mark(q.signal, terms) + '</p>' +
+      (q.next ? '<p class="q-next"><strong>Ask next:</strong> ' + mark(q.next, terms) + '</p>' : "") +
       '<details class="q-notes"><summary>Coaching notes</summary><dl>' +
-      '<dt>What asking this signals</dt><dd>' + mark(q.signal, terms) + '</dd>' +
       '<dt>Strong answer</dt><dd>' + mark(q.strong, terms) + '</dd>' +
       '<dt>Weak answer</dt><dd>' + mark(q.weak, terms) + '</dd></dl></details></li>';
   }
-  function list(qs, terms) { return '<ol class="qlist">' + qs.map(function (q) { return item(q, terms); }).join("") + '</ol>'; }
+  /* Long lists show three "start here" questions (starred for this situation, else the first three), then "Show all N".
+     Search results always show everything. */
+  var listSeq = 0;
+  function list(qs, terms, sitId) {
+    var collapse = !terms && sitId && qs.length > 4;
+    if (collapse) {
+      var starred = qs.filter(function (q) { return q.star && q.star.indexOf(sitId) >= 0; });
+      if (starred.length) qs = starred.concat(qs.filter(function (q) { return starred.indexOf(q) < 0; }));
+    }
+    var id = "ql-" + (++listSeq);
+    return '<ol class="qlist" id="' + id + '">' + qs.map(function (q, i) { return item(q, terms, collapse && i >= 3); }).join("") + '</ol>' +
+      (collapse ? '<p class="q-more-row"><button type="button" class="q-more" aria-expanded="false" aria-controls="' + id + '" data-total="' + qs.length + '">Show all ' + qs.length + ' questions</button></p>' : "");
+  }
+  function setMore(btn, open) {
+    var ol = document.getElementById(btn.getAttribute("aria-controls"));
+    Array.prototype.forEach.call(ol.querySelectorAll(".qitem"), function (li, i) { if (i >= 3) li.hidden = !open; });
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "Show the top 3 only" : "Show all " + btn.getAttribute("data-total") + " questions";
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest(".q-more");
+    if (b) setMore(b, b.getAttribute("aria-expanded") !== "true");
+  });
+  window.addEventListener("beforeprint", function () { Array.prototype.forEach.call(document.querySelectorAll(".q-more"), function (b) { setMore(b, true); }); });
   function extras(s) {
     var bits = [];
     if (s.concept) bits.push('Concept: <a href="' + root + esc(s.concept.u) + '">' + esc(s.concept.t) + '</a>');
@@ -49,7 +73,7 @@
       var qs = questionsFor(s.id);
       return '<section aria-labelledby="' + s.id + '"><h2 id="' + s.id + '">' + esc(s.label) + '</h2>' +
         '<p class="qsit-intro">' + esc(s.blurb) + '</p>' +
-        (s.playbook ? '<p><a href="' + root + esc(s.playbook) + '"><strong>Open the ' + esc(s.label) + ' playbook</strong></a>: the 30-minute agenda and all ' + qs.length + ' questions in one place.</p>' : list(qs)) +
+        (s.playbook ? '<p><a href="' + root + esc(s.playbook) + '"><strong>Open the ' + esc(s.label) + ' playbook</strong></a>: the 30-minute agenda and all ' + qs.length + ' questions in one place.</p>' : list(qs, null, s.id)) +
         extras(s) + '</section>';
     }).join("");
   });
@@ -57,7 +81,7 @@
   /* ---------- Mode 2: one situation ---------- */
   Array.prototype.forEach.call(document.querySelectorAll("[data-qsit]"), function (el) {
     var s = sit(el.getAttribute("data-qsit"));
-    if (s) el.innerHTML = list(questionsFor(s.id)) + extras(s);
+    if (s) el.innerHTML = list(questionsFor(s.id), null, s.id) + extras(s);
   });
 
   /* ---------- Mode 3: search (home page) ---------- */
@@ -77,10 +101,10 @@
     window.addEventListener("hashchange", forward);
     if (forward()) return;
 
-    var SUGGEST = ["escalate", "RCA", "handoff", "rollback", "not technical", "owner"];
+    var SUGGEST = ["stuck", "escalate", "owner", "rollback", "agenda", "status"];
     box.innerHTML =
       '<label for="q-search">Search ' + Q.length + ' questions</label>' +
-      '<div class="search-row"><input type="search" id="q-search" autocomplete="off" aria-describedby="q-search-hint" placeholder="Try: escalate, RCA, handoff, rollback"><kbd aria-hidden="true">/</kbd></div>' +
+      '<div class="search-row"><input type="search" id="q-search" autocomplete="off" aria-describedby="q-search-hint" placeholder="Try: stuck, escalate, agenda, status"><kbd aria-hidden="true">/</kbd></div>' +
       '<p class="search-hint" id="q-search-hint">Results appear as you type. Press <kbd>/</kbd> to jump here.</p>' +
       '<div class="results" id="q-results" aria-live="polite"></div>';
     var input = document.getElementById("q-search"), out = document.getElementById("q-results"), timer = null;

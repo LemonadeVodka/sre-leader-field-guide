@@ -19,11 +19,23 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Running the Postmortem Meeting</h1>
       <p class="summary">Your playbook as the senior manager: before the meeting, your script for the 45 minutes, handling the room, the decisions you own, what happens after, and the variants.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Run the Postmortem</h2>
+      <ol>
+      <li><strong>Open with the ground rules:</strong> blameless, facts first, a few actions with owners and dates. <a href="meeting-starter.html#rules-postmortem">Copy them</a>.</li>
+      <li><strong>Agree the impact</strong> before anything else.</li>
+      <li><strong>Walk the timeline,</strong> asking "what made sense to them at the time?"</li>
+      <li><strong>Ask "what let this happen?"</strong> until you reach things you can change: checks, alerts, runbooks, defaults.</li>
+      <li><strong>Close with 3 to 5 ranked actions,</strong> each with one owner, a date, and what done means.</li>
+      </ol>
+      </section>
+
       <div class="callout"><p class="callout-title">Use This When</p>
       <p>You're sponsoring or running a postmortem (RCA review) meeting. The <a href="../rca/run-an-rca.html">RCA section</a> covers writing and judging the document. This playbook covers <strong>running the room</strong>: what you do before, what you say during, how you handle the hard moments, and what you own afterwards.</p>
       </div>
 
+      <section class="fold">
       <h2>Your Role as the Senior Manager</h2>
+      <div class="fold-body">
       <div class="table-wrap"><table>
       <thead><tr><th>You do</th><th>You don't</th></tr></thead>
       <tbody>
@@ -36,7 +48,11 @@
       </tbody>
       </table></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Before the Meeting</h2>
+      <div class="fold-body">
       <p>From two days before, up to the start of the meeting:</p>
       <ul class="done-list">
       <li><strong>The draft passes the <a href="../rca/judge-an-rca.html">5-minute check</a>.</strong> If it doesn't, send it back with the feedback reply. A weak draft wastes 45 minutes of eight people's time.</li>
@@ -54,7 +70,11 @@
       <li><strong>Name a facilitator and a note-taker,</strong> so you can listen.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>The 45-Minute Agenda, With Your Script</h2>
+      <div class="fold-body">
       <div class="table-wrap agenda"><table>
       <thead><tr><th>Minutes</th><th>Block</th><th>What you say</th><th>Listen for</th></tr></thead>
       <tbody>
@@ -67,7 +87,11 @@
       <tfoot><tr><td>45 min</td><td colspan="3"><strong>Total.</strong></td></tr></tfoot>
       </table></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Handling the Room</h2>
+      <div class="fold-body">
       <div class="table-wrap"><table>
       <thead><tr><th>When…</th><th>Say</th><th>Why it works</th></tr></thead>
       <tbody>
@@ -83,7 +107,11 @@
       </tbody>
       </table></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Decisions You Own</h2>
+      <div class="fold-body">
       <ul>
       <li><strong>Accept, rank, or reject actions.</strong> You can say "that's too vague" or "that won't prevent this."</li>
       <li><strong>Which actions need a manager-to-manager priority conversation,</strong> and holding it within a week.</li>
@@ -91,7 +119,11 @@
       <li><strong>Whether leadership needs a readout,</strong> using the 5-minute script below.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>After the Meeting</h2>
+      <div class="fold-body">
       <div class="table-wrap"><table>
       <thead><tr><th>When</th><th>Do this</th></tr></thead>
       <tbody>
@@ -103,7 +135,11 @@
       </tbody>
       </table></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Variants</h2>
+      <div class="fold-body">
       <h3>Lightweight Review (Sev 3 and Near Misses)</h3>
       <div class="table-wrap agenda"><table>
       <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
@@ -131,7 +167,11 @@
       <h3>5-Minute Exec Readout</h3>
       <p>For leadership: what happened, the impact, why (systems, not people), the top three actions with owners, and any decision you need. Script below.</p>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Copy-Ready</h2>
+      <div class="fold-body">
       <div class="code-card"><div class="code-head">Facilitator's opening and closing script</div><pre>OPENING
 "Thanks for coming. We're here to understand how our system allowed this incident,
 not to find someone to blame. Assume everyone did what made sense with what they knew.
@@ -163,7 +203,11 @@ I want you to know how we'll frame it: the question is why our process let a cha
 not who made it. You know that change better than anyone, so your view on what would have caught it is really valuable.
 Anything you'd like me to know beforehand?</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
       <p class="qsit-intro">These are the post-incident review questions. For checking the document itself, see <a href="../rca/judge-an-rca.html">Judging an RCA</a>.</p>
       <div data-qsit="incident"></div>
 
@@ -189,6 +233,8 @@ Anything you'd like me to know beforehand?</pre></div>
       </div>
 
       <div class="go-deeper-box"><p class="go-deeper"><strong>Related:</strong> <a href="../rca/day-one.html">RCA Day One</a> · <a href="../rca/run-an-rca.html">Running an RCA</a> · <a href="../rca/judge-an-rca.html">Judging an RCA</a>. <strong>Go deeper:</strong> <a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">Workbook, Ch. 10: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">SRE Book, Ch. 15: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+      </div>
+      </section>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>

@@ -19,11 +19,23 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Running a Task or Small Project</h1>
       <p class="summary">Kick off, keep moving, and close out a task that has engineers owning action items, without becoming the project manager.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Start, Run, and Finish a Task</h2>
+      <ol>
+      <li><strong>Kickoff (15 min):</strong> the problem, what done means, one owner per action, the first checkpoint.</li>
+      <li><strong>Write it down:</strong> the one-page <a href="#task-brief">task brief</a>, posted in the channel.</li>
+      <li><strong>During:</strong> a 4-line update every 2 to 3 days. Ask for date confidence, 1 to 10.</li>
+      <li><strong>Slipping?</strong> Unblock, rescope, add help, or reset the date publicly.</li>
+      <li><strong>Close:</strong> verify against done, hand over to operations, credit people.</li>
+      </ol>
+      </section>
+
       <div class="callout"><p class="callout-title">Use This When</p>
       <p>You need a few engineers to get something done, like an automation, a runbook rewrite, a dashboard, or a fix that crosses a team. It isn't a full program. This playbook gives that work a light structure: a clear start, a steady middle, and a real finish. You stay the leader, not the project manager.</p>
       </div>
 
+      <section class="fold">
       <h2>Right-Size It First</h2>
+      <div class="fold-body">
       <div class="table-wrap"><table>
       <thead><tr><th>Size</th><th>Looks like</th><th>How much process</th></tr></thead>
       <tbody>
@@ -33,7 +45,11 @@
       </tbody>
       </table></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="kickoff">Kickoff</h2>
+      <div class="fold-body">
       <p>Fifteen minutes with everyone doing the work. Fill in the task brief as you go, and post it right after.</p>
       <div class="table-wrap agenda"><table>
       <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
@@ -71,7 +87,11 @@ Owners: [name: action, date] / [name: action, date].
 Not doing: [out of scope]. Midpoint check-in: [date].
 Short updates here every [2-3] days: done / next / blocked / confidence 1-10. Brief: [link]</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="during">During</h2>
+      <div class="fold-body">
       <ul>
       <li><strong>Async status every 2–3 days,</strong> in the channel, using the 4-line template below. It takes two minutes to write and saves meetings.</li>
       <li><strong>One 10-minute midpoint checkpoint:</strong> are we on track for done-means and the date? If not, decide now.</li>
@@ -100,7 +120,11 @@ Why: [honest reason, e.g. "the owner was pulled into 3 incidents" / "scope was b
 What we changed: [rescope / added help / unblocked X].
 New checkpoint: [date]. Done still means: [done-means].</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="closing">Closing</h2>
+      <div class="fold-body">
       <ul class="done-list">
       <li><strong>Verify against done-means.</strong> A demo, a graph, or a removed runbook step, not "it's merged."</li>
       <li><strong>Hand it over to operations.</strong> If anything changes for operations, update the runbooks, dashboards, and alerts, and walk the NOC lead through it.</li>
@@ -126,7 +150,11 @@ Leftovers: [item: owner, date] or "none"
 Thanks to: [names and what each did]
 Lesson for next time: [one line]</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
       <h3>Kicking Off</h3>
       <div data-qsit="proj-kickoff"></div>
       <h3>Keeping It Moving</h3>
@@ -154,6 +182,8 @@ Lesson for next time: [one line]</pre></div>
       </div>
 
       <p><strong>Related:</strong> <a href="../questions/projects.html">Running Tasks &amp; Projects questions</a> · <a href="../questions/peers-leaders.html#status">Status &amp; Commitments questions</a> · <a href="../meetings/sre-daily.html">SRE Daily</a> (where updates and credit land)</p>
+      </div>
+      </section>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>

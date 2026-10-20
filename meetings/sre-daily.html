@@ -19,11 +19,23 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>SRE Daily</h1>
       <p class="summary">A 30-minute weekday meeting for decisions, not status. It covers operations, progress on reliability projects, what's shipping soon, learning, and how the team is doing.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Run Today's SRE Daily</h2>
+      <ol>
+      <li><strong>Wins (2 min):</strong> one or two specific shout-outs, by name.</li>
+      <li><strong>Operations (10 min):</strong> last 24 hours, health verdict, NOC handoff, what's stuck.</li>
+      <li><strong>Engineering (7 min):</strong> walk the board, not the people: moved, next, blocked.</li>
+      <li><strong>Changes and rotating segment (8 min):</strong> the next 48 hours of changes, then the day's segment.</li>
+      <li><strong>Asks and recap (3 min):</strong> who needs help, parking lot, actions read back.</li>
+      </ol>
+      </section>
+
       <div class="callout"><p class="callout-title">Purpose</p>
         <p>Start every day with one shared picture: <strong>operations</strong> (what happened, are we healthy, what's stuck), <strong>engineering progress</strong> on reliability work, <strong>what's coming</strong>, and <strong>how the team is doing</strong>. It's for decisions and unblocking, not a round-robin status read-out.</p>
       </div>
 
+      <section class="fold">
       <h2>Who's in the Room</h2>
+      <div class="fold-body">
       <ul>
         <li><strong>The SRE team,</strong> including whoever is on call.</li>
         <li><strong>The NOC shift lead,</strong> for the 10-minute operations block only, if time zones allow. If they can't attend, use their written handoff.</li>
@@ -32,7 +44,11 @@
         <li><strong>You:</strong> listen for what's stuck, take the blockers, recognize good work, and protect focus time.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Before the Meeting</h2>
+      <div class="fold-body">
       <ul>
         <li><strong>On-call posts three lines</strong> in the team channel 10 minutes before: what paged, what's still open, and anything weird.</li>
         <li><strong>Project owners update the reliability project board</strong> (SLOs, automation, observability, toil) before the meeting, not during it.</li>
@@ -41,7 +57,11 @@
         <li><strong>You:</strong> read the on-call note and the NOC handoff, and note one win to call out.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>The Agenda</h2>
+      <div class="fold-body">
       <div class="table-wrap agenda"><table>
         <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
         <tbody>
@@ -72,7 +92,11 @@ Purpose: operations, engineering progress, what's coming, and how the team is do
 Prep: on-call posts 3 lines 10 min before. Project owners update the board. Change calendar checked.
 Rules: over 2 minutes = parking lot. No live debugging. Facilitator rotates weekly.</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
       <p class="qsit-intro">Bring three. Mix operations with one engineering or team question. Each question has a follow-up for a weak answer, and coaching notes on what good sounds like.</p>
       <div data-qsit="sre-daily"></div>
 
@@ -99,7 +123,11 @@ Rules: over 2 minutes = parking lot. No live debugging. Facilitator rotates week
         </dl>
       </div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Rules for Every Recurring Meeting</h2>
+      <div class="fold-body">
       <div class="callout">
         <ul>
           <li><strong>Same format every time.</strong> People prepare for a format they can predict.</li>
@@ -111,6 +139,8 @@ Rules: over 2 minutes = parking lot. No live debugging. Facilitator rotates week
       </div>
 
       <p>Related: <a href="performance-engineering.html">Performance Engineering playbook</a> · <a href="../implement/index.html">Implementation roadmap (the projects on your board)</a> · <a href="../questions/technical-meetings.html">all technical meeting questions</a></p>
+      </div>
+      </section>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>

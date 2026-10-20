@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Where Are We? · SRE Leader's Field Guide</title>
+  <meta name="description" content="Find out what people are working on and where things really stand, without micromanaging and without sounding out of touch.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-where" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Where Are We?</h1>
+      <p class="summary">Find out what people are working on and where things really stand, without micromanaging and without sounding out of touch.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Get the Real Status</h2>
+      <ol>
+      <li><strong>"What's moved since we last spoke?"</strong></li>
+      <li><strong>"What's next, and when will we know it worked?"</strong></li>
+      <li><strong>"What's blocking you, or who are you waiting on?"</strong></li>
+      <li><strong>"How confident are you in the date, 1 to 10?"</strong> Anything under 7: "What would make it a 9?"</li>
+      </ol>
+      <p>Then say it out loud: <em>"Telling me early that it's late is always safe."</em></p>
+      </section>
+
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You need to know what people are working on and where things stand, often across engineers who don't report to a project manager. You're the de facto PM. This page keeps it light: ask about change and blockers, not activity, and make bad news safe to deliver early.</p>
+      </div>
+
+      <section class="fold">
+      <h2 id="weekly-sweep">The Weekly Sweep</h2>
+      <div class="fold-body">
+      <p>One short, predictable check-in a week beats constant pinging. Same day, same format, same channel.</p>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>What you say</th></tr></thead>
+      <tbody>
+      <tr><td>1 min</td><td><strong>Frame it</strong></td><td>"One line each: what moved, what's next, what's blocked. Details after."</td></tr>
+      <tr><td>6 min</td><td><strong>Round the room</strong></td><td>About 1 minute per person or workstream. Cut stories short: "What's the one-line version?"</td></tr>
+      <tr><td>2 min</td><td><strong>Blockers</strong></td><td>Each blocker gets an owner, often you. "I'll talk to their manager today."</td></tr>
+      <tr><td>1 min</td><td><strong>Recap</strong></td><td>Read back anything at risk and the date you'll check again.</td></tr>
+      </tbody>
+      <tfoot><tr><td>10 min</td><td colspan="2">Total</td></tr></tfoot>
+      </table></div>
+      <div class="code-card"><div class="code-head">Async status ask (post in the channel)</div><pre>Weekly check-in for [workstream]. Reply in the thread by [time], one line each:
+Moved:     what's done since last week
+Next:      what's next, and when we'll know it worked
+Blocked:   anything you're waiting on, and who
+Date:      on track / at risk / late, and confidence 1-10
+Late is fine. Late and quiet isn't.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="decode">Decode the Answer</h2>
+      <div class="fold-body">
+      <p>Status words hide a lot. When you hear one of these, ask the follow-up. It's not distrust; it's how you find problems while they're still small.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>They say</th><th>It often means</th><th>Ask next</th></tr></thead>
+      <tbody>
+      <tr><td>"Almost done"</td><td>The easy 80% is done. The hard 20% isn't started.</td><td>"What's actually left, and what's the riskiest part?"</td></tr>
+      <tr><td>"On track" (every week)</td><td>Nobody has checked against the date, or it's green outside and red inside.</td><td>"What's the part you're least sure about?"</td></tr>
+      <tr><td>"Should be fine"</td><td>Untested.</td><td>"How will we know it's fine? When do we test it?"</td></tr>
+      <tr><td>"Waiting on them"</td><td>They sent one message and stopped.</td><td>"Who exactly, since when, and do you want me to escalate?"</td></tr>
+      <tr><td>"Working on it"</td><td>Activity with no next milestone.</td><td>"What's the next thing that will be done, and when?"</td></tr>
+      <tr><td>"It's complicated"</td><td>Scope grew, or nobody has broken it down.</td><td>"What's the smallest version that still solves the problem?"</td></tr>
+      <tr><td>"I've been busy with other stuff"</td><td>Hidden work is eating their time.</td><td>"What's the other stuff? Let's put it on the board."</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="tracking">Keep a One-Page Tracker</h2>
+      <div class="fold-body">
+      <p>You don't need a project tool. One table, updated after the sweep, is enough to answer your boss in 30 seconds.</p>
+      <div class="code-card"><div class="code-head">Status tracker</div><pre>Item              Owner    Target   Status     Confidence  Blocked on        Next check
+[task / project]  [name]   [date]   on track   8/10        -                 [date]
+[task / project]  [name]   [date]   at risk    5/10        [team / person]   [date]
+[task / project]  [name]   [date]   late       3/10        [decision]        [date]</pre></div>
+      <p>When something is slipping, use <a href="running-a-task.html#when-its-slipping">the four moves in Running a Task</a>: unblock, rescope, add help, or reset the date publicly.</p>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
+      <h3>What Are You Working On?</h3>
+      <div data-qsit="status-ask"></div>
+      <h3>Keeping It Moving</h3>
+      <div data-qsit="proj-during"></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="example">Example in Practice</h2>
+      <div class="fold-body">
+      <div class="callout example"><p class="callout-title">The Automation That Was "On Track" for Three Weeks</p>
+      <p>A runbook automation has been "on track" in three sweeps. This week you ask for date confidence: "about a 5." You ask what would make it a 9: "Platform has to approve the service account, and we've been waiting two weeks." You ask who exactly: "I sent one ticket." You message the platform manager that afternoon, the account is approved two days later, and you reset the date publicly by one week.</p>
+      <p>The engineer wasn't hiding anything. Nobody had asked a question that made the blocker visible.</p>
+      </div>
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>People hear "status" as "are you working hard enough."</strong> Ask about blockers and change, and act on blockers fast. They'll start telling you sooner.</li>
+      <li><strong>Everyone says "on track" until the week it's due.</strong> The confidence number is what breaks that habit.</li>
+      <li><strong>The sweep grows into a 45-minute meeting.</strong> Hold it to one line each and take details offline.</li>
+      <li><strong>You'll be tempted to ask every day.</strong> Don't. Predictable weekly beats anxious daily, and it builds trust.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

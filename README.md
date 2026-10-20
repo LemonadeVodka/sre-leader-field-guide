@@ -6,19 +6,24 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 ## What's Inside
 
+The site is built around four jobs, in priority order. The home page shows them first.
+
+1. **Move a Stuck Incident:** questions organized by how the incident is stuck (nobody owns it, going in circles, waiting on someone, the NOC is lost, exec heat, and more).
+2. **Where Are We?** Asking people what they're working on and getting the real status: weekly sweep, decoding "almost done," a one-page tracker.
+3. **Meeting Starter:** an agenda in 60 seconds, ground rules to say out loud (postmortem, incident bridge, SRE Daily, Perf Eng, vendor demo), and lines for holding the room.
+4. **Performance Engineering:** leading the weekly perf meeting without being the expert.
+
+The sidebar has four sections:
+
 | Section | Pages |
 |---|---|
-| **Home** | Tabs of one-tap buttons: I'm in a Meeting (10), Right Now (12), Running a Task (5), plus search |
-| **Question Bank** (252 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · Running Tasks & Projects · With Peers & Leaders · With Vendors · With Your SRE Team · With the Offshore NOC · Building Credibility |
-| **Root Cause Analysis** | RCA Day One · RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
-| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · Running the Postmortem Meeting · Running a Task or Small Project · Vendor Demos & Evaluations · SRE Daily (ops, projects, launches, learning, team) · Performance Engineering. Agenda times are shown in minutes. |
-| **Implementation** | Roadmap & Self-Check · Ownership & Engagement · Incident Program · Observability Foundation · Alerting & Paging · SLOs From Zero · Safe Change · Toil & Automation. Each program is grounded in the SRE Workbook. |
-| **AI Reliability** | What's Different About AI · Latency: TTFT & TTLT · Tokens, Quotas & Cost · Quality & Safety · Agents & Model Providers |
-| **SRE Concepts** (25 concepts) | Overview & Roadmap · Observability Day One · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
-| **Guides** | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader |
-| **Power & Politics** | The Real Playbook (with the Risk Ledger) · Tactics Repertoire (39 tactics, paraphrased from Greene, Machiavelli, Pfeffer, Cialdini, Voss) · When It's Used on You · Political Playbooks |
+| **Do** (in the moment) | Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
+| **Ask** (Question Bank, 284 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
+| **Learn** (study time) | RCA Day One · Observability Day One · RCA the SRE Way · Worked Example · 25 SRE concepts · AI reliability (5 pages) · Implementation programs grounded in the SRE Workbook (8 pages) |
+| **Lead** (people and politics) | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader · Power & Politics (4 pages, 39 tactics) |
 
-- **Questions:** every question has an **Ask next** follow-up for weak answers, plus collapsed **Coaching notes**: what asking it signals, and what strong and weak answers sound like.
+- **Lighter pages:** the "Do" playbooks open with a one-screen **Quick Card**. The detail below is folded into sections you open as needed (links to a section open it automatically, and printing opens everything).
+- **Questions:** every question card shows **why it builds credibility**, plus an **Ask next** follow-up for weak answers and collapsed **Coaching notes** (what strong and weak answers sound like). Long lists show the top 3 first, with "Show all."
 - **Concepts:** every concept follows the same seven parts:
   1. in one sentence
   2. in IT Ops terms
@@ -28,11 +33,11 @@ A handbook for leading Site Reliability Engineering **without a software enginee
   6. what to ask
   7. links to Google's free SRE Book and Workbook, plus official docs
 
-The home page searches all questions; press `/` to jump to the search box. The sidebar sections collapse (only the current one is open), and "Find a page" filters every page as you type.
+The home page searches all questions; press `/` to jump to the search box. Sidebar sections collapse (only the current one is open), and "Find a page" filters every page as you type.
 
 ## Editing
 
-- **Questions:** `assets/questions.js`. Each group is a Question Bank page; each situation is a section on it. Add a question with `q`, `tags` (situation ids), `strong`, `weak`, `next`, and `signal`.
+- **Questions:** `assets/questions.js`. Each group is a Question Bank page; each situation is a section on it. Add a question with `q`, `tags` (situation ids), `strong`, `weak`, `next`, and `signal` (why it builds credibility, shown on every card). Optional `star` lists the situations where it's one of the top 3.
 - **Pages:** plain HTML. Every page uses the same frame: breadcrumb, H1, one-line summary, then H2 sections. Only three callout styles are used: `callout` (key point), `callout example`, and `callout watch`.
 - **Navigation:** the `NAV` array in `assets/site.js`.
 

@@ -19,11 +19,23 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Performance Engineering</h1>
       <p class="summary">A 30-minute weekly meeting to keep the product fast and affordable at the load that's coming, and to leave with one owned fix.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Lead the Perf Meeting Without Being the Expert</h2>
+      <ol>
+      <li><strong>"What's the one number users would feel this week, better or worse?"</strong></li>
+      <li><strong>"What got slower, and what changed right before it?"</strong></li>
+      <li><strong>"Is that ours, load, or a dependency like the model provider?"</strong></li>
+      <li><strong>"What's coming in 30 days that changes load or cost?"</strong></li>
+      <li><strong>"If we fix only one thing before next week, which, and who owns it?"</strong></li>
+      </ol>
+      </section>
+
       <div class="callout"><p class="callout-title">Purpose</p>
         <p>Keep the product fast enough and affordable at the load that's coming. Spot regressions early, tie them to a change, and leave with one owned fix. This meeting is about decisions. The analysis happens before it.</p>
       </div>
 
+      <section class="fold">
       <h2>Who's in the Room</h2>
+      <div class="fold-body">
       <ul>
         <li><strong>Performance engineering lead:</strong> owns the scorecard and presents it.</li>
         <li><strong>An SRE representative:</strong> brings capacity and incident links.</li>
@@ -32,14 +44,22 @@
         <li><strong>You:</strong> facilitate, ask, decide, and unblock.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Before the Meeting</h2>
+      <div class="fold-body">
       <ul>
         <li><strong>24 hours before:</strong> the performance lead updates the scorecard in the same format as every week. For each of the top 3 user journeys, it shows the slowest 5% of requests against its target, along with peak traffic, error rate under load, and cost per request. For AI journeys, it also shows <strong>p95 TTFT</strong> (time until the answer starts), <strong>p95 TTLT</strong> (time until it's done), and <strong>tokens per request</strong>. See <a href="../ai/latency.html">AI Latency</a>.</li>
         <li><strong>Anyone with a regression</strong> brings one graph and one sentence about what changed.</li>
         <li><strong>You:</strong> read the scorecard and pick three questions from the <a href="#questions">Performance Engineering Meeting</a> questions.</li>
       </ul>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>The Agenda</h2>
+      <div class="fold-body">
       <div class="table-wrap agenda"><table>
         <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
         <tbody>
@@ -67,7 +87,11 @@ Purpose: keep the product fast and affordable at the load that's coming. Leave w
 Prep: scorecard updated 24h before. Regressions bring one graph + one sentence on what changed.
 Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot.</pre></div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
       <p class="qsit-intro">Bring three. Each has a follow-up for a weak answer, and coaching notes on what good sounds like.</p>
       <div data-qsit="perf"></div>
 
@@ -92,7 +116,11 @@ Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot
         </dl>
       </div>
 
+      </div>
+      </section>
+      <section class="fold">
       <h2>Rules for Every Recurring Meeting</h2>
+      <div class="fold-body">
       <div class="callout">
         <ul>
           <li><strong>Same format every time.</strong> People prepare for a format they can predict.</li>
@@ -104,6 +132,8 @@ Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot
       </div>
 
       <p>Related: <a href="sre-daily.html">the other meeting playbook</a> · <a href="../questions/technical-meetings.html">all technical meeting questions</a></p>
+      </div>
+      </section>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>
