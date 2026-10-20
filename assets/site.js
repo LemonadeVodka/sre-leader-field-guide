@@ -85,13 +85,24 @@
     menuBtn = header.querySelector(".menu-btn");
   }
 
+  /* ---------- Sidebar: one icon per section so sections are easy to tell apart ---------- */
+  function icon(d) { return '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; }
+  var SECTION_ICONS = {
+    "Question Bank": icon('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M10 9.5a2.2 2.2 0 1 1 3 2c-.6.3-1 .8-1 1.5"/><path d="M12 16h.01"/>'),
+    "Root Cause Analysis": icon('<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/><path d="M11 8v3l2 1.5"/>'),
+    "Meeting Playbooks": icon('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+    "SRE Concepts": icon('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>'),
+    "Guides": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
+  };
+
   /* ---------- Sidebar ---------- */
   var sidebar = document.getElementById("sidebar");
   if (sidebar) {
     sidebar.setAttribute("aria-label", "Site");
     sidebar.innerHTML = NAV.map(function (s, n) {
       var labelId = "nav-sec-" + n;
-      return '<div class="nav-section">' + (s.section ? '<p class="nav-title" id="' + labelId + '">' + esc(s.section) + '</p>' : "") +
+      var cls = "nav-section" + (s === curSection ? " is-current" : "") + (s.section ? "" : " nav-home");
+      return '<div class="' + cls + '">' + (s.section ? '<p class="nav-title" id="' + labelId + '">' + (SECTION_ICONS[s.section] || "") + '<span>' + esc(s.section) + '</span></p>' : "") +
         '<ul' + (s.section ? ' aria-labelledby="' + labelId + '"' : "") + '>' + s.items.map(function (i) {
           return '<li><a href="' + root + i.href + '"' + (i.id === page ? ' aria-current="page"' : "") + '>' + esc(i.title) + '</a></li>';
         }).join("") + '</ul></div>';
