@@ -13,7 +13,9 @@
       { id: "q-meetings", href: "questions/technical-meetings.html", title: "In Technical Meetings" },
       { id: "q-incidents", href: "questions/incidents.html", title: "During & After Incidents" },
       { id: "q-ai", href: "questions/ai-product.html", title: "Supporting the AI Product" },
+      { id: "q-projects", href: "questions/projects.html", title: "Running Tasks & Projects" },
       { id: "q-peers", href: "questions/peers-leaders.html", title: "With Peers & Leaders" },
+      { id: "q-vendors", href: "questions/vendors.html", title: "With Vendors" },
       { id: "q-team", href: "questions/sre-team.html", title: "With Your SRE Team" },
       { id: "q-noc", href: "questions/offshore-noc.html", title: "With the Offshore NOC" },
       { id: "q-cred", href: "questions/credibility.html", title: "Building Credibility" }
@@ -29,6 +31,8 @@
     { section: "Playbooks", items: [
       { id: "p-stuck", href: "playbooks/stuck-incident.html", title: "When an Incident Is Stuck" },
       { id: "p-pm", href: "playbooks/postmortem-meeting.html", title: "Running the Postmortem Meeting" },
+      { id: "p-task", href: "playbooks/running-a-task.html", title: "Running a Task or Small Project" },
+      { id: "p-vendor", href: "playbooks/vendor-demo.html", title: "Vendor Demos & Evaluations" },
       { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
       { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" }
     ]},
@@ -127,27 +131,111 @@
     "Guides": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
   };
 
-  /* ---------- Sidebar ---------- */
+  /* ---------- Sidebar: "Find a page" filter + collapsible sections ----------
+     Only the current page's section starts open (all collapsed on Home). Opened/closed sections are remembered in
+     srl-nav-open as a convenience; the current section is always open. */
+  var CHEVRON = '<svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var sidebar = document.getElementById("sidebar");
+  var navFilter = null;
   if (sidebar) {
     sidebar.setAttribute("aria-label", "Site");
-    sidebar.innerHTML = NAV.map(function (s, n) {
-      var labelId = "nav-sec-" + n;
-      var cls = "nav-section" + (s === curSection ? " is-current" : "") + (s.section ? "" : " nav-home");
-      return '<div class="' + cls + '">' + (s.section ? '<p class="nav-title" id="' + labelId + '">' + (SECTION_ICONS[s.section] || "") + '<span>' + esc(s.section) + '</span></p>' : "") +
-        '<ul' + (s.section ? ' aria-labelledby="' + labelId + '"' : "") + '>' + s.items.map(function (i) {
-          return '<li><a href="' + root + i.href + '"' + (i.id === page ? ' aria-current="page"' : "") + '>' + esc(i.title) + '</a></li>';
-        }).join("") + '</ul></div>';
+    var remembered = SRL.get("nav-open", null);
+    var html = '<div class="nav-tools"><label class="nav-filter-label" for="nav-filter">Find a page</label>' +
+      '<input type="search" id="nav-filter" class="nav-filter" autocomplete="off" placeholder="e.g. SLO, vendor, RCA">' +
+      '<div class="nav-bulk"><button type="button" class="link-btn" data-nav-all="open">Expand all</button><span aria-hidden="true">·</span><button type="button" class="link-btn" data-nav-all="close">Collapse all</button></div>' +
+      '<p class="nav-status" id="nav-status" role="status"></p></div>';
+    html += NAV.map(function (s, n) {
+      var links = s.items.map(function (i) {
+        return '<li><a href="' + root + i.href + '"' + (i.id === page ? ' aria-current="page"' : "") + ' data-title="' + esc(i.title) + '">' + esc(i.title) + '</a></li>';
+      }).join("");
+      if (!s.section) return '<div class="nav-section nav-home"><ul>' + links + '</ul></div>';
+      var isCur = s === curSection;
+      var open = isCur || (remembered ? remembered.indexOf(s.section) >= 0 : false);
+      var listId = "nav-list-" + n;
+      return '<div class="nav-section' + (isCur ? " is-current" : "") + '" data-section="' + esc(s.section) + '">' +
+        '<div class="nav-heading"><button type="button" class="nav-toggle" aria-expanded="' + open + '" aria-controls="' + listId + '">' +
+        (SECTION_ICONS[s.section] || "") + '<span class="nav-toggle-text">' + esc(s.section) + '</span><span class="nav-count" aria-hidden="true">' + s.items.length + '</span><span class="visually-hidden">, ' + s.items.length + ' pages</span>' + CHEVRON + '</button></div>' +
+        '<ul id="' + listId + '"' + (open ? "" : " hidden") + '>' + links + '</ul></div>';
     }).join("");
+    sidebar.innerHTML = html;
+    navFilter = sidebar.querySelector("#nav-filter");
+
+    var setOpen = function (sec, open) {
+      var btn = sec.querySelector(".nav-toggle"), list = sec.querySelector("ul");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      list.hidden = !open;
+    };
+    var saveOpen = function () {
+      var openNames = [];
+      Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) {
+        if (sec.querySelector(".nav-toggle").getAttribute("aria-expanded") === "true" && !sec.classList.contains("is-current")) openNames.push(sec.getAttribute("data-section"));
+      });
+      SRL.set("nav-open", openNames);
+    };
+    sidebar.addEventListener("click", function (e) {
+      var t = e.target.closest(".nav-toggle");
+      if (t) { var sec = t.closest(".nav-section"); setOpen(sec, t.getAttribute("aria-expanded") !== "true"); saveOpen(); return; }
+      var bulk = e.target.closest("[data-nav-all]");
+      if (bulk) {
+        var openAll = bulk.getAttribute("data-nav-all") === "open";
+        Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) { setOpen(sec, openAll || sec.classList.contains("is-current")); });
+        saveOpen(); return;
+      }
+      if (e.target.closest("[data-nav-clear]")) { navFilter.value = ""; applyFilter(); navFilter.focus(); }
+    });
+
+    /* Filter: match link titles or section names; auto-expand matches; highlight; announce the count. */
+    var status = sidebar.querySelector("#nav-status");
+    var markText = function (text, term) {
+      var i = text.toLowerCase().indexOf(term);
+      if (!term || i < 0) return esc(text);
+      return esc(text.slice(0, i)) + "<mark>" + esc(text.slice(i, i + term.length)) + "</mark>" + esc(text.slice(i + term.length));
+    };
+    var applyFilter = function () {
+      var term = navFilter.value.trim().toLowerCase(), total = 0;
+      sidebar.classList.toggle("is-filtering", !!term);
+      Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section"), function (sec) {
+        var secName = (sec.getAttribute("data-section") || "").toLowerCase();
+        var secMatch = term && secName.indexOf(term) >= 0, shown = 0;
+        Array.prototype.forEach.call(sec.querySelectorAll("li"), function (li) {
+          var a = li.querySelector("a"), title = a.getAttribute("data-title");
+          var hit = !term || secMatch || title.toLowerCase().indexOf(term) >= 0;
+          li.hidden = !hit;
+          a.innerHTML = term && !secMatch ? markText(title, term) : esc(title);
+          if (hit) shown++;
+        });
+        if (term) {
+          sec.hidden = shown === 0;
+          if (sec.getAttribute("data-section")) { var list = sec.querySelector("ul"); list.hidden = shown === 0; sec.querySelector(".nav-toggle").setAttribute("aria-expanded", shown ? "true" : "false"); }
+          if (sec.getAttribute("data-section")) total += shown;
+        } else {
+          sec.hidden = false;
+        }
+      });
+      if (!term) {
+        /* Restore the normal collapsed state. */
+        var rem = SRL.get("nav-open", []) || [];
+        Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) {
+          setOpen(sec, sec.classList.contains("is-current") || rem.indexOf(sec.getAttribute("data-section")) >= 0);
+        });
+        status.innerHTML = "";
+      } else {
+        status.innerHTML = total ? total + " page" + (total === 1 ? "" : "s") + " match" : 'No pages match. <button type="button" class="link-btn" data-nav-clear>Clear</button>';
+      }
+    };
+    navFilter.addEventListener("input", applyFilter);
+    navFilter.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && navFilter.value) { e.stopPropagation(); navFilter.value = ""; applyFilter(); }
+    });
   }
 
-  /* ---------- Mobile menu: Esc closes and returns focus ---------- */
+  /* ---------- Mobile menu: focus moves to the filter; Esc closes and returns focus ---------- */
   function setMenu(open) {
     body.classList.toggle("nav-open", open);
     if (!menuBtn) return;
     menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
     menuBtn.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
-    if (open) { var first = sidebar && sidebar.querySelector("a"); if (first) first.focus(); }
+    if (open && navFilter) navFilter.focus();
   }
   if (menuBtn) menuBtn.addEventListener("click", function () { setMenu(!body.classList.contains("nav-open")); });
   document.addEventListener("keydown", function (e) {

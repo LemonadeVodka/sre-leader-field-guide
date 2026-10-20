@@ -64,7 +64,7 @@
   var box = document.querySelector("[data-qsearch]");
   if (box) {
     /* Forward links from the old single-page bank: index.html#<situation> or #g-<group>. */
-    var LEGACY_SIT = { live: "inc-first15" };
+    var LEGACY_SIT = { live: "inc-first15", vendor: "vendor-discovery" };
     var LEGACY_GROUP = { tech: "meetings", meet: "meetings", peers: "peers", cred: "cred", team: "team", noc: "noc" };
     var forward = function () {
       var h = location.hash.slice(1), target = null;

@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vendor Demos & Evaluations · SRE Leader's Field Guide</title>
+  <meta name="description" content="Run the vendor demo instead of watching it: set the agenda, make them prove it on your scenario, decode the pitch, and score the evidence.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-vendor" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Vendor Demos & Evaluations</h1>
+      <p class="summary">Run the vendor demo instead of watching it: set the agenda, make them prove it on your scenario, decode the pitch, and score the evidence.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>A vendor is demoing an observability, incident, or AI-ops tool. Vendors are practiced at running the room. Your goal is to run it instead: start from your problem, make them prove it on your scenario, and leave knowing the real cost and risk. Done well, it's also one of the easiest places to show engineers and leadership sound judgment.</p>
+      </div>
+
+      <h2>Your Role in the Room</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>You judge</th><th>Your engineer judges</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Fit:</strong> does it solve our problem, for our team and our NOC?</td><td>How it's built, and whether the integration claims hold up</td></tr>
+      <tr><td><strong>Proof:</strong> did they show it working on our scenario, including failure?</td><td>Whether the data in the demo is realistic</td></tr>
+      <tr><td><strong>Cost:</strong> 3-year total, including our team's time</td><td>The effort to run it day to day</td></tr>
+      <tr><td><strong>Risk:</strong> security, lock-in, support, the vendor's own reliability</td><td>Technical lock-in (agents, formats)</td></tr>
+      </tbody>
+      </table></div>
+      <p>You don't need to understand the code. You need to control the agenda, ask the questions below, and listen for weak answers.</p>
+
+      <h2>Before the Demo</h2>
+      <ul class="done-list">
+      <li><strong>Write the problem in one sentence.</strong> For example: "When the model provider throttles us, it takes 30+ minutes to see it and find the owner."</li>
+      <li><strong>Write 3–5 success criteria,</strong> measurable where you can. For example: "shows provider throttling within 5 minutes," "routes to PagerDuty without double-paging," "works on our OpenTelemetry data as-is."</li>
+      <li><strong>Send the vendor your agenda and scenario a week ahead:</strong> "Please demo this on an AI assistant on Azure, using Application Insights and Azure Managed Grafana, with alerts going to PagerDuty. Show us a model-provider throttling incident." Vendors who can't do this usually tell you something important.</li>
+      <li><strong>Invite the right people:</strong> one SRE engineer for the technical deep-dive, a NOC lead if it affects their workflow, and security or finance if you're past the first look.</li>
+      <li><strong>Pick your top 5 questions</strong> from the lists below.</li>
+      </ul>
+
+      <h2>The Agenda You Set</h2>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>What you say</th></tr></thead>
+      <tbody>
+      <tr><td>5 min</td><td><strong>Our problem &amp; criteria</strong>You speak first.</td><td><em>"Here's what we're trying to solve, and how we'll judge it."</em></td></tr>
+      <tr><td>15 min</td><td><strong>Demo on our scenario</strong></td><td><em>"Let's see the throttling scenario we sent."</em></td></tr>
+      <tr><td>10 min</td><td><strong>Failure &amp; edge cases</strong></td><td><em>"Now show us when something breaks that you didn't plan for."</em></td></tr>
+      <tr><td>10 min</td><td><strong>Fit, cost &amp; risk</strong></td><td>Your top questions from the lists below.</td></tr>
+      <tr><td>5 min</td><td><strong>Next steps &amp; proof plan</strong></td><td><em>"If we continue, it's a 2-week proof of concept against our criteria. What do you need from us?"</em></td></tr>
+      </tbody>
+      <tfoot><tr><td>45 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+      <div class="code-card"><div class="code-head">Agenda to send the vendor</div><pre>[Vendor] demo: 45 min total. Our agenda, please.
+
+ 5 min   Our problem and success criteria (we'll start)
+15 min   Your demo on OUR scenario: [scenario, e.g. AI assistant on Azure; App Insights + Azure Managed Grafana;
+         PagerDuty paging; show a model-provider throttling incident end to end]
+10 min   Failure and edge cases: what does it look like when things break unexpectedly?
+10 min   Fit, cost, and risk questions
+ 5 min   Next steps: a time-boxed proof of concept against our written criteria
+
+Please bring: pricing at our volume (we'll send numbers), a customer reference similar to us, and your security documentation.</pre></div>
+
+      <h2>Decode the Pitch</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>They say</th><th>It often means</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>"Single pane of glass"</td><td>Another dashboard, on top of your current ones</td><td><em>"Which of our tools does it replace, and which stay?"</em></td></tr>
+      <tr><td>"AI-powered" / "AIOps"</td><td>Anything from real anomaly detection to basic rules</td><td><em>"Show us one decision the AI made on data like ours, and how we'd know it was wrong."</em></td></tr>
+      <tr><td>"Reduces alert noise by 90%"</td><td>Measured on a customer with far noisier alerts than you</td><td><em>"Measured how, on what baseline? What would it be for our volume?"</em></td></tr>
+      <tr><td>"OpenTelemetry-native"</td><td>Accepts OpenTelemetry, but the best features need their agent</td><td><em>"What do we lose if we stay on plain OpenTelemetry, with no agent?"</em></td></tr>
+      <tr><td>"Agentless"</td><td>Less depth, or it relies on cloud APIs with delays</td><td><em>"What can't you see without an agent, and how fresh is the data?"</em></td></tr>
+      <tr><td>"Full-stack observability"</td><td>A broad product, maybe shallow in the area you need</td><td><em>"Show us the AI request path end to end, including the model call."</em></td></tr>
+      <tr><td>"No code changes needed"</td><td>Auto-instrumentation that misses business detail</td><td><em>"How would we see TTFT and token usage on model calls without code changes?"</em></td></tr>
+      <tr><td>"Unlimited users"</td><td>The cost is elsewhere: data volume, retention, or features</td><td><em>"What do we pay for as we grow: data, hosts, retention, or add-ons?"</em></td></tr>
+      <tr><td>"Enterprise-grade security"</td><td>It might be true. It's not evidence.</td><td><em>"Can our security team review your certifications and data-residency documents this week?"</em></td></tr>
+      <tr><td>"Integrates with everything"</td><td>An integrations page, not necessarily a working integration with your setup</td><td><em>"Show us the PagerDuty and Azure Managed Grafana integration live, right now."</em></td></tr>
+      <tr><td>"Customers see value in weeks"</td><td>The best case, with heavy vendor help</td><td><em>"What did a typical customer of our size have working at 30 and 90 days?"</em></td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Red Flags During the Demo</h2>
+      <ul>
+      <li><strong>They won't use your scenario,</strong> or keep switching back to their demo data.</li>
+      <li><strong>They dodge pricing,</strong> or only quote year one.</li>
+      <li><strong>"That's on the roadmap"</strong> for something on your success criteria. Treat roadmap as "doesn't exist."</li>
+      <li><strong>No customer like you</strong> that you can talk to.</li>
+      <li><strong>They talk only to the most senior person</strong> and ignore your engineer or NOC lead.</li>
+      <li><strong>Pressure to sign before their quarter ends.</strong> That's their deadline, not yours.</li>
+      </ul>
+
+      <h2 id="after-the-demo">After the Demo</h2>
+      <div class="code-card"><div class="code-head">Vendor scorecard</div><pre>Vendor: [name]     Product: [name]     Demo date: [date]     Scored by: [names]
+Score each 1-5 and write the EVIDENCE (what we saw, not what they said).
+
+Problem fit      [ ]  Does it solve our one-sentence problem?
+Stack fit        [ ]  OTel as-is? App Insights / Azure Managed Grafana? PagerDuty without double-paging? AI workload?
+Proof            [ ]  Shown on our scenario? Shown failing? Willing to do a proof of concept with our criteria?
+Cost (3 years)   [ ]  Estimate at our volume x1 / x2 / x5, add-ons, our team's time to run it
+Risk             [ ]  Security docs, data residency, the vendor's own uptime SLA, support at 3 a.m.
+Exit             [ ]  Data export, contract length, lock-in (agents, formats)
+NOC usability    [ ]  Could an L1 analyst use it at 3 a.m.?
+
+Decision: [proceed to proof of concept / pass / revisit in N months]    Why: [one line]</pre></div>
+      <ul>
+      <li><strong>Reference calls:</strong> ask "What surprised you after signing? What did year two cost compared to year one? What would you do differently? Would you buy it again?"</li>
+      <li><strong>Proof-of-concept plan:</strong> 2 weeks, one service, your success criteria written down beforehand, no commitment. Agree in advance what "pass" means, so the decision isn't swayed by enthusiasm.</li>
+      <li><strong>Negotiation:</strong> anchor with your own data-based budget, use silence after their offer, and use "yes, if…" to trade a commitment for terms. See <a href="../power/tactics.html#anchor-high">Anchor High</a>, <a href="../power/tactics.html#tactical-silence">Use Silence</a>, and <a href="../power/tactics.html#yes-if">Yes, If…</a>.</li>
+      </ul>
+
+      <h2 id="questions">Questions to Ask</h2>
+      <p class="qsit-intro">Pick your top 5 across these. The full set is on <a href="../questions/vendors.html">With Vendors</a>.</p>
+      <h3>Understanding the Product</h3>
+      <div data-qsit="vendor-discovery"></div>
+      <h3>Fit With Our Stack</h3>
+      <div data-qsit="vendor-fit"></div>
+      <h3>Prove It</h3>
+      <div data-qsit="vendor-proof"></div>
+      <h3>Cost &amp; Contract</h3>
+      <div data-qsit="vendor-cost"></div>
+      <h3>Risk, Security &amp; Lock-In</h3>
+      <div data-qsit="vendor-risk"></div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>An observability vendor opens with a polished dashboard tour. <strong>You, at minute 2:</strong> "This looks great. Before we go further, can we switch to the scenario we sent: a model-provider throttling incident on Azure, going to PagerDuty?"</p>
+      <p>They show it with their own agent installed. <strong>You:</strong> "We're on plain OpenTelemetry into Application Insights. What do we lose without your agent?" The answer: the throttling view needs their agent. <strong>Your engineer</strong> asks how often the agentless data refreshes: every 5 minutes.</p>
+      <p><strong>Pricing:</strong> year one is discounted, and year two depends on ingestion. <strong>You:</strong> "Please send an estimate at 2× and 5× our current volume." In other words, in 15 minutes you found the two things that matter (an agent dependency and ingestion-based cost growth), and your engineer saw you steer the demo toward your scenario.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The demo is impressive, and the room gets excited.</dt>
+      <dd>Counter: go back to the scorecard. Score the evidence, not the excitement.</dd>
+      <dt>An exec has already decided to buy it.</dt>
+      <dd>Counter: make the proof of concept and the scorecard the condition: "Let's validate it on our scenario before we commit." That protects the exec if it fails.</dd>
+      <dt>The vendor goes around you to your boss.</dt>
+      <dd>Counter: tell your boss early what you're evaluating and how. Send them the scorecard when it's done.</dd>
+      <dt>You buy it, and nobody has time to implement it.</dt>
+      <dd>Counter: put "our team's time" in the cost, and name the owner before signing.</dd>
+      </dl>
+      </div>
+
+      <p><strong>Related:</strong> <a href="../concepts/observability-day-one.html">Observability Day One</a> (know your own stack first) · <a href="../implement/observability-foundation.html">Observability Foundation</a> · <a href="../questions/vendors.html">With Vendors questions</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

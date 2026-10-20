@@ -17,7 +17,9 @@
   <main class="content" id="main">
     <article class="prose">
       <h1>SRE Leader's Field Guide</h1>
-      <p class="summary">Lead reliability by asking the right questions. Tap the meeting or moment you're in, or search over 200 questions. RCA, playbooks, AI reliability, and SRE concepts are all written for a senior manager.</p>
+      <p class="summary">Lead reliability by asking the right questions. Tap the meeting, moment, or task you're in, or search over 250 questions. RCA, playbooks, AI reliability, and SRE concepts are all written for a senior manager.</p>
+      <div class="home-tabs" data-home-tabs>
+      <section class="tab-panel" id="panel-meeting" aria-labelledby="in-a-meeting">
       <h2 id="in-a-meeting">I'm in a Meeting</h2>
       <ul class="quick-grid">
       <li><a class="quick-btn" href="meetings/sre-daily.html"><strong>SRE Daily</strong><span>Ops, projects, launches, team</span></a></li>
@@ -29,8 +31,11 @@
       <li><a class="quick-btn" href="questions/sre-team.html#hiring"><strong>Interview</strong><span>Your part of the loop</span></a></li>
       <li><a class="quick-btn" href="questions/offshore-noc.html#noc-lead"><strong>NOC Shift-Lead Sync</strong><span>The truth, through the lead</span></a></li>
       <li><a class="quick-btn" href="questions/offshore-noc.html#noc-perf"><strong>Coaching a NOC Analyst</strong><span>After a miss</span></a></li>
+      <li><a class="quick-btn" href="playbooks/vendor-demo.html"><strong>Vendor Demo</strong><span>Questions that cut through the pitch</span></a></li>
       </ul>
+      </section>
 
+      <section class="tab-panel" id="panel-now" aria-labelledby="right-now">
       <h2 id="right-now">Right Now</h2>
       <ul class="quick-grid">
       <li><a class="quick-btn now" href="questions/incidents.html#inc-first15"><strong>Live Incident</strong><span>The first 15 minutes</span></a></li>
@@ -46,6 +51,19 @@
       <li><a class="quick-btn now" href="questions/credibility.html#cred-story"><strong>"How Reliable Are We?"</strong><span>Own the reliability story</span></a></li>
       <li><a class="quick-btn now" href="power/when-used-on-you.html"><strong>Someone's Playing Politics</strong><span>Recognize, counter, document</span></a></li>
       </ul>
+      </section>
+
+      <section class="tab-panel" id="panel-task" aria-labelledby="running-a-task">
+      <h2 id="running-a-task">Running a Task</h2>
+      <ul class="quick-grid">
+      <li><a class="quick-btn task" href="playbooks/running-a-task.html#kickoff"><strong>Kick Off a Task</strong><span>15-minute kickoff agenda</span></a></li>
+      <li><a class="quick-btn task" href="playbooks/running-a-task.html#task-brief"><strong>Write the Task Brief</strong><span>One page: owners, done-means, dates</span></a></li>
+      <li><a class="quick-btn task" href="playbooks/running-a-task.html#during"><strong>Mid-Task Check-In</strong><span>4-line status and what to watch</span></a></li>
+      <li><a class="quick-btn task" href="playbooks/running-a-task.html#when-its-slipping"><strong>It's Slipping</strong><span>Unblock, rescope, help, reset</span></a></li>
+      <li><a class="quick-btn task" href="playbooks/running-a-task.html#closing"><strong>Closing It Out</strong><span>Verify, hand over, credit, retro</span></a></li>
+      </ul>
+      </section>
+      </div>
 
       <h2 id="search">Search the Question Bank</h2>
       <div class="search" data-qsearch>
@@ -54,9 +72,9 @@
 
       <h2>What's in the Guide</h2>
       <ul class="section-grid">
-      <li><a class="section-link" href="questions/technical-meetings.html"><strong>Question Bank</strong><span>Over 200 questions organized by who you're with, including incidents and the AI product. Each one has a follow-up for weak answers, plus coaching notes.</span></a></li>
+      <li><a class="section-link" href="questions/technical-meetings.html"><strong>Question Bank</strong><span>Over 250 questions organized by who you're with, including incidents, the AI product, tasks, and vendors. Each one has a follow-up for weak answers, plus coaching notes.</span></a></li>
       <li><a class="section-link" href="rca/day-one.html"><strong>Root Cause Analysis</strong><span>RCA Day One, the SRE way of thinking, running and judging an RCA, a worked example, and a template.</span></a></li>
-      <li><a class="section-link" href="playbooks/stuck-incident.html"><strong>Playbooks</strong><span>Stuck incidents, running the postmortem meeting, and the SRE Daily and Performance Engineering agendas.</span></a></li>
+      <li><a class="section-link" href="playbooks/stuck-incident.html"><strong>Playbooks</strong><span>Stuck incidents, postmortem meetings, running a task, vendor demos, and the SRE Daily and Performance Engineering agendas.</span></a></li>
       <li><a class="section-link" href="implement/index.html"><strong>Implementation</strong><span>Step-by-step programs grounded in the SRE Workbook: SLOs, alerting, incidents, ownership, toil, safe change, observability.</span></a></li>
       <li><a class="section-link" href="ai/index.html"><strong>AI Reliability</strong><span>TTFT and TTLT, tokens and quotas, quality and safety, and agents and model providers.</span></a></li>
       <li><a class="section-link" href="concepts/observability-day-one.html"><strong>SRE Concepts</strong><span>Observability Day One for your stack, plus 25 concepts with Azure, Grafana, and PagerDuty steps.</span></a></li>
@@ -73,5 +91,6 @@
 <script src="./assets/questions.js"></script>
 <script src="./assets/site.js"></script>
 <script src="./assets/qbank.js"></script>
+<script src="./assets/home.js"></script>
 </body>
 </html>

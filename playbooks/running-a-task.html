@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Running a Task or Small Project · SRE Leader's Field Guide</title>
+  <meta name="description" content="Kick off, keep moving, and close out a task that has engineers owning action items, without becoming the project manager.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-task" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Running a Task or Small Project</h1>
+      <p class="summary">Kick off, keep moving, and close out a task that has engineers owning action items, without becoming the project manager.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You need a few engineers to get something done, like an automation, a runbook rewrite, a dashboard, or a fix that crosses a team. It isn't a full program. This playbook gives that work a light structure: a clear start, a steady middle, and a real finish. You stay the leader, not the project manager.</p>
+      </div>
+
+      <h2>Right-Size It First</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Size</th><th>Looks like</th><th>How much process</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Task</strong></td><td>1–2 people, under 2 weeks</td><td>A message with owner, done-means, and date. Check in once.</td></tr>
+      <tr><td><strong>Small project</strong></td><td>Several engineers, 2–6 weeks</td><td><strong>This playbook:</strong> kickoff, brief, light updates, a proper close.</td></tr>
+      <tr><td><strong>Real project</strong></td><td>Cross-team, or longer than 6 weeks</td><td>A project plan, possibly a TPM. See <a href="../implement/index.html">Implementation</a> for program-sized work.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2 id="kickoff">Kickoff</h2>
+      <p>Fifteen minutes with everyone doing the work. Fill in the task brief as you go, and post it right after.</p>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>3 min</td><td><strong>The problem and why now</strong></td><td><em>"What happens if we don't do this?"</em></td></tr>
+      <tr><td>3 min</td><td><strong>What done looks like</strong>Something you can check.</td><td><em>"What will we look at to prove it's done?"</em></td></tr>
+      <tr><td>4 min</td><td><strong>Owners &amp; action items</strong>One name per action, with a date.</td><td><em>"Who owns this one, and by when?"</em></td></tr>
+      <tr><td>2 min</td><td><strong>In and out of scope</strong></td><td><em>"What are we deliberately not doing?"</em></td></tr>
+      <tr><td>2 min</td><td><strong>Dependencies &amp; risks</strong></td><td><em>"What are we waiting on, and who's chasing it?"</em></td></tr>
+      <tr><td>1 min</td><td><strong>Checkpoints &amp; recap</strong></td><td><em>"When's the midpoint check-in?"</em></td></tr>
+      </tbody>
+      <tfoot><tr><td>15 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+
+      <div class="code-card" id="task-brief"><div class="code-head">Task brief (one page)</div><pre>TASK: [short name]                 Lead: [name]        Started: [date]   Target: [date]
+
+Problem:      [one sentence: what hurts, and for whom]
+Why now:      [the cost of waiting]
+Done means:   [something checkable, e.g. "no manual restarts for 2 weeks; NOC runbook step removed"]
+
+Action items:
+  [name]   [action]                                   by [date]
+  [name]   [action]                                   by [date]
+  [name]   [action]                                   by [date]
+
+Not in scope: [what we're deliberately not doing]
+Depends on:   [team / person: what, who's chasing it]
+Risks:        [what could derail it]
+Checkpoints:  midpoint [date] (10 min) | close-out [date]
+Updates:      [channel], short status every [2-3] days</pre></div>
+
+      <div class="code-card"><div class="code-head">Kickoff message (post in the channel)</div><pre>Kicking off: [task name]. Lead: [name]. Target: [date].
+Why: [one-line problem]. Done means: [checkable outcome].
+Owners: [name: action, date] / [name: action, date].
+Not doing: [out of scope]. Midpoint check-in: [date].
+Short updates here every [2-3] days: done / next / blocked / confidence 1-10. Brief: [link]</pre></div>
+
+      <h2 id="during">During</h2>
+      <ul>
+      <li><strong>Async status every 2–3 days,</strong> in the channel, using the 4-line template below. It takes two minutes to write and saves meetings.</li>
+      <li><strong>One 10-minute midpoint checkpoint:</strong> are we on track for done-means and the date? If not, decide now.</li>
+      <li><strong>What you watch for:</strong>
+        <ul>
+          <li>Confidence stuck at "10" right up to the deadline. That's watermelon status: green outside, red inside.</li>
+          <li>"Almost done" for more than two updates.</li>
+          <li>An owner who's gone quiet, often because they've been pulled into incidents.</li>
+          <li>A dependency nobody is chasing.</li>
+        </ul></li>
+      </ul>
+      <div class="code-card"><div class="code-head">Status update (4 lines)</div><pre>Done:       [what moved since last update]
+Next:       [the next visible result, and when]
+Blocked:    [what / who, or "nothing"]
+Confidence: [1-10] for [target date]</pre></div>
+
+      <h3 id="when-its-slipping">When It's Slipping</h3>
+      <ol>
+      <li><strong>Unblock:</strong> <em>"What are you waiting on?"</em> If it's another team, that's yours to chase, manager to manager.</li>
+      <li><strong>Rescope:</strong> <em>"What's the smallest version that still solves the problem?"</em> Ship that, and park the rest.</li>
+      <li><strong>Add help or swap the owner.</strong> If the owner keeps getting pulled into incidents, protect their focus time, or move the work.</li>
+      <li><strong>Reset the date, openly.</strong> Set a new date with a checkpoint in the middle, and post it. Never let a date silently drift.</li>
+      </ol>
+      <div class="code-card"><div class="code-head">Reset message</div><pre>Update on [task]: we're resetting the target from [old date] to [new date].
+Why: [honest reason, e.g. "the owner was pulled into 3 incidents" / "scope was bigger than we thought"].
+What we changed: [rescope / added help / unblocked X].
+New checkpoint: [date]. Done still means: [done-means].</pre></div>
+
+      <h2 id="closing">Closing</h2>
+      <ul class="done-list">
+      <li><strong>Verify against done-means.</strong> A demo, a graph, or a removed runbook step, not "it's merged."</li>
+      <li><strong>Hand it over to operations.</strong> If anything changes for operations, update the runbooks, dashboards, and alerts, and walk the NOC lead through it.</li>
+      <li><strong>Log leftovers</strong> as tracked items with an owner and a date.</li>
+      <li><strong>Send the close-out note</strong> below to the channel and to your boss.</li>
+      <li><strong>Run a 15-minute retro</strong> for anything that took more than 2 weeks.</li>
+      <li><strong>Give credit by name</strong> in the SRE Daily wins block, and update the project board.</li>
+      </ul>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>4 min</td><td><strong>What worked</strong></td><td><em>"What should we keep doing?"</em></td></tr>
+      <tr><td>4 min</td><td><strong>What didn't</strong></td><td><em>"What took longer than expected, and why?"</em></td></tr>
+      <tr><td>5 min</td><td><strong>One change for next time</strong></td><td><em>"If we change one thing, what is it?"</em></td></tr>
+      <tr><td>2 min</td><td><strong>Credit</strong></td><td><em>"Who made this happen?"</em></td></tr>
+      </tbody>
+      <tfoot><tr><td>15 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+      <div class="code-card"><div class="code-head">Close-out note</div><pre>Done: [task name]
+Outcome: [done-means, with evidence, e.g. "0 manual restarts in 14 days (was 6/week)"]
+What changed for ops: [runbook / dashboard / alert updates; NOC briefed on [date]]
+Leftovers: [item: owner, date] or "none"
+Thanks to: [names and what each did]
+Lesson for next time: [one line]</pre></div>
+
+      <h2 id="questions">Questions to Ask</h2>
+      <h3>Kicking Off</h3>
+      <div data-qsit="proj-kickoff"></div>
+      <h3>Keeping It Moving</h3>
+      <div data-qsit="proj-during"></div>
+      <h3>Closing It Out</h3>
+      <div data-qsit="proj-close"></div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p><strong>Kickoff (15 min).</strong> Two engineers will automate the queue-worker restart that the NOC does by hand about six times a week. Done means "no manual restarts for 14 days, and the NOC runbook step removed." Ana owns the automation, by the 14th. Sam owns the service account from the platform team, by the 7th. Out of scope: fixing the underlying leak (the pod's job, tracked separately).</p>
+      <p><strong>Day 6.</strong> Sam's update says "Blocked: platform team hasn't responded. Confidence 4." <strong>You</strong> message the platform manager the same day, and the account arrives on day 8. The target resets openly from the 14th to the 16th, with a new checkpoint.</p>
+      <p><strong>Closing.</strong> Ana shows the graph: zero manual restarts for 14 days. The runbook step is deleted, and the NOC lead is walked through it. The close-out note goes to your boss, Ana and Sam get called out in the SRE Daily, and the 15-minute retro produces one change: request service accounts at kickoff, not mid-task.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>Incidents eat the people doing the task.</dt>
+      <dd>Counter: name an interrupt handler, so the task owners are protected for the task's duration. Or reset the date openly. Don't pretend.</dd>
+      <dt>Updates stop after week one.</dt>
+      <dd>Counter: ask for the 4-line status in the SRE Daily engineering block until the habit sticks.</dd>
+      <dt>It's declared done without being done.</dt>
+      <dd>Counter: the done-means from the kickoff is the test. "Show me" is fair and expected.</dd>
+      <dt>Nobody tells the NOC, so the old runbook still says to restart it by hand.</dt>
+      <dd>Counter: the operations handover is a closing step, not a nice-to-have.</dd>
+      </dl>
+      </div>
+
+      <p><strong>Related:</strong> <a href="../questions/projects.html">Running Tasks &amp; Projects questions</a> · <a href="../questions/peers-leaders.html#status">Status &amp; Commitments questions</a> · <a href="../meetings/sre-daily.html">SRE Daily</a> (where updates and credit land)</p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

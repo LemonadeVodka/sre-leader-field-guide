@@ -8,10 +8,10 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 | Section | Pages |
 |---|---|
-| **Home** | One-tap buttons for the meeting you're in (9) and the moment you're in (12), plus search |
-| **Question Bank** (214 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
+| **Home** | Tabs of one-tap buttons: I'm in a Meeting (10), Right Now (12), Running a Task (5), plus search |
+| **Question Bank** (252 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · Running Tasks & Projects · With Peers & Leaders · With Vendors · With Your SRE Team · With the Offshore NOC · Building Credibility |
 | **Root Cause Analysis** | RCA Day One · RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
-| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · Running the Postmortem Meeting · SRE Daily (ops, projects, launches, learning, team) · Performance Engineering. Agenda times are shown in minutes. |
+| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · Running the Postmortem Meeting · Running a Task or Small Project · Vendor Demos & Evaluations · SRE Daily (ops, projects, launches, learning, team) · Performance Engineering. Agenda times are shown in minutes. |
 | **Implementation** | Roadmap & Self-Check · Ownership & Engagement · Incident Program · Observability Foundation · Alerting & Paging · SLOs From Zero · Safe Change · Toil & Automation. Each program is grounded in the SRE Workbook. |
 | **AI Reliability** | What's Different About AI · Latency: TTFT & TTLT · Tokens, Quotas & Cost · Quality & Safety · Agents & Model Providers |
 | **SRE Concepts** (25 concepts) | Overview & Roadmap · Observability Day One · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
@@ -28,7 +28,7 @@ A handbook for leading Site Reliability Engineering **without a software enginee
   6. what to ask
   7. links to Google's free SRE Book and Workbook, plus official docs
 
-The home page searches all questions; press `/` to jump to the search box.
+The home page searches all questions; press `/` to jump to the search box. The sidebar sections collapse (only the current one is open), and "Find a page" filters every page as you type.
 
 ## Editing
 
