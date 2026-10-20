@@ -1,35 +1,39 @@
 # SRE Leader's Field Guide
 
-A daily working tool for leading Site Reliability Engineering **without a software engineering background**. It's written for leaders who came up through IT Operations and want to be credible with engineers, peers, and leadership by asking the right questions instead of writing code.
+A question bank for leading Site Reliability Engineering **without a software engineering background**. It's written for leaders who came up through IT Operations and want to build credibility with engineers, peers, leadership, and their own teams by asking the right questions.
 
-It's practical, not academic. Every page starts from a real situation ("Use This When"), puts actions before explanation, includes an **Example in Practice**, and says plainly how things go wrong in **What Actually Happens**.
+**Live site:** https://lemonadevodka.github.io/sre-leader-field-guide/
 
-## What's in It (Phases 1–2)
+## The Question Bank
 
-| Area | Pages and tools |
+110 questions across 21 situations, in five audience groups:
+
+| Group | Situations |
 |---|---|
-| **Today** | A dashboard rebuilt every morning: checklist by day of week, items generated from your data, a Fire Day switch, roll-over, a streak, and a fully customizable routine |
-| **Become the SRE Leader** | Your Path: IT Ops → SRE Leader · **Skills Map** (27 "I can…" skills, with quarterly snapshots) · **Wins & Evidence Log** |
-| **Lead Daily** | **Commitment Tracker** (owners, dates, "done means," slip counting, nudge messages, CSV) · **Meeting Prep** (questions, open items, notes → commitments, recap) |
-| **Firefighting Mode** | **Top Offenders Board** (pain-ranked recurring issues, plus a "Make the Case" business-case draft) |
-| **Use Daily** | Rituals (weekly, monthly, and quarterly agendas) · Question Bank (60+ questions with strong and weak answers) |
+| **Technical Rooms** | Dashboard Review · During an Incident · Post-Incident Review · Design Review |
+| **Peers & Leaders** | Pod & Peer Sync · Status & Commitments · Boss & Execs · Roadmap & Priorities · Vendor & Tool Pitch |
+| **Credibility Moments** | New to the Room · When You're Tested or Dismissed · When You Don't Know · Owning the Reliability Story |
+| **Your SRE Team** | 1:1 With an Engineer · Hiring Loop |
+| **Offshore NOC L1** | Diagnose the Real Problem · Instructions That Stick · Triage & Escalation · Shift Handoff · Performance & Accountability · Through the Shift Lead or Vendor |
 
-Planned next: the offshore 24x7 team section, the rest of Firefighting Mode, the credibility pages, Play the Real Game, the SRE playbooks (Observability, SLOs, Incidents, Change, Toil, Capacity, Architecture, Org), a Glossary, and an SRE Book & Workbook companion.
+Every question comes with:
+- **If the answer is weak, ask next:** the follow-up question.
+- **What asking this signals:** why it builds your credibility.
+- **Strong vs weak answers:** what good sounds like, and the red flags.
 
-## Your Data
+Every situation has its own link (for example, `index.html#noc-instructions`), so you can bookmark the ones you use most.
 
-- Tools save to this browser's `localStorage` under the `srl-` prefix. **Nothing is sent anywhere.** No analytics, no accounts, no network calls.
-- Back up and restore from **Start Here → Your Data** (a JSON file). Today reminds you after 7 days.
-- All examples use a generic "AI assistant" product and invented numbers.
+## Other Pages
 
-## The Google SRE Books
+- **How to Ask:** six habits, tone that lands, and how to ask questions of an offshore NOC team.
+- **Your Path: IT Ops → SRE Leader:** what carries over, what to unlearn, and where your background is an advantage.
 
-The guide links to the free official chapters of [*Site Reliability Engineering*](https://sre.google/sre-book/table-of-contents/) and [*The Site Reliability Workbook*](https://sre.google/workbook/table-of-contents/), but only where a chapter really helps. The books themselves are **not** stored in this repo. If you keep an offline copy, put it in `local/`, which is git-ignored.
+## Editing Questions
 
-## Running Locally
+All questions live in `assets/questions.js`. Add an entry with `q`, `tags` (situation ids), `strong`, `weak`, `next`, and `signal`. Prefix a question with `(To yourself)`, `(To the shift lead)`, etc. to label who you're asking.
 
-Open `index.html` in a browser, or run `npx serve .`. Add `?date=2026-11-02` to any URL to preview the checklist for another day.
+## Notes
 
-## Structure
-
-No build step and no dependencies. `assets/site.js` holds the `NAV` array that drives the header, sidebar, and pager. `assets/store.js` is the storage layer, and `assets/data.js` holds the shared record models. Content data lives in `rituals.js`, `questions.js`, `skills.js`, and `sre-books.js`.
+- Static HTML, no build step, no dependencies. The only thing stored is your light/dark theme choice, in your browser.
+- Open `index.html` locally, or run `npx serve .`.
+- All examples use a generic "AI assistant" product and invented details. Links go to the free official [SRE Book](https://sre.google/sre-book/table-of-contents/) and [Workbook](https://sre.google/workbook/table-of-contents/) chapters where they help.

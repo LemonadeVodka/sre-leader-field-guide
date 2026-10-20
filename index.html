@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Today · SRE Leader's Field Guide</title>
-  <meta name="description" content="Your daily SRE leadership dashboard: today's routine, commitments due, top repeat offenders, and your skill focus.">
+  <title>Question Bank · SRE Leader's Field Guide</title>
+  <meta name="description" content="Questions that build credibility as an SRE leader without a coding background: for technical rooms, peers and execs, your SRE team, and an offshore NOC L1 team. Each comes with a follow-up for weak answers and what asking it signals.">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/style.css">
   <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
@@ -15,53 +15,23 @@
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
   <main class="content" id="main">
-    <article class="prose" style="max-width:1100px">
-      <div class="eyebrow" id="today-date">Today</div>
-      <h1 data-notoc>Today</h1>
-      <p class="lede">Ten minutes here every morning. Work the list, check what you're owed, and know what's burning.</p>
-      <div id="today-notes"></div>
-
-      <div id="today-app" class="today-grid">
-        <section class="panel" aria-labelledby="h-checklist">
-          <h2 id="h-checklist" data-notoc>Today's Checklist <small><a href="./daily/rituals.html">How it's built</a></small></h2>
-          <div id="checklist-body"></div>
-        </section>
-        <div>
-          <section class="panel" aria-labelledby="h-commit">
-            <h2 id="h-commit" data-notoc>Commitments <small><a href="./lead/commitments.html">Tracker →</a></small></h2>
-            <div id="commit-body"></div>
-          </section>
-          <section class="panel" aria-labelledby="h-off">
-            <h2 id="h-off" data-notoc>Top 3 Repeat Offenders <small><a href="./firefight/top-offenders.html">Board →</a></small></h2>
-            <div id="offender-body"></div>
-          </section>
-          <section class="panel" aria-labelledby="h-skill">
-            <h2 id="h-skill" data-notoc>This Week's Skill Focus</h2>
-            <div id="skill-body"></div>
-          </section>
-          <section class="panel" aria-labelledby="h-quick">
-            <h2 id="h-quick" data-notoc>Quick Launch</h2>
-            <div class="quick">
-              <a class="btn" href="./lead/meeting-prep.html">Prep a Meeting</a>
-              <a class="btn" href="./lead/commitments.html#add">Add Commitment</a>
-              <a class="btn" href="./grow/wins.html#add">Log a Win</a>
-              <a class="btn" href="./firefight/top-offenders.html#add">Log an Offender</a>
-              <a class="btn" href="./daily/questions.html">Question Bank</a>
-              <a class="btn" href="./grow/skills-map.html">Skills Map</a>
-            </div>
-          </section>
-        </div>
+    <article class="prose">
+      <div class="eyebrow">SRE Leader's Field Guide</div>
+      <h1 data-notoc>Question Bank</h1>
+      <p class="lede">You don't need to be the most technical person in the room. You need to ask the question that changes the conversation, recognize a weak answer, and know what to ask next. Every question here comes with all three, plus what asking it says about you.</p>
+      <div class="howto">
+        <div><strong>Pick three, not ten.</strong> Choose the situation you're walking into and bring three questions.</div>
+        <div><strong>Ask, then go quiet.</strong> Let the silence work. Don't rescue them with options.</div>
+        <div><strong>Follow the weak answer.</strong> The follow-up is where credibility is won. <a href="how-to-ask.html">How to ask →</a></div>
       </div>
+      <div id="qbank"></div>
     </article>
   </main>
-  <aside class="toc" id="toc"></aside>
 </div>
 <footer class="site-footer" id="footer"></footer>
 <script src="./assets/store.js"></script>
-<script src="./assets/data.js"></script>
-<script src="./assets/rituals.js"></script>
-<script src="./assets/skills.js"></script>
+<script src="./assets/questions.js"></script>
 <script src="./assets/site.js"></script>
-<script src="./assets/today.js"></script>
+<script src="./assets/qbank.js"></script>
 </body>
 </html>
