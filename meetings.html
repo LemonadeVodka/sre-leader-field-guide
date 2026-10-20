@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting Agendas · SRE Leader's Field Guide</title>
+  <meta name="description" content="Time-boxed 30-minute agendas for a weekly performance engineering meeting and an SRE daily, with the questions to ask in each block.">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="./" data-page="meetings">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="./index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <div class="eyebrow">Recurring Meetings</div>
+      <h1>Meeting Agendas</h1>
+      <p class="lede">Two 30-minute meetings, built so you can run them well without being the most technical person in the room. Each block has a time box, what happens, and the question you ask. The questions come from the <a href="index.html#g-meet">Question Bank</a>.</p>
+
+      <div class="box do-this"><span class="box-label">Rules for Both Meetings</span>
+        <ul>
+          <li><strong>Same format every time.</strong> People prepare for a format they can predict.</li>
+          <li><strong>Hard stop at 30 minutes.</strong> End early if you're done. A meeting that respects time gets attended.</li>
+          <li><strong>Anything over 2 minutes goes to the parking lot,</strong> with two named people to take it right after.</li>
+          <li><strong>No action without an owner, a date, and what "done" means.</strong></li>
+          <li><strong>A three-line written recap within the hour.</strong> It reaches people who missed it, and it becomes the record.</li>
+        </ul>
+      </div>
+
+      <!-- ===================== Performance engineering ===================== -->
+      <h2 id="performance-engineering">Performance Engineering (30 min, Weekly)</h2>
+
+      <div class="box use-when"><span class="box-label">Purpose</span>
+        <p>Keep the product fast enough and affordable at the load that's coming. Spot regressions early, tie them to a change, and leave with one owned fix. This meeting is about decisions. The analysis happens before it.</p>
+      </div>
+
+      <h3>Who's in the Room</h3>
+      <ul>
+        <li><strong>Performance engineering lead:</strong> owns the scorecard and presents it.</li>
+        <li><strong>An SRE representative:</strong> brings capacity and incident links.</li>
+        <li><strong>Pod representatives:</strong> only the pods with a regression or a launch coming, which changes week to week.</li>
+        <li><strong>Once a month:</strong> product (upcoming launches) and platform or finance (cost).</li>
+        <li><strong>You:</strong> facilitate, ask, decide, and unblock.</li>
+      </ul>
+
+      <h3>Before the Meeting</h3>
+      <ul>
+        <li><strong>24 hours before:</strong> the performance lead updates the scorecard in the same format as every week. For each of the top 3 user journeys, it shows the slowest 5% of requests against its target, along with peak traffic, error rate under load, and cost per request.</li>
+        <li><strong>Anyone with a regression</strong> brings one graph and one sentence about what changed.</li>
+        <li><strong>You:</strong> read the scorecard and pick three questions from the <a href="index.html#perf">Performance Engineering Meeting</a> questions.</li>
+      </ul>
+
+      <h3>The Agenda</h3>
+      <div class="table-wrap agenda"><table>
+        <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
+        <tbody>
+          <tr><td>00–03</td><td><strong>Last week's actions</strong>Done, slipped, or dropped, and what each one changed.</td><td><em>"What did it change?"</em> If something slipped: "What's in the way, and is it mine to unblock?"</td></tr>
+          <tr><td>03–10</td><td><strong>Scorecard</strong>Top 3 user journeys against targets, plus peak traffic, errors under load, and cost per request. Only look at what's off target or trending the wrong way.</td><td><em>"Are we faster or slower than last week, against what target?"</em></td></tr>
+          <tr><td>10–17</td><td><strong>Regressions</strong>What got slower, what changed right before it, and whether it's our code, our capacity, or a dependency such as the model provider.</td><td><em>"What changed right before it?"</em> Then: <em>"Code, capacity, or dependency?"</em></td></tr>
+          <tr><td>17–24</td><td><strong>Look ahead</strong>Launches, campaigns, new customers, and model changes in the next 30 days, plus load test status for each.</td><td><em>"When did we last load test this, and at what multiple of peak?"</em></td></tr>
+          <tr><td>24–28</td><td><strong>Decide</strong>Pick the one fix that most improves what users feel for the least effort.</td><td><em>"If we only did one this month, which, who, and by when?"</em></td></tr>
+          <tr><td>28–30</td><td><strong>Recap</strong>Read back the actions with owner, date, and what "done" means. Name who sends the notes.</td><td><em>"Who's sending the recap?"</em></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="code-card"><div class="code-head">Calendar invite text: Performance Engineering</div><pre>Performance Engineering: weekly, 30 min
+Purpose: keep the product fast and affordable at the load that's coming. Leave with one owned fix.
+
+00-03  Last week's actions: done / slipped / dropped, and what each one changed
+03-10  Scorecard: top 3 user journeys vs target (slowest 5%), peak traffic, errors under load, cost per request
+10-17  Regressions: what got slower, what changed, code / capacity / dependency?
+17-24  Look ahead: launches and load changes in the next 30 days, load test status
+24-28  Decide: the one fix for this week (owner, date, done means)
+28-30  Recap: actions read back, who sends notes
+
+Prep: scorecard updated 24h before. Regressions bring one graph + one sentence on what changed.
+Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot.</pre></div>
+
+      <div class="box example"><span class="box-label">Example in Practice</span>
+        <p><strong>Scorecard block, minute 5.</strong> "Assistant answer time" is 4.8 seconds for the slowest 5% of requests. The target is 5, and last week it was 3.9.</p>
+        <p><strong>You:</strong> "That jumped almost a second. What changed right before it?" The pod rep says a new prompt template went out Thursday. <strong>You:</strong> "Is it our code, our capacity, or the model provider?" The performance lead: "Provider time went up. The new template sends about 40% more tokens." In other words, the prompt got longer, so every answer takes longer and costs more.</p>
+        <p><strong>Decide block:</strong> the pod tests a trimmed template, and the performance lead re-measures by Wednesday. Done means the slowest 5% is back under 4 seconds. That took six minutes, and nobody needed you to understand tokens in depth. They needed you to ask what changed.</p>
+      </div>
+
+      <div class="box reality"><span class="box-label">What Actually Happens</span>
+        <dl>
+          <dt>The scorecard changes format every week, so nobody can spot trends.</dt>
+          <dd>Counter: fix the format once and protect it. "Same four numbers, same order, every week. Add a new one only if we drop an old one."</dd>
+          <dt>It turns into a 30-minute deep dive on one graph.</dt>
+          <dd>Counter: at minute 2 of any single topic, say "Let's park it. Who takes it after?" One deep dive per week, maximum, and only in the Regressions block.</dd>
+          <dt>Pods send someone who can't commit to anything.</dt>
+          <dd>Counter: the invite says who's needed by name when their service has a regression. If the person who came can't commit, the action becomes "get a date from [lead] by tomorrow," and it's yours to chase.</dd>
+          <dt>Launches surprise you anyway.</dt>
+          <dd>Counter: invite product once a month to the Look Ahead block, and ask them directly what's shipping in the next 30 days.</dd>
+          <dt>Nobody owns cost, so it grows quietly.</dt>
+          <dd>Counter: keep cost per request on the scorecard even if it's rough. Visible numbers get managed.</dd>
+        </dl>
+      </div>
+
+      <p><a href="index.html#perf"><strong>All Performance Engineering questions →</strong></a></p>
+
+      <!-- ===================== SRE daily ===================== -->
+      <h2 id="sre-daily">SRE Daily (30 min, Every Weekday)</h2>
+
+      <div class="box use-when"><span class="box-label">Purpose</span>
+        <p>Start every day with the same shared picture: what happened, are we healthy, what's stuck, what's risky today, and who's on interrupts. It's for decisions and unblocking, not a round-robin status read-out.</p>
+      </div>
+
+      <h3>Who's in the Room</h3>
+      <ul>
+        <li><strong>The SRE team,</strong> including whoever is on call.</li>
+        <li><strong>The NOC shift lead,</strong> for minutes 08–12, if time zones allow. If they can't attend, use their written handoff.</li>
+        <li><strong>A facilitator who rotates weekly.</strong> You don't have to run it every day, and having others facilitate builds the team and frees you to listen.</li>
+        <li><strong>You:</strong> listen for what's stuck, take the blockers, and protect focus time.</li>
+      </ul>
+
+      <h3>Before the Meeting</h3>
+      <ul>
+        <li><strong>On-call posts three lines</strong> in the team channel 10 minutes before: what paged, what's still open, and anything weird.</li>
+        <li><strong>One person checks the deploy and change calendar</strong> for risky changes today. This rotates with the facilitator.</li>
+        <li><strong>You:</strong> read the on-call note and the NOC handoff.</li>
+      </ul>
+
+      <h3>The Agenda</h3>
+      <div class="table-wrap agenda"><table>
+        <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
+        <tbody>
+          <tr><td>00–05</td><td><strong>Last 24 hours</strong>Incidents, pages, and near misses, from on-call. Only what matters.</td><td><em>"What happened that we'd regret not talking about?"</em> Then: "Has it happened before?"</td></tr>
+          <tr><td>05–08</td><td><strong>Health verdict</strong>Green, yellow, or red, plus one sentence of evidence.</td><td><em>"Green, yellow, or red, and why?"</em></td></tr>
+          <tr><td>08–12</td><td><strong>NOC handoff</strong>Open items from the overnight shift, each one getting an SRE owner. Thank the NOC for anything they caught well.</td><td><em>"What did the NOC hand over, and is anything still open?"</em></td></tr>
+          <tr><td>12–20</td><td><strong>Active &amp; stuck</strong>Open incidents, escalations to pods, and anything blocked more than two days.</td><td><em>"What's stuck, and who or what is it waiting on?"</em> Blocked more than two days: "That one's mine."</td></tr>
+          <tr><td>20–25</td><td><strong>Today's risk &amp; interrupts</strong>Deploys, launches, provider maintenance, and config changes. Name today's interrupt handler.</td><td><em>"What's changing today that could hurt us?"</em> and <em>"Who's on interrupts?"</em></td></tr>
+          <tr><td>25–30</td><td><strong>Asks &amp; recap</strong>Who needs help, the parking lot assignments, and actions read back.</td><td><em>"Is anyone carrying too much right now?"</em></td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="code-card"><div class="code-head">Calendar invite text: SRE Daily</div><pre>SRE Daily: weekdays, 30 min (ends early if we're done)
+Purpose: a shared picture, unblock what's stuck, and protect focus time. Not a status read-out.
+
+00-05  Last 24 hours: incidents, pages, near misses (on-call)
+05-08  Health verdict: green / yellow / red + one sentence why
+08-12  NOC handoff: open items from overnight, each gets an SRE owner
+12-20  Active & stuck: open incidents, pod escalations, anything blocked > 2 days
+20-25  Today's risk: deploys, launches, provider maintenance. Name today's interrupt handler.
+25-30  Asks & recap: who needs help, parking lot, actions read back
+
+Prep: on-call posts 3 lines in the channel 10 min before (what paged / still open / anything weird).
+Rules: over 2 minutes = parking lot. No live debugging in the meeting. Facilitator rotates weekly.</pre></div>
+
+      <div class="box example"><span class="box-label">Example in Practice</span>
+        <p><strong>Minute 6, health verdict.</strong> The facilitator asks, "Green, yellow, or red?" On-call says "green." <strong>You:</strong> "What would make it yellow?" On-call pauses: "Actually, the slowest 5% of answers has been creeping up since 6 a.m." Now it's yellow, with a reason, before any customer notices.</p>
+        <p><strong>Minute 9, NOC handoff.</strong> The NOC flagged "assistant slow for some users, 02:00–02:40, resolved itself." Nobody on SRE had seen it. <strong>You:</strong> "That lines up with the creep. Sam, can you take both and report back at tomorrow's daily?" Then, to the NOC shift lead: "Good catch, thank you for writing it up." In other words, the NOC's note turned into an early warning, and the NOC heard that their work matters.</p>
+      </div>
+
+      <div class="box reality"><span class="box-label">What Actually Happens</span>
+        <dl>
+          <dt>It becomes a round-robin where everyone reads their ticket list.</dt>
+          <dd>Counter: kill the round-robin. Go by agenda block, not by person. If someone has nothing stuck and nothing risky, they say nothing, and that's a good daily.</dd>
+          <dt>Two engineers start debugging live while everyone else watches.</dt>
+          <dd>Counter: "Great, that's a parking lot item. You two take it right after." Say it kindly and every time, until the team says it before you do.</dd>
+          <dt>People stop coming because it always runs over.</dt>
+          <dd>Counter: hard stop at 30, end early when you can. A daily that regularly ends at 18 minutes earns its attendance.</dd>
+          <dt>The NOC handoff gets skipped when the meeting runs long.</dt>
+          <dd>Counter: it's minutes 08–12 on purpose, early, before the long discussions. Skipping it tells the offshore team their work doesn't matter.</dd>
+          <dt>Nobody admits to being overloaded in front of peers.</dt>
+          <dd>Counter: ask in the room anyway, so it's normal. Then follow up privately with whoever had the worst night.</dd>
+        </dl>
+      </div>
+
+      <p><a href="index.html#sre-daily"><strong>All SRE Daily questions →</strong></a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="./assets/store.js"></script>
+<script src="./assets/questions.js"></script>
+<script src="./assets/site.js"></script>
+</body>
+</html>

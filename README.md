@@ -6,12 +6,13 @@ A question bank for leading Site Reliability Engineering **without a software en
 
 ## The Question Bank
 
-110 questions across 21 situations, in five audience groups:
+126 questions across 23 situations, in six groups:
 
 | Group | Situations |
 |---|---|
 | **Technical Rooms** | Dashboard Review · During an Incident · Post-Incident Review · Design Review |
 | **Peers & Leaders** | Pod & Peer Sync · Status & Commitments · Boss & Execs · Roadmap & Priorities · Vendor & Tool Pitch |
+| **Recurring Meetings** | Performance Engineering Meeting · SRE Daily |
 | **Credibility Moments** | New to the Room · When You're Tested or Dismissed · When You Don't Know · Owning the Reliability Story |
 | **Your SRE Team** | 1:1 With an Engineer · Hiring Loop |
 | **Offshore NOC L1** | Diagnose the Real Problem · Instructions That Stick · Triage & Escalation · Shift Handoff · Performance & Accountability · Through the Shift Lead or Vendor |
@@ -25,6 +26,7 @@ Every situation has its own link (for example, `index.html#noc-instructions`), s
 
 ## Other Pages
 
+- **Meeting Agendas:** time-boxed 30-minute agendas for a weekly Performance Engineering meeting and the SRE Daily, with the question to ask in each block and calendar-invite text to copy.
 - **How to Ask:** six habits, tone that lands, and how to ask questions of an offshore NOC team.
 - **Your Path: IT Ops → SRE Leader:** what carries over, what to unlearn, and where your background is an advantage.
 

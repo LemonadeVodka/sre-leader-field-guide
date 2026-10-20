@@ -38,7 +38,7 @@
   function sitSection(s) {
     var list = questionsFor(s.id);
     return '<section class="q-section"><h3 data-notoc><a href="#' + s.id + '">' + esc(s.label) + '</a> <span class="small">' + list.length + '</span></h3>' +
-      '<p class="q-blurb">' + esc(s.blurb) + '</p>' + grid(list, false) + '</section>';
+      '<p class="q-blurb">' + esc(s.blurb) + (s.agenda ? ' <a href="' + esc(s.agenda) + '">See the agenda →</a>' : "") + '</p>' + grid(list, false) + '</section>';
   }
   function groupSection(g) {
     return '<h2 class="q-group-head" data-notoc>' + esc(g.label) + '</h2>' + SIT.filter(function (x) { return x.group === g.id; }).map(sitSection).join("");
@@ -64,6 +64,7 @@
       var s = sit(st.sit), list = questionsFor(s.id);
       intro.innerHTML = '<div class="box use-when"><span class="box-label">' + esc(group(s.group).label) + ' · ' + list.length + ' questions</span>' +
         '<h2 data-notoc class="q-sit-title">' + esc(s.label) + '</h2><p>' + esc(s.blurb) + '</p>' +
+        (s.agenda ? '<p class="q-read"><a href="' + esc(s.agenda) + '"><strong>Open the 30-minute agenda →</strong></a></p>' : "") +
         (s.read && s.read.length ? '<p class="small q-read">Go deeper: ' + s.read.map(function (r) { return '<a href="' + esc(r.u) + '" target="_blank" rel="noopener">' + esc(r.t) + ' ↗</a>'; }).join(" · ") + '</p>' : "") + '</div>';
       out.innerHTML = grid(list, false);
     } else if (st.group) {

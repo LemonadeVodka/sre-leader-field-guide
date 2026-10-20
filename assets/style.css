@@ -216,3 +216,11 @@ body.wide .toc { display: none; }
   .layout { display: block; } .content { padding: 0; }
   .box { box-shadow: none; break-inside: avoid; }
 }
+
+/* ---------- Agendas ---------- */
+.agenda td:first-child { white-space: nowrap; font: 600 13px/1.4 var(--mono); color: var(--accent); }
+.agenda td:nth-child(2) strong { display: block; }
+.code-card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin: 14px 0; overflow: hidden; }
+.code-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 12px; background: var(--surface-2); font: 600 12px var(--mono); }
+.code-card pre { margin: 0; padding: 12px 14px; white-space: pre-wrap; font: 13.5px/1.55 var(--mono); }
+.copy-btn { font: 600 12px var(--mono); border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 6px; padding: 4px 8px; cursor: pointer; }

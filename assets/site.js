@@ -7,6 +7,7 @@
   var UPDATED = "October 19, 2026"; /* bump on each release */
   var PAGES = [
     { id: "index", href: "index.html", title: "Question Bank" },
+    { id: "meetings", href: "meetings.html", title: "Meeting Agendas" },
     { id: "how-to-ask", href: "how-to-ask.html", title: "How to Ask" },
     { id: "your-path", href: "your-path.html", title: "Your Path: IT Ops → SRE Leader" }
   ];
@@ -100,6 +101,17 @@
   /* ---------- Footer ---------- */
   var footer = document.getElementById("footer");
   if (footer) footer.innerHTML = "&copy; 2026 SRE Leader's Field Guide · Examples are fictional · Updated " + UPDATED;
+
+  /* ---------- Copy buttons on .code-card blocks (e.g. agendas to paste into an invite) ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".code-card"), function (card) {
+    var head = card.querySelector(".code-head"), pre = card.querySelector("pre");
+    if (!head || !pre) return;
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "copy-btn"; btn.textContent = "Copy";
+    btn.setAttribute("aria-label", "Copy " + head.textContent.trim());
+    btn.addEventListener("click", function () { SRL.copy(pre.innerText.replace(/\n$/, "")); });
+    head.appendChild(btn);
+  });
 
   /* ---------- Heading anchors + "On this page" ---------- */
   var article = document.querySelector("main.content article");
