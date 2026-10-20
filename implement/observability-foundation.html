@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observability Foundation · SRE Leader's Field Guide</title>
+  <meta name="description" content="Make the critical path of your top user journeys visible end to end, including the model call, with one official dashboard per service.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-obs">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Observability Foundation</h1>
+      <p class="summary">Make the critical path of your top user journeys visible end to end, including the model call, with one official dashboard per service.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> you can't fix what you can't see. Unclear telemetry is why incidents stall on "we don't know where it's failing."</li>
+      <li><strong>For you:</strong> every other program depends on this. SLOs need SLIs, alerts need signals, RCAs need evidence, and surfacing well needs dashboards SRE can actually open.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Monitoring should answer two questions:</strong> what's broken, and why. Symptoms (user impact) drive alerts; causes help diagnosis. (<a href="https://sre.google/workbook/monitoring/" target="_blank" rel="noopener">Workbook, Ch. 4: Monitoring<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Use the right source for the job:</strong> metrics for trends and alerting, and logs (and traces) for detailed investigation.</li>
+      <li><strong>Treat monitoring configuration like code:</strong> versioned and reviewed, so dashboards and alerts don't silently drift.</li>
+      <li><strong>Prefer a small set of trusted dashboards</strong> over many unowned ones. (<a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>Instrumentation lives in pod code.</strong> SRE can define the standard and check coverage, but pods add the spans and attributes. Keep the asks small and specific.</li>
+      <li><strong>Coverage is probably uneven.</strong> Some services are well instrumented, some barely. Start with the user's critical path.</li>
+      <li><strong>Client-side visibility may be mostly in Pendo,</strong> not OTel. Decide what you need from the device side.</li>
+      <li><strong>Telemetry costs money.</strong> Agree on sampling and retention, so coverage doesn't become a finance problem.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>You've done <a href="../concepts/observability-day-one.html">Observability Day One</a>, and know your actual setup.</li>
+      <li>The critical user journeys are named (shared with the <a href="slos.html">SLO program</a>).</li>
+      <li>One SRE engineer to own the standard and the coverage tracking.</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Weeks</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1–2</td><td>Map the critical path for each top journey (client → API → assistant → tools → model provider) and check telemetry at each hop</td><td>SRE</td><td>Coverage map</td><td>Every hop is marked covered, partial, or missing</td></tr>
+      <tr><td>2–3</td><td>Write a one-page telemetry standard: consistent <code>service.name</code>, required span attributes (including model, tokens, TTFT on model calls), log-trace correlation, sampling rules</td><td>SRE</td><td>Telemetry standard</td><td>Reviewed with two pod leads</td></tr>
+      <tr><td>3–4</td><td>Ensure SRE read access to Application Insights, Log Analytics, and Grafana for all critical services</td><td>You</td><td>Access</td><td>SRE can open every critical service's data</td></tr>
+      <tr><td>3–8</td><td>Pods close the gaps on the critical path, one small ask each (for example "add TTFT to the model-call span")</td><td>Pods</td><td>Instrumentation changes</td><td>The coverage map shows the critical path fully covered</td></tr>
+      <tr><td>4–6</td><td>One official Grafana dashboard per critical service: golden signals on top, owner and purpose in the header, annotations on</td><td>SRE</td><td>Official dashboards</td><td>Linked from the runbooks and the SRE Daily</td></tr>
+      <tr><td>6–8</td><td>Agree sampling, retention, and a monthly cost check</td><td>SRE + you</td><td>Written policy</td><td>The cost is known and has an owner</td></tr>
+      <tr><td>Ongoing</td><td>After every incident, ask "what couldn't we see?" and add it to the gap list</td><td>You</td><td>Gap list</td><td>The gap list shrinks each quarter</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>In [N] of last quarter's incidents, we lost time because we couldn't see where requests were failing.
+I want to make the critical path of our top journeys fully visible end to end, including the model call (TTFT, tokens),
+with one official dashboard per critical service. It's mostly small, specific asks to pods, plus SRE time.
+It's the foundation for SLOs, better alerts, and faster incidents. Ask: help us get it into pod planning.</pre></div>
+      <div class="code-card"><div class="code-head">To a pod manager</div><pre>One small ask: can your team add [attribute/span, e.g. TTFT and token counts on the model call] using our telemetry standard?
+It's roughly [estimate] of work. In return, when something breaks we can point to the exact hop with evidence,
+instead of paging you to go look.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Telemetry standard (one page)</div><pre>Applies to: every production service on the critical path.
+1. OpenTelemetry instrumentation exporting to Azure Monitor / Application Insights.
+2. service.name: [pod]-[service], the same in every environment; deployment environment set as an attribute.
+3. Trace context propagated across every hop (and from client apps where possible).
+4. Model calls: one span each, with model name, input/output token counts, TTFT (first chunk) and total duration.
+5. Tool calls: one span each, with tool name and success/failure.
+6. Logs include the trace ID; no personal data in attributes or logs.
+7. Sampling: 100% of errors; [x%] of successful requests. Retention: [n] days.
+8. One official Grafana dashboard per service, golden signals on top, owner named.</pre></div>
+      <div class="code-card"><div class="code-head">Coverage map</div><pre>Journey | Hop (client / API / assistant / tool / model provider) | Metrics? | Traces? | Logs correlated? |
+Key attributes present? | Dashboard link | Gap | Owner | Target date</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> % of the critical path covered; % of services following the standard; official dashboards in place.</li>
+      <li><strong>Lagging:</strong> fewer "couldn't see it" gaps in RCAs; faster time to identify the failing hop; SLIs measurable for every top journey.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>"Improve observability" never gets prioritized.</dt>
+      <dd>Counter: break it into one small, named ask per pod, each tied to a specific incident it would have helped.</dd>
+      <dt>Dashboard sprawl continues.</dt>
+      <dd>Counter: "official" dashboards are marked as such and linked from runbooks. Others are fine, but they aren't what incidents use.</dd>
+      <dt>The telemetry bill spikes.</dt>
+      <dd>Counter: the sampling and retention policy, plus a monthly cost check with a named owner.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/technical-meetings.html#dashboard">Dashboard Review</a> · <a href="../questions/ai-product.html#ai-latency">AI Latency</a> · <a href="../questions/peers-leaders.html#vendor">Vendor &amp; Tool Pitch</a>. Concepts: <a href="../concepts/observability.html#telemetry">Telemetry</a> · <a href="../concepts/observability.html#metrics-logs-traces">Metrics, Logs &amp; Traces</a> · <a href="../concepts/observability.html#dashboards">Dashboards</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

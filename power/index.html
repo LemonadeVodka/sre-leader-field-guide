@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Power & Politics · SRE Leader's Field Guide</title>
+  <meta name="description" content="How power actually works for a central SRE leader without authority over the pods, the Risk Ledger to run before any move, and the books it draws on.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="pw">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Power & Politics: The Real Playbook</h1>
+      <p class="summary">How power actually works for a central SRE leader without authority over the pods, the Risk Ledger to run before any move, and the books it draws on.</p>
+      <div class="callout"><p class="callout-title">Why This Section Exists</p>
+      <p>Being right isn't enough to get things done in an organization. A central SRE leader has responsibility for reliability without authority over the teams that own the code. That gap is filled by power: information, relationships, timing, reputation, and leverage. This section is a candid repertoire of how power actually works, drawn from the classic books on it, applied to your world, with the backfire risk of each move stated honestly.</p>
+      </div>
+
+      <h2>Where Your Power Comes From</h2>
+      <p>You don't control the pods' code or roadmaps. You do control, or can build, these five sources:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Source</th><th>What it is</th><th>How to build it</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Information</strong></td><td>You know what's breaking, how often, and what it costs</td><td>Own the SLO dashboards, the top offenders, and the monthly reliability report</td></tr>
+      <tr><td><strong>Relationships</strong></td><td>People who'll back you when it's contested</td><td>Help peers in their incidents; credit them publicly; get a sponsor above you</td></tr>
+      <tr><td><strong>Timing</strong></td><td>Knowing when an ask will land</td><td>Ask right after visible incidents, and at planning cycles, with data ready</td></tr>
+      <tr><td><strong>Reputation</strong></td><td>What people assume about you before you speak</td><td>Sharp questions, clean incident leadership, results shown with numbers</td></tr>
+      <tr><td><strong>Dependency</strong></td><td>What others need from you</td><td>Incident process, NOC coverage, PRR sign-off, the reliability story</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>The Risk Ledger</h2>
+      <p>Run this check before using any tactic rated Medium or High. It's practical, not moral: these are the questions that decide whether a move helps your career or ends it.</p>
+      <ol>
+      <li><strong>If this were exposed, would I survive it?</strong> Imagine it described in a meeting with your boss and HR present.</li>
+      <li><strong>Is it reversible?</strong> Can you undo it, or recover if it fails?</li>
+      <li><strong>Who loses, and will they remember?</strong> Today's opponent is next year's peer, or your boss.</li>
+      <li><strong>Does it create HR or legal exposure?</strong> Anything involving deception about facts, a person's reputation, or retaliation: stop.</li>
+      <li><strong>Does it cost my team's trust?</strong> Your people watch how you play. Moves you'd hide from them usually cost more than they win.</li>
+      </ol>
+      <p>Two or more worrying answers: choose a different tactic. There almost always is one.</p>
+
+      <h2>How to Use This Section</h2>
+      <ul>
+      <li><strong><a href="tactics.html">The Tactics Repertoire</a>:</strong> 39 tactics in 8 groups, each with source, mechanism, your use case, backfire risk, and counter.</li>
+      <li><strong><a href="when-used-on-you.html">When It's Used on You</a>:</strong> the destructive tactics, and how to recognize, counter, document, and escalate them.</li>
+      <li><strong><a href="scenarios.html">Political Playbooks</a>:</strong> 8 real situations for an SRE leader, with the sequence of moves.</li>
+      </ul>
+
+      <h2>Sources</h2>
+      <p>All ideas are summarized in our own words. Law and strategy titles are cited as short references only.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Book</th><th>Why it's useful here</th></tr></thead>
+      <tbody>
+      <tr><td><em>The 48 Laws of Power</em>, Robert Greene</td><td>The classic catalogue of how power is gained and lost. Many laws apply directly to org politics.</td></tr>
+      <tr><td><em>The 33 Strategies of War</em>, Robert Greene</td><td>Strategy for long campaigns: initiative, fait accompli, choosing battles.</td></tr>
+      <tr><td><em>The Laws of Human Nature</em>, Robert Greene</td><td>Reading people's motives, envy, and defensiveness. Useful in postmortems and peer conflicts.</td></tr>
+      <tr><td><em>The Prince</em>, Niccolò Machiavelli</td><td>The original on seizing opportunity and how leaders are perceived.</td></tr>
+      <tr><td><em>Power: Why Some People Have It and Others Don't</em> and <em>7 Rules of Power</em>, Jeffrey Pfeffer</td><td>Research-based: networks, visibility, and resources matter more than performance alone.</td></tr>
+      <tr><td><em>Influence</em>, Robert Cialdini</td><td>The psychology of yes: reciprocity, commitment, social proof, authority, liking, scarcity, unity.</td></tr>
+      <tr><td><em>Never Split the Difference</em>, Chris Voss</td><td>Negotiation: labeling, calibrated questions, and silence. Excellent with pod managers and vendors.</td></tr>
+      <tr><td><em>Snakes in Suits</em>, Babiak &amp; Hare</td><td>For defense: recognizing manipulative people at work, and protecting yourself.</td></tr>
+      </tbody>
+      </table></div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>You read the 48 Laws and try ten of them in a week.</dt>
+      <dd>Counter: people notice a sudden change in behavior. Pick two tactics that fit your style, and use them consistently.</dd>
+      <dt>The tactic works, and you lose a relationship you needed.</dt>
+      <dd>Counter: that's what the third Risk Ledger question is for. Ask it every time.</dd>
+      <dt>You assume everyone else is playing games.</dt>
+      <dd>Counter: most friction is overload and misaligned priorities, not schemes. Check <a href="when-used-on-you.html">the signs</a> before concluding it's personal.</dd>
+      </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

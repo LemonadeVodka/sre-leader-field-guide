@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Implementation Roadmap · SRE Leader's Field Guide</title>
+  <meta name="description" content="Where you are now, what to roll out in which order, and how to run SRE programs when your team doesn't own the code.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Implementation Roadmap</h1>
+      <p class="summary">Where you are now, what to roll out in which order, and how to run SRE programs when your team doesn't own the code.</p>
+      <div class="callout"><p class="callout-title">How This Section Is Different</p>
+      <p><a href="../concepts/index.html">SRE Concepts</a> explain what each practice <em>is</em>. This section is how you <strong>roll it out</strong> as a program you lead: phases, owners, artifacts, how to sell it, and how to know it's working. Every guide is grounded in Google's free <a href="https://sre.google/workbook/table-of-contents/" target="_blank" rel="noopener">Site Reliability Workbook<span class="visually-hidden"> (opens in a new tab)</span></a>, and adapted to a central SRE team that surfaces problems, pods that own the code, an offshore L1 NOC, and an AI product on Azure.</p>
+      </div>
+
+      <h2>Where Are We Now? A 10-Question Self-Check</h2>
+      <p>Answer yes or no honestly. Count your yeses.</p>
+      <ol>
+      <li>Every critical service has a named owning team and a PagerDuty service.</li>
+      <li>SRE can see the telemetry (Application Insights, Grafana) for every critical service.</li>
+      <li>We have at least one written, agreed SLO, and we review it weekly.</li>
+      <li>Most pages are about user impact, and fewer than 2 pages per on-call shift are noise.</li>
+      <li>We have written severity criteria that the NOC uses to declare incidents.</li>
+      <li>Every Sev 1 and Sev 2 gets an RCA within 5 working days, and the actions are tracked to done.</li>
+      <li>We can roll back a bad change, including prompt and model changes, in minutes.</li>
+      <li>We know roughly what percentage of the team's time goes to toil and interrupts.</li>
+      <li>Pods have pre-approved levers that SRE can pull during incidents.</li>
+      <li>New services go through a readiness check before SRE or the NOC supports them.</li>
+      </ol>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Yeses</th><th>Stage</th><th>What it feels like</th><th>Start with</th></tr></thead>
+      <tbody>
+      <tr><td>0–2</td><td><strong>Firefighting</strong></td><td>Every day is reactive. Incidents get stuck on "who owns this?"</td><td>Ownership, then the incident program</td></tr>
+      <tr><td>3–5</td><td><strong>Stabilizing</strong></td><td>Incidents are run, but they repeat. Pages are noisy.</td><td>Alerting and paging, then the observability foundation</td></tr>
+      <tr><td>6–8</td><td><strong>Measuring</strong></td><td>You have data, but decisions are still made on opinion.</td><td>SLOs and error budgets, then safe change</td></tr>
+      <tr><td>9–10</td><td><strong>Improving</strong></td><td>Reliability is managed with numbers. Toil is falling.</td><td>Toil and automation, then tighten SLOs</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>The Recommended Order</h2>
+      <p>Each program makes the next one possible. For a team that today mostly surfaces problems, this order works:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Program</th><th>Why now</th><th>What it unlocks</th></tr></thead>
+      <tbody>
+      <tr><td>Quarter 1</td><td><a href="ownership-engagement.html">Ownership, On-Call &amp; Engagement</a></td><td>Stuck incidents are your biggest pain, and most of the stuck time is "who owns this?"</td><td>Faster owner engagement; access; pre-approved levers</td></tr>
+      <tr><td>Quarter 1</td><td><a href="incident-program.html">Incident Program</a></td><td>Severity, roles, and comms turn chaos into a process the NOC can run</td><td>Consistent incidents; good RCAs</td></tr>
+      <tr><td>Quarter 1–2</td><td><a href="observability-foundation.html">Observability Foundation</a></td><td>You can't set SLOs or fix alerts without trustworthy telemetry</td><td>SLIs you can measure; traces for diagnosis</td></tr>
+      <tr><td>Quarter 2</td><td><a href="alerting-paging.html">Alerting &amp; Paging</a></td><td>Noise is burning out SRE and training the NOC to ignore pages</td><td>Fewer, better pages; capacity for project work</td></tr>
+      <tr><td>Quarter 2–3</td><td><a href="slos.html">SLOs From Zero</a></td><td>Turns "is it reliable?" into a number you can manage and negotiate with</td><td>Error budgets; data-driven priorities with pods</td></tr>
+      <tr><td>Quarter 3</td><td><a href="safe-change.html">Safe Change</a></td><td>Most incidents start with a change, and for AI that includes prompts and models</td><td>Fewer change-caused incidents; fast rollback</td></tr>
+      <tr><td>Quarter 3–4</td><td><a href="toil-automation.html">Toil &amp; Automation</a></td><td>With fewer fires, you can reinvest the hours you get back</td><td>Headroom; a lighter load for the NOC</td></tr>
+      </tbody>
+      </table></div>
+      <p>Run at most two programs at once. Put them on the project board you walk in the <a href="../meetings/sre-daily.html">SRE Daily</a>, and report progress monthly.</p>
+
+      <h2>How to Run This When You Don't Own the Code</h2>
+      <ul>
+      <li><strong>Lead with your scope.</strong> Incident process, the NOC, alert hygiene, dashboards, and SLO measurement are things SRE can drive mostly on its own.</li>
+      <li><strong>Make the pod asks small and specific.</strong> "Add one span attribute" gets done. "Improve observability" doesn't.</li>
+      <li><strong>Use data as leverage.</strong> Every program produces numbers (pages, stuck time, budget burn). They're your case to pod managers and leadership.</li>
+      <li><strong>Get leadership to sponsor the program,</strong> not just you. One line from your boss to the pod managers ("this is a priority for us this quarter") does more than ten meetings.</li>
+      </ul>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>You try to start all seven programs at once.</dt>
+      <dd>Counter: two at a time, maximum. Finish one visibly before starting the next.</dd>
+      <dt>Firefighting eats the program time.</dt>
+      <dd>Counter: protect a fixed slice of time, such as one engineer's week or 20% of the team. That's how you ever get out of firefighting.</dd>
+      <dt>Pods agree in principle and never act.</dt>
+      <dd>Counter: get each ask into the pod's own plan with a date, through their manager, and track it like an RCA action.</dd>
+      </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

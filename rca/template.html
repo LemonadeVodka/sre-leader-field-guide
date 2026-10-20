@@ -29,76 +29,76 @@
 
       <h2>Full RCA Template</h2>
       <div class="code-card"><div class="code-head">RCA template</div><pre>RCA: [Short title, e.g. "Assistant timeouts at afternoon peak"]
-      Incident date: [YYYY-MM-DD]    Severity: [Sev 1/2/3]    Status: [Draft / Reviewed / Actions complete]
-      Author: [name]    Review date: [date]    PagerDuty incident: [link]
+Incident date: [YYYY-MM-DD]    Severity: [Sev 1/2/3]    Status: [Draft / Reviewed / Actions complete]
+Author: [name]    Review date: [date]    PagerDuty incident: [link]
 
-      1. SUMMARY (3-5 sentences anyone can understand)
-      What users experienced, for how long, the trigger, the main contributing factors, and how it was mitigated.
+1. SUMMARY (3-5 sentences anyone can understand)
+What users experienced, for how long, the trigger, the main contributing factors, and how it was mitigated.
 
-      2. IMPACT
-      - Who / where: [regions, devices, app versions, customer segments]
-      - How many: [% of requests, approx. number of users or requests]
-      - Duration: [start - end, total minutes]
-      - What users saw: [error message / behaviour]
-      - Source of numbers: [Application Insights query / Grafana panel link]
+2. IMPACT
+- Who / where: [regions, devices, app versions, customer segments]
+- How many: [% of requests, approx. number of users or requests]
+- Duration: [start - end, total minutes]
+- What users saw: [error message / behaviour]
+- Source of numbers: [Application Insights query / Grafana panel link]
 
-      3. TIMELINE (every row needs a source)
-      Time  | Event                                   | Source (Grafana / App Insights / Activity Log / PagerDuty / channel)
-      ----- | --------------------------------------- | ------
-            | Trigger: [change / event]               |
-            | Impact started                          |
-            | Detected (first alert or report)        |
-            | Acknowledged                            |
-            | Escalated to owning team                |
-            | Mitigated (user impact stopped)         |
-            | Resolved                                |
-      Time to detect: [min]    Time from detection to mitigation: [min]
+3. TIMELINE (every row needs a source)
+Time  | Event                                   | Source (Grafana / App Insights / Activity Log / PagerDuty / channel)
+----- | --------------------------------------- | ------
+      | Trigger: [change / event]               |
+      | Impact started                          |
+      | Detected (first alert or report)        |
+      | Acknowledged                            |
+      | Escalated to owning team                |
+      | Mitigated (user impact stopped)         |
+      | Resolved                                |
+Time to detect: [min]    Time from detection to mitigation: [min]
 
-      4. TRIGGER
-      Why did this happen now?
+4. TRIGGER
+Why did this happen now?
 
-      5. CONTRIBUTING FACTORS
-      Why were we vulnerable to it? (List each condition. "Human error" is not a contributing factor;
-      ask what made the error possible.)
-      -
-      -
+5. CONTRIBUTING FACTORS
+Why were we vulnerable to it? (List each condition. "Human error" is not a contributing factor;
+ask what made the error possible.)
+-
+-
 
-      6. THE FOUR DEFENSES
-      Prevent:  what failed / what held
-      Detect:   what failed / what held
-      Mitigate: what failed / what held
-      Respond:  what failed / what held
+6. THE FOUR DEFENSES
+Prevent:  what failed / what held
+Detect:   what failed / what held
+Mitigate: what failed / what held
+Respond:  what failed / what held
 
-      7. HAS THIS HAPPENED BEFORE?
-      Links to previous incidents, and what happened to their action items.
+7. HAS THIS HAPPENED BEFORE?
+Links to previous incidents, and what happened to their action items.
 
-      8. ACTIONS (3-5, ranked; at least one Detect)
-      # | Defense  | Action | Owner (person) | Due | Done means (checkable)
-      1 |          |        |                |     |
-      2 |          |        |                |     |
-      3 |          |        |                |     |
+8. ACTIONS (3-5, ranked; at least one Detect)
+# | Defense  | Action | Owner (person) | Due | Done means (checkable)
+1 |          |        |                |     |
+2 |          |        |                |     |
+3 |          |        |                |     |
 
-      9. WHAT WENT WELL
-      What helped: alerts that fired, people who escalated early, runbooks that worked.
+9. WHAT WENT WELL
+What helped: alerts that fired, people who escalated early, runbooks that worked.
 
-      10. LESSONS FOR OTHER TEAMS
-      What should other pods, SRE, or the NOC know?</pre></div>
+10. LESSONS FOR OTHER TEAMS
+What should other pods, SRE, or the NOC know?</pre></div>
 
       <h2>One-Page Summary for Leadership</h2>
       <div class="code-card"><div class="code-head">Exec summary</div><pre>Incident summary: [title], [date], Sev [x]
 
-      What happened: [one sentence in user terms]
-      Impact: [% / number affected], [duration], [what users saw]
-      Why: [trigger] + [top 1-2 contributing factors]
-      Fixed by: [mitigation] at [time]
+What happened: [one sentence in user terms]
+Impact: [% / number affected], [duration], [what users saw]
+Why: [trigger] + [top 1-2 contributing factors]
+Fixed by: [mitigation] at [time]
 
-      What we're changing:
-      1. [Top action]: [owner], [date]
-      2. [Detection action]: [owner], [date]
-      3. [Third action]: [owner], [date]
+What we're changing:
+1. [Top action]: [owner], [date]
+2. [Detection action]: [owner], [date]
+3. [Third action]: [owner], [date]
 
-      Ask / decision needed: [anything you need from leadership, or "none"]
-      Full RCA: [link]</pre></div>
+Ask / decision needed: [anything you need from leadership, or "none"]
+Full RCA: [link]</pre></div>
 
       <h2>Before You Mark an RCA "Done"</h2>
       <ul class="done-list">

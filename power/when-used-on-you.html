@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>When It's Used on You · SRE Leader's Field Guide</title>
+  <meta name="description" content="The destructive tactics people use at work, and how to recognize, counter, document, and escalate each one.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="pw-defense">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>When It's Used on You</h1>
+      <p class="summary">The destructive tactics people use at work, and how to recognize, counter, document, and escalate each one.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>Something feels off: your credibility is quietly eroding, decisions happen without you, or your team keeps getting blamed. These are the destructive tactics people use in organizations. They're here so you can <strong>recognize, counter, document, and escalate</strong> them. They aren't here for you to use: each one creates HR and legal exposure, and they end careers when discovered.</p>
+      </div>
+
+      <div class="callout"><p class="callout-title">Three Rules for Any of These</p>
+      <ul>
+      <li><strong>Write it down, the same day:</strong> date, what was said or done, who was present, and the impact. Facts, not interpretations.</li>
+      <li><strong>Respond in writing</strong> where possible. A calm written record beats a heated conversation.</li>
+      <li><strong>Escalate on the pattern, not a single event.</strong> One incident might be a misunderstanding. Three is a pattern your boss or HR should see.</li>
+      </ul>
+      </div>
+
+      <h2>Gaslighting</h2>
+      <p><strong>Signs:</strong> you're told things you remember clearly didn't happen ("I never agreed to that date"). Your concerns get recast as overreactions. You start doubting your own records.</p>
+      <p><strong>What it's for:</strong> avoiding accountability by making you unsure of the facts.</p>
+      <p><strong>Counter:</strong> rely on written records. Follow every agreement with a recap: "Confirming what we agreed: X by Friday." When it's contradicted: "My notes from the 14th say X. Let's go with the written version."</p>
+      <p><strong>Document:</strong> recaps, chat messages, meeting notes. <strong>Escalate when:</strong> it repeats, or it affects your team's standing.</p>
+
+      <h2>Credit Theft</h2>
+      <p><strong>Signs:</strong> your team's fix or idea shows up in someone else's update or presentation, framed as theirs.</p>
+      <p><strong>What it's for:</strong> visibility and promotion at your expense.</p>
+      <p><strong>Counter:</strong> tell your story first and in writing: the weekly update, with names and dates. When it happens in a meeting: "Glad that landed. Ana on my team built it. Ana, want to add anything?" Calm, factual, public.</p>
+      <p><strong>Document:</strong> dated evidence of the work (tickets, commits, messages). <strong>Escalate when:</strong> it's repeated, or affects reviews or promotions.</p>
+
+      <h2>Scapegoating SRE or the NOC</h2>
+      <p><strong>Signs:</strong> after an outage, the story becomes "the NOC escalated late" or "SRE should have caught it," while the triggering change goes unmentioned.</p>
+      <p><strong>What it's for:</strong> shifting blame away from the team that caused it, often toward the team with the least political protection.</p>
+      <p><strong>Counter:</strong> insist on the evidence-based timeline and the blameless norm (see <a href="../rca/index.html">RCA the SRE Way</a>). "The NOC followed the runbook exactly. The runbook was the delay. And the trigger was the change at 13:52." Protect your offshore team in public, every time.</p>
+      <p><strong>Document:</strong> the PagerDuty timeline, Activity Log, and runbook versions. <strong>Escalate when:</strong> the blame story reaches leadership uncorrected.</p>
+
+      <h2>Information Starvation</h2>
+      <p><strong>Signs:</strong> you learn about launches, decisions, or incidents late, or second-hand. You're left off distribution lists. Data requests go unanswered.</p>
+      <p><strong>What it's for:</strong> weakening you by making you look uninformed.</p>
+      <p><strong>Counter:</strong> ask explicitly to be on the lists. Build alternative sources: the change calendar, Activity Log alerts, peers. Make the gap visible: "We learned about Tuesday's launch from a page. Can we get on the launch list?"</p>
+      <p><strong>Document:</strong> each late discovery and its impact. <strong>Escalate when:</strong> it causes an incident or a missed commitment.</p>
+
+      <h2>The Meeting After the Meeting</h2>
+      <p><strong>Signs:</strong> decisions agreed in the room get reversed later, in a conversation you weren't part of.</p>
+      <p><strong>What it's for:</strong> overturning outcomes without open debate.</p>
+      <p><strong>Counter:</strong> send a written decision recap within the hour ("Decision: X. Owner: Y. Shout by 5 p.m. if I've got this wrong"). Pre-wire the key people yourself, and ask your boss to confirm big decisions in writing.</p>
+      <p><strong>Document:</strong> recaps and reversals. <strong>Escalate when:</strong> reversals repeat on the same topic.</p>
+
+      <h2>Triangulation</h2>
+      <p><strong>Signs:</strong> someone tells you what a third person "really thinks" about you, or plays two of you against each other privately.</p>
+      <p><strong>What it's for:</strong> control through division and anxiety.</p>
+      <p><strong>Counter:</strong> go to the source directly and calmly: "I heard you have concerns about the SLO plan. I'd rather hear them from you." Refuse to relay messages yourself.</p>
+      <p><strong>Document:</strong> only if it becomes a pattern. <strong>Escalate when:</strong> it damages working relationships across teams.</p>
+
+      <h2>Sabotage by Delay (Slow-Walking)</h2>
+      <p><strong>Signs:</strong> agreed actions keep slipping without explanation. Every request "needs more analysis." "Yes" never turns into a date.</p>
+      <p><strong>What it's for:</strong> killing an initiative without openly opposing it.</p>
+      <p><strong>Counter:</strong> put every commitment in writing with an owner and a date. After the second slip, move it to their manager: "This has slipped twice. Is it a priority conflict we should decide together?" Use decision deadlines.</p>
+      <p><strong>Document:</strong> commitments and slips with dates. <strong>Escalate when:</strong> the second slip on anything important.</p>
+
+      <h2>The Weaponized Postmortem</h2>
+      <p><strong>Signs:</strong> an RCA or review is used to build a case against a person or team. Leading questions, cherry-picked timeline, "human error" as the conclusion.</p>
+      <p><strong>What it's for:</strong> blame with a process stamp on it.</p>
+      <p><strong>Counter:</strong> hold the blameless ground rule out loud. Insist on the evidence-based timeline and the four defenses. Run it with the <a href="../playbooks/postmortem-meeting.html">Postmortem Meeting playbook</a>, and offer to facilitate.</p>
+      <p><strong>Document:</strong> drafts, comments, and evidence. <strong>Escalate when:</strong> the review is used in performance conversations.</p>
+
+      <h2>Public Undermining</h2>
+      <p><strong>Signs:</strong> you're interrupted, contradicted, or talked down to in meetings with senior people present. Your points get repeated by someone else and credited to them.</p>
+      <p><strong>What it's for:</strong> lowering your standing where it counts.</p>
+      <p><strong>Counter:</strong> stay calm and specific: "Let me finish the point. It matters for the decision." Reclaim credit: "Yes, that's the proposal I made a minute ago. Let's go with it." Raise the pattern privately with the person afterwards, then with your boss if it continues.</p>
+      <p><strong>Document:</strong> dates, meetings, witnesses. <strong>Escalate when:</strong> it continues after a private conversation.</p>
+
+      <h2>The "Not Technical" Label</h2>
+      <p><strong>Signs:</strong> your points get dismissed with "you wouldn't understand," or engineers go around you to your boss.</p>
+      <p><strong>What it's for:</strong> excluding you from decisions you're accountable for.</p>
+      <p><strong>Counter:</strong> don't argue the label. Make it irrelevant: ask the failure-mode question nobody else asked, bring the numbers, run the incident well. See <a href="../questions/credibility.html#cred-tested">When You're Tested or Dismissed</a>.</p>
+      <p><strong>Document:</strong> only if it becomes exclusion from decisions. <strong>Escalate when:</strong> you're cut out of decisions you own.</p>
+
+      <h2>Divide and Conquer: SRE vs the NOC</h2>
+      <p><strong>Signs:</strong> others play SRE and the NOC against each other ("your NOC is the problem," "SRE never helps us"), so neither team has a united voice.</p>
+      <p><strong>What it's for:</strong> weakening both teams, so neither can push back on the pods.</p>
+      <p><strong>Counter:</strong> you lead both. Present them as one function in public, settle disagreements privately, and share credit across both.</p>
+      <p><strong>Document:</strong> incidents where blame was shifted between the teams. <strong>Escalate when:</strong> it affects either team's resourcing or reviews.</p>
+
+      <h2>Isolating the Leader</h2>
+      <p><strong>Signs:</strong> your team members get pulled into side conversations or decisions without you, or are encouraged to go around you.</p>
+      <p><strong>What it's for:</strong> weakening you by separating you from your team. This is the destructive reading of Law 42, "Strike the shepherd."</p>
+      <p><strong>Counter:</strong> stay close to your team in 1:1s, tell them openly that you want to know about side requests, and agree with your peers that requests go through you or with you copied.</p>
+      <p><strong>Document:</strong> bypass incidents. <strong>Escalate when:</strong> your authority over your team's priorities is undermined.</p>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>You confront it emotionally and become the problem.</dt>
+      <dd>Counter: calm, factual, written. Emotion is what lets the other side reframe you.</dd>
+      <dt>You wait too long, until the pattern has already damaged you.</dt>
+      <dd>Counter: the same-day log means you can escalate on the third instance with evidence.</dd>
+      <dt>HR treats it as a "personality conflict."</dt>
+      <dd>Counter: bring dated facts and business impact, not feelings. "Three reversed decisions delayed the ownership program by six weeks."</dd>
+      </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

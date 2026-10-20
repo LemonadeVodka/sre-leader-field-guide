@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Running the Postmortem Meeting · SRE Leader's Field Guide</title>
+  <meta name="description" content="Your playbook as the senior manager: before the meeting, your script for the 45 minutes, handling the room, the decisions you own, what happens after, and the variants.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-pm" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Running the Postmortem Meeting</h1>
+      <p class="summary">Your playbook as the senior manager: before the meeting, your script for the 45 minutes, handling the room, the decisions you own, what happens after, and the variants.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You're sponsoring or running a postmortem (RCA review) meeting. The <a href="../rca/run-an-rca.html">RCA section</a> covers writing and judging the document. This playbook covers <strong>running the room</strong>: what you do before, what you say during, how you handle the hard moments, and what you own afterwards.</p>
+      </div>
+
+      <h2>Your Role as the Senior Manager</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>You do</th><th>You don't</th></tr></thead>
+      <tbody>
+      <tr><td>Sponsor the meeting. Facilitate it yourself, or appoint a facilitator and back them.</td><td>Debug the incident in the meeting</td></tr>
+      <tr><td>Protect blameless culture, out loud, every time</td><td>Write the RCA (the author does)</td></tr>
+      <tr><td>Insist every claim has evidence</td><td>Accept "human error" as an answer</td></tr>
+      <tr><td>Push for a few strong, ranked actions</td><td>Leave with 15 actions owned by "the team"</td></tr>
+      <tr><td>Negotiate priority for actions with pod managers</td><td>Make engineers fight for priority with other teams themselves</td></tr>
+      <tr><td>Decide who it's shared with, and whether leadership needs a readout</td><td>Let it quietly disappear into a wiki</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Before the Meeting</h2>
+      <p>From two days before, up to the start of the meeting:</p>
+      <ul class="done-list">
+      <li><strong>The draft passes the <a href="../rca/judge-an-rca.html">5-minute check</a>.</strong> If it doesn't, send it back with the feedback reply. A weak draft wastes 45 minutes of eight people's time.</li>
+      <li><strong>The right people are invited:</strong>
+        <ul>
+          <li>the author</li>
+          <li>the incident lead</li>
+          <li><strong>the NOC analyst who saw the first alert</strong></li>
+          <li>an engineer from the owning pod <strong>and the pod manager</strong>, who can commit to dates</li>
+          <li>SRE on-call</li>
+          <li>product, if customers were affected</li>
+        </ul></li>
+      <li><strong>The pre-read goes out 24 hours before.</strong> Ask everyone to read it before the meeting, not in it.</li>
+      <li><strong>Talk privately first</strong> to anyone whose change triggered the incident ("You'll hear your change discussed. Here's how we'll frame it: the system let it through."), and to the manager of a pod that's likely to be defensive.</li>
+      <li><strong>Name a facilitator and a note-taker,</strong> so you can listen.</li>
+      </ul>
+
+      <h2>The 45-Minute Agenda, With Your Script</h2>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>What you say</th><th>Listen for</th></tr></thead>
+      <tbody>
+      <tr><td>5 min</td><td><strong>Ground rules &amp; impact</strong></td><td><em>"We're here to understand how our system let this happen, not who to blame. Assume everyone did what made sense at the time. We'll leave with a few actions, each with an owner, a date, and what done means."</em> Then: <em>"Does everyone agree with the impact numbers?"</em></td><td>Disagreement about impact. Settle it now, or the rest of the meeting wobbles.</td></tr>
+      <tr><td>15 min</td><td><strong>Timeline walk</strong></td><td><em>"[NOC analyst], can you walk us through the first 15 minutes?"</em> Then: <em>"Where did we lose the most time?"</em></td><td>Gaps with no source. Long waits between detect, acknowledge, escalate, and mitigate.</td></tr>
+      <tr><td>10 min</td><td><strong>Trigger, factors &amp; defenses</strong></td><td><em>"What changed right before? And what made us vulnerable to it?"</em> Then: <em>"Which defenses failed: prevent, detect, mitigate, respond?"</em></td><td>A single "root cause" with no conditions. Names instead of systems.</td></tr>
+      <tr><td>10 min</td><td><strong>Actions</strong></td><td><em>"If we only did one, which?"</em> Then, for each: <em>"Who, by when, and how will we know it's done?"</em></td><td>"Investigate" actions. Team owners. No detection action.</td></tr>
+      <tr><td>5 min</td><td><strong>Close</strong></td><td><em>"Thank you, especially [person whose change triggered it / NOC analyst] for being open. I'll send the summary within the hour and we'll review these actions on [date]. Who outside this room needs to read this?"</em></td><td>Who'll be surprised by this RCA if they don't hear about it now.</td></tr>
+      </tbody>
+      <tfoot><tr><td>45 min</td><td colspan="3"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+
+      <h2>Handling the Room</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When…</th><th>Say</th><th>Why it works</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Blame emerges</strong> ("Sam pushed a bad change")</td><td><em>"Let's hold the who. What let that change reach every user?"</em></td><td>It moves the room to the system without shaming anyone. That's where the real fixes are.</td></tr>
+      <tr><td><strong>Someone gets defensive</strong></td><td><em>"Nobody's on trial. If you'd had a canary, would this have been caught?"</em></td><td>It gives them a way to contribute to the fix instead of defending themselves.</td></tr>
+      <tr><td><strong>A senior engineer dominates</strong></td><td><em>"Thanks, let me get [quieter person]'s view. You were closest to the first alert."</em></td><td>It brings out the people with the most first-hand information.</td></tr>
+      <tr><td><strong>It gets too technical for you</strong></td><td><em>"I'm going to translate. So users saw X because Y, and the fix is Z? Is that right?"</em></td><td>It keeps you leading, and makes the RCA readable for everyone else.</td></tr>
+      <tr><td><strong>An exec asks "who did this?"</strong></td><td><em>"The change came from the pod, but the real question is why our process let it reach everyone. Here are the three things we're fixing."</em></td><td>It protects the person and redirects the exec to systemic fixes, which is what they actually need.</td></tr>
+      <tr><td><strong>The NOC analyst stays silent</strong></td><td>Ask directly and warmly: <em>"What did you see at 02:10, and what did the runbook tell you to do?"</em></td><td>Offshore L1 staff often won't volunteer in a senior meeting. A direct, specific question makes it safe.</td></tr>
+      <tr><td><strong>People disagree on the cause</strong></td><td><em>"What evidence would settle it? Let's take it offline, and record both until we know."</em></td><td>It stops a debate that eats the actions block.</td></tr>
+      <tr><td><strong>A pod refuses an action</strong></td><td><em>"Understood. Let's capture it as an open risk with your name on the decision, and I'll discuss priority with [pod manager] this week."</em></td><td>It makes the refusal visible and owned, and moves the negotiation to the right level.</td></tr>
+      <tr><td><strong>You're running out of time</strong></td><td><em>"Let's lock the top action with an owner and date now. I'll finish the rest async by Friday."</em></td><td>The one action that matters never gets lost.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Decisions You Own</h2>
+      <ul>
+      <li><strong>Accept, rank, or reject actions.</strong> You can say "that's too vague" or "that won't prevent this."</li>
+      <li><strong>Which actions need a manager-to-manager priority conversation,</strong> and holding it within a week.</li>
+      <li><strong>Who it's shared with:</strong> other pods, the NOC, support, leadership.</li>
+      <li><strong>Whether leadership needs a readout,</strong> using the 5-minute script below.</li>
+      </ul>
+
+      <h2>After the Meeting</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Do this</th></tr></thead>
+      <tbody>
+      <tr><td>Within 1 hour</td><td>Send the "RCA complete" share-out (template in <a href="../rca/day-one.html#copy-ready-messages">RCA Day One</a>).</td></tr>
+      <tr><td>Within 1 day</td><td>Actions are in the tracker with the <code>rca-action</code> label, owners, and due dates.</td></tr>
+      <tr><td>Within 1 week</td><td>Hold any manager-to-manager priority conversations you committed to.</td></tr>
+      <tr><td>At 2 weeks</td><td>Check the top action. If it's slipping, unblock or escalate.</td></tr>
+      <tr><td>Monthly</td><td>Monthly postmortem pattern review (below). Verify the top actions actually reduced risk.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Variants</h2>
+      <h3>Lightweight Review (Sev 3 and Near Misses)</h3>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>3 min</td><td><strong>Impact &amp; ground rules</strong></td><td><em>"What happened, in one sentence?"</em></td></tr>
+      <tr><td>7 min</td><td><strong>What made it possible</strong></td><td><em>"Which defense failed?"</em></td></tr>
+      <tr><td>7 min</td><td><strong>One or two actions</strong></td><td><em>"Who, by when, done means?"</em></td></tr>
+      <tr><td>3 min</td><td><strong>Close</strong></td><td><em>"Does anyone else need to know?"</em></td></tr>
+      </tbody>
+      <tfoot><tr><td>20 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+      <h3>Repeat-Incident Review</h3>
+      <p>Use the full 45-minute agenda, but spend the trigger and factors block on one question: <em>"We said we'd do X last time. Why didn't it happen, or why didn't it work?"</em> The usual answers are a priority conflict, an action that wasn't specific enough, or an owner who left. The fix is usually a manager-level decision, so bring the pod manager.</p>
+      <h3>Monthly Postmortem Pattern Review</h3>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>5 min</td><td><strong>The month in numbers</strong>Incidents by severity, repeat incidents, time to detect and time to mitigate</td><td><em>"Better or worse than last month?"</em></td></tr>
+      <tr><td>10 min</td><td><strong>Themes across RCAs</strong>Common contributing factors, such as no canary, missing alerts, or unclear ownership</td><td><em>"What keeps showing up?"</em></td></tr>
+      <tr><td>10 min</td><td><strong>Open actions</strong>Overdue <code>rca-action</code> items: help, rescope, or escalate</td><td><em>"Which open action would have prevented an incident this month?"</em></td></tr>
+      <tr><td>5 min</td><td><strong>One systemic investment &amp; ask</strong>The single biggest fix across teams, and what you need from leadership</td><td><em>"What's the one thing we'd ask leadership for?"</em></td></tr>
+      </tbody>
+      <tfoot><tr><td>30 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
+      </table></div>
+      <h3>5-Minute Exec Readout</h3>
+      <p>For leadership: what happened, the impact, why (systems, not people), the top three actions with owners, and any decision you need. Script below.</p>
+
+      <h2>Copy-Ready</h2>
+      <div class="code-card"><div class="code-head">Facilitator's opening and closing script</div><pre>OPENING
+"Thanks for coming. We're here to understand how our system allowed this incident,
+not to find someone to blame. Assume everyone did what made sense with what they knew.
+We'll leave with a few actions, each with an owner, a date, and what 'done' means.
+First: does everyone agree with the impact? [read impact statement]"
+
+CLOSING
+"Thank you, and especially [name], for being open about what happened.
+Recap: our top action is [action] by [owner], [date]. The others are [list].
+I'll send the summary within the hour, and we'll check these on [date].
+Who outside this room needs to read this?"</pre></div>
+      <div class="code-card"><div class="code-head">Monthly postmortem pattern review invite</div><pre>Monthly Postmortem Pattern Review: 30 min total
+
+ 5 min   The month in numbers: incidents by severity, repeats, time to detect / mitigate
+10 min   Themes across RCAs: what keeps showing up?
+10 min   Open rca-action items: help, rescope, or escalate
+ 5 min   One systemic investment + our ask for leadership
+
+Pre-read: list of this month's RCAs and open actions [link].</pre></div>
+      <div class="code-card"><div class="code-head">5-minute exec readout</div><pre>[Incident title], [date], Sev [x]
+
+1. What happened: [one sentence in user terms]
+2. Impact: [% / number affected], [duration]
+3. Why: [trigger] + [top contributing factors]. This was a systems gap, not one person's error.
+4. What we're changing: [action 1: owner, date] [action 2] [action 3]
+5. What I need from you: [decision / priority call / nothing]</pre></div>
+      <div class="code-card"><div class="code-head">Pre-wire note (to the person whose change triggered it)</div><pre>Hi [name], ahead of Thursday's review for [incident]: your change will come up, because it was the trigger.
+I want you to know how we'll frame it: the question is why our process let a change like that reach every user,
+not who made it. You know that change better than anyone, so your view on what would have caught it is really valuable.
+Anything you'd like me to know beforehand?</pre></div>
+
+      <h2 id="questions">Questions to Ask</h2>
+      <p class="qsit-intro">These are the post-incident review questions. For checking the document itself, see <a href="../rca/judge-an-rca.html">Judging an RCA</a>.</p>
+      <div data-qsit="incident"></div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p><strong>Minute 12, timeline walk.</strong> A pod lead says: "Honestly, the NOC sat on this for 19 minutes." The NOC analyst goes quiet.</p>
+      <p><strong>You:</strong> "Let's hold the who. [Analyst], what did the runbook tell you to do when the alert fired?" The answer: "Monitor for 15 minutes, then escalate." <strong>You:</strong> "So the NOC followed the runbook exactly. The runbook was the delay. Who owns fixing it?" The pod lead nods, and the NOC lead takes the action with a one-week date.</p>
+      <p>In other words, one redirect turned a blame moment into the incident's cheapest fix, and the offshore team saw you defend them in front of a pod.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The meeting becomes a re-debug of the incident.</dt>
+      <dd>Counter: "Good question for after. Let's finish the timeline." Keep the agenda visible on screen.</dd>
+      <dt>People attend without reading the pre-read.</dt>
+      <dd>Counter: start with a 3-minute silent read. People adjust quickly.</dd>
+      <dt>Actions get agreed in the room, then quietly deprioritized.</dt>
+      <dd>Counter: the pod manager is in the room, actions go in the tracker within a day, and the monthly review checks them.</dd>
+      <dt>The same people dominate every review.</dt>
+      <dd>Counter: always ask the person closest to the first alert to start the timeline.</dd>
+      <dt>Execs want a name.</dt>
+      <dd>Counter: give them the systemic answer and three actions. They mostly want to know it won't happen again.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Related:</strong> <a href="../rca/day-one.html">RCA Day One</a> · <a href="../rca/run-an-rca.html">Running an RCA</a> · <a href="../rca/judge-an-rca.html">Judging an RCA</a>. <strong>Go deeper:</strong> <a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">Workbook, Ch. 10: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">SRE Book, Ch. 15: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

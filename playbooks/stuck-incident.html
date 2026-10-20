@@ -38,7 +38,7 @@
       <h2>The Stuck Clock</h2>
       <p>An escalation ladder with time triggers, so nobody has to decide in the moment whether it's "time to escalate." Agree these times with pod leadership <em>before</em> the next incident, and build the first steps into PagerDuty escalation policies.</p>
       <div class="table-wrap agenda"><table>
-      <thead><tr><th>When</th><th>Action</th><th>How</th></tr></thead>
+      <thead><tr><th>Minutes since declared</th><th>Action</th><th>How</th></tr></thead>
       <tbody>
       <tr><td>T+0</td><td><strong>Declare and page the owning pod</strong>Severity set by the criteria. Escalation packet posted.</td><td>PagerDuty incident on the pod's service. Packet pinned in the channel.</td></tr>
       <tr><td>T+15</td><td><strong>No acknowledgement: escalate automatically</strong>The pod's secondary, then their manager.</td><td>PagerDuty escalation policy. No human decision needed.</td></tr>
@@ -53,15 +53,15 @@
       <p>When you can't fix it, the quality of your hand-off is your contribution. Post this packet in the incident channel and attach it to the PagerDuty incident before you page anyone.</p>
       <div class="code-card"><div class="code-head">Escalation packet</div><pre>ESCALATION: [service / feature]   Sev [x]   PagerDuty: [link]
 
-      Impact:     [what users see], about [% of requests / users], since [HH:MM] (from Grafana)
-      Scope:      [all regions / region X]  [all app versions / version X]  [all devices / device type]
-      Changed:    [deploy / config / prompt change at HH:MM: Grafana annotation or Activity Log link]  or  "nothing found in the last 24h"
-      Evidence:   Grafana panel: [link]
-                  App Insights failing requests: [query link]   example operation/trace IDs: [id], [id]
-      Dependency: model provider status [ok / degraded / unknown]   our failure rate to provider: [x%]
-      Ruled out:  [what we checked and how]
-      On bridge:  [names, roles]   Incident lead: [name]
-      Need from you: [the specific ask, e.g. "confirm whether yesterday's prompt change can be rolled back"]</pre></div>
+Impact:     [what users see], about [% of requests / users], since [HH:MM] (from Grafana)
+Scope:      [all regions / region X]  [all app versions / version X]  [all devices / device type]
+Changed:    [deploy / config / prompt change at HH:MM: Grafana annotation or Activity Log link]  or  "nothing found in the last 24h"
+Evidence:   Grafana panel: [link]
+            App Insights failing requests: [query link]   example operation/trace IDs: [id], [id]
+Dependency: model provider status [ok / degraded / unknown]   our failure rate to provider: [x%]
+Ruled out:  [what we checked and how]
+On bridge:  [names, roles]   Incident lead: [name]
+Need from you: [the specific ask, e.g. "confirm whether yesterday's prompt change can be rolled back"]</pre></div>
 
       <h2>Mitigation Without Writing Code: Pre-Approved Levers</h2>
       <p>Most stuck time is spent waiting for permission, not for a fix. Agree in advance, per critical service, which levers SRE (or the NOC, with a runbook) may pull without waiting for the pod:</p>
@@ -77,17 +77,17 @@
       </tbody>
       </table></div>
       <div class="code-card"><div class="code-head">Pre-approved levers agreement (one per service)</div><pre>Service: [name]            Owning pod: [name]       Pod manager: [name]
-      Agreed on: [date]          Review: every quarter, and after any incident where a lever was used
+Agreed on: [date]          Review: every quarter, and after any incident where a lever was used
 
-      SRE may, WITHOUT waiting for the pod, when [trigger, e.g. "SLO burn-rate page fires" or "Sev 1/2 declared"]:
-      1. [Lever, e.g. turn off flag "assistant-new-tools"]   How: [runbook link]   Undo: [how]
-      2. [Lever, e.g. run rollback job for the last release] How: [runbook link]   Undo: [how]
-      3. [Lever, e.g. route to fallback model]             How: [runbook link]   Undo: [how]
+SRE may, WITHOUT waiting for the pod, when [trigger, e.g. "SLO burn-rate page fires" or "Sev 1/2 declared"]:
+1. [Lever, e.g. turn off flag "assistant-new-tools"]   How: [runbook link]   Undo: [how]
+2. [Lever, e.g. run rollback job for the last release] How: [runbook link]   Undo: [how]
+3. [Lever, e.g. route to fallback model]             How: [runbook link]   Undo: [how]
 
-      SRE will: post in the incident channel before and after pulling a lever, and page the pod at the same time.
-      The pod will: keep the runbooks current and test each lever once a quarter.
+SRE will: post in the incident channel before and after pulling a lever, and page the pod at the same time.
+The pod will: keep the runbooks current and test each lever once a quarter.
 
-      Signed: [pod manager]  [SRE manager]</pre></div>
+Signed: [pod manager]  [SRE manager]</pre></div>
 
       <h2>When Nobody Can Fix It Yet</h2>
       <ul>
@@ -99,6 +99,7 @@
       </ul>
 
       <h2>Getting Out of Surface-Only: A 90-Day Plan</h2>
+      <p>The full program, with the Workbook background, pitches, and templates, is in <a href="../implement/ownership-engagement.html">Implementation: Ownership, On-Call &amp; Engagement</a>.</p>
       <div class="table-wrap"><table>
       <thead><tr><th>When</th><th>Do this</th></tr></thead>
       <tbody>
@@ -120,14 +121,14 @@
 
       <h2>Copy-Ready Messages</h2>
       <div class="code-card"><div class="code-head">Manager to manager (T+30)</div><pre>Hi [name], we have a Sev [x] on [service] affecting [impact] since [time]. Your on-call was paged at [time] via PagerDuty and we haven't got [an acknowledgement / a path forward] yet.
-      SRE can see the problem but can't change [component]. Can you get someone with access onto the bridge in the next 10 minutes? Bridge: [link]. Escalation packet is pinned in [channel].</pre></div>
+SRE can see the problem but can't change [component]. Can you get someone with access onto the bridge in the next 10 minutes? Bridge: [link]. Escalation packet is pinned in [channel].</pre></div>
       <div class="code-card"><div class="code-head">Exec update for a stuck incident (T+60)</div><pre>Sev [x]: [service]. Status: STUCK, owner engaged [yes/no]
 
-      Impact: [what users see], about [%], for [duration] so far.
-      Where we are: SRE has identified [what we know]. The fix needs [access / change] owned by [team]. They were engaged at [time].
-      What we've done: [levers pulled, mitigations tried].
-      Decision needed: [e.g. approve degraded mode X / approve customer comms / assign an incident lead from team Y].
-      Next update: [time].</pre></div>
+Impact: [what users see], about [%], for [duration] so far.
+Where we are: SRE has identified [what we know]. The fix needs [access / change] owned by [team]. They were engaged at [time].
+What we've done: [levers pulled, mitigations tried].
+Decision needed: [e.g. approve degraded mode X / approve customer comms / assign an incident lead from team Y].
+Next update: [time].</pre></div>
 
       <div class="callout example"><p class="callout-title">Example in Practice</p>
       <p><strong>14:12:</strong> the NOC raises slow assistant answers. SRE confirms the model provider is throttling calls: 18% of requests are failing. SRE can't change the routing or the prompt. Both belong to the Assistant pod.</p>

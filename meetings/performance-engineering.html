@@ -41,30 +41,31 @@
 
       <h2>The Agenda</h2>
       <div class="table-wrap agenda"><table>
-        <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
+        <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
         <tbody>
-          <tr><td>00–03</td><td><strong>Last week's actions</strong>Done, slipped, or dropped, and what each one changed.</td><td><em>"What did it change?"</em> If something slipped: "What's in the way, and is it mine to unblock?"</td></tr>
-          <tr><td>03–10</td><td><strong>Scorecard</strong>Top 3 user journeys against targets: for AI journeys, p95 TTFT and TTLT. Plus peak traffic, errors under load, tokens per request, and cost per request. Only look at what's off target or trending the wrong way.</td><td><em>"Are we faster or slower than last week, against what target?"</em> For AI: <em>"Did TTFT or only TTLT move?"</em></td></tr>
-          <tr><td>10–17</td><td><strong>Regressions</strong>What got slower, what changed right before it, and whether it's our code, our capacity, or a dependency such as the model provider.</td><td><em>"What changed right before it?"</em> Then: <em>"Code, capacity, or dependency?"</em></td></tr>
-          <tr><td>17–24</td><td><strong>Look ahead</strong>Launches, campaigns, new customers, and model changes in the next 30 days, plus load test status for each.</td><td><em>"When did we last load test this, and at what multiple of peak?"</em></td></tr>
-          <tr><td>24–28</td><td><strong>Decide</strong>Pick the one fix that most improves what users feel for the least effort.</td><td><em>"If we only did one this month, which, who, and by when?"</em></td></tr>
-          <tr><td>28–30</td><td><strong>Recap</strong>Read back the actions with owner, date, and what "done" means. Name who sends the notes.</td><td><em>"Who's sending the recap?"</em></td></tr>
+          <tr><td>3 min</td><td><strong>Last week's actions</strong>Done, slipped, or dropped, and what each one changed.</td><td><em>"What did it change?"</em> If something slipped: "What's in the way, and is it mine to unblock?"</td></tr>
+          <tr><td>7 min</td><td><strong>Scorecard</strong>Top 3 user journeys against targets: for AI journeys, p95 TTFT and TTLT. Plus peak traffic, errors under load, tokens per request, and cost per request. Only look at what's off target or trending the wrong way.</td><td><em>"Are we faster or slower than last week, against what target?"</em> For AI: <em>"Did TTFT or only TTLT move?"</em></td></tr>
+          <tr><td>7 min</td><td><strong>Regressions</strong>What got slower, what changed right before it, and whether it's our code, our capacity, or a dependency such as the model provider.</td><td><em>"What changed right before it?"</em> Then: <em>"Code, capacity, or dependency?"</em></td></tr>
+          <tr><td>7 min</td><td><strong>Look ahead</strong>Launches, campaigns, new customers, and model changes in the next 30 days, plus load test status for each.</td><td><em>"When did we last load test this, and at what multiple of peak?"</em></td></tr>
+          <tr><td>4 min</td><td><strong>Decide</strong>Pick the one fix that most improves what users feel for the least effort.</td><td><em>"If we only did one this month, which, who, and by when?"</em></td></tr>
+          <tr><td>2 min</td><td><strong>Recap</strong>Read back the actions with owner, date, and what "done" means. Name who sends the notes.</td><td><em>"Who's sending the recap?"</em></td></tr>
         </tbody>
+      <tfoot><tr><td>30 min</td><td colspan="2"><strong>Total.</strong></td></tr></tfoot>
       </table></div>
 
       <div class="code-card"><div class="code-head">Calendar invite text: Performance Engineering</div><pre>Performance Engineering: weekly, 30 min
-      Purpose: keep the product fast and affordable at the load that's coming. Leave with one owned fix.
+Purpose: keep the product fast and affordable at the load that's coming. Leave with one owned fix.
 
-      00-03  Last week's actions: done / slipped / dropped, and what each one changed
-      03-10  Scorecard: top 3 user journeys vs target (slowest 5%; for AI: p95 TTFT + TTLT), peak traffic,
-             errors under load, tokens per request, cost per request
-      10-17  Regressions: what got slower, what changed, code / capacity / dependency?
-      17-24  Look ahead: launches and load changes in the next 30 days, load test status
-      24-28  Decide: the one fix for this week (owner, date, done means)
-      28-30  Recap: actions read back, who sends notes
+ 3 min   Last week's actions: done / slipped / dropped, and what each one changed
+ 7 min   Scorecard: top 3 user journeys vs target (slowest 5%; for AI: p95 TTFT + TTLT), peak traffic,
+         errors under load, tokens per request, cost per request
+ 7 min   Regressions: what got slower, what changed, code / capacity / dependency?
+ 7 min   Look ahead: launches and load changes in the next 30 days, load test status
+ 4 min   Decide: the one fix for this week (owner, date, done means)
+ 2 min   Recap: actions read back, who sends notes
 
-      Prep: scorecard updated 24h before. Regressions bring one graph + one sentence on what changed.
-      Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot.</pre></div>
+Prep: scorecard updated 24h before. Regressions bring one graph + one sentence on what changed.
+Rules: numbers vs target or it's not discussed. Deep dives go to the parking lot.</pre></div>
 
       <h2 id="questions">Questions to Ask</h2>
       <p class="qsit-intro">Bring three. Each has a follow-up for a weak answer, and coaching notes on what good sounds like.</p>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fix Alerting & Paging · SRE Leader's Field Guide</title>
+  <meta name="description" content="Cut alert noise, give every page a runbook and a clear NOC trigger, and move to SLO burn-rate alerts routed through PagerDuty.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-alert">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Fix Alerting & Paging</h1>
+      <p class="summary">Cut alert noise, give every page a runbook and a clear NOC trigger, and move to SLO burn-rate alerts routed through PagerDuty.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> noisy alerts hide real ones. When on-call gets 40 pages a week, the important page at 3 a.m. gets the same tired response as the 39 that didn't matter.</li>
+      <li><strong>For you:</strong> alert noise is the fastest way to burn out SRE and teach the offshore NOC to ignore alarms. Cutting it is a visible, early win that buys your team time and trust.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Judge alerts on four qualities:</strong> precision (how many alerts are real), recall (how many real problems alert), detection time, and reset time. Any alert setup trades these off. (<a href="https://sre.google/workbook/alerting-on-slos/" target="_blank" rel="noopener">Workbook, Ch. 5: Alerting on SLOs<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Alert on SLO burn rate,</strong> meaning how fast the error budget is being used, not on raw thresholds. Fast burn pages a person; slow burn opens a ticket.</li>
+      <li><strong>Use multiple time windows</strong> (for example a short and a long window together), so alerts fire quickly on big problems but don't flap on blips.</li>
+      <li><strong>On-call load is a health metric.</strong> Track pages per shift, and treat sustained overload as a problem to fix, not something to endure. (<a href="https://sre.google/workbook/on-call/" target="_blank" rel="noopener">Ch. 8: On-Call<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>Alerts were added over time by different people,</strong> and nobody remembers why half of them exist. Expect to find duplicates and alerts that nobody acts on.</li>
+      <li><strong>The NOC follows alerts literally.</strong> An alert without a clear runbook and escalation trigger creates escalation delays (see the <a href="../rca/worked-example.html">worked example</a>).</li>
+      <li><strong>Alerts may live in two places,</strong> Grafana Alerting and Azure Monitor. Inventory both.</li>
+      <li><strong>Deleting alerts feels risky</strong> to people who've been burned. Demote to a ticket or a dashboard first, then delete after 30 quiet days.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>Access to PagerDuty reporting for the last 30–90 days.</li>
+      <li>A list of alert rules from Grafana Alerting and Azure Monitor.</li>
+      <li>The NOC lead and one SRE engineer committed for about 3 weeks.</li>
+      <li>At least one SLO in progress, for the burn-rate step (see <a href="slos.html">SLOs From Zero</a>).</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Week</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>Export 30–90 days of pages from PagerDuty: count by alert, time of day, and who was paged</td><td>SRE</td><td>Alert inventory sheet</td><td>Top 20 noisiest alerts are known</td></tr>
+      <tr><td>1–2</td><td>For each alert, ask: what did someone do when it fired? Keep, fix, demote to ticket, or delete</td><td>SRE + NOC lead</td><td>Decision per alert</td><td>Every alert has an owner and a decision</td></tr>
+      <tr><td>2</td><td>Demote or delete noise. Route low-urgency alerts to chat or tickets, not pages</td><td>SRE</td><td>Updated alert rules</td><td>Pages per shift visibly down</td></tr>
+      <tr><td>2–3</td><td>Every remaining paging alert gets a runbook link and an objective NOC escalation trigger</td><td>SRE + NOC lead</td><td>Runbooks</td><td>The NOC passes teach-back on the top 10 alerts</td></tr>
+      <tr><td>3</td><td>Check PagerDuty routing: right service, escalation policy, and urgency for each alert</td><td>SRE</td><td>Routing map</td><td>No alert pages a team that can't act on it</td></tr>
+      <tr><td>4+</td><td>Add multi-window burn-rate alerts for each SLO; retire the threshold alerts they replace</td><td>SRE</td><td>Burn-rate rules</td><td>Tested with a simulated burn</td></tr>
+      <tr><td>Ongoing</td><td>Review pages per shift monthly; any alert paging more than 5 times without action gets reviewed</td><td>You</td><td>Monthly page report</td><td>The trend is flat or falling</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>On-call got [N] pages last month; about [X%] needed no action. That's noise burning out SRE and training the NOC to tune out alarms.
+Over 4 weeks we'll cut noisy alerts, give every remaining page a runbook and a clear NOC trigger, and move to SLO-based alerts.
+Target: under [2] pages per shift. Cost: one engineer part-time. Risk is managed: we demote alerts before we delete them.</pre></div>
+      <div class="code-card"><div class="code-head">To a pod manager</div><pre>Your service's alerts paged us [N] times last month, mostly [alert]. We'd like 30 minutes with someone on your side
+to agree which alerts matter and what the first response should be. You'll get fewer bogus escalations
+from us and the NOC, and the ones you do get will come with evidence.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Alert review sheet (one row per alert)</div><pre>Alert name | Source (Grafana / Azure Monitor) | Pages in last 30 days | What did someone DO when it fired? |
+User-facing? (Y/N) | Runbook link | NOC escalation trigger | PagerDuty service | Decision (keep / fix / demote / delete) | Owner | Date</pre></div>
+      <div class="code-card"><div class="code-head">Good paging alert checklist</div><pre>[ ] It's about user impact (or imminent user impact), not a cause like CPU at 80%
+[ ] A human can do something about it right now
+[ ] It links to a runbook with a clear STOP-and-escalate point
+[ ] The NOC knows the objective trigger ("if X for Y minutes, page SRE")
+[ ] It routes to the PagerDuty service of the team that can act
+[ ] It paged no more than 5 times last month without a fix decision</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> the inventory is done; the share of alerts with runbooks; the number of burn-rate alerts live.</li>
+      <li><strong>Lagging:</strong> pages per shift falling; NOC time-to-escalate falling; fewer incidents found by customers first.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>"We can't delete that, it caught something once in 2024."</dt>
+      <dd>Counter: demote it to a ticket or a dashboard. If it really matters, its SLO burn-rate alert will catch the user impact.</dd>
+      <dt>Noise creeps back within months.</dt>
+      <dd>Counter: the monthly page review and the "5 pages without action" rule stop the creep.</dd>
+      <dt>Burn-rate math confuses people.</dt>
+      <dd>Counter: explain it in one line: "we page if, at this rate, we'd use [X%] of the month's budget within the hour." The detail stays with SRE.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/offshore-noc.html#noc-triage">NOC Triage &amp; Escalation</a> · <a href="../questions/sre-team.html#oneonone">1:1 With an Engineer</a> (on-call pain). Concepts: <a href="../concepts/alerting-incidents.html#alerting">Alerting</a> · <a href="../concepts/alerting-incidents.html#on-call">On-Call</a> · <a href="../concepts/change-and-toil.html#runbooks">Runbooks</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

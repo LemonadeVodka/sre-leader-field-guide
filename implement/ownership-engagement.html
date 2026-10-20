@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ownership, On-Call & Engagement · SRE Leader's Field Guide</title>
+  <meta name="description" content="Your way out of surface-only: an ownership map, an escalation chain, SRE access, pre-approved levers, first-15-minutes runbooks, and a readiness gate.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-own">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Ownership, On-Call & Engagement Model</h1>
+      <p class="summary">Your way out of surface-only: an ownership map, an escalation chain, SRE access, pre-approved levers, first-15-minutes runbooks, and a readiness gate.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> when ownership is unclear, every incident starts with a hunt for an owner. That's dead time with users affected.</li>
+      <li><strong>For you:</strong> this is <strong>the way out of surface-only</strong>. A clear engagement model defines what SRE does, what pods do, and what SRE is allowed to do during an incident. It's also how you stop central SRE from becoming the dumping ground for every unowned problem.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>SRE engagement is deliberate, not automatic.</strong> Services are onboarded through an assessment such as a production readiness review, and the relationship has explicit terms. (<a href="https://sre.google/workbook/engagement-model/" target="_blank" rel="noopener">Workbook, Ch. 18: SRE Engagement Model<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Shared goals, written down.</strong> SLOs act as the agreement between SRE and the development team about what "reliable enough" means.</li>
+      <li><strong>Engagement can change over time.</strong> It can deepen, reduce, or even end when a service doesn't meet the bar. (<a href="https://sre.google/sre-book/evolving-sre-engagement-model/" target="_blank" rel="noopener">SRE Book, Ch. 32<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Sustainable on-call</strong> needs balanced load, good runbooks, and the authority to act. (<a href="https://sre.google/workbook/on-call/" target="_blank" rel="noopener">Ch. 8: On-Call<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>Today SRE and the NOC surface problems,</strong> while pods own the code, the access, and the fixes. Incidents stall in between. (See <a href="../playbooks/stuck-incident.html">When an Incident Is Stuck</a>.)</li>
+      <li><strong>Pods may resist taking on-call</strong> for their own services. Frame it as "you share the pager for what only you can fix," not "SRE is pushing work back."</li>
+      <li><strong>Access requests take time</strong> through security reviews. Start them in week 1.</li>
+      <li><strong>AI components</strong> (prompts, models, tools, quota) often have unclear owners. Name them explicitly.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>Your boss sponsors the program and agrees to raise it with pod leadership.</li>
+      <li>A list of production services, even rough, from Azure resources or App Insights.</li>
+      <li>Your recent incidents, with "time to owner engaged" estimated, for the business case.</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Weeks</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1–2</td><td>Build the ownership map: every service and AI component (prompts, models, tools, quota) gets an owning pod, a manager, and a PagerDuty service</td><td>You + SRE</td><td>Ownership map</td><td>No critical component shows "unknown"</td></tr>
+      <tr><td>1–4</td><td>Request read access for SRE to Application Insights, Log Analytics, and Grafana for every critical service</td><td>You</td><td>Access tickets</td><td>SRE can open any critical service's telemetry</td></tr>
+      <tr><td>2–4</td><td>Agree the escalation chain (NOC → SRE → pod) and the stuck clock; build it into PagerDuty escalation policies</td><td>You + pod managers</td><td>Escalation policies</td><td>Tested with a test incident</td></tr>
+      <tr><td>4–8</td><td>Sign pre-approved lever agreements for the top 3 services</td><td>You + pod managers</td><td>Signed agreements and runbooks</td><td>Each lever tested once</td></tr>
+      <tr><td>6–10</td><td>Each critical service's pod writes a "first 15 minutes" diagnostic runbook that SRE and the NOC can run</td><td>Pods (SRE reviews)</td><td>Runbooks</td><td>The NOC passes teach-back on each</td></tr>
+      <tr><td>8–12</td><td>Agree a production readiness review (PRR) gate for new critical services</td><td>You + pod leadership</td><td>PRR checklist</td><td>The next launch goes through it</td></tr>
+      <tr><td>Ongoing</td><td>Report time to owner engaged, and incidents where SRE lacked access, monthly</td><td>You</td><td>Monthly report</td><td>Both trending down</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>Last month [X] of [Y] incidents stalled an average of [Z] minutes waiting for an owner, and in [N] SRE had no access to the telemetry.
+I want a 90-day program: an ownership map with a PagerDuty route for every service, read access for SRE, pre-approved levers for the
+top 3 services, and a readiness gate for new launches. Ask: you sponsor it with pod leadership, and we report both numbers monthly.</pre></div>
+      <div class="code-card"><div class="code-head">To pod managers</div><pre>We want fewer 2 a.m. "is this yours?" calls for both of us. Three asks:
+1) confirm your services and PagerDuty route in our ownership map,
+2) agree a couple of pre-approved levers SRE can pull (with a runbook) so we can stop the bleeding before your engineer joins,
+3) a short "first 15 minutes" runbook per critical service.
+In return: cleaner escalations with evidence, and fewer pages to your team for things we can now handle.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Ownership map (one row per service or AI component)</div><pre>Service / component | Type (API, worker, prompt, model deployment, tool, quota) | Owning pod | Manager |
+PagerDuty service | Escalation policy | SRE has read access? (Y/N) | Pre-approved levers (Y/N, link) |
+First-15-min runbook (link) | Critical? (Y/N) | Last reviewed</pre></div>
+      <div class="code-card"><div class="code-head">Production readiness review (PRR) checklist</div><pre>[ ] Owning pod and PagerDuty service with an escalation policy
+[ ] SLI/SLO defined for the main user journey
+[ ] Golden-signal dashboard in Grafana; SRE has read access
+[ ] Paging alerts with runbooks and NOC escalation triggers
+[ ] Rollback tested (code, config, prompt/model)
+[ ] Load test at 2x expected peak; quota headroom checked
+[ ] Dependencies listed with fallbacks / degraded modes
+[ ] First-15-minutes runbook reviewed by SRE and the NOC
+Gaps: fixed before launch, or accepted in writing by [accountable leader]</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> % of critical services fully mapped; % with SRE access; number of signed lever agreements.</li>
+      <li><strong>Lagging:</strong> time to owner engaged falling; fewer stuck incidents; levers pulled in real incidents; new launches arriving with PRRs done.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>Pods agree to the map but never update it.</dt>
+      <dd>Counter: review it quarterly in the PRR process, and after any incident where it was wrong.</dd>
+      <dt>Pods refuse pre-approved levers: "only we touch prod."</dt>
+      <dd>Counter: start with the safest lever (a feature flag off, with a runbook) for one service. One successful use builds trust for the next.</dd>
+      <dt>The PRR becomes a box-ticking exercise.</dt>
+      <dd>Counter: keep it short, focus it on on-call outcomes, and let SRE say "not yet" with your backing.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/incidents.html#inc-stuck">When It's Stuck</a> · <a href="../questions/peers-leaders.html#pod">Pod &amp; Peer Sync</a> · <a href="../questions/technical-meetings.html#design">Design Review</a>. Concepts: <a href="../concepts/alerting-incidents.html#on-call">On-Call</a> · <a href="../concepts/capacity-readiness.html#prr">Production Readiness Review</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

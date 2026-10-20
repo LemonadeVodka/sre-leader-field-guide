@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Tactics Repertoire · SRE Leader's Field Guide</title>
+  <meta name="description" content="39 political tactics in 8 groups, each with its source, how it works, where it works for you, its backfire risk, and how to counter it.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="pw-tactics">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>The Tactics Repertoire</h1>
+      <p class="summary">39 political tactics in 8 groups, each with its source, how it works, where it works for you, its backfire risk, and how to counter it.</p>
+      <div class="callout"><p class="callout-title">How to Read This</p>
+      <p>Each tactic shows its <strong>source</strong>, <strong>how it works</strong>, <strong>where it works for you</strong> as a central SRE leader, its <strong>backfire risk</strong>, and <strong>what to do when it's used on you</strong>. Run the <a href="index.html#the-risk-ledger">Risk Ledger</a> before using anything rated Medium or High. Tactics designed to harm a specific person are on <a href="when-used-on-you.html">When It's Used on You</a>, for defense.</p>
+      </div>
+
+      <h2>Information</h2>
+      <p class="lead-in">Whoever controls what's known, when, and how controls the decision.</p>
+      <section class="tactic" aria-labelledby="say-less">
+      <h3 id="say-less">Say Less Than Necessary</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 4: “Always say less than necessary”</dd>
+      <dt>How it works</dt><dd data-f="how">In contested settings, the more you say, the more you commit to and the more there is to attack. Short, deliberate statements make you look more certain, and silence pulls the other side into revealing their position.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">In an escalation call with a resistant pod: state the impact and the ask in two sentences, then stop. Let them propose the date. Whatever they offer first is usually more than you'd have asked for.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Overdone, it reads as evasive or cold. Keep it for negotiations, not for your team.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask closed, specific questions ("Is that a yes for Friday?"), and summarize their silence in writing: "I take it there's no date yet. I'll note that."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="own-the-data">
+      <h3 id="own-the-data">Be the Source of the Numbers</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>Power</em>: power flows from controlling resources others need. Also <em>The 48 Laws of Power</em>, Law 3: “Conceal your intentions”</dd>
+      <dt>How it works</dt><dd data-f="how">Become the place where reliability data lives: the SLO dashboard, pages per shift, the top offenders, time to owner engaged. Whoever produces the numbers frames them, and decides when they surface.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">You own the monthly reliability report. You choose which three numbers lead, and which pod's story gets told first.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> If people think you're hiding or spinning data, you lose trust fast. Never fake a number; choose emphasis, not facts.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask for raw-data access, and publish your own numbers from the same source. "Here's what App Insights shows for the same window."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="bad-news-first">
+      <h3 id="bad-news-first">Deliver the Bad News Yourself, First</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Common political practice (inoculation); Greene, <em>The 33 Strategies of War</em>, on seizing the initiative</dd>
+      <dt>How it works</dt><dd data-f="how">The first credible account of a bad event becomes the reference version. If you deliver it, with your framing and a plan, others have to argue against your version.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Tell your boss about the outage, the impact, and your three actions before the pod manager or an exec frames it as "SRE missed it."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Only risky if your account turns out to be wrong. Stick to facts you can prove, and label what's still unknown.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone beat you to it, don't fight their frame head on. Add evidence: "Adding to that, the timeline shows…"</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="strategic-ambiguity">
+      <h3 id="strategic-ambiguity">Strategic Ambiguity</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Greene, <em>The 33 Strategies of War</em>; also <em>The 48 Laws of Power</em>, Law 3: “Conceal your intentions”</dd>
+      <dt>How it works</dt><dd data-f="how">Keep a commitment or plan deliberately unspecific to keep options open until you have more information or leverage.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">When asked to commit SRE to a new service before the PRR is done: "We'll support it as soon as it's ready," without defining "ready" until you've checked.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> People notice vagueness. Use it with peers and execs on unsettled issues, never with your own team about their work, or they'll stop trusting your word.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Pin it down: owner, date, and what "done" means. "What specifically would 'ready' mean?"</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="seem-less-technical">
+      <h3 id="seem-less-technical">Let Them Underestimate You</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 21: “Play a sucker to catch a sucker: seem dumber than your mark”</dd>
+      <dt>How it works</dt><dd data-f="how">If people think you're not technical, they explain more, guard less, and reveal the weak spots in their own proposals. Naive-sounding questions often expose more than expert ones.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">In a design review: "Walk me through what happens if the provider is down. I want to make sure I follow." The gaps appear in their answer.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Overdone, it reinforces the "not technical" label. Pair it with one sharp, informed point per meeting.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When someone plays dumb with you, ask them to explain their own proposal in full detail, in writing.</dd>
+      </dl>
+      </section>
+
+      <h2>Timing</h2>
+      <p class="lead-in">The same move can win or lose depending on when you make it.</p>
+      <section class="tactic" aria-labelledby="pre-wire">
+      <h3 id="pre-wire">Pre-Wire the Decision</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>7 Rules of Power</em>; standard organizational politics</dd>
+      <dt>How it works</dt><dd data-f="how">Meet each key stakeholder one-on-one before the meeting. Resolve objections privately, so the meeting ratifies a decision that's already made.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Before the monthly review where you'll propose an error budget freeze: align the pod manager and your boss separately the day before.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> If someone finds out they were the only one not consulted, they'll feel ambushed. Pre-wire everyone who can block it.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If you suspect it's been pre-wired against you: "Has this been discussed already? I'd like a day to review before we decide."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="use-the-crisis">
+      <h3 id="use-the-crisis">Use the Crisis Window</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Machiavelli, <em>The Prince</em>, on seizing opportunity; <em>The 48 Laws of Power</em>, Law 35: “Master the art of timing”</dd>
+      <dt>How it works</dt><dd data-f="how">Attention and willingness to spend are highest right after a visible failure. Asks that were impossible last month become easy.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">In the exec readout after a Sev 1: "Two of our last three Sev 1s stalled on ownership. I'd like your sponsorship for the ownership program."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> If it looks opportunistic or tone-deaf (pitching while users are still down), it backfires. Ask after mitigation, tied directly to the incident.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When someone uses a crisis for a land grab, insist on facts first: "Let's see what the RCA shows before we reorganize."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="let-risk-land">
+      <h3 id="let-risk-land">Let a Documented Risk Land</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Organizational politics; related to <em>The 48 Laws of Power</em>, Law 9: “Win through your actions, never through argument”</dd>
+      <dt>How it works</dt><dd data-f="how">After you've warned in writing and been overruled, stop silently absorbing the consequences. When the risk materializes, the record speaks for you.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">A pod declines a quota alert you recommended, in writing. You stop manually watching the quota every afternoon. When throttling hits, the RCA shows the declined recommendation.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-high">High</span> Users get hurt, so never withhold incident response, never sabotage, and only do this after proper escalation. Done wrong, it looks like you let things fail on purpose.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone's warning lands in your lap, answer it in writing with a decision, an owner, and a date, or an explicit risk acceptance by someone senior.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="control-agenda">
+      <h3 id="control-agenda">Control the Agenda and the Clock</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 31: “Control the options: get others to play with the cards you deal”</dd>
+      <dt>How it works</dt><dd data-f="how">Whoever sets the agenda decides what gets discussed, in what order, and for how long. Items at the end of an agenda get rushed or dropped.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Put "open RCA actions by pod" first in the monthly review, while senior people are fresh and present.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Blatant agenda games get noticed. Keep it to legitimate prioritization.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Submit your agenda items in advance, in writing, and ask for a fixed time slot.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="wait-them-out">
+      <h3 id="wait-them-out">Wait Them Out</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 35: “Master the art of timing”</dd>
+      <dt>How it works</dt><dd data-f="how">When your position is weak, don't force it. Wait for the conditions to change: a new leader, a budget cycle, an incident.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">A pod manager blocks pod on-call. You park it, collect stuck-time data for two months, and raise it again at planning time with numbers.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> You can miss the window. Set yourself a date to revisit.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone is stalling you, set a decision deadline: "If there's no decision by Friday, I'll take it to [boss] at Monday's review."</dd>
+      </dl>
+      </section>
+
+      <h2>Alliances</h2>
+      <p class="lead-in">Power in organizations is mostly relationships. Build them before you need them.</p>
+      <section class="tactic" aria-labelledby="coalition-early">
+      <h3 id="coalition-early">Build the Coalition Before You Need It</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>Power</em>, on building networks</dd>
+      <dt>How it works</dt><dd data-f="how">Invest in relationships when you don't need anything: help in their incidents, share data, make introductions. When you do need support, it's already there.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Offer a pod manager a clean alert-noise analysis for free. Three months later, they're the first to back your ownership program.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> None, if it's genuine. If it's obviously transactional, people discount it.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Map who's allied with whom before contested decisions, and build your own coalition on that issue.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="sponsor">
+      <h3 id="sponsor">Get a Sponsor Above You</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>Power</em>, on relationships with powerful people</dd>
+      <dt>How it works</dt><dd data-f="how">A visible backer one or two levels up multiplies your influence. One line from them does more than ten of your meetings.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Get your boss to send a note to pod managers: "The ownership program is a priority for us this quarter."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Your fortunes become tied to theirs. If they leave or fall out of favor, you need other backers.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If your opponent has a sponsor, engage the sponsor directly with data rather than fighting their proxy.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="credible-messenger">
+      <h3 id="credible-messenger">Use a Credible Messenger</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Cialdini, <em>Influence</em> (authority); a borrowed-credibility version of <em>The 48 Laws of Power</em>, Law 7: “Get others to do the work for you”</dd>
+      <dt>How it works</dt><dd data-f="how">Some audiences trust a senior engineer more than a manager. Let the respected technical voice deliver the technical case.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Have your strongest SRE present the burn-rate alerting design to the pods. You frame the business case afterwards.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> As long as you credit them publicly. Taking the credit yourself destroys the relationship.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask the messenger questions directly, and see whether they own the content or are reciting it.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="win-influencer">
+      <h3 id="win-influencer">Win the Informal Leader</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Adapted from <em>The 48 Laws of Power</em>, Law 42: “Strike the shepherd and the sheep will scatter”. Used constructively: recruit the shepherd</dd>
+      <dt>How it works</dt><dd data-f="how">Every group has an informal leader whose opinion others follow. Convince them, and the group follows.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">The most respected engineer in a pod is skeptical of pod on-call. Spend an hour with them. If they agree, the pod does.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> None, if you persuade rather than pressure.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone is working on your team's informal leader, talk to that person directly and early.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="liking">
+      <h3 id="liking">Be Easy to Say Yes To</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Cialdini, <em>Influence</em> (liking)</dd>
+      <dt>How it works</dt><dd data-f="how">People say yes more to people they like: shared goals, genuine compliments, cooperation, familiarity.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Start pod syncs with something that went well for them before your asks.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Fake warmth is obvious. Make it real or skip it.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When someone is very charming before a big ask, separate the ask from the person: "Let me look at this on its own merits."</dd>
+      </dl>
+      </section>
+
+      <h2>Framing & Narrative</h2>
+      <p class="lead-in">How a situation is described often decides how it's resolved.</p>
+      <section class="tactic" aria-labelledby="their-priority">
+      <h3 id="their-priority">Frame It as Their Priority</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 13: “When asking for help, appeal to people's self-interest”</dd>
+      <dt>How it works</dt><dd data-f="how">Present your ask in terms of what the other person already cares about: their launch, their metric, their boss's priority. Not your needs.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Not "SRE needs SLOs." Instead: "An SLO gives your team a clear line for when you can ship faster, and protects the Q3 launch."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> If the link is a stretch, it sounds manipulative. Make the benefit real.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask, "What problem does this solve for my team?" and wait for a specific answer.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="own-the-story">
+      <h3 id="own-the-story">Own the Story</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 6: “Court attention at all costs” (adapted); Greene, <em>The 33 Strategies of War</em></dd>
+      <dt>How it works</dt><dd data-f="how">Be first with a clear, written summary: the incident recap, the meeting notes, the monthly report. The written record becomes the version people remember.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Send the incident summary within the hour, and the RCA share-out the same day.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Only if your summary is biased. Keep it factual, and others will start relying on yours.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Reply to a slanted summary quickly, in writing, with corrections and evidence.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="label-objection">
+      <h3 id="label-objection">Name the Objection Before They Do</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Voss, <em>Never Split the Difference</em> (labeling; the accusation audit)</dd>
+      <dt>How it works</dt><dd data-f="how">Say the other side's likely objections or feelings out loud first. It defuses them and signals you understand.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"This probably feels like SRE pushing work onto your team, and with your launch next month that's the last thing you need." Then make the ask.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Done mechanically, it sounds scripted. Use your own words.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Notice when your objections are named for you. Respond to the substance, not the empathy.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="numbers-weapon">
+      <h3 id="numbers-weapon">Turn Pain Into Numbers</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>Power</em>; standard business-case practice</dd>
+      <dt>How it works</dt><dd data-f="how">Opinions can be argued with; well-sourced numbers mostly can't. Translate pain into hours, pages, users affected, and money.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"This issue cost 26 engineer-hours last month, about 15% of one engineer, and paged on-call 31 times."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> If your numbers are challenged and found shaky, your credibility takes a hit. Show the source and method.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask for the method and the raw data, and check whether the time window was cherry-picked.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="social-proof">
+      <h3 id="social-proof">Show Others Already Do It</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Cialdini, <em>Influence</em> (social proof and authority)</dd>
+      <dt>How it works</dt><dd data-f="how">People follow what peers and respected authorities do. "Other teams already do this" and "this is how Google runs SRE" lower resistance.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"The Search pod already has an SLO and cut their pages by half." Or cite the SRE Workbook chapter.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> If the comparison doesn't hold up, it backfires. Use real examples.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">"That's them. What's different about our situation?"</dd>
+      </dl>
+      </section>
+
+      <h2>Leverage & Reciprocity</h2>
+      <p class="lead-in">Trades, obligations, and what others need from you.</p>
+      <section class="tactic" aria-labelledby="give-first">
+      <h3 id="give-first">Give First</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Cialdini, <em>Influence</em> (reciprocity)</dd>
+      <dt>How it works</dt><dd data-f="how">Help, information, or credit given first creates a feeling of obligation that makes your later ask easier.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Clean up a pod's alert noise for them, then ask for their PagerDuty escalation policy and a first-15-minutes runbook.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> None if genuine. Keeping score out loud ruins it.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Accept favors knowingly. Don't let a small favor buy a big concession: "Thanks, and that's separate from this decision."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="yes-if">
+      <h3 id="yes-if">Make the Trade-Off Public: “Yes, If…”</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Negotiation practice; <em>The 48 Laws of Power</em>, Law 9: “Win through your actions, never through argument”</dd>
+      <dt>How it works</dt><dd data-f="how">Never just say no. State the cost in writing so the requester has to own the trade-off.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"We can support the launch next week if the reliability project slips a month. Your call. Please confirm in writing."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> It's hard to argue with. Just make sure the trade-off you name is real.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When it's used on you, decide explicitly and document the decision. Don't leave it hanging.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="small-commitment">
+      <h3 id="small-commitment">Get a Small Public Commitment</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Cialdini, <em>Influence</em> (commitment and consistency)</dd>
+      <dt>How it works</dt><dd data-f="how">People act consistently with what they've said publicly. Get a small, specific commitment in front of others, then hold them to it.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">In the postmortem: "So we agree the target is under 5 pages a week from this alert?" Get the nod, then put it in the recap.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> If it feels like a trap, people stop agreeing to anything in public.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Avoid casual public commitments: "Let me come back to you on the number."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="dependency-leverage">
+      <h3 id="dependency-leverage">Use What They Need From You</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 11: “Learn to keep people dependent on you”</dd>
+      <dt>How it works</dt><dd data-f="how">Notice what others need from SRE (PRR sign-off, NOC coverage, launch support) and make it conditional on what you need.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"We'll take on NOC coverage for the new feature once the PRR items are done: runbook, alerts, PagerDuty route."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-high">High</span> Easily seen as holding launches hostage. Tie it to written standards your boss has agreed, not to personal favors.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Escalate to shared leadership with the business impact, or meet the written standard so the leverage disappears.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="indispensable">
+      <h3 id="indispensable">Become the Hub</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 11: “Learn to keep people dependent on you”</dd>
+      <dt>How it works</dt><dd data-f="how">Own something everyone needs in a crisis: the incident process, the NOC, the reliability data. People who need you consult you.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Your team runs every major incident and the monthly reliability review. Nobody plans a launch without talking to you.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Become a bottleneck and you burn out, and get seen as hoarding. Be indispensable as a function, not as a person: document and delegate.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone makes themselves the only path, build an alternative: documentation, a second contact, direct access.</dd>
+      </dl>
+      </section>
+
+      <h2>Visibility & Credit</h2>
+      <p class="lead-in">Work nobody sees doesn't build power.</p>
+      <section class="tactic" aria-labelledby="court-attention">
+      <h3 id="court-attention">Make Your Team's Work Visible</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 6: “Court attention at all costs” (applied to your team)</dd>
+      <dt>How it works</dt><dd data-f="how">Prevention is invisible by default. Make it visible on purpose: weekly updates, demos, before-and-after numbers, named shout-outs.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">The weekly update to your boss always includes one win, with names and numbers: "Ana's runbook cut NOC escalations on queue alerts to zero."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Bragging about trivia wears thin. Keep it to real outcomes.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If others' visibility crowds you out, get on the same stage: offer a slot in their review to present SRE's part.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="dont-outshine">
+      <h3 id="dont-outshine">Make Your Boss Look Good</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 1: “Never outshine the master”</dd>
+      <dt>How it works</dt><dd data-f="how">Bosses back people who make them look good and don't show them up. Let them present wins upward, and never correct them in public.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Give your boss the one-page reliability summary before their staff meeting, so they present it.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Overdone, you become invisible above your boss. Make sure at least one exec knows your work directly.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If a report is outshining you, back them. Their success reflects on you. Insecurity is the real risk.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="credit-generously">
+      <h3 id="credit-generously">Credit Generously, Sideways</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Pfeffer, <em>Power</em> (networks and reputation)</dd>
+      <dt>How it works</dt><dd data-f="how">Publicly credit pods and peers for fixes. People cooperate with leaders who make them look good.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"Thanks to the Assistant pod for the retry fix. Pages are down 80%." Sent to their manager and yours.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Almost none, and it compounds over time.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone credits you lavishly before an ask, enjoy it, then judge the ask on its merits.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="actions-not-arguments">
+      <h3 id="actions-not-arguments">Win With Results, Not Debate</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 9: “Win through your actions, never through argument”</dd>
+      <dt>How it works</dt><dd data-f="how">Arguments create resentment even when you win. A small, visible result changes minds without anyone having to admit they were wrong.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Instead of debating SLOs with skeptics, pilot one on a single journey and show the monthly report.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Results take time. Pick fast pilots.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask opponents for their pilot too: "Let's both try it for a month."</dd>
+      </dl>
+      </section>
+
+      <h2>Positioning</h2>
+      <p class="lead-in">Where you stand, and how you're seen, before any specific fight.</p>
+      <section class="tactic" aria-labelledby="behave-like-others">
+      <h3 id="behave-like-others">Change the Substance, Not the Vocabulary</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 38: “Think as you like but behave like others”</dd>
+      <dt>How it works</dt><dd data-f="how">New ideas get resisted when they sound foreign. Use the organization's language and rituals while changing what actually happens.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">If the culture says "launch checklist," call the PRR that. If they love their weekly ops meeting, put the SLO review inside it.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Very low. The only risk is looking like you're dressing up old ideas, so make sure the substance really changes.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When someone rebrands to slip a change past you, ask what's actually different.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="plan-to-end">
+      <h3 id="plan-to-end">Plan All the Way to the End</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 29: “Plan all the way to the end”</dd>
+      <dt>How it works</dt><dd data-f="how">Know the end state you want (pods on-call for their code, SRE as a partner, not a dumping ground) and choose each move for whether it leads there.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Don't win an argument about one alert in a way that poisons the relationship you'll need for the ownership program.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Rigid plans break. Re-plan quarterly.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Ask yourself where the other side's moves are heading, not just what they want today.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="concentrate-forces">
+      <h3 id="concentrate-forces">Pick Your Fights</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 23: “Concentrate your forces”</dd>
+      <dt>How it works</dt><dd data-f="how">Political capital is limited. Spend it on one or two issues that matter most, and concede the rest gracefully.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">This quarter: ownership and stuck incidents. Let the dashboard tooling debate go.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> You'll lose some small battles. That's the point.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When someone opens many small fights with you, ask which one actually matters to them.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="scarcity-time">
+      <h3 id="scarcity-time">Make Your Time Scarce</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 16: “Use absence to increase respect and honor”; Cialdini (scarcity)</dd>
+      <dt>How it works</dt><dd data-f="how">Being always available lowers the value of your attention. Being selective raises it.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Stop attending every pod standup. Send your SRE lead, and show up for the decisions.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Overdone, you look aloof or out of touch. Stay highly available to your own team.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone is "too busy" to engage, go through their calendar owner or their boss with a specific, short ask.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="recreate-yourself">
+      <h3 id="recreate-yourself">Shape Your Own Reputation</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source"><em>The 48 Laws of Power</em>, Law 25: “Re-create yourself”</dd>
+      <dt>How it works</dt><dd data-f="how">Reputations form by default unless you shape them. Decide what you want to be known for, and make deliberate, visible moves toward it.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">From "the IT Ops person" to "the person who owns the reliability story": monthly SLO reports, sharp questions in design reviews, clean incident leadership.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> A mismatch between image and substance gets exposed. Back it with results.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">If someone is labeling you ("not technical"), don't argue the label. Replace it with a stronger one through visible results.</dd>
+      </dl>
+      </section>
+
+      <h2>Pressure & Negotiation</h2>
+      <p class="lead-in">Moves for when you need a decision, not a discussion.</p>
+      <section class="tactic" aria-labelledby="fait-accompli">
+      <h3 id="fait-accompli">The Fait Accompli</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Greene, <em>The 33 Strategies of War</em>, Strategy 29: “Take small bites” (the fait accompli)</dd>
+      <dt>How it works</dt><dd data-f="how">Do something small within your own authority before asking permission. Once it exists and works, it becomes the status quo.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Start publishing pages-per-shift and time-to-owner-engaged in your weekly update without asking. Soon everyone expects it.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Outside your authority, it reads as going rogue. Stay strictly within your remit.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Name it and reopen it formally: "I don't think we decided this. Let's put it on the agenda."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="anchor-high">
+      <h3 id="anchor-high">Anchor High</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Negotiation research (anchoring); Cialdini (contrast)</dd>
+      <dt>How it works</dt><dd data-f="how">The first number sets the reference point. Ask for more than you expect, with a credible rationale, and settle where you wanted to be.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Ask for three engineers for the ownership program, backed by stuck-time data. Settle at two.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> An absurd anchor costs credibility. Keep it defensible.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Don't respond to their anchor. Reset with your own data-based number: "Our data supports about X."</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="calibrated-questions">
+      <h3 id="calibrated-questions">Make Them Solve Your Problem</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Voss, <em>Never Split the Difference</em> (calibrated questions)</dd>
+      <dt>How it works</dt><dd data-f="how">"How" and "what" questions make the other side work on your constraint instead of defending their position.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Asked to take on a launch with no runbook: "How am I supposed to support this at 3 a.m. without a runbook?" Then wait.</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> Overused, it sounds like a technique. Mix it with plain statements.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">When it's used on you, answer with your constraints and a question back.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="force-decision">
+      <h3 id="force-decision">Force a Decision Point</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Standard negotiation practice; <em>The 48 Laws of Power</em>, Law 35: “Master the art of timing”</dd>
+      <dt>How it works</dt><dd data-f="how">Open-ended discussions favor whoever benefits from delay. A clear deadline with a default forces the decision.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">"If I don't hear otherwise by Friday, we'll proceed with the escalation ladder as written."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-medium">Medium</span> Artificial deadlines get called out. Tie them to something real: a launch, a review, a quarter.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">"What happens if we miss that date?" Don't accept a deadline that only serves them.</dd>
+      </dl>
+      </section>
+      <section class="tactic" aria-labelledby="tactical-silence">
+      <h3 id="tactical-silence">Use Silence</h3>
+      <dl class="tactic-dl">
+      <dt>Source</dt><dd data-f="source">Voss, <em>Never Split the Difference</em>; <em>The 48 Laws of Power</em>, Law 4: “Always say less than necessary”</dd>
+      <dt>How it works</dt><dd data-f="how">After making an ask or hearing a weak offer, stay silent. Most people fill the silence with concessions or information.</dd>
+      <dt>Where it works for you</dt><dd data-f="where">Pod manager: "Maybe next quarter." You: [silence]. Them: "…though we could probably do the alert part this sprint."</dd>
+      <dt>Backfire risk</dt><dd data-f="risk"><span class="risk risk-low">Low</span> None, if used sparingly.</dd>
+      <dt>When it's used on you</dt><dd data-f="counter">Get comfortable with silence too. Repeat your position calmly instead of filling it.</dd>
+      </dl>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Build the Incident Program · SRE Leader's Field Guide</title>
+  <meta name="description" content="Severity criteria the NOC can apply, clear roles, PagerDuty paging that runs itself, a comms cadence, and quarterly drills.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-inc">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Build the Incident Program</h1>
+      <p class="summary">Severity criteria the NOC can apply, clear roles, PagerDuty paging that runs itself, a comms cadence, and quarterly drills.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> most long incidents aren't technically hard. They're disorganized. A consistent incident process shortens every incident, including the ones nobody can predict.</li>
+      <li><strong>For you:</strong> the incident process is the part of reliability you can own outright, even without owning code. Running it well is where non-coding SRE leaders earn the most credibility.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Use a clear incident command structure:</strong> an incident commander who coordinates, an operations lead who works the problem, and a communications lead who handles updates. Separate roles keep work from colliding. (<a href="https://sre.google/workbook/incident-response/" target="_blank" rel="noopener">Workbook, Ch. 9: Incident Response<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Declare early.</strong> It's cheaper to declare and downgrade than to declare late. (<a href="https://sre.google/sre-book/managing-incidents/" target="_blank" rel="noopener">SRE Book, Ch. 14<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Keep a live incident state document</strong> so anyone joining, or the next shift, can catch up quickly.</li>
+      <li><strong>Practice.</strong> Incident response is a skill. Drills and reviews make it routine before the real thing.</li>
+      <li><strong>Close the loop with blameless postmortems</strong> and tracked actions. (<a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">Ch. 10: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>The NOC declares, but L1 can't judge "serious."</strong> Severity must be objective criteria, not judgment.</li>
+      <li><strong>SRE often can't fix it.</strong> The process must include fast escalation to owners, and the <a href="../playbooks/stuck-incident.html">stuck clock</a>.</li>
+      <li><strong>Time zones:</strong> long incidents cross shifts, so handoffs are part of the process, not an afterthought.</li>
+      <li><strong>Execs join bridges.</strong> A communications role and cadence protects engineers from interruptions.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>PagerDuty services exist for at least the critical services (see <a href="ownership-engagement.html">Ownership</a>).</li>
+      <li>Your boss agrees to back the severity criteria and the comms cadence.</li>
+      <li>The NOC lead is a co-owner of the rollout.</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Week</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>Write severity criteria based on user impact: who, how many, how long</td><td>You + NOC lead</td><td>Severity table</td><td>The NOC can classify the last 5 incidents with it consistently</td></tr>
+      <tr><td>1–2</td><td>Define roles (incident lead, comms, subject experts) and who can play them</td><td>You</td><td>Roles page</td><td>Named people for each role, per shift</td></tr>
+      <tr><td>2</td><td>Configure PagerDuty: declaring an incident pages the right services; use PagerDuty incident workflows if your plan includes them (confirm with your team)</td><td>SRE</td><td>PagerDuty workflow</td><td>A test declaration pages correctly</td></tr>
+      <tr><td>2–3</td><td>Comms cadence and templates: exec update, status update, all-clear</td><td>You</td><td>Templates</td><td>Used in the next real incident</td></tr>
+      <tr><td>3</td><td>Agree the stuck clock and escalation ladder with pod managers</td><td>You</td><td>Signed ladder</td><td>Built into PagerDuty escalation policies</td></tr>
+      <tr><td>3–4</td><td>A live incident document template and a shift handoff routine</td><td>SRE + NOC lead</td><td>Templates</td><td>Used in the next incident that crosses a shift</td></tr>
+      <tr><td>4</td><td>RCA criteria and process (see the <a href="../rca/day-one.html">RCA section</a>)</td><td>You</td><td>RCA announcement</td><td>The next qualifying incident gets an RCA within 5 days</td></tr>
+      <tr><td>Quarterly</td><td>A 60-minute drill on a realistic AI scenario, including the NOC</td><td>SRE</td><td>Drill notes and actions</td><td>Gaps from the drill are tracked like RCA actions</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>Our incidents run long mainly because of coordination: who leads, who to page, who updates execs.
+I want to roll out a lightweight incident program over 4 weeks: objective severity criteria the NOC can apply,
+named roles, PagerDuty paging that runs itself, a comms cadence for execs, and quarterly drills.
+Ask: your backing on the severity criteria, and that execs use the comms channel rather than pinging engineers mid-incident.</pre></div>
+      <div class="code-card"><div class="code-head">To pod managers</div><pre>We're standardizing incidents: clear severity, one incident lead, and an escalation ladder with times.
+For you that means fewer vague pages, a clean escalation packet when we do page, and fewer execs going straight to your engineers.
+What we need: your PagerDuty service and escalation policy kept current, and agreement on the ladder times.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Severity criteria (starting point)</div><pre>Sev 1: Core journey (e.g. ask the assistant) failing or unusable for >= 25% of users, OR any data/security exposure.
+        Page owning pod + SRE immediately. Updates every 30 min. Exec notified.
+Sev 2: Core journey degraded (slow, errors 5-25%) OR a major feature down for a segment, > 15 minutes.
+        Page owning pod + SRE. Updates every 60 min.
+Sev 3: Minor feature degraded, workaround available, or small segment affected.
+        Ticket + business-hours follow-up. No exec updates.
+When unsure: declare the higher severity. Downgrading later is free.</pre></div>
+      <div class="code-card"><div class="code-head">Live incident document</div><pre>Incident: [title]   Sev: [x]   Declared: [time]   PagerDuty: [link]
+Incident lead: [name]   Comms: [name]   Bridge: [link]
+
+CURRENT STATUS (update every 30 min): [one or two sentences]
+Impact: [what users see, %, since when]
+What we know: [...]
+Ruled out: [...]
+Current theory / next decision: [...] by [time]
+Actions in flight: [who is doing what]
+Next update: [time]</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> severity criteria used in every incident; a named lead within 10 minutes; updates on schedule; drills held.</li>
+      <li><strong>Lagging:</strong> time to mitigate falling; time to owner engaged falling; fewer exec escalations to engineers; RCAs on time.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>Severity gets argued in the moment.</dt>
+      <dd>Counter: "Against the criteria, what's the severity?" If the criteria don't fit, fix them after the incident, not during.</dd>
+      <dt>Roles exist on paper; in practice everyone debugs.</dt>
+      <dd>Counter: the first question in every incident is "who's leading?" Drills build the habit.</dd>
+      <dt>Drills get cancelled for real work.</dt>
+      <dd>Counter: keep them to 60 minutes, put them in the calendar a quarter ahead, and bring the findings to leadership.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/incidents.html#inc-first15">First 15 Minutes</a> · <a href="../questions/incidents.html#inc-comms">Escalation &amp; Exec Comms</a> · <a href="../questions/incidents.html#inc-long">Long-Running Incidents</a>. Concepts: <a href="../concepts/alerting-incidents.html#incident-management">Incident Management</a> · <a href="../concepts/alerting-incidents.html#postmortems">Postmortems</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

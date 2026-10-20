@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Political Playbooks · SRE Leader's Field Guide</title>
+  <meta name="description" content="Eight situations you'll face, each with a sequence of moves, the risks, and what winning actually looks like.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="pw-scenarios">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Political Playbooks for an SRE Leader</h1>
+      <p class="summary">Eight situations you'll face, each with a sequence of moves, the risks, and what winning actually looks like.</p>
+      <div class="callout"><p class="callout-title">How These Work</p>
+      <p>Each playbook combines tactics from <a href="tactics.html">the repertoire</a> into a sequence of moves for a real situation you're likely to face. Each shows the risks, and what winning actually looks like (it's rarely total victory).</p>
+      </div>
+
+      <h2>A Pod Refuses to Own a Recurring Issue</h2>
+      <ol>
+      <li><strong>Turn pain into numbers:</strong> pages, hours, and users affected per month, from the top offenders data. (<a href="tactics.html#numbers-weapon">Turn Pain Into Numbers</a>)</li>
+      <li><strong>Give first:</strong> offer an analysis of their alert noise, or a quick fix SRE can do. (<a href="tactics.html#give-first">Give First</a>)</li>
+      <li><strong>Frame it as their priority:</strong> "This is eating time your engineers need for the launch." (<a href="tactics.html#their-priority">Frame It as Their Priority</a>)</li>
+      <li><strong>Make the trade-off public</strong> in writing: "We can keep absorbing it, and here's what it costs us. Your call." (<a href="tactics.html#yes-if">Yes, If…</a>)</li>
+      <li><strong>If still no:</strong> stop silently absorbing it, after documenting the warning. Bring it to the monthly review with your sponsor present. (<a href="tactics.html#let-risk-land">Let a Documented Risk Land</a>, <a href="tactics.html#sponsor">Sponsor</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> escalating too early burns the relationship. Letting the risk land must never mean withholding incident response. <strong>Winning looks like:</strong> the issue is in the pod's plan with an owner and a date, and they still take your calls.</p>
+
+      <h2>A Peer Takes Credit for SRE's Save</h2>
+      <ol>
+      <li><strong>Tell your story first next time:</strong> wins in your weekly update, with names and evidence. (<a href="tactics.html#own-the-story">Own the Story</a>)</li>
+      <li><strong>Reclaim it calmly in public:</strong> "Glad it worked. Ana built that fix. Ana, anything to add?" (<a href="when-used-on-you.html#credit-theft">Credit Theft</a>)</li>
+      <li><strong>Talk to the peer privately:</strong> "I want to make sure my team gets visibility for their work. Can we credit them in your updates?"</li>
+      <li><strong>If it repeats:</strong> make sure your boss already knows the facts from your updates.</li>
+      </ol>
+      <p><strong>Risks:</strong> looking petty if it's a one-off. <strong>Winning looks like:</strong> your team's name is on its work, and the peer credits you by default.</p>
+
+      <h2>An Exec Blames SRE for an Outage the Pod Caused</h2>
+      <ol>
+      <li><strong>Deliver the facts yourself, first,</strong> with the timeline and three actions. Blame the system, not the pod. (<a href="tactics.html#bad-news-first">Bad News First</a>)</li>
+      <li><strong>Use the evidence-based timeline</strong> to show the trigger and what SRE did. "The trigger was the 13:52 change. SRE escalated in 3 minutes."</li>
+      <li><strong>Turn it into an ask:</strong> "What would have prevented this is X. I need your support for it." (<a href="tactics.html#use-the-crisis">Use the Crisis Window</a>)</li>
+      <li><strong>Brief the pod manager before the exec does,</strong> so they hear the systemic framing from you. (<a href="tactics.html#pre-wire">Pre-Wire</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> pointing at the pod makes an enemy. Keep it systemic. <strong>Winning looks like:</strong> the exec's takeaway is "we need X," not "SRE failed," and the pod sees you as fair.</p>
+
+      <h2>Your Boss Surprises You in a Meeting</h2>
+      <ol>
+      <li><strong>Don't fight it in the room:</strong> "Good question. Let me get you accurate numbers by 3." (<a href="../guides/saying-i-dont-know.html">Saying "I Don't Know"</a>)</li>
+      <li><strong>Deliver early,</strong> in writing, with a plan.</li>
+      <li><strong>Privately afterwards:</strong> "I'd love a heads-up on topics like that, so I can bring data. Can I send you a weekly one-pager so you're never surprised either?" (<a href="tactics.html#dont-outshine">Make Your Boss Look Good</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> being defensive in public. <strong>Winning looks like:</strong> your boss starts using your one-pager in their own meetings.</p>
+
+      <h2>Competing for Headcount</h2>
+      <ol>
+      <li><strong>Collect the data a quarter early:</strong> toil %, pages per shift, time to owner engaged, stuck incidents.</li>
+      <li><strong>Build the coalition:</strong> pod managers who'd benefit say so to your boss. (<a href="tactics.html#coalition-early">Coalition</a>)</li>
+      <li><strong>Anchor with a defensible ask</strong> tied to outcomes. (<a href="tactics.html#anchor-high">Anchor High</a>)</li>
+      <li><strong>Pre-wire the decision-makers</strong> one-on-one before the planning meeting. (<a href="tactics.html#pre-wire">Pre-Wire</a>)</li>
+      <li><strong>Offer a trade:</strong> "With two engineers we deliver X by Q3. With one, Y by Q4." (<a href="tactics.html#yes-if">Yes, If…</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> inflated numbers backfire for years. <strong>Winning looks like:</strong> you get what you can defend, and your numbers become the reference for next year.</p>
+
+      <h2>The Offshore Vendor Games the Metrics</h2>
+      <ol>
+      <li><strong>Measure what matters yourself:</strong> escalation timeliness and runbook adherence on sampled tickets, not their dashboard. (<a href="tactics.html#own-the-data">Be the Source of the Numbers</a>)</li>
+      <li><strong>Ask about incentives:</strong> "How are analysts rewarded?" (<a href="../questions/offshore-noc.html#noc-lead">NOC Through the Vendor</a>)</li>
+      <li><strong>Put quality into the contract</strong> at the next review, using your sampled data. (<a href="tactics.html#force-decision">Force a Decision Point</a>)</li>
+      <li><strong>Protect the analysts in public</strong> while holding the vendor accountable in private.</li>
+      </ol>
+      <p><strong>Risks:</strong> blaming individual analysts for a vendor system problem. <strong>Winning looks like:</strong> quality measures are in the SOW, and escalation timeliness improves.</p>
+
+      <h2>You're Being Sidelined From Decisions</h2>
+      <ol>
+      <li><strong>Check the signs</strong> on <a href="when-used-on-you.html#information-starvation">Information Starvation</a> and <a href="when-used-on-you.html#the-meeting-after-the-meeting">the Meeting After the Meeting</a>.</li>
+      <li><strong>Ask directly</strong> to be included, tied to impact: "Reliability decisions without SRE have caused [incident]."</li>
+      <li><strong>Become the hub</strong> for something they can't do without: the reliability report, the incident process. (<a href="tactics.html#indispensable">Become the Hub</a>)</li>
+      <li><strong>Get your sponsor</strong> to add you to the right forums. (<a href="tactics.html#sponsor">Sponsor</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> complaining without leverage. <strong>Winning looks like:</strong> you're invited because decisions go worse without you.</p>
+
+      <h2>A New Leader Arrives and Tests You</h2>
+      <ol>
+      <li><strong>Bring the story before they ask:</strong> a one-page summary of reliability state, risks, and your plan. (<a href="tactics.html#own-the-story">Own the Story</a>)</li>
+      <li><strong>Learn what they care about</strong> and frame your priorities in their terms. (<a href="tactics.html#their-priority">Frame It as Their Priority</a>)</li>
+      <li><strong>Deliver one visible, quick win</strong> in the first 30 days. (<a href="tactics.html#actions-not-arguments">Win With Results</a>)</li>
+      <li><strong>Don't outshine them in public.</strong> Make their early decisions look good. (<a href="tactics.html#dont-outshine">Make Your Boss Look Good</a>)</li>
+      </ol>
+      <p><strong>Risks:</strong> being seen as part of the old regime. <strong>Winning looks like:</strong> they see you as the person who explains reliability to them.</p>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The situation doesn't match any playbook cleanly.</dt>
+      <dd>Counter: they rarely do. Pick the closest one, run the Risk Ledger, and take the first move only. Then reassess.</dd>
+      <dt>You win the battle and lose the relationship.</dt>
+      <dd>Counter: decide in advance what "winning" means. It's usually a commitment, not a defeat.</dd>
+      </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

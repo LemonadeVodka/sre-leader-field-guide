@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLOs From Zero · SRE Leader's Field Guide</title>
+  <meta name="description" content="From picking a user journey to a signed SLO and error budget policy in about six weeks, measured from data you already have.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-slo">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>SLOs From Zero</h1>
+      <p class="summary">From picking a user journey to a signed SLO and error budget policy in about six weeks, measured from data you already have.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> an SLO turns "is the assistant reliable?" from an opinion into a number, and the error budget turns "reliability or features?" into a rule instead of an argument.</li>
+      <li><strong>For you:</strong> SLOs are a central SRE leader's strongest tool for influence. You can't order a pod to fix something, but you can show its SLO burning in front of its manager and your boss, and point to a signed policy that says what happens next.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Start from the user's point of view.</strong> An SLI is the proportion of good events out of valid events, measured as close to the user as practical. (<a href="https://sre.google/workbook/implementing-slos/" target="_blank" rel="noopener">Workbook, Ch. 2<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Start with a few, achievable SLOs,</strong> based on current performance, then tighten over time. Aspirational targets nobody can hit get ignored.</li>
+      <li><strong>SLOs need stakeholder agreement:</strong> product, the engineering owner, and SRE. Otherwise there are no consequences when they're missed.</li>
+      <li><strong>Write it down:</strong> an SLO document and an error budget policy, reviewed regularly. (<a href="https://sre.google/workbook/slo-document/" target="_blank" rel="noopener">Appendix A: Example SLO Document<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/error-budget-policy/" target="_blank" rel="noopener">Appendix B: Example Error Budget Policy<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Learn from others' attempts:</strong> the case studies show that starting simple and iterating beats waiting for perfect measurement. (<a href="https://sre.google/workbook/slo-engineering-case-studies/" target="_blank" rel="noopener">Ch. 3: SLO Engineering Case Studies<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>SRE doesn't own the code.</strong> You can measure SLIs from existing request data in Application Insights without the pods changing anything. Start there.</li>
+      <li><strong>Azure Managed Grafana has no built-in SLO feature.</strong> You build an SLO dashboard yourself: a KQL query, a target line, and a budget panel.</li>
+      <li><strong>The product is AI.</strong> "Success" must include speed (TTFT) and arguably quality, not just HTTP 200. Start with success plus TTFT; add quality later.</li>
+      <li><strong>Firefighting leaves little time.</strong> Do one journey end to end first, rather than five halfway.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>The <a href="observability-foundation.html">observability foundation</a> is good enough: request data for the journey is in Application Insights.</li>
+      <li>One SRE engineer has about 20% of their time for 6 weeks.</li>
+      <li>A product partner and the owning pod's manager have agreed to take part.</li>
+      <li>Your boss has agreed to sign the error budget policy.</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Week</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>Pick 1–2 critical user journeys, such as "ask a question and get an answer"</td><td>You + product</td><td>Journey list</td><td>Product agrees these matter most</td></tr>
+      <tr><td>1–2</td><td>Define the SLI: what counts as good (succeeded and TTFT under N seconds) and valid</td><td>SRE + pod</td><td>SLI definition (one sentence)</td><td>A non-engineer can read and understand it</td></tr>
+      <tr><td>2–3</td><td>Measure it from Application Insights request data with a KQL query; review 4 weeks of history</td><td>SRE</td><td>Saved query; baseline number</td><td>You know today's actual performance</td></tr>
+      <tr><td>3</td><td>Build the Grafana SLO dashboard: SLI, target line, budget remaining, burn rate</td><td>SRE</td><td>Dashboard</td><td>It's linked from the SRE Daily and the service dashboard</td></tr>
+      <tr><td>4</td><td>Propose a target a little better than the baseline; agree it with the pod and product</td><td>You</td><td>Signed-off target</td><td>Pod manager and product say yes in writing</td></tr>
+      <tr><td>4–5</td><td>Write the SLO document and error budget policy; get your boss to sign</td><td>You</td><td>SLO doc + policy</td><td>Published and linked</td></tr>
+      <tr><td>5–6</td><td>Add burn-rate alerts (see <a href="alerting-paging.html">Alerting &amp; Paging</a>)</td><td>SRE</td><td>Alert rules → PagerDuty</td><td>Tested with a simulated burn</td></tr>
+      <tr><td>6+</td><td>Review weekly in the SRE Daily, monthly with leadership; revisit the target after a quarter</td><td>You</td><td>Monthly SLO report</td><td>The budget has influenced at least one real decision</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>Right now "is the assistant reliable?" is answered by gut feel, and reliability vs feature work is argued case by case.
+I want to pilot one SLO on [journey] over 6 weeks: measured from data we already have, agreed with [pod] and product,
+with an error budget policy you sign. Then we report one clear number monthly, and when the budget is gone,
+there's a pre-agreed response instead of a fight. Ask: your signature on the policy, and a note to [pod manager] backing it.</pre></div>
+      <div class="code-card"><div class="code-head">To a pod manager</div><pre>We'd like to agree one SLO with you for [journey]. SRE does the measuring and the dashboard; we'd need about 2 hours of
+[engineer]'s time to confirm what "good" means. The benefit for you: a clear line for when reliability work
+outranks features, decided in advance, instead of SRE escalating every bad week. And when the budget is healthy,
+you get evidence that you can ship faster.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">One-page SLO document</div><pre>SLO: [journey name]         Owner (pod): [team]    SRE contact: [name]    Product: [name]
+Status: [draft / agreed]    Agreed on: [date]      Review: quarterly
+
+User journey:  [what the user is trying to do]
+SLI:           % of [valid requests] that [succeed] AND [TTFT < N s]   (source: Application Insights, query: [link])
+Target:        [99.5%] over a rolling [28 days]
+Error budget:  [0.5%] of requests = about [X] bad requests per window
+Dashboard:     [Grafana link]
+Alerts:        burn-rate page via PagerDuty service [name]; slow-burn ticket
+Exclusions:    [e.g. requests from internal test accounts]
+Rationale:     [why this target: current performance, user expectations]</pre></div>
+      <div class="code-card"><div class="code-head">Error budget policy (starting point)</div><pre>Error Budget Policy: [service]     Signed: [boss], [pod manager], [SRE manager]   Date: [date]
+
+While budget remains: normal release pace.
+When 50% of the budget is spent in a window: review the top contributors in the weekly SRE/pod sync.
+When 100% is spent: non-critical launches pause until the SLI is back within target for [7] days,
+  and the pod's top reliability action becomes its #1 priority.
+Exceptions: [boss] may grant an exception in writing.
+Single incident using more than 20% of the budget: requires an RCA.</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> the SLO dashboard is opened in every SRE Daily. The target is signed. Burn-rate alerts exist.</li>
+      <li><strong>Lagging:</strong> SLO attainment trends up over a quarter. At least one decision (a launch held, or work prioritized) cited the budget. Fewer "is it reliable?" debates in leadership meetings.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>Everyone wants 99.99% on day one.</dt>
+      <dd>Counter: show the baseline. If you're at 98.7% today, 99.99% is fiction. Start at 99% or 99.5% and earn the next nine.</dd>
+      <dt>The SLO gets agreed, then ignored.</dt>
+      <dd>Counter: the signed error budget policy and the monthly leadership report are what give it teeth.</dd>
+      <dt>Arguments about the perfect SLI delay everything.</dt>
+      <dd>Counter: ship a good-enough SLI in week 2, and improve it in version 2.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/credibility.html#cred-story">Owning the Reliability Story</a> · <a href="../questions/ai-product.html#ai-latency">AI Latency</a> · <a href="../questions/peers-leaders.html#boss">Boss &amp; Execs</a>. Concepts: <a href="../concepts/reliability-targets.html#sli">SLI</a> · <a href="../concepts/reliability-targets.html#slo">SLO</a> · <a href="../concepts/reliability-targets.html#error-budget-policy">Error Budget Policy</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

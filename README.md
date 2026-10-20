@@ -8,13 +8,15 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 | Section | Pages |
 |---|---|
-| **Home** | One-tap buttons for the meeting you're in (9) and the moment you're in (11), plus search |
-| **Question Bank** (208 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
+| **Home** | One-tap buttons for the meeting you're in (9) and the moment you're in (12), plus search |
+| **Question Bank** (214 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
 | **Root Cause Analysis** | RCA Day One · RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
-| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · SRE Daily · Performance Engineering |
+| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · Running the Postmortem Meeting · SRE Daily (ops, projects, launches, learning, team) · Performance Engineering. Agenda times are shown in minutes. |
+| **Implementation** | Roadmap & Self-Check · Ownership & Engagement · Incident Program · Observability Foundation · Alerting & Paging · SLOs From Zero · Safe Change · Toil & Automation. Each program is grounded in the SRE Workbook. |
 | **AI Reliability** | What's Different About AI · Latency: TTFT & TTLT · Tokens, Quotas & Cost · Quality & Safety · Agents & Model Providers |
 | **SRE Concepts** (25 concepts) | Overview & Roadmap · Observability Day One · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
 | **Guides** | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader |
+| **Power & Politics** | The Real Playbook (with the Risk Ledger) · Tactics Repertoire (39 tactics, paraphrased from Greene, Machiavelli, Pfeffer, Cialdini, Voss) · When It's Used on You · Political Playbooks |
 
 - **Questions:** every question has an **Ask next** follow-up for weak answers, plus collapsed **Coaching notes**: what asking it signals, and what strong and weak answers sound like.
 - **Concepts:** every concept follows the same seven parts:

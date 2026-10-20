@@ -50,6 +50,7 @@
       <p>If the draft comes back weak, send the feedback reply from <a href="judge-an-rca.html#a-reply-you-can-send">Judging an RCA</a>. It's specific and doesn't need technical depth.</p>
 
       <h2>Review Day</h2>
+      <p><strong>Running the meeting?</strong> Use the <a href="../playbooks/postmortem-meeting.html">Postmortem Meeting playbook</a>: the before-checklist, your script, and how to handle the room.</p>
       <ul>
       <li>Run the <a href="run-an-rca.html#step-8-run-the-review-45-minutes">45-minute agenda</a>, and read the blameless opening aloud.</li>
       <li>Invite the person closest to the first alert, often a NOC analyst, to walk through the first 15 minutes.</li>
@@ -93,42 +94,42 @@
 
       <h2>Copy-Ready Messages</h2>
       <div class="code-card"><div class="code-head">Assigning the RCA</div><pre>Hi [author], thanks for leading [incident]. Could you own the RCA?
-      - Template: [link]   Evidence so far: PagerDuty export [link], Grafana panels [link], App Insights queries [link], channel export [link]
-      - Draft by: [date, +3 working days]   Review: [date/time, +5 working days] (invite sent)
-      - Quick 15-min check-in on [date] to help shape it.
-      Thanks. This is about learning how our system let this happen, not about blame.</pre></div>
+- Template: [link]   Evidence so far: PagerDuty export [link], Grafana panels [link], App Insights queries [link], channel export [link]
+- Draft by: [date, +3 working days]   Review: [date/time, +5 working days] (invite sent)
+- Quick 15-min check-in on [date] to help shape it.
+Thanks. This is about learning how our system let this happen, not about blame.</pre></div>
       <div class="code-card"><div class="code-head">Review invite</div><pre>RCA review: [incident title], [date of incident], Sev [x]   (45 min)
-      Draft: [link]. Please read before the meeting.
+Draft: [link]. Please read before the meeting.
 
-      00-05  Ground rules + impact
-      05-20  Timeline walk (where did we lose time?)
-      20-30  Trigger, contributing factors, the four defenses
-      30-40  Actions: rank, owner, date, done means
-      40-45  Who we share this with; when actions are reviewed
+ 5 min   Ground rules + impact
+15 min   Timeline walk (where did we lose time?)
+10 min   Trigger, contributing factors, the four defenses
+10 min   Actions: rank, owner, date, done means
+ 5 min   Who we share this with; when actions are reviewed
 
-      We're here to understand the system, not to find someone to blame.</pre></div>
+We're here to understand the system, not to find someone to blame.</pre></div>
       <div class="code-card"><div class="code-head">Blameless RCA announcement (send once)</div><pre>Starting this month, every Sev 1/2 incident, any customer impact over 30 minutes, and any repeat incident gets an RCA within 5 working days.
 
-      How we run them:
-      - Blameless: we assume people did what made sense with what they knew. We look for what in our systems allowed the incident.
-      - Evidence-based: timelines come from Grafana, App Insights, PagerDuty, and the Activity Log.
-      - Few, strong actions: 3-5, each with an owner, a date, and what "done" means, tracked until verified.
+How we run them:
+- Blameless: we assume people did what made sense with what they knew. We look for what in our systems allowed the incident.
+- Evidence-based: timelines come from Grafana, App Insights, PagerDuty, and the Activity Log.
+- Few, strong actions: 3-5, each with an owner, a date, and what "done" means, tracked until verified.
 
-      Template: [link]. Questions: talk to me.</pre></div>
+Template: [link]. Questions: talk to me.</pre></div>
       <div class="code-card"><div class="code-head">Action item nudge</div><pre>Hi [owner], checking on the RCA action "[action]" from [incident], due [date].
-      Where is it now, and what's a realistic date? If something's in the way (priority, access, another team), tell me and I'll help clear it.
-      This one matters because it [prevents / detects / mitigates] [the failure].</pre></div>
+Where is it now, and what's a realistic date? If something's in the way (priority, access, another team), tell me and I'll help clear it.
+This one matters because it [prevents / detects / mitigates] [the failure].</pre></div>
       <div class="code-card"><div class="code-head">RCA complete: share-out</div><pre>RCA complete: [incident title] ([date], Sev [x])
 
-      What happened: [one sentence in user terms]
-      Impact: [% / number affected] for [duration]
-      Why: [trigger] + [top 1-2 contributing factors]
-      What we're changing:
-      1. [action]: [owner], [date]
-      2. [action]: [owner], [date]
-      3. [action]: [owner], [date]
-      Lesson for other teams: [one line]
-      Full RCA: [link]</pre></div>
+What happened: [one sentence in user terms]
+Impact: [% / number affected] for [duration]
+Why: [trigger] + [top 1-2 contributing factors]
+What we're changing:
+1. [action]: [owner], [date]
+2. [action]: [owner], [date]
+3. [action]: [owner], [date]
+Lesson for other teams: [one line]
+Full RCA: [link]</pre></div>
 
       <h2>The One-Page RCA Cheat Sheet</h2>
       <div class="callout"><p class="callout-title">Print this section, or keep it open in a tab</p>

@@ -28,8 +28,19 @@
     ]},
     { section: "Playbooks", items: [
       { id: "p-stuck", href: "playbooks/stuck-incident.html", title: "When an Incident Is Stuck" },
+      { id: "p-pm", href: "playbooks/postmortem-meeting.html", title: "Running the Postmortem Meeting" },
       { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
       { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" }
+    ]},
+    { section: "Implementation", items: [
+      { id: "impl", href: "implement/index.html", title: "Roadmap & Self-Check" },
+      { id: "impl-own", href: "implement/ownership-engagement.html", title: "Ownership & Engagement" },
+      { id: "impl-inc", href: "implement/incident-program.html", title: "Incident Program" },
+      { id: "impl-obs", href: "implement/observability-foundation.html", title: "Observability Foundation" },
+      { id: "impl-alert", href: "implement/alerting-paging.html", title: "Alerting & Paging" },
+      { id: "impl-slo", href: "implement/slos.html", title: "SLOs From Zero" },
+      { id: "impl-change", href: "implement/safe-change.html", title: "Safe Change" },
+      { id: "impl-toil", href: "implement/toil-automation.html", title: "Toil & Automation" }
     ]},
     { section: "AI Reliability", items: [
       { id: "ai", href: "ai/index.html", title: "What's Different About AI" },
@@ -51,6 +62,12 @@
       { id: "g-idk", href: "guides/saying-i-dont-know.html", title: "Saying \"I Don't Know\"" },
       { id: "g-ask", href: "guides/how-to-ask.html", title: "How to Ask" },
       { id: "g-path", href: "guides/it-ops-to-sre.html", title: "From IT Ops to SRE Leader" }
+    ]},
+    { section: "Power & Politics", items: [
+      { id: "pw", href: "power/index.html", title: "The Real Playbook" },
+      { id: "pw-tactics", href: "power/tactics.html", title: "Tactics Repertoire" },
+      { id: "pw-defense", href: "power/when-used-on-you.html", title: "When It's Used on You" },
+      { id: "pw-scenarios", href: "power/scenarios.html", title: "Political Playbooks" }
     ]}
   ];
 
@@ -105,6 +122,8 @@
     "Playbooks": icon('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
     "AI Reliability": icon('<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>'),
     "SRE Concepts": icon('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>'),
+    "Implementation": icon('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3.5 17.5a1.8 1.8 0 0 0 2.5 2.5l5.8-5.8a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.1-.4-.4-2.1z"/>'),
+    "Power & Politics": icon('<path d="M9 21h6M10 21l.6-5h2.8l.6 5"/><path d="M8.5 16h7"/><circle cx="12" cy="7.5" r="2.5"/><path d="M10 10.5L9 16M14 10.5l1 5.5"/><path d="M12 3V2"/>'),
     "Guides": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
   };
 

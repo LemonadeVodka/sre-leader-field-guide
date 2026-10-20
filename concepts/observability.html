@@ -19,6 +19,10 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Observability & Telemetry</h1>
       <p class="summary">How you know what your system is doing: telemetry, metrics, logs, traces, the golden signals, dashboards, and quality signals for an AI product.</p>
+      <div class="callout"><p class="callout-title">New to Your Telemetry Stack?</p>
+      <p>Start with <a href="observability-day-one.html"><strong>Observability Day One</strong></a>. It follows one request through OpenTelemetry, Application Insights, Grafana, PagerDuty, and Pendo, then come back here for each concept.</p>
+      </div>
+
       <section class="concept" aria-labelledby="monitoring-vs-observability">
       <h2 id="monitoring-vs-observability">Monitoring vs Observability</h2>
       <p class="one-liner" data-block="sentence">Monitoring tells you <em>that</em> something is wrong. Observability lets you work out <em>why</em>, including for problems nobody predicted.</p>
@@ -42,6 +46,7 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“What question couldn't we answer during the last incident?”</em> · <em>“Can we split the error rate by region and app version right now?”</em> · <a href="../questions/incidents.html#inc-mitigate">Driving to Mitigation questions</a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/observability-foundation.html">Implementation: Observability Foundation</a>.</p>
       <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6: Monitoring Distributed Systems<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/overview" target="_blank" rel="noopener">Microsoft Learn: Azure Monitor overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
 
@@ -70,6 +75,7 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“How does our telemetry bill grow as traffic grows?”</em> · <em>“Which service generates the most log data, and do we use it?”</em> · <a href="../questions/peers-leaders.html#vendor">Vendor &amp; Tool Pitch questions</a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/observability-foundation.html">Implementation: Observability Foundation</a>.</p>
       <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview" target="_blank" rel="noopener">Microsoft Learn: OpenTelemetry in Azure Monitor<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/monitoring/" target="_blank" rel="noopener">Workbook, Ch. 4: Monitoring<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
 
@@ -98,6 +104,7 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“Where does the time go in one slow request?”</em> · <em>“Do we have a trace for the request that failed?”</em> · <a href="../questions/incidents.html#inc-stuck">When It's Stuck questions</a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/observability-foundation.html">Implementation: Observability Foundation</a>.</p>
       <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data" target="_blank" rel="noopener">Microsoft Learn: Distributed tracing in Application Insights<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview" target="_blank" rel="noopener">Microsoft Learn: Log Analytics overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
 
@@ -126,6 +133,7 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“What does a normal day look like on this graph?”</em> · <em>“Which three graphs would you look at first at 3 a.m.?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/observability-foundation.html">Implementation: Observability Foundation</a>.</p>
       <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6: Monitoring Distributed Systems<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
 
@@ -154,6 +162,7 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“Who owns this dashboard, and when was it last changed?”</em> · <em>“Is there an annotation for the change before this spike?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/observability-foundation.html">Implementation: Observability Foundation</a>.</p>
       <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/best-practices/" target="_blank" rel="noopener">Grafana docs: Dashboard best practices<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/annotate-visualizations/" target="_blank" rel="noopener">Grafana docs: Annotations<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
 
@@ -182,7 +191,8 @@
       </ul>
       </div>
       <p data-block="ask"><strong>Ask this:</strong> <em>“If the assistant gave wrong answers fast, would anything turn red?”</em> · <em>“What changed in the prompts or model this week?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
-      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview" target="_blank" rel="noopener">Microsoft Learn: Application Insights overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      <p class="impl-link"><strong>Ready to roll it out?</strong> See <a href="../implement/safe-change.html">Implementation: Safe Change</a>.</p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="../ai/quality-safety.html">Full guide: Quality &amp; Safety Signals</a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview" target="_blank" rel="noopener">Microsoft Learn: Application Insights overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
       </section>
     </article>
     <nav class="pager" id="pager"></nav>

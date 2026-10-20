@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toil Reduction & Automation · SRE Leader's Field Guide</title>
+  <meta name="description" content="Measure toil, rank it by real cost, automate it or hand it back to the pod, and take manual work off the NOC.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-toil">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Toil Reduction & Automation</h1>
+      <p class="summary">Measure toil, rank it by real cost, automate it or hand it back to the pod, and take manual work off the NOC.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> toil (manual, repetitive work that grows with traffic) quietly eats the team's capacity. Every hour of toil is an hour not spent preventing the next incident.</li>
+      <li><strong>For you:</strong> measured toil is your strongest headcount and priority argument. "40% of SRE time goes to manual restarts caused by [pod]'s service" gets action that "we're busy" never will.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Toil is manual, repetitive, automatable, reactive, without lasting value, and grows with service size.</strong> Not all operational work is toil. (<a href="https://sre.google/workbook/eliminating-toil/" target="_blank" rel="noopener">Workbook, Ch. 6: Eliminating Toil<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Measure before you fix.</strong> Identify and quantify toil so you prioritize by real cost, not by what's most annoying.</li>
+      <li><strong>Treat toil reduction as engineering work,</strong> with its own time, priority, and success measures.</li>
+      <li><strong>Start small and safe:</strong> automate well-understood steps first, and keep humans in the loop for risky actions.</li>
+      <li><strong>The SRE norm is to keep toil to a minority of the team's time,</strong> commonly around half at most. (<a href="https://sre.google/sre-book/eliminating-toil/" target="_blank" rel="noopener">SRE Book, Ch. 5<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>Much of your toil is caused by pod code</strong> (restarts, cleanups, workarounds). The best "automation" is often handing it back with data: "fix the cause."</li>
+      <li><strong>The offshore NOC does toil too.</strong> Lookups and copy-paste steps in runbooks are the easiest wins, and they reduce errors.</li>
+      <li><strong>Firefighting crowds out automation.</strong> Without protected time, it never happens.</li>
+      <li><strong>Some automation needs pod access</strong> or service accounts, which take time. Request them early.</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>The team agrees to tag their time for two weeks (rough is fine).</li>
+      <li>A protected slice of time, such as one engineer at 50%, for the top item.</li>
+      <li>The <a href="alerting-paging.html">alerting cleanup</a> done or underway. Noisy pages are often the biggest toil.</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Weeks</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1–2</td><td>Tag time for two weeks: project, toil, interrupts. Include the NOC's top manual tasks</td><td>SRE + NOC lead</td><td>Toil log</td><td>A baseline toil % exists</td></tr>
+      <tr><td>3</td><td>Rank toil items by hours per month; mark each as automate, fix the cause (pod), or accept</td><td>SRE + you</td><td>Ranked toil list</td><td>The top 5 each have a decision and an owner</td></tr>
+      <tr><td>3</td><td>Set a target, such as toil under 50%, and agree it with your boss</td><td>You</td><td>Target</td><td>Agreed and reported monthly</td></tr>
+      <tr><td>4–8</td><td>Automate the top SRE-owned item; hand the top pod-caused item back with data</td><td>SRE / you</td><td>Automation; pod commitment</td><td>Hours measured before and after</td></tr>
+      <tr><td>4–8</td><td>Automate one NOC runbook step (a lookup or safe restart)</td><td>SRE + NOC lead</td><td>Automated step</td><td>NOC time and errors on that task drop</td></tr>
+      <tr><td>Quarterly</td><td>Re-measure toil for one week; report the trend and hours reinvested</td><td>You</td><td>Toil report</td><td>Toil % trending down</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>Two weeks of time tagging shows SRE spends about [X%] on toil, about [N] engineer-hours a month. The top 3 items are [list].
+Plan: automate [item 1] ourselves, get [pod] to fix the cause of [item 2], and take [item 3] off the NOC.
+Target: toil under [50%] by [quarter end], with the hours reinvested in [SLOs / alerting]. Ask: protect one engineer at 50% for 6 weeks.</pre></div>
+      <div class="code-card"><div class="code-head">To a pod manager</div><pre>Your service generates about [N] hours a month of manual work for SRE and the NOC: [task] about [count] times.
+We can keep absorbing it, but the real fix is [cause]. Can we get it into your next planning cycle?
+We'll share the before-and-after numbers so your team gets credit for the improvement.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Toil log</div><pre>Task | Who does it (SRE / NOC) | How often (per week) | Minutes each | Hours per month | Triggered by (alert / ticket / request) |
+Caused by (service / pod) | Decision (automate / fix cause / accept) | Owner | Status</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> toil measured; the top 5 decided; one automation in progress at all times.</li>
+      <li><strong>Lagging:</strong> toil % falling quarter over quarter; hours reinvested into reliability projects; fewer NOC errors on automated tasks.</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>Engineers automate what's fun, not what's costly.</dt>
+      <dd>Counter: rank strictly by hours per month. Fun projects wait.</dd>
+      <dt>Time tagging gets abandoned after three days.</dt>
+      <dd>Counter: keep it rough (three categories, daily), and explain what the data will win: headcount or pod fixes.</dd>
+      <dt>Automation creates a new failure mode.</dt>
+      <dd>Counter: start with safe, reversible actions. Add logging, and a human approval step for anything risky.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/peers-leaders.html#roadmap">Roadmap &amp; Priorities</a> · <a href="../questions/sre-team.html#oneonone">1:1 With an Engineer</a> · <a href="../questions/offshore-noc.html#noc-instructions">Instructions That Stick</a>. Concepts: <a href="../concepts/change-and-toil.html#toil">Toil</a> · <a href="../concepts/change-and-toil.html#automation">Automation</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

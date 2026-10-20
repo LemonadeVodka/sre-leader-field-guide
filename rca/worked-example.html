@@ -45,11 +45,11 @@
       </table></div>
       <p><strong>Time to detect:</strong> 7 minutes (good). <strong>Time from detection to mitigation:</strong> 68 minutes (the problem). Most of it was lost in NOC escalation (19 minutes) and in finding an owner (16 minutes).</p>
       <div class="code-card"><div class="code-head">The kind of query an engineer ran (you don't need to write it)</div><pre>// Application Insights / Log Analytics (KQL): throttled calls to the model provider, per minute
-      dependencies
-      | where timestamp between (datetime(2026-10-08 13:30) .. datetime(2026-10-08 15:45))
-      | where target has "model-provider"
-      | summarize throttled = countif(resultCode == "429"), total = count() by bin(timestamp, 1m)
-      | render timechart</pre></div>
+dependencies
+| where timestamp between (datetime(2026-10-08 13:30) .. datetime(2026-10-08 15:45))
+| where target has "model-provider"
+| summarize throttled = countif(resultCode == "429"), total = count() by bin(timestamp, 1m)
+| render timechart</pre></div>
       <p><em>You: "Where did 14:05 come from, the graph or someone's memory?" "Can we link the PagerDuty entry for the acknowledgement time?"</em></p>
 
       <h2>Step 3: Impact in User Terms</h2>

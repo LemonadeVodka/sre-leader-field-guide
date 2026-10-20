@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Safe Change · SRE Leader's Field Guide</title>
+  <meta name="description" content="Make every change visible, gradual, and reversible, including prompts, model versions, and safety settings, without adding a CAB.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="impl-change">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Safe Change: Canary, Rollback & Prompt/Model Changes</h1>
+      <p class="summary">Make every change visible, gradual, and reversible, including prompts, model versions, and safety settings, without adding a CAB.</p>
+      <h2>Why It Matters</h2>
+      <ul>
+      <li><strong>For the business:</strong> most incidents start with a change. Making change small, gradual, visible, and reversible prevents incidents and shortens the ones that still happen.</li>
+      <li><strong>For you:</strong> for an AI product, prompt and model changes are code changes. If they skip the safety steps, you'll keep getting "up but wrong" incidents nobody saw coming. This is also the modern answer to the CAB, and leading it shows you've moved from IT Ops to SRE thinking.</li>
+      </ul>
+
+      <h2>What the Workbook Says</h2>
+      <ul>
+      <li><strong>Canarying</strong> means releasing a change to a small part of production first and comparing it against the rest before going wider. (<a href="https://sre.google/workbook/canarying-releases/" target="_blank" rel="noopener">Workbook, Ch. 16: Canarying Releases<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Choose canary metrics that reflect user impact,</strong> and give the canary enough time and traffic to tell the difference.</li>
+      <li><strong>Configuration changes are a major source of outages,</strong> and deserve the same rigor as code: review, versioning, and gradual rollout. (<a href="https://sre.google/workbook/configuration-design/" target="_blank" rel="noopener">Ch. 14: Configuration Design<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/configuration-specifics/" target="_blank" rel="noopener">Ch. 15: Configuration Specifics<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      <li><strong>Releases should be repeatable and automated,</strong> with rollback as a normal, practiced operation. (<a href="https://sre.google/sre-book/release-engineering/" target="_blank" rel="noopener">SRE Book, Ch. 8: Release Engineering<span class="visually-hidden"> (opens in a new tab)</span></a>)</li>
+      </ul>
+
+      <h2>Reality Check</h2>
+      <ul>
+      <li><strong>Pods own the pipelines.</strong> SRE's job is to set the standard, make changes visible, and measure change-caused incidents, not to build every pipeline.</li>
+      <li><strong>Prompts, model versions, and safety settings may be edited in a portal,</strong> outside any pipeline. Find these first, because they're your biggest blind spot.</li>
+      <li><strong>Your IT Ops instinct may be to add approvals.</strong> Resist it: approvals slow change without catching much. Canaries and rollback catch the problems.</li>
+      <li><strong>Feature flags and canaries need tooling</strong> (confirm what your pods use, for example Azure App Configuration).</li>
+      </ul>
+
+      <h2>Before You Start</h2>
+      <ul class="done-list">
+      <li>Change-caused incidents counted from recent RCAs. This is your business case.</li>
+      <li>Pod managers willing to adopt a change standard.</li>
+      <li>A Grafana annotation source available (pipeline webhook or Activity Log query).</li>
+      </ul>
+
+      <h2>The Rollout Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Weeks</th><th>Step</th><th>Owner</th><th>Artifact</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1–2</td><td>Inventory every change type: code, config, infrastructure, prompts, model versions, safety settings, feature flags. How does each ship today?</td><td>SRE + pods</td><td>Change-type inventory</td><td>Every type has a "how it ships" and an owner</td></tr>
+      <tr><td>2–4</td><td>Make every change type appear as a Grafana annotation</td><td>SRE + pods</td><td>Annotation feed</td><td>A prompt change shows on the dashboards within minutes</td></tr>
+      <tr><td>3–6</td><td>Agree a change standard: versioned, reviewed, canaried, rollback in under 10 minutes</td><td>You + pod managers</td><td>Change standard</td><td>Signed by pod managers</td></tr>
+      <tr><td>4–10</td><td>Pods put the riskiest types (prompts and models first) through canary with automatic rollback; add offline evals for AI changes</td><td>Pods</td><td>Canary pipeline; eval gate</td><td>The next prompt change rolls to 5% first</td></tr>
+      <tr><td>6–10</td><td>Make rollback of the riskiest change types a pre-approved SRE lever</td><td>You + pods</td><td>Lever agreement</td><td>SRE can roll back without waiting</td></tr>
+      <tr><td>8+</td><td>Freeze rules tied to the error budget policy; track the change failure rate monthly</td><td>You</td><td>Freeze rules; monthly metric</td><td>Change-caused incidents trend down</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>How to Sell It</h2>
+      <div class="code-card"><div class="code-head">To your boss</div><pre>[X] of our last [Y] incidents started with a change, including [N] prompt or model changes that skipped any testing.
+Instead of adding approvals (slow, and they don't catch much), I want every change type visible on our dashboards,
+and the riskiest ones (prompts and models) canaried with fast rollback. Ask: back a change standard with pod leadership this quarter.</pre></div>
+      <div class="code-card"><div class="code-head">To a pod manager</div><pre>We're not adding a CAB. We want your prompt and model changes to go to 5% of traffic first, with automatic rollback,
+and to show up on our dashboards. That means you can ship faster with less risk, and when something does go wrong,
+it hits 5% of users for minutes instead of everyone for an hour.</pre></div>
+
+      <h2>Copy-Ready Artifacts</h2>
+      <div class="code-card"><div class="code-head">Change-type inventory</div><pre>Change type | Example | Owner | How it ships today (pipeline / portal / manual) | Reviewed? | Versioned? |
+Canary? | Annotated in Grafana? | Rollback method + time | Pre-approved SRE lever? | Gap to close</pre></div>
+      <div class="code-card"><div class="code-head">Change standard (one page)</div><pre>Every production change, including prompts, model versions, safety settings and config:
+1. Is versioned and reviewed by a second person.
+2. Appears as an annotation on the service's Grafana dashboards.
+3. Rolls out gradually (canary at 5% or less first) with automatic rollback on SLI degradation.
+4. AI changes pass offline evals against the current version before rollout.
+5. Can be rolled back in under 10 minutes; rollback is tested quarterly.
+6. During an error-budget freeze: only fixes and reliability changes ship.</pre></div>
+
+      <h2>How You'll Know It's Working</h2>
+      <ul>
+      <li><strong>Leading:</strong> % of change types annotated; % of prompt and model changes canaried; rollback time tested.</li>
+      <li><strong>Lagging:</strong> change-caused incidents falling; change failure rate falling; shorter time to mitigate for change-caused incidents (rollback is quick).</li>
+      </ul>
+
+      <h2>What Actually Happens</h2>
+      <div class="callout watch">
+      <dl>
+      <dt>"Prompts aren't code."</dt>
+      <dd>Counter: show the last quality incident caused by a prompt change. Then ask for the smallest step: annotate every prompt change.</dd>
+      <dt>Canaries run too short to catch anything.</dt>
+      <dd>Counter: agree a minimum canary duration and traffic level, and let the canary decide automatically on SLIs.</dd>
+      <dt>Portal edits bypass everything.</dt>
+      <dd>Counter: lock portal permissions down over time, and annotate portal changes from the Activity Log until then.</dd>
+      </dl>
+      </div>
+
+      <h2>Questions to Ask</h2>
+      <p><a href="../questions/ai-product.html#ai-changes">Model &amp; Prompt Changes</a> · <a href="../questions/technical-meetings.html#design">Design Review</a> · <a href="../questions/incidents.html#inc-mitigate">Driving to Mitigation</a>. Concepts: <a href="../concepts/change-and-toil.html#change-management">Change Management</a> · <a href="../concepts/change-and-toil.html#safe-deploys">Canary, Flags &amp; Rollback</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

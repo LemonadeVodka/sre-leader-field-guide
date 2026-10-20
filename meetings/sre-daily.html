@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SRE Daily · SRE Leader's Field Guide</title>
-  <meta name="description" content="A 30-minute weekday meeting for decisions, not status: what happened, are we healthy, what's stuck, what's risky today, and who needs help.">
+  <meta name="description" content="A 30-minute weekday meeting for decisions, not status. It covers operations, progress on reliability projects, what's shipping soon, learning, and how the team is doing.">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/style.css">
   <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
@@ -18,73 +18,84 @@
     <article class="prose">
       <nav class="crumbs" id="crumbs"></nav>
       <h1>SRE Daily</h1>
-      <p class="summary">A 30-minute weekday meeting for decisions, not status: what happened, are we healthy, what's stuck, what's risky today, and who needs help.</p>
+      <p class="summary">A 30-minute weekday meeting for decisions, not status. It covers operations, progress on reliability projects, what's shipping soon, learning, and how the team is doing.</p>
       <div class="callout"><p class="callout-title">Purpose</p>
-        <p>Start every day with the same shared picture: what happened, are we healthy, what's stuck, what's risky today, and who's on interrupts. It's for decisions and unblocking, not a round-robin status read-out.</p>
+        <p>Start every day with one shared picture: <strong>operations</strong> (what happened, are we healthy, what's stuck), <strong>engineering progress</strong> on reliability work, <strong>what's coming</strong>, and <strong>how the team is doing</strong>. It's for decisions and unblocking, not a round-robin status read-out.</p>
       </div>
 
       <h2>Who's in the Room</h2>
       <ul>
         <li><strong>The SRE team,</strong> including whoever is on call.</li>
-        <li><strong>The NOC shift lead,</strong> for minutes 08–12, if time zones allow. If they can't attend, use their written handoff.</li>
+        <li><strong>The NOC shift lead,</strong> for the 10-minute operations block only, if time zones allow. If they can't attend, use their written handoff.</li>
+        <li><strong>Project owners</strong> speak in the engineering block, for their item only.</li>
         <li><strong>A facilitator who rotates weekly.</strong> You don't have to run it every day, and having others facilitate builds the team and frees you to listen.</li>
-        <li><strong>You:</strong> listen for what's stuck, take the blockers, and protect focus time.</li>
+        <li><strong>You:</strong> listen for what's stuck, take the blockers, recognize good work, and protect focus time.</li>
       </ul>
 
       <h2>Before the Meeting</h2>
       <ul>
         <li><strong>On-call posts three lines</strong> in the team channel 10 minutes before: what paged, what's still open, and anything weird.</li>
-        <li><strong>One person checks the deploy and change calendar</strong> for risky changes today. This rotates with the facilitator.</li>
-        <li><strong>You:</strong> read the on-call note and the NOC handoff.</li>
+        <li><strong>Project owners update the reliability project board</strong> (SLOs, automation, observability, toil) before the meeting, not during it.</li>
+        <li><strong>One person checks the change calendar</strong> for the next 48 hours: deploys, prompt or model changes, launches. This rotates with the facilitator.</li>
+        <li><strong>The learning-share rota is published</strong> a week ahead, so Tuesday's and Thursday's presenters can prepare 4 minutes.</li>
+        <li><strong>You:</strong> read the on-call note and the NOC handoff, and note one win to call out.</li>
       </ul>
 
       <h2>The Agenda</h2>
       <div class="table-wrap agenda"><table>
-        <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
+        <thead><tr><th>Minutes</th><th>Block</th><th>Ask</th></tr></thead>
         <tbody>
-          <tr><td>00–05</td><td><strong>Last 24 hours</strong>Incidents, pages, and near misses, from on-call. Only what matters.</td><td><em>"What happened that we'd regret not talking about?"</em> Then: "Has it happened before?"</td></tr>
-          <tr><td>05–08</td><td><strong>Health verdict</strong>Green, yellow, or red, plus one sentence of evidence.</td><td><em>"Green, yellow, or red, and why?"</em></td></tr>
-          <tr><td>08–12</td><td><strong>NOC handoff</strong>Open items from the overnight shift, each one getting an SRE owner. Thank the NOC for anything they caught well.</td><td><em>"What did the NOC hand over, and is anything still open?"</em></td></tr>
-          <tr><td>12–20</td><td><strong>Active &amp; stuck</strong>Open incidents, escalations to pods, and anything blocked more than two days.</td><td><em>"What's stuck, and who or what is it waiting on?"</em> Blocked more than two days: "That one's mine."</td></tr>
-          <tr><td>20–25</td><td><strong>Today's risk &amp; interrupts</strong>Deploys, launches, provider maintenance, and config changes. Name today's interrupt handler.</td><td><em>"What's changing today that could hurt us?"</em> and <em>"Who's on interrupts?"</em></td></tr>
-          <tr><td>25–30</td><td><strong>Asks &amp; recap</strong>Who needs help, the parking lot assignments, and actions read back.</td><td><em>"Is anyone carrying too much right now?"</em></td></tr>
+          <tr><td>2 min</td><td><strong>Wins &amp; shout-outs</strong>One or two specific recognitions from yesterday, by name, with what they made possible.</td><td><em>"Who did something yesterday worth calling out?"</em></td></tr>
+          <tr><td>10 min</td><td><strong>Operations</strong>Last 24 hours (incidents, pages, near misses), the green/yellow/red health verdict, the NOC handoff (each item gets an SRE owner), and anything stuck more than two days.</td><td><em>"Green, yellow, or red, and why?"</em> and <em>"What did the NOC hand over?"</em> Stuck over two days: "That one's mine."</td></tr>
+          <tr><td>7 min</td><td><strong>Engineering &amp; project work</strong>Walk the reliability project board, not the people: what moved, what's next, what's blocked.</td><td><em>"Which project moved yesterday, and which is blocked?"</em></td></tr>
+          <tr><td>4 min</td><td><strong>Upcoming changes &amp; launches</strong>The next 48 hours of deploys, prompt or model changes, and launches. Who's watching each one? Name today's interrupt handler.</td><td><em>"What's shipping in the next 48 hours that we should be ready for?"</em></td></tr>
+          <tr><td>4 min</td><td><strong>Rotating segment</strong>Mon: the week's top 3 priorities. Tue and Thu: a 4-minute learning share. Wed: a toil and automation spotlight. Fri: a team health check (workload, wins of the week).</td><td>Mon: <em>"What are our top 3 this week?"</em> Fri: <em>"Is anyone carrying too much?"</em></td></tr>
+          <tr><td>3 min</td><td><strong>Asks &amp; recap</strong>Who needs help, the parking-lot assignments, and actions read back.</td><td><em>"Who needs something from someone in this room?"</em></td></tr>
         </tbody>
+        <tfoot><tr><td>30 min</td><td colspan="2"><strong>Total.</strong> End early if you're done.</td></tr></tfoot>
       </table></div>
 
-      <div class="code-card"><div class="code-head">Calendar invite text: SRE Daily</div><pre>SRE Daily: weekdays, 30 min (ends early if we're done)
-      Purpose: a shared picture, unblock what's stuck, and protect focus time. Not a status read-out.
+      <div class="callout watch"><p class="callout-title">Fire-Day Rule</p>
+      <p>On a Sev 1 or Sev 2 day, operations takes the time it needs. The engineering walk and the rotating segment shrink, or move to tomorrow. <strong>The 2-minute wins block always stays.</strong> It costs almost nothing, and it's what keeps the team going through a bad week.</p>
+      </div>
 
-      00-05  Last 24 hours: incidents, pages, near misses (on-call)
-      05-08  Health verdict: green / yellow / red + one sentence why
-      08-12  NOC handoff: open items from overnight, each gets an SRE owner
-      12-20  Active & stuck: open incidents, pod escalations, anything blocked > 2 days
-      20-25  Today's risk: deploys, launches, provider maintenance. Name today's interrupt handler.
-      25-30  Asks & recap: who needs help, parking lot, actions read back
+      <div class="code-card"><div class="code-head">Calendar invite text: SRE Daily</div><pre>SRE Daily: weekdays, 30 min total (ends early if we're done)
+Purpose: operations, engineering progress, what's coming, and how the team is doing. Not a status read-out.
 
-      Prep: on-call posts 3 lines in the channel 10 min before (what paged / still open / anything weird).
-      Rules: over 2 minutes = parking lot. No live debugging in the meeting. Facilitator rotates weekly.</pre></div>
+ 2 min   Wins & shout-outs: one or two specific recognitions, by name
+10 min   Operations: last 24h, health verdict (green/yellow/red), NOC handoff, anything stuck > 2 days
+ 7 min   Engineering & project work: walk the reliability project board (moved / next / blocked)
+ 4 min   Upcoming changes & launches: next 48h of deploys, prompt/model changes, launches. Name today's interrupt handler.
+ 4 min   Rotating: Mon priorities | Tue+Thu learning share | Wed toil spotlight | Fri team health
+ 3 min   Asks & recap: who needs help, parking lot, actions read back
+
+Prep: on-call posts 3 lines 10 min before. Project owners update the board. Change calendar checked.
+Rules: over 2 minutes = parking lot. No live debugging. Facilitator rotates weekly.</pre></div>
 
       <h2 id="questions">Questions to Ask</h2>
-      <p class="qsit-intro">Bring three. Each has a follow-up for a weak answer, and coaching notes on what good sounds like.</p>
+      <p class="qsit-intro">Bring three. Mix operations with one engineering or team question. Each question has a follow-up for a weak answer, and coaching notes on what good sounds like.</p>
       <div data-qsit="sre-daily"></div>
 
       <div class="callout example"><p class="callout-title">Example in Practice</p>
-        <p><strong>Minute 6, health verdict.</strong> The facilitator asks, "Green, yellow, or red?" On-call says "green." <strong>You:</strong> "What would make it yellow?" On-call pauses: "Actually, the slowest 5% of answers has been creeping up since 6 a.m." Now it's yellow, with a reason, before any customer notices.</p>
-        <p><strong>Minute 9, NOC handoff.</strong> The NOC flagged "assistant slow for some users, 02:00–02:40, resolved itself." Nobody on SRE had seen it. <strong>You:</strong> "That lines up with the creep. Sam, can you take both and report back at tomorrow's daily?" Then, to the NOC shift lead: "Good catch, thank you for writing it up." In other words, the NOC's note turned into an early warning, and the NOC heard that their work matters.</p>
+        <p><strong>Minute 1, wins.</strong> <strong>You:</strong> "Shout-out to Ana. Her runbook rewrite meant the NOC handled last night's queue alert alone, without paging anyone." The NOC lead on the call hears it too.</p>
+        <p><strong>Minute 14, engineering walk.</strong> The board shows the "auto-restart for the stuck queue worker" automation as blocked for 6 days. <strong>You:</strong> "What's it waiting on?" It needs a service account from the platform team. <strong>You:</strong> "That one's mine. I'll ask their manager today." It ships two days later and removes about 4 pages a week.</p>
+        <p><strong>Thursday's learning share.</strong> An engineer spends 4 minutes on how last week's model-provider throttling showed up in Application Insights before anything paged. The NOC lead asks for screenshots for the runbook. Two weeks later, the NOC spots the same pattern early and escalates in 5 minutes. In other words, the non-ops blocks prevented incidents, not just reported on them.</p>
       </div>
 
       <div class="callout watch"><p class="callout-title">What Actually Happens</p>
         <dl>
+          <dt>Operations swallows the whole meeting every day.</dt>
+          <dd>Counter: the facilitator keeps time out loud ("2 minutes left on ops"). Anything longer goes to the parking lot. If it's a real fire day, use the fire-day rule on purpose, not by accident.</dd>
+          <dt>The project walk turns into status theatre.</dt>
+          <dd>Counter: walk the board, and only discuss items that moved, changed date, or are blocked. "No change" items get skipped.</dd>
+          <dt>Learning shares get skipped "just this week," every week.</dt>
+          <dd>Counter: publish the rota, keep it to 4 minutes, and allow small topics: one graph, one query, one lesson from an RCA.</dd>
+          <dt>Recognition feels forced or generic.</dt>
+          <dd>Counter: be specific: who, what they did, and what it made possible. "Great job, team" doesn't count. Rotate who gives the shout-out.</dd>
           <dt>It becomes a round-robin where everyone reads their ticket list.</dt>
-          <dd>Counter: kill the round-robin. Go by agenda block, not by person. If someone has nothing stuck and nothing risky, they say nothing, and that's a good daily.</dd>
-          <dt>Two engineers start debugging live while everyone else watches.</dt>
-          <dd>Counter: "Great, that's a parking lot item. You two take it right after." Say it kindly and every time, until the team says it before you do.</dd>
-          <dt>People stop coming because it always runs over.</dt>
-          <dd>Counter: hard stop at 30, end early when you can. A daily that regularly ends at 18 minutes earns its attendance.</dd>
+          <dd>Counter: go by agenda block, not by person. If someone has nothing to add, they say nothing, and that's a good daily.</dd>
           <dt>The NOC handoff gets skipped when the meeting runs long.</dt>
-          <dd>Counter: it's minutes 08–12 on purpose, early, before the long discussions. Skipping it tells the offshore team their work doesn't matter.</dd>
-          <dt>Nobody admits to being overloaded in front of peers.</dt>
-          <dd>Counter: ask in the room anyway, so it's normal. Then follow up privately with whoever had the worst night.</dd>
+          <dd>Counter: it sits inside the operations block, early on purpose. Skipping it tells the offshore team their work doesn't matter.</dd>
         </dl>
       </div>
 
@@ -99,7 +110,7 @@
         </ul>
       </div>
 
-      <p>Related: <a href="performance-engineering.html">the other meeting playbook</a> · <a href="../questions/technical-meetings.html">all technical meeting questions</a></p>
+      <p>Related: <a href="performance-engineering.html">Performance Engineering playbook</a> · <a href="../implement/index.html">Implementation roadmap (the projects on your board)</a> · <a href="../questions/technical-meetings.html">all technical meeting questions</a></p>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>
