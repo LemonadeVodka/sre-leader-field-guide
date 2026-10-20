@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quality & Safety Signals · SRE Leader's Field Guide</title>
+  <meta name="description" content="&quot;Up but wrong&quot; incidents: how to measure answer quality and safety blocks, when a drop becomes an incident, and why prompt and model changes are deploys.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="ai-quality">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Quality & Safety Signals</h1>
+      <p class="summary">"Up but wrong" incidents: how to measure answer quality and safety blocks, when a drop becomes an incident, and why prompt and model changes are deploys.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>Users say answers got worse, a prompt or model change is planned, or you're deciding what counts as an incident for an AI product. "Up but wrong" is a class of incident that traditional monitoring can't see.</p>
+      </div>
+
+      <h2>Why "Up but Wrong" Is Different</h2>
+      <p>A traditional service is either working or erroring. An AI assistant can return a fast, successful HTTP 200 with an answer that's unhelpful, wrong, or refused. Every infrastructure dashboard stays green while users lose trust. These incidents usually start with a <strong>change</strong>: a prompt, a model version, retrieved data, or a safety setting.</p>
+
+      <h2>Quality Signals</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Signal</th><th>Type</th><th>What it tells you</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Offline evals</strong></td><td>Before release</td><td>Score a fixed test set of real-world questions against the new prompt or model, and compare with the current version. This is your quality gate.</td></tr>
+      <tr><td><strong>Thumbs-down rate</strong></td><td>Online, user feedback</td><td>A direct signal, but it lags and is noisy. Watch the trend and sudden jumps.</td></tr>
+      <tr><td><strong>Refusal or "can't help" rate</strong></td><td>Online, from responses</td><td>Spikes often mean a prompt or safety-setting change.</td></tr>
+      <tr><td><strong>Fallback rate</strong></td><td>Online, from orchestration</td><td>How often the backup model or a degraded answer was used.</td></tr>
+      <tr><td><strong>Grounding or hallucination checks</strong></td><td>Online, sampled</td><td>Automated scoring of a sample of answers against their sources.</td></tr>
+      <tr><td><strong>Task completion</strong></td><td>Online, from Pendo or app events</td><td>Did the user complete what they came to do, or retry and give up?</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Content Filters and Safety Blocks</h2>
+      <ul>
+      <li>Model providers apply <strong>content filters</strong> that can block a prompt or an answer. Track the <strong>block rate</strong> as its own metric.</li>
+      <li>A sudden rise in blocks is an incident signal: a filter setting changed, a prompt change triggered false positives, or someone is attempting abuse.</li>
+      <li>Watch for <strong>prompt injection</strong> (inputs trying to override instructions) in agent features that take actions. Confirm with your security team who owns detection.</li>
+      </ul>
+
+      <h2>When a Quality Drop Becomes an Incident</h2>
+      <p>Agree a threshold in advance, so quality problems get <em>declared</em> instead of discussed for a week. A starting point to agree with product:</p>
+      <ul>
+      <li>Thumbs-down rate <strong>doubles</strong> against the 7-day baseline for an hour, or</li>
+      <li>Refusal or block rate goes above <strong>2× baseline</strong> for 30 minutes, or</li>
+      <li>An offline eval regression is discovered <strong>after</strong> release.</li>
+      </ul>
+      <p>Then run it like any incident: declare it, look for the change, roll back the prompt or model, and do an <a href="../rca/day-one.html">RCA</a>.</p>
+
+      <h2>Prompt and Model Changes Are Deploys</h2>
+      <div class="callout"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Prompts and model versions are <strong>versioned</strong> in source control, not edited in a portal.</li>
+      <li>Every change passes <strong>offline evals</strong> before release.</li>
+      <li>Changes ship through a <strong>canary</strong>, such as 5% of traffic, with automatic rollback on quality or error signals.</li>
+      <li>Every change appears as a <strong>Grafana annotation</strong>.</li>
+      <li>Rollback is <strong>one action</strong>, and SRE can pull it as a <a href="../playbooks/stuck-incident.html#mitigation-without-writing-code-pre-approved-levers">pre-approved lever</a>.</li>
+      <li>At least one quality signal is on the service dashboard, with an incident threshold.</li>
+      </ul>
+      </div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>On Tuesday the thumbs-down rate rises from 4% to 9%. Errors and latency are normal, so no alert fires. The NOC notices the quality panel and declares, using the threshold. The Grafana annotation shows a model version update at 09:00. The pod rolls back by 11:30 and the rate returns to 4%. The RCA's top action: model version updates now go through the same offline eval and canary as prompt changes.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>Quality is "product's problem," not reliability's.</dt>
+      <dd>Counter: if users can't get a useful answer, the service isn't reliable. Agree the threshold together with product.</dd>
+      <dt>Model versions update automatically and nobody notices.</dt>
+      <dd>Counter: pin model versions, and treat an upgrade as a change with evals.</dd>
+      <dt>Thumbs-down data sits in a product tool nobody in SRE can see.</dt>
+      <dd>Counter: get the signal onto the Grafana dashboard, or at least a shared daily number.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/evaluation-approach-gen-ai" target="_blank" rel="noopener">Microsoft Learn: Evaluating generative AI applications<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/content-filter" target="_blank" rel="noopener">Microsoft Learn: Content filtering<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/canarying-releases/" target="_blank" rel="noopener">Workbook, Ch. 16: Canarying Releases<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

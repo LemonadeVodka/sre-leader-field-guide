@@ -17,33 +17,48 @@
   <main class="content" id="main">
     <article class="prose">
       <h1>SRE Leader's Field Guide</h1>
-      <p class="summary">Lead reliability by asking the right questions. Questions for every room you're in, a practical RCA guide, meeting playbooks, and SRE concepts explained for a senior manager.</p>
+      <p class="summary">Lead reliability by asking the right questions. Tap the meeting or moment you're in, or search over 200 questions. RCA, playbooks, AI reliability, and SRE concepts are all written for a senior manager.</p>
+      <h2 id="in-a-meeting">I'm in a Meeting</h2>
+      <ul class="quick-grid">
+      <li><a class="quick-btn" href="meetings/sre-daily.html"><strong>SRE Daily</strong><span>Agenda + questions</span></a></li>
+      <li><a class="quick-btn" href="meetings/performance-engineering.html"><strong>Performance Engineering</strong><span>Agenda + questions</span></a></li>
+      <li><a class="quick-btn" href="questions/incidents.html#incident"><strong>Incident Postmortem</strong><span>Review questions + 45-min agenda</span></a></li>
+      <li><a class="quick-btn" href="questions/technical-meetings.html#dashboard"><strong>Dashboard / Ops Review</strong><span>What normal looks like</span></a></li>
+      <li><a class="quick-btn" href="questions/sre-team.html#oneonone"><strong>1:1 With an Engineer</strong><span>Blockers, burnout, growth</span></a></li>
+      <li><a class="quick-btn" href="questions/peers-leaders.html#boss"><strong>Boss or Exec Update</strong><span>Numbers, trade-offs, asks</span></a></li>
+      <li><a class="quick-btn" href="questions/sre-team.html#hiring"><strong>Interview</strong><span>Your part of the loop</span></a></li>
+      <li><a class="quick-btn" href="questions/offshore-noc.html#noc-lead"><strong>NOC Shift-Lead Sync</strong><span>The truth, through the lead</span></a></li>
+      <li><a class="quick-btn" href="questions/offshore-noc.html#noc-perf"><strong>Coaching a NOC Analyst</strong><span>After a miss</span></a></li>
+      </ul>
+
+      <h2 id="right-now">Right Now</h2>
+      <ul class="quick-grid">
+      <li><a class="quick-btn now" href="questions/incidents.html#inc-first15"><strong>Live Incident</strong><span>The first 15 minutes</span></a></li>
+      <li><a class="quick-btn now" href="playbooks/stuck-incident.html"><strong>Incident Is Stuck</strong><span>Surface, escalate, pull levers</span></a></li>
+      <li><a class="quick-btn now" href="ai/latency.html#when-the-assistant-is-slow"><strong>The Assistant Is Slow</strong><span>TTFT or TTLT? 5-question triage</span></a></li>
+      <li><a class="quick-btn now" href="questions/incidents.html#inc-comms"><strong>An Exec Joined the Bridge</strong><span>Own the comms</span></a></li>
+      <li><a class="quick-btn now" href="questions/incidents.html#inc-close"><strong>Closing an Incident</strong><span>Fixed, or just quiet?</span></a></li>
+      <li><a class="quick-btn now" href="rca/day-one.html"><strong>Starting an RCA Today</strong><span>First hour, messages, checklist</span></a></li>
+      <li><a class="quick-btn now" href="rca/judge-an-rca.html"><strong>Reviewing an RCA</strong><span>The 5-minute check</span></a></li>
+      <li><a class="quick-btn now" href="questions/offshore-noc.html#noc-diagnose"><strong>The NOC Missed Something</strong><span>Diagnose before you blame</span></a></li>
+      <li><a class="quick-btn now" href="guides/saying-i-dont-know.html"><strong>I Don't Know the Answer</strong><span>Say it without losing credibility</span></a></li>
+      <li><a class="quick-btn now" href="questions/credibility.html#cred-tested"><strong>Dismissed as "Not Technical"</strong><span>Change the conversation</span></a></li>
+      <li><a class="quick-btn now" href="questions/credibility.html#cred-story"><strong>"How Reliable Are We?"</strong><span>Own the reliability story</span></a></li>
+      </ul>
+
+      <h2 id="search">Search the Question Bank</h2>
       <div class="search" data-qsearch>
       <p><a href="questions/technical-meetings.html">Browse the Question Bank</a> (search needs JavaScript).</p>
       </div>
 
-      <h2>Right Now, I'm…</h2>
-      <div class="table-wrap"><table>
-      <thead><tr><th>Situation</th><th>Go to</th></tr></thead>
-      <tbody>
-      <tr><td>In a live incident</td><td><a href="questions/incidents.html#inc-first15">First 15 Minutes</a>, then <a href="questions/incidents.html#inc-stuck">When It's Stuck</a></td></tr>
-      <tr><td>Writing or reviewing an RCA</td><td><a href="rca/run-an-rca.html">Running an RCA</a> or <a href="rca/judge-an-rca.html">Judging an RCA</a></td></tr>
-      <tr><td>Running the SRE Daily or Performance Engineering meeting</td><td><a href="meetings/sre-daily.html">SRE Daily</a> · <a href="meetings/performance-engineering.html">Performance Engineering</a></td></tr>
-      <tr><td>Dealing with an offshore NOC that missed something</td><td><a href="questions/offshore-noc.html#noc-diagnose">Diagnose the Real Problem</a></td></tr>
-      <tr><td>Being dismissed as "not technical"</td><td><a href="questions/credibility.html#cred-tested">When You're Tested or Dismissed</a></td></tr>
-      <tr><td>Asked "how reliable are we?"</td><td><a href="concepts/reliability-targets.html#slo">SLOs</a> and <a href="questions/credibility.html#cred-story">Owning the Reliability Story</a></td></tr>
-      <tr><td>Pushing a pod to own a recurring problem</td><td><a href="questions/peers-leaders.html#pod">Pod &amp; Peer Sync</a></td></tr>
-      <tr><td>Unsure what an SRE term means</td><td><a href="concepts/index.html">SRE Concepts</a></td></tr>
-      </tbody>
-      </table></div>
-
       <h2>What's in the Guide</h2>
       <ul class="section-grid">
-      <li><a class="section-link" href="questions/technical-meetings.html"><strong>Question Bank</strong><span>172 questions organized by who you're with. Each one comes with a follow-up for weak answers and coaching notes.</span></a></li>
-      <li><a class="section-link" href="rca/index.html"><strong>Root Cause Analysis</strong><span>RCA the SRE way: run one, judge one, a worked example, and a template.</span></a></li>
-      <li><a class="section-link" href="meetings/sre-daily.html"><strong>Meeting Playbooks</strong><span>30-minute agendas for the SRE Daily and Performance Engineering, with their questions.</span></a></li>
-      <li><a class="section-link" href="concepts/index.html"><strong>SRE Concepts</strong><span>SLIs, SLOs, observability, alerting, toil, and more. What each one means, how to implement it in Azure and Grafana, and what done looks like.</span></a></li>
-      <li><a class="section-link" href="guides/how-to-ask.html"><strong>Guides</strong><span>How to ask so it lands, and the path from IT Ops to SRE leader.</span></a></li>
+      <li><a class="section-link" href="questions/technical-meetings.html"><strong>Question Bank</strong><span>Over 200 questions organized by who you're with, including incidents and the AI product. Each one has a follow-up for weak answers, plus coaching notes.</span></a></li>
+      <li><a class="section-link" href="rca/day-one.html"><strong>Root Cause Analysis</strong><span>RCA Day One, the SRE way of thinking, running and judging an RCA, a worked example, and a template.</span></a></li>
+      <li><a class="section-link" href="playbooks/stuck-incident.html"><strong>Playbooks</strong><span>Stuck incidents for a surface-only team, plus the SRE Daily and Performance Engineering agendas.</span></a></li>
+      <li><a class="section-link" href="ai/index.html"><strong>AI Reliability</strong><span>TTFT and TTLT, tokens and quotas, quality and safety, and agents and model providers.</span></a></li>
+      <li><a class="section-link" href="concepts/observability-day-one.html"><strong>SRE Concepts</strong><span>Observability Day One for your stack, plus 25 concepts with Azure, Grafana, and PagerDuty steps.</span></a></li>
+      <li><a class="section-link" href="guides/saying-i-dont-know.html"><strong>Guides</strong><span>Saying "I don't know," how to ask, and the path from IT Ops to SRE leader.</span></a></li>
       </ul>
     </article>
     <nav class="pager" id="pager"></nav>

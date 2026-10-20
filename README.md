@@ -8,11 +8,13 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 | Section | Pages |
 |---|---|
-| **Question Bank** (172 questions) | In Technical Meetings · During & After Incidents · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
-| **Root Cause Analysis** | RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
-| **Meeting Playbooks** | SRE Daily · Performance Engineering (30-minute agendas plus their questions) |
-| **SRE Concepts** (25 concepts) | Overview & Roadmap · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
-| **Guides** | How to Ask · From IT Ops to SRE Leader |
+| **Home** | One-tap buttons for the meeting you're in (9) and the moment you're in (11), plus search |
+| **Question Bank** (208 questions) | In Technical Meetings · During & After Incidents · Supporting the AI Product · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
+| **Root Cause Analysis** | RCA Day One · RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
+| **Playbooks** | When an Incident Is Stuck (for a surface-only team) · SRE Daily · Performance Engineering |
+| **AI Reliability** | What's Different About AI · Latency: TTFT & TTLT · Tokens, Quotas & Cost · Quality & Safety · Agents & Model Providers |
+| **SRE Concepts** (25 concepts) | Overview & Roadmap · Observability Day One · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
+| **Guides** | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader |
 
 - **Questions:** every question has an **Ask next** follow-up for weak answers, plus collapsed **Coaching notes**: what asking it signals, and what strong and weak answers sound like.
 - **Concepts:** every concept follows the same seven parts:

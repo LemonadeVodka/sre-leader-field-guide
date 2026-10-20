@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RCA Day One · SRE Leader's Field Guide</title>
+  <meta name="description" content="The first hour after an incident, the days to the review, making actions stick, a 30-day starter plan, what to look for by incident type, and copy-ready messages.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca-day1">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>RCA Day One: What to Do Today</h1>
+      <p class="summary">The first hour after an incident, the days to the review, making actions stick, a 30-day starter plan, what to look for by incident type, and copy-ready messages.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>An incident just closed and needs an RCA, or you're starting an RCA practice from nothing. This page is the "what do I do and send today" companion to <a href="index.html">RCA the SRE Way</a> (the thinking) and <a href="run-an-rca.html">Running an RCA</a> (the method).</p>
+      </div>
+
+      <h2>The First Hour After an Incident Closes</h2>
+      <ul class="done-list">
+      <li><strong>Name the author.</strong> Usually the incident lead or an engineer from the owning pod. Not you.</li>
+      <li><strong>Book the review now:</strong> draft in 3 working days, review in 5. Send the invite below.</li>
+      <li><strong>Grab the evidence before it's gone</strong> (retention, dashboard time ranges, and memories all fade):
+        <ul>
+          <li>Export the <strong>PagerDuty</strong> incident timeline: alerts, pages, acknowledgements, escalations.</li>
+          <li>Screenshot or save links to the <strong>Grafana</strong> panels for the incident window, with the time range fixed, not "last 6 hours."</li>
+          <li>Save the <strong>Application Insights / Log Analytics</strong> query links that showed the failures, plus 2–3 example request or trace IDs.</li>
+          <li>Note the time range to check in the <strong>Azure Activity Log</strong> and the deploy history (an hour before impact through to resolution).</li>
+          <li>Save or export the <strong>incident channel</strong>, and any bridge notes.</li>
+        </ul></li>
+      <li><strong>Send the "assigning the RCA" message</strong> below, so the author has everything in one place.</li>
+      </ul>
+
+      <h2>Days 1–3: Getting the Draft Right</h2>
+      <p>Have a <strong>15-minute check-in</strong> with the author halfway through the draft. Ask:</p>
+      <ol>
+      <li>"Where did each time on the timeline come from?"</li>
+      <li>"What's the trigger, and what made us vulnerable to it?"</li>
+      <li>"Which of the four defenses failed: prevent, detect, mitigate, respond?"</li>
+      <li>"What's the one action you'd do if you could only do one?"</li>
+      <li>"Who outside the team needs to read this?"</li>
+      </ol>
+      <p>If the draft comes back weak, send the feedback reply from <a href="judge-an-rca.html#a-reply-you-can-send">Judging an RCA</a>. It's specific and doesn't need technical depth.</p>
+
+      <h2>Review Day</h2>
+      <ul>
+      <li>Run the <a href="run-an-rca.html#step-8-run-the-review-45-minutes">45-minute agenda</a>, and read the blameless opening aloud.</li>
+      <li>Invite the person closest to the first alert, often a NOC analyst, to walk through the first 15 minutes.</li>
+      <li>Leave with 3–5 ranked actions, each with a person, a date, and what "done" means.</li>
+      <li>Within the hour, send the "RCA complete" share-out below.</li>
+      </ul>
+
+      <h2>After: Making Actions Actually Happen</h2>
+      <ul>
+      <li><strong>Where actions live:</strong> your team's work tracker, labelled <code>rca-action</code>, with due dates and the RCA linked. Not in the RCA document alone, where they'll be forgotten.</li>
+      <li><strong>Monthly review:</strong> filter on <code>rca-action</code> in the monthly reliability review. Anything overdue gets a decision: help, rescope, or escalate.</li>
+      <li><strong>Nudge slipping actions</strong> with the message below. Two slips means it's a priority conflict for the pod's manager, not a motivation problem.</li>
+      <li><strong>Verify the top action.</strong> Prove it reduces the risk with a drill, a test, or by watching the metric that failed. Then log it as a win.</li>
+      </ul>
+
+      <h2>Starting From Zero: Your First 30 Days</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Week</th><th>Do this</th><th>Done when</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>Write the RCA criteria (Sev 1/2, customer impact over 30 minutes, any repeat). Adopt the <a href="template.html">template</a>. Send the blameless announcement below.</td><td>Criteria and template published; announcement sent</td></tr>
+      <tr><td>2</td><td>Run one RCA on the most recent big incident, as a learning exercise.</td><td>One reviewed RCA with ranked, owned actions</td></tr>
+      <tr><td>3</td><td>Set up action tracking (<code>rca-action</code> label) and book a monthly reliability review slot.</td><td>Actions in the tracker; the monthly slot is booked</td></tr>
+      <tr><td>4</td><td>Share what you learned with the pods and the NOC, and send leadership a one-line summary of the practice.</td><td>Learnings shared; leadership knows RCAs are happening</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>What to Look For, by Incident Type</h2>
+      <p>The most common incident types for a cross-device AI assistant on Azure, and where to start:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Incident type</th><th>Evidence to pull</th><th>Factors to probe</th><th>Typical strong actions</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Model provider outage or throttling</strong></td><td>App Insights dependency calls to the provider (429s, timeouts); provider status page; quota usage</td><td>No quota alert; retries without backoff; no fallback; unclear quota owner</td><td>80% quota alert; backoff; tested fallback lever. See <a href="../ai/tokens-quotas-cost.html">Tokens &amp; Quotas</a>.</td></tr>
+      <tr><td><strong>Bad deploy, config, or prompt change</strong></td><td>Deploy history; Grafana annotations; Activity Log; error rate around the change</td><td>No canary; change not annotated; slow rollback; prompt treated as config</td><td>Canary for all change types; one-click rollback. See <a href="../ai/quality-safety.html#prompt-and-model-changes-are-deploys">changes are deploys</a>.</td></tr>
+      <tr><td><strong>Capacity or quota limits</strong></td><td>Saturation metrics; traffic vs limits; autoscale events</td><td>Untested peak; launch not on the calendar; limits unknown</td><td>Load test before launches; headroom alerts. See <a href="../concepts/capacity-readiness.html#capacity">Capacity</a>.</td></tr>
+      <tr><td><strong>Dependency failure</strong> (identity, data store, a tool)</td><td>App Insights dependency map; per-dependency success rate</td><td>No timeout; no degraded mode; owner unknown</td><td>Timeouts and degraded modes; dependency ownership. See <a href="../ai/agents-dependencies.html">Agents &amp; Providers</a>.</td></tr>
+      <tr><td><strong>NOC escalation delay</strong></td><td>PagerDuty timeline; NOC ticket notes; the runbook used</td><td>Runbook said "monitor"; fear of escalating; unclear criteria</td><td>Objective escalation triggers; teach-back. See <a href="../questions/offshore-noc.html#noc-triage">NOC Triage</a>.</td></tr>
+      <tr><td><strong>AI quality regression</strong> (up but wrong)</td><td>Thumbs-down, refusal, and block rates; model and prompt annotations; eval results</td><td>No quality signal; no eval gate; unpinned model version</td><td>Quality threshold that declares; offline evals; pinned versions. See <a href="../ai/quality-safety.html">Quality &amp; Safety</a>.</td></tr>
+      <tr><td><strong>Stuck with no owner</strong></td><td>Time to owner engaged; who was paged when</td><td>No PagerDuty service; no access; no levers</td><td>Ownership map; read access; lever agreements. See <a href="../playbooks/stuck-incident.html">Stuck Incident</a>.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Copy-Ready Messages</h2>
+      <div class="code-card"><div class="code-head">Assigning the RCA</div><pre>Hi [author], thanks for leading [incident]. Could you own the RCA?
+      - Template: [link]   Evidence so far: PagerDuty export [link], Grafana panels [link], App Insights queries [link], channel export [link]
+      - Draft by: [date, +3 working days]   Review: [date/time, +5 working days] (invite sent)
+      - Quick 15-min check-in on [date] to help shape it.
+      Thanks. This is about learning how our system let this happen, not about blame.</pre></div>
+      <div class="code-card"><div class="code-head">Review invite</div><pre>RCA review: [incident title], [date of incident], Sev [x]   (45 min)
+      Draft: [link]. Please read before the meeting.
+
+      00-05  Ground rules + impact
+      05-20  Timeline walk (where did we lose time?)
+      20-30  Trigger, contributing factors, the four defenses
+      30-40  Actions: rank, owner, date, done means
+      40-45  Who we share this with; when actions are reviewed
+
+      We're here to understand the system, not to find someone to blame.</pre></div>
+      <div class="code-card"><div class="code-head">Blameless RCA announcement (send once)</div><pre>Starting this month, every Sev 1/2 incident, any customer impact over 30 minutes, and any repeat incident gets an RCA within 5 working days.
+
+      How we run them:
+      - Blameless: we assume people did what made sense with what they knew. We look for what in our systems allowed the incident.
+      - Evidence-based: timelines come from Grafana, App Insights, PagerDuty, and the Activity Log.
+      - Few, strong actions: 3-5, each with an owner, a date, and what "done" means, tracked until verified.
+
+      Template: [link]. Questions: talk to me.</pre></div>
+      <div class="code-card"><div class="code-head">Action item nudge</div><pre>Hi [owner], checking on the RCA action "[action]" from [incident], due [date].
+      Where is it now, and what's a realistic date? If something's in the way (priority, access, another team), tell me and I'll help clear it.
+      This one matters because it [prevents / detects / mitigates] [the failure].</pre></div>
+      <div class="code-card"><div class="code-head">RCA complete: share-out</div><pre>RCA complete: [incident title] ([date], Sev [x])
+
+      What happened: [one sentence in user terms]
+      Impact: [% / number affected] for [duration]
+      Why: [trigger] + [top 1-2 contributing factors]
+      What we're changing:
+      1. [action]: [owner], [date]
+      2. [action]: [owner], [date]
+      3. [action]: [owner], [date]
+      Lesson for other teams: [one line]
+      Full RCA: [link]</pre></div>
+
+      <h2>The One-Page RCA Cheat Sheet</h2>
+      <div class="callout"><p class="callout-title">Print this section, or keep it open in a tab</p>
+      <p><strong>The 8 steps:</strong> 1. Does it need an RCA? · 2. Timeline from evidence · 3. Impact in user terms · 4. Trigger vs conditions · 5. Four defenses · 6. 5 Whys (branched) · 7. 3–5 ranked actions · 8. Review and follow-through.</p>
+      <p><strong>The four defenses:</strong> Prevent (why could it happen?) · Detect (why didn't we know sooner?) · Mitigate (why did it hurt this much?) · Respond (why did humans take this long?).</p>
+      <p><strong>Six timestamps:</strong> impact started · detected · acknowledged · escalated · mitigated · resolved. Gaps to compare: time to detect, and time from detect to mitigate.</p>
+      <p><strong>Red flags:</strong> "human error" as the root cause · "be more careful" · 15 unranked actions · no detection action · owners are teams · "investigate further" · timeline with no sources · treated as first-time when it isn't.</p>
+      <p><strong>Your questions:</strong> "What made that possible?" · "What would have told us 10 minutes sooner?" · "If we only did one action, which?" · "Has this happened before?"</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The evidence is gone by the time the author starts.</dt>
+      <dd>Counter: the first-hour checklist exists for this reason. Do the evidence grab yourself if you have to. It doesn't need technical skill.</dd>
+      <dt>Everyone agrees to the RCA, then the next incident eats the week.</dt>
+      <dd>Counter: the review is booked before anyone leaves the incident. Moving it requires a new date, not "later."</dd>
+      <dt>Actions live in the RCA document and die there.</dt>
+      <dd>Counter: the <code>rca-action</code> label and the monthly review are what keep them alive.</dd>
+      </dl>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

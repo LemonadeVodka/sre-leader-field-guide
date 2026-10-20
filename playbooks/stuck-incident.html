@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>When an Incident Is Stuck · SRE Leader's Field Guide</title>
+  <meta name="description" content="A playbook for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-stuck">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>When an Incident Is Stuck</h1>
+      <p class="summary">A playbook for a surface-only team: when you can see the problem but can't diagnose or fix it yet. Surface well, escalate on a clock, pull pre-approved levers, and build your way out.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>An incident is open, users are affected, and nobody on the bridge can diagnose or fix it. Your team can see the problem and raise it, but the access, tools, and knowledge to fix it sit with a pod, a platform team, or a vendor. This is common for central SRE teams early on. This page is how to lead well inside that constraint, and how to get out of it.</p>
+      </div>
+
+      <h2>Your Real Job When You Can't Fix It</h2>
+      <p>"We can't fix it" is a normal state for a surface-only team today. It's not a personal failure. What you <em>can</em> own, and should be excellent at:</p>
+      <ul>
+      <li><strong>Detect and declare early.</strong> Open the PagerDuty incident against the written severity criteria. Don't wait for certainty.</li>
+      <li><strong>Scope the impact.</strong> Who's affected, how many, since when, and what they see.</li>
+      <li><strong>Gather evidence</strong> so the fixing team starts at minute 10, not minute 0.</li>
+      <li><strong>Get the right owner in fast,</strong> and escalate on a clock, not on a feeling.</li>
+      <li><strong>Coordinate and communicate:</strong> one channel, one incident lead, updates on schedule.</li>
+      <li><strong>Pull any pre-approved levers</strong> you've been given, such as turning a feature off or switching to a fallback.</li>
+      </ul>
+      <p>Done well, this is visible, valued work. Engineers will remember who handed them a clean escalation packet at 3 a.m.</p>
+
+      <h2>The Stuck Clock</h2>
+      <p>An escalation ladder with time triggers, so nobody has to decide in the moment whether it's "time to escalate." Agree these times with pod leadership <em>before</em> the next incident, and build the first steps into PagerDuty escalation policies.</p>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>When</th><th>Action</th><th>How</th></tr></thead>
+      <tbody>
+      <tr><td>T+0</td><td><strong>Declare and page the owning pod</strong>Severity set by the criteria. Escalation packet posted.</td><td>PagerDuty incident on the pod's service. Packet pinned in the channel.</td></tr>
+      <tr><td>T+15</td><td><strong>No acknowledgement: escalate automatically</strong>The pod's secondary, then their manager.</td><td>PagerDuty escalation policy. No human decision needed.</td></tr>
+      <tr><td>T+30</td><td><strong>No progress: manager to manager</strong>You call the pod's manager directly.</td><td>Phone or a direct message. Use the message below.</td></tr>
+      <tr><td>T+60</td><td><strong>Still stuck: director or exec level</strong>The pod names its own incident lead.</td><td>The exec update below. Ask for a decision, not sympathy.</td></tr>
+      <tr><td>T+90</td><td><strong>Business decision</strong>Run degraded, tell customers, or accept the risk explicitly.</td><td>An exec decides, and it's written in the incident record.</td></tr>
+      </tbody>
+      </table></div>
+      <p class="go-deeper">The times are starting points. A Sev 1 might compress them, and a Sev 3 might skip the last two steps.</p>
+
+      <h2>Surface So Well They Can Start Immediately</h2>
+      <p>When you can't fix it, the quality of your hand-off is your contribution. Post this packet in the incident channel and attach it to the PagerDuty incident before you page anyone.</p>
+      <div class="code-card"><div class="code-head">Escalation packet</div><pre>ESCALATION: [service / feature]   Sev [x]   PagerDuty: [link]
+
+      Impact:     [what users see], about [% of requests / users], since [HH:MM] (from Grafana)
+      Scope:      [all regions / region X]  [all app versions / version X]  [all devices / device type]
+      Changed:    [deploy / config / prompt change at HH:MM: Grafana annotation or Activity Log link]  or  "nothing found in the last 24h"
+      Evidence:   Grafana panel: [link]
+                  App Insights failing requests: [query link]   example operation/trace IDs: [id], [id]
+      Dependency: model provider status [ok / degraded / unknown]   our failure rate to provider: [x%]
+      Ruled out:  [what we checked and how]
+      On bridge:  [names, roles]   Incident lead: [name]
+      Need from you: [the specific ask, e.g. "confirm whether yesterday's prompt change can be rolled back"]</pre></div>
+
+      <h2>Mitigation Without Writing Code: Pre-Approved Levers</h2>
+      <p>Most stuck time is spent waiting for permission, not for a fix. Agree in advance, per critical service, which levers SRE (or the NOC, with a runbook) may pull without waiting for the pod:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Lever</th><th>What it does</th><th>Who usually provides it</th></tr></thead>
+      <tbody>
+      <tr><td>Turn off a feature flag</td><td>Removes a new or risky feature without a deploy</td><td>Pod (flag tool, or Azure App Configuration)</td></tr>
+      <tr><td>Roll back the last release</td><td>Returns to the last known-good version</td><td>Pod pipeline, with a one-click rollback job for SRE</td></tr>
+      <tr><td>Switch to a fallback model</td><td>Routes AI requests to a backup model or provider</td><td>Pod (routing config)</td></tr>
+      <tr><td>Fail over a region</td><td>Moves traffic away from an unhealthy region</td><td>Platform team (for example, Front Door rules)</td></tr>
+      <tr><td>Scale out</td><td>Adds capacity for load-related failures</td><td>Platform team (autoscale limits)</td></tr>
+      <tr><td>Shed non-critical work</td><td>Turns off nice-to-have features to protect the core journey</td><td>Pod (flags)</td></tr>
+      </tbody>
+      </table></div>
+      <div class="code-card"><div class="code-head">Pre-approved levers agreement (one per service)</div><pre>Service: [name]            Owning pod: [name]       Pod manager: [name]
+      Agreed on: [date]          Review: every quarter, and after any incident where a lever was used
+
+      SRE may, WITHOUT waiting for the pod, when [trigger, e.g. "SLO burn-rate page fires" or "Sev 1/2 declared"]:
+      1. [Lever, e.g. turn off flag "assistant-new-tools"]   How: [runbook link]   Undo: [how]
+      2. [Lever, e.g. run rollback job for the last release] How: [runbook link]   Undo: [how]
+      3. [Lever, e.g. route to fallback model]             How: [runbook link]   Undo: [how]
+
+      SRE will: post in the incident channel before and after pulling a lever, and page the pod at the same time.
+      The pod will: keep the runbooks current and test each lever once a quarter.
+
+      Signed: [pod manager]  [SRE manager]</pre></div>
+
+      <h2>When Nobody Can Fix It Yet</h2>
+      <ul>
+      <li><strong>Decide the degraded mode.</strong> What's the best experience you can give users now: a shorter answer, no tools, a clear "try again later"?</li>
+      <li><strong>Communicate outward.</strong> Brief support, and decide on a status page update. Use the <a href="../questions/incidents.html#inc-comms">exec comms questions</a>.</li>
+      <li><strong>Make risk acceptance explicit.</strong> If the fix will take hours or days, an exec decides to accept the impact. Write it in the incident record.</li>
+      <li><strong>Keep the rhythm.</strong> Updates every 30–60 minutes, even when the update is "no change, next update at 15:00."</li>
+      <li><strong>Protect people.</strong> Rotate whoever has been on the bridge longest. See <a href="../questions/incidents.html#inc-long">long-running incidents</a>.</li>
+      </ul>
+
+      <h2>Getting Out of Surface-Only: A 90-Day Plan</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Do this</th></tr></thead>
+      <tbody>
+      <tr><td>Days 1–30</td><td><strong>Ownership map:</strong> every production service has an owning pod, a PagerDuty service, and an escalation policy. Agree the stuck clock with pod managers. Start measuring the two numbers below.</td></tr>
+      <tr><td>Days 31–60</td><td><strong>Access and levers:</strong> SRE gets read access to Application Insights, Log Analytics, and Grafana for every critical service. Sign pre-approved lever agreements for the top 3 services.</td></tr>
+      <tr><td>Days 61–90</td><td><strong>First-15-minutes runbooks:</strong> each critical service's pod writes a short "what to check first" runbook that SRE and the NOC can run. Add both to the <a href="../concepts/capacity-readiness.html#prr">production readiness review</a> for new services.</td></tr>
+      </tbody>
+      </table></div>
+      <div class="callout"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every critical service has an owner and a PagerDuty route. Nobody spends 16 minutes asking "who owns this?"</li>
+      <li>SRE can see the telemetry for every critical service.</li>
+      <li>At least 3 services have signed lever agreements and tested runbooks.</li>
+      <li><strong>Time to owner engaged</strong> (from SRE engaged to the owning team acknowledging) is measured and trending down.</li>
+      <li><strong>Incidents where SRE lacked access</strong> is counted monthly, and reported to leadership as a risk.</li>
+      </ul>
+      </div>
+      <p>Those two numbers are your case for change. "Last month, 6 of 9 incidents stalled an average of 34 minutes waiting for an owner, and in 4 we had no access to the telemetry" is an argument leadership can act on. See <a href="../questions/credibility.html#cred-story">Owning the Reliability Story</a>.</p>
+
+      <h2>Copy-Ready Messages</h2>
+      <div class="code-card"><div class="code-head">Manager to manager (T+30)</div><pre>Hi [name], we have a Sev [x] on [service] affecting [impact] since [time]. Your on-call was paged at [time] via PagerDuty and we haven't got [an acknowledgement / a path forward] yet.
+      SRE can see the problem but can't change [component]. Can you get someone with access onto the bridge in the next 10 minutes? Bridge: [link]. Escalation packet is pinned in [channel].</pre></div>
+      <div class="code-card"><div class="code-head">Exec update for a stuck incident (T+60)</div><pre>Sev [x]: [service]. Status: STUCK, owner engaged [yes/no]
+
+      Impact: [what users see], about [%], for [duration] so far.
+      Where we are: SRE has identified [what we know]. The fix needs [access / change] owned by [team]. They were engaged at [time].
+      What we've done: [levers pulled, mitigations tried].
+      Decision needed: [e.g. approve degraded mode X / approve customer comms / assign an incident lead from team Y].
+      Next update: [time].</pre></div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p><strong>14:12:</strong> the NOC raises slow assistant answers. SRE confirms the model provider is throttling calls: 18% of requests are failing. SRE can't change the routing or the prompt. Both belong to the Assistant pod.</p>
+      <p><strong>14:15:</strong> SRE posts the escalation packet, with the Grafana panel, an App Insights query showing the throttled calls with two example IDs, and a deploy annotation at 13:52 for a prompt change. The pod is paged.</p>
+      <p><strong>14:30:</strong> the pod hasn't acknowledged, and PagerDuty has already escalated to their manager. <strong>You</strong> call the manager directly and send the T+30 message. The pod's engineer joins at 14:38 and starts from the packet instead of from scratch.</p>
+      <p><strong>14:45:</strong> the pod confirms a rollback will take 25 minutes. <strong>You</strong> ask: "Is there a fallback model we can switch to now?" There is, and it's pre-approved. SRE switches it at 14:47, and errors drop to 2% while the rollback runs.</p>
+      <p>In other words, SRE didn't fix anything, but the incident was mitigated 40 minutes sooner because of the packet, the clock, and a lever agreed in advance.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The pod says "it's not us."</dt>
+      <dd>Counter: "Then help us prove it in 10 minutes. Here's the packet. If it's not you, who would you page?" Ownership disputes get resolved after the incident, in the review. During it, the default owner is whoever owns the user-facing service.</dd>
+      <dt>Ping-pong: pod → platform → provider → pod.</dt>
+      <dd>Counter: name one incident lead from the owning pod who keeps it until it's handed over explicitly. The incident is never "with nobody."</dd>
+      <dt>Everyone watches, nobody acts.</dt>
+      <dd>Counter: "What's the next decision, and who's making it?" Then set a 15-minute checkpoint.</dd>
+      <dt>"We're waiting on the provider."</dt>
+      <dd>Counter: waiting isn't a plan. Ask: "What can we do on our side while we wait: fallback, degraded mode, comms?"</dd>
+      <dt>Execs get frustrated with SRE because "SRE owns incidents."</dt>
+      <dd>Counter: be explicit in every update about what SRE can and can't change, and who owns the fix. Then bring the two metrics to the next leadership review.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Related:</strong> <a href="../questions/incidents.html#inc-stuck">When It's Stuck questions</a> · <a href="../concepts/alerting-incidents.html#on-call">On-call and escalation policies</a> · <a href="../rca/day-one.html">RCA Day One</a>. <strong>Go deeper:</strong> <a href="https://sre.google/sre-book/operational-overload/" target="_blank" rel="noopener">SRE Book, Ch. 30: Recovering from Operational Overload<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/engagement-model/" target="_blank" rel="noopener">Workbook, Ch. 18: SRE Engagement Model<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://support.pagerduty.com/main/docs/escalation-policies" target="_blank" rel="noopener">PagerDuty: Escalation Policies<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

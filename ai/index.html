@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supporting an AI Product · SRE Leader's Field Guide</title>
+  <meta name="description" content="How AI backends fail, the path an AI request takes, and the 8 numbers a senior manager should know every week.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="ai">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Supporting an AI Product: What's Different</h1>
+      <p class="summary">How AI backends fail, the path an AI request takes, and the 8 numbers a senior manager should know every week.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You support the backend of an AI assistant and need to know what's different about keeping it reliable, what to measure every week, and where to start. Everything here is written for a cross-device AI assistant: client apps on devices, cloud services on Azure, and a third-party model provider. Confirm the specifics of your own setup with your team.</p>
+      </div>
+
+      <h2>How AI Backends Fail</h2>
+      <p>Traditional services mostly fail by being down or slow. AI products fail in five ways, and the last three are easy to miss with traditional monitoring.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Failure</th><th>What users experience</th><th>Typical cause</th><th>Where to read more</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Slow</strong></td><td>Long wait before the answer starts, or a slow trickle</td><td>Long prompts, slow retrieval or tool calls, provider load</td><td><a href="latency.html">AI Latency</a></td></tr>
+      <tr><td><strong>Down</strong></td><td>Errors, "something went wrong"</td><td>Provider outage, throttling, a bad deploy</td><td><a href="tokens-quotas-cost.html">Quotas</a> · <a href="agents-dependencies.html">Providers</a></td></tr>
+      <tr><td><strong>Wrong</strong></td><td>Fast, confident, unhelpful or incorrect answers</td><td>A prompt or model change, retrieval returning the wrong data</td><td><a href="quality-safety.html">Quality &amp; Safety</a></td></tr>
+      <tr><td><strong>Expensive</strong></td><td>Nothing, until the bill arrives</td><td>Prompts growing longer, retries, a costlier model</td><td><a href="tokens-quotas-cost.html">Tokens &amp; Cost</a></td></tr>
+      <tr><td><strong>Unsafe</strong></td><td>Blocked answers, or harmful ones</td><td>Content filter changes, prompt injection, model behaviour</td><td><a href="quality-safety.html">Quality &amp; Safety</a></td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>The AI Request Path</h2>
+      <p>Every AI request takes roughly this path. Most problems live at one of these hops, and your telemetry needs to see each one.</p>
+      <ol>
+      <li><strong>Client app</strong> on the device sends the user's request (possibly after some on-device processing; confirm which requests run where).</li>
+      <li><strong>Front door / API</strong> on Azure receives it, checks identity, and applies rate limits.</li>
+      <li><strong>Orchestration or agent</strong> builds the prompt: system instructions, conversation history, user context.</li>
+      <li><strong>Retrieval and tools</strong> fetch data or take actions (search, calendar, device settings) before or during generation.</li>
+      <li><strong>Model provider</strong> generates the answer and streams it back token by token.</li>
+      <li><strong>Streaming response</strong> flows back to the device. The user sees words appear.</li>
+      </ol>
+      <p>A <em>token</em> is a chunk of text, roughly ¾ of a word. Models read and write in tokens, and providers charge and limit by tokens.</p>
+
+      <h2>The AI Scorecard: 8 Numbers to Know Every Week</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Number</th><th>What it tells you</th><th>Source</th></tr></thead>
+      <tbody>
+      <tr><td><strong>TTFT, p95</strong></td><td>How long the slowest 5% of users wait before the answer starts. This is what "is it working?" feels like.</td><td>OTel → App Insights → Grafana</td></tr>
+      <tr><td><strong>TTLT, p95</strong></td><td>How long until the full answer is done</td><td>OTel → App Insights → Grafana</td></tr>
+      <tr><td><strong>Success rate</strong></td><td>% of requests that returned a usable answer</td><td>App Insights requests</td></tr>
+      <tr><td><strong>Throttling rate</strong></td><td>% of model calls rejected for exceeding quota (HTTP 429)</td><td>App Insights dependency calls</td></tr>
+      <tr><td><strong>Tokens per request</strong></td><td>Whether prompts are growing, which drives both latency and cost</td><td>Token usage from the model calls</td></tr>
+      <tr><td><strong>Cost per 1,000 requests</strong></td><td>Unit economics</td><td>Azure Cost Management ÷ request volume</td></tr>
+      <tr><td><strong>A quality signal</strong></td><td>Whether answers are good, for example the thumbs-down rate</td><td>App events or Pendo, plus evals</td></tr>
+      <tr><td><strong>Fallback rate</strong></td><td>How often you're using the backup path (another model, a degraded mode)</td><td>Custom metric from the orchestration layer</td></tr>
+      </tbody>
+      </table></div>
+      <p>Put these on one Grafana dashboard and review them in the <a href="../meetings/performance-engineering.html">Performance Engineering</a> meeting.</p>
+
+      <h2>Where to Start</h2>
+      <ol>
+      <li><strong>TTFT and TTLT</strong> measured and on a dashboard. Users feel these first. See <a href="latency.html">AI Latency</a>.</li>
+      <li><strong>Throttling and quota alerts</strong> at 80%, routed to PagerDuty. This is the most common cause of AI outages. See <a href="tokens-quotas-cost.html">Tokens, Quotas &amp; Cost</a>.</li>
+      <li><strong>Prompt and model changes treated like deploys:</strong> annotated, canaried, and easy to roll back. See <a href="quality-safety.html">Quality &amp; Safety</a>.</li>
+      <li><strong>One quality signal</strong> with a threshold that makes a drop an incident.</li>
+      <li><strong>A fallback path</strong> for the model provider, pre-approved as a <a href="../playbooks/stuck-incident.html#mitigation-without-writing-code-pre-approved-levers">lever</a>.</li>
+      </ol>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The team measures uptime and error rate, and calls it reliable.</dt>
+      <dd>Counter: ask "if the assistant gave wrong answers fast, would anything turn red?" Most AI quality incidents are invisible to traditional monitoring.</dd>
+      <dt>"The provider is slow" becomes the explanation for everything.</dt>
+      <dd>Counter: ask for the breakdown of a slow request: how much time was retrieval, tools, waiting in a queue, and the model itself? It's often your side.</dd>
+      <dt>Prompt changes ship like config, with no review.</dt>
+      <dd>Counter: a prompt change is a code change for an AI product. Same canary, same annotation, same rollback.</dd>
+      </dl>
+      </div>
+
+      <p><strong>Next:</strong> <a href="latency.html">AI Latency: TTFT, TTLT &amp; Streaming</a> · <a href="../questions/ai-product.html">Supporting the AI Product: questions</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

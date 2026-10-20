@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observability Day One · SRE Leader's Field Guide</title>
+  <meta name="description" content="Understand your telemetry stack by following one request: OpenTelemetry, Application Insights, Azure Managed Grafana, PagerDuty, and Pendo, with the vocabulary, a map of your setup, and a 2-week learning plan.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="c-obs-day1">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Observability Day One</h1>
+      <p class="summary">Understand your telemetry stack by following one request: OpenTelemetry, Application Insights, Azure Managed Grafana, PagerDuty, and Pendo, with the vocabulary, a map of your setup, and a 2-week learning plan.</p>
+      <div class="callout"><p class="callout-title">The Best Way to Learn This</p>
+      <p>Don't learn the tools one at a time. <strong>Follow one user request through your system</strong> and name what each tool sees at each step. Once the path is clear, every term (span, collector, sampling) has a place to attach to. This page draws that path for your stack: <strong>OpenTelemetry → Azure Monitor / Application Insights → Azure Managed Grafana → PagerDuty</strong>, with <strong>Pendo</strong> for product analytics. Anything marked "confirm" varies by team.</p>
+      </div>
+
+      <h2>The Big Picture in One Diagram</h2>
+      <div class="diagram" tabindex="0" role="region" aria-label="Telemetry flow diagram (scrolls sideways on small screens)">
+      <svg viewBox="0 0 760 350" role="img" aria-labelledby="dg-title dg-desc">
+      <title id="dg-title">How telemetry flows through the stack</title>
+      <desc id="dg-desc">Two lanes. Ops telemetry: device and client apps send requests to backend services on Azure, where the OpenTelemetry SDK records traces, metrics, and logs, optionally through an OpenTelemetry Collector, into Application Insights and Log Analytics. Azure Managed Grafana reads that data for dashboards, alerts fire from Grafana or Azure Monitor, PagerDuty routes them, and SRE on-call and the NOC respond. Product analytics: the Pendo snippet or SDK in the client apps sends user behaviour to Pendo.</desc>
+      <defs><marker id="dg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="dg-head"/></marker></defs>
+      <rect class="dg-lane" x="4" y="4" width="752" height="214" rx="10"/>
+      <text class="dg-lane-label" x="16" y="26">OPS TELEMETRY: is the system healthy? (OpenTelemetry)</text>
+      <g class="dg-box"><rect x="16" y="40" width="160" height="56" rx="8"/><text x="96" y="64">Device &amp; client apps</text><text class="dg-sub" x="96" y="82">send requests</text></g>
+      <g class="dg-box"><rect x="208" y="40" width="160" height="56" rx="8"/><text x="288" y="64">Backend on Azure</text><text class="dg-sub" x="288" y="82">OTel SDK records</text></g>
+      <g class="dg-box dg-opt"><rect x="400" y="40" width="160" height="56" rx="8"/><text x="480" y="64">OTel Collector</text><text class="dg-sub" x="480" y="82">optional (confirm)</text></g>
+      <g class="dg-box"><rect x="592" y="40" width="160" height="56" rx="8"/><text x="672" y="64">App Insights +</text><text class="dg-sub" x="672" y="82">Log Analytics</text></g>
+      <line class="dg-line" x1="176" y1="68" x2="206" y2="68" marker-end="url(#dg-arrow)"/>
+      <line class="dg-line" x1="368" y1="68" x2="398" y2="68" marker-end="url(#dg-arrow)"/>
+      <line class="dg-line" x1="560" y1="68" x2="590" y2="68" marker-end="url(#dg-arrow)"/>
+      <line class="dg-line" x1="672" y1="96" x2="672" y2="138" marker-end="url(#dg-arrow)"/>
+      <g class="dg-box"><rect x="592" y="140" width="160" height="56" rx="8"/><text x="672" y="164">Azure Managed</text><text class="dg-sub" x="672" y="182">Grafana dashboards</text></g>
+      <g class="dg-box"><rect x="400" y="140" width="160" height="56" rx="8"/><text x="480" y="164">Alerts</text><text class="dg-sub" x="480" y="182">Grafana / Azure Monitor</text></g>
+      <g class="dg-box"><rect x="208" y="140" width="160" height="56" rx="8"/><text x="288" y="164">PagerDuty</text><text class="dg-sub" x="288" y="182">routes &amp; escalates</text></g>
+      <g class="dg-box"><rect x="16" y="140" width="160" height="56" rx="8"/><text x="96" y="164">SRE on-call</text><text class="dg-sub" x="96" y="182">&amp; the NOC</text></g>
+      <line class="dg-line" x1="592" y1="168" x2="562" y2="168" marker-end="url(#dg-arrow)"/>
+      <line class="dg-line" x1="400" y1="168" x2="370" y2="168" marker-end="url(#dg-arrow)"/>
+      <line class="dg-line" x1="208" y1="168" x2="178" y2="168" marker-end="url(#dg-arrow)"/>
+      <rect class="dg-lane" x="4" y="234" width="752" height="112" rx="10"/>
+      <text class="dg-lane-label" x="16" y="256">PRODUCT ANALYTICS: what are users doing? (Pendo)</text>
+      <g class="dg-box"><rect x="16" y="272" width="160" height="56" rx="8"/><text x="96" y="296">Device &amp; client apps</text><text class="dg-sub" x="96" y="314">Pendo snippet / SDK</text></g>
+      <g class="dg-box"><rect x="208" y="272" width="160" height="56" rx="8"/><text x="288" y="296">Pendo</text><text class="dg-sub" x="288" y="314">usage, funnels, feedback</text></g>
+      <line class="dg-line" x1="176" y1="300" x2="206" y2="300" marker-end="url(#dg-arrow)"/>
+      <text class="dg-note" x="400" y="296">Use both in an incident: OTel says the system broke,</text>
+      <text class="dg-note" x="400" y="314">Pendo shows how much it changed user behaviour.</text>
+      </svg>
+      </div>
+      <details class="q-notes"><summary>The diagram in words</summary>
+      <ol>
+      <li>Device and client apps send a request to the backend on Azure.</li>
+      <li>The OpenTelemetry SDK in the backend records traces, metrics, and logs.</li>
+      <li>Optionally, an OpenTelemetry Collector gathers and forwards them (confirm whether you have one).</li>
+      <li>They're stored in Application Insights and Log Analytics.</li>
+      <li>Azure Managed Grafana reads them for dashboards.</li>
+      <li>Alerts (Grafana Alerting or Azure Monitor) fire on SLOs and thresholds.</li>
+      <li>PagerDuty routes and escalates the alert.</li>
+      <li>SRE on-call and the NOC respond.</li>
+      <li>Separately, the Pendo snippet or SDK in the client apps sends user behaviour (clicks, feature use, feedback) to Pendo.</li>
+      </ol>
+      </details>
+
+      <h2>Follow One Request</h2>
+      <p>14:05. A user asks the assistant to "summarize my unread email." Here's what each tool sees at each hop.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Hop</th><th>What happens</th><th>What the telemetry sees</th></tr></thead>
+      <tbody>
+      <tr><td>1. Client app</td><td>User taps "ask"</td><td><strong>Pendo</strong> records the click, the feature used, and the device type. If the app is instrumented with OTel, it starts a trace and sends the <strong>trace ID</strong> with the request (confirm).</td></tr>
+      <tr><td>2. Front door / API</td><td>Request arrives on Azure</td><td>A <strong>span</strong> starts: "POST /assistant/ask." The <strong>trace ID</strong> follows the request from here on.</td></tr>
+      <tr><td>3. Assistant service</td><td>Builds the prompt; calls the email tool</td><td>Child spans: "build prompt" and "tool: email.fetch" (with its duration and success). Logs carry the same trace ID.</td></tr>
+      <tr><td>4. Model call</td><td>Prompt sent to the model provider; answer streams back</td><td>A span for the model call, with the model name and token counts as attributes. The first streamed piece gives <strong>TTFT</strong>; the end of the span gives <strong>TTLT</strong>. See <a href="../ai/latency.html">AI Latency</a>.</td></tr>
+      <tr><td>5. Response</td><td>The answer appears on the device</td><td>The trace completes. <strong>Application Insights</strong> shows it in the end-to-end transaction view.</td></tr>
+      <tr><td>Aggregate</td><td>Thousands of these per minute</td><td><strong>Grafana</strong> panels show p95 TTFT, error rate, and traffic. If the SLO burns too fast, an <strong>alert</strong> fires and <strong>PagerDuty</strong> pages on-call.</td></tr>
+      <tr><td>Afterwards</td><td>User gives a thumbs-down</td><td><strong>Pendo</strong> (or an app event) records the feedback, a quality signal.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>The Vocabulary You Actually Need</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Term</th><th>Plain meaning</th><th>You'll hear it as…</th></tr></thead>
+      <tbody>
+      <tr><td><strong>OpenTelemetry (OTel)</strong></td><td>An open standard and toolkit for producing telemetry, so you aren't locked into one vendor</td><td>"We instrument with OTel."</td></tr>
+      <tr><td><strong>Instrumentation</strong> (auto vs manual)</td><td>Code that records telemetry. Auto covers common things (HTTP, databases); manual adds business detail</td><td>"Is that auto-instrumented?"</td></tr>
+      <tr><td><strong>Trace</strong></td><td>The full journey of one request across services</td><td>"Pull the trace for that request."</td></tr>
+      <tr><td><strong>Span</strong></td><td>One step in a trace, with a start, an end, and details</td><td>"The model-call span took 9 seconds."</td></tr>
+      <tr><td><strong>Trace ID / context propagation</strong></td><td>The ID passed along with a request so every service's spans join up</td><td>"Context isn't propagating from the app."</td></tr>
+      <tr><td><strong>Attributes</strong>, <code>service.name</code></td><td>Labels on telemetry. <code>service.name</code> says which service sent it</td><td>"Filter by service.name."</td></tr>
+      <tr><td><strong>Semantic conventions</strong></td><td>Agreed standard names for attributes, so everyone labels things the same way</td><td>"Use the GenAI semconv names."</td></tr>
+      <tr><td><strong>Collector</strong></td><td>A service that receives, processes, and forwards telemetry</td><td>"The collector drops debug logs."</td></tr>
+      <tr><td><strong>Exporter</strong></td><td>The piece that sends telemetry to a backend, such as Azure Monitor</td><td>"We use the Azure Monitor exporter."</td></tr>
+      <tr><td><strong>Sampling</strong></td><td>Keeping only a percentage of traces to control cost</td><td>"We sample at 10%, so we might not have that one."</td></tr>
+      <tr><td><strong>Counter / histogram</strong></td><td>Metric types: a running count, and a distribution (used for percentiles like p95)</td><td>"TTFT is a histogram."</td></tr>
+      <tr><td><strong>Log correlation</strong></td><td>Logs stamped with the trace ID, so you can jump from a trace to its logs</td><td>"Are logs correlated?"</td></tr>
+      <tr><td><strong>Pendo event / tagged feature</strong></td><td>A recorded user action, and a UI element tagged so its usage is counted</td><td>"Is that button tagged in Pendo?"</td></tr>
+      <tr><td><strong>Pendo guide / segment</strong></td><td>An in-app message or walkthrough, and a defined group of users</td><td>"Show the guide to the beta segment."</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Which Tool Answers Which Question</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Question</th><th>Go to</th></tr></thead>
+      <tbody>
+      <tr><td>Is it up, slow, or erroring right now?</td><td>Grafana panels (data from Application Insights)</td></tr>
+      <tr><td>Why did this one request fail or take so long?</td><td>Application Insights end-to-end transaction (the trace)</td></tr>
+      <tr><td>What exactly did the service log?</td><td>Log Analytics (KQL), filtered by trace ID</td></tr>
+      <tr><td>What changed?</td><td>Grafana annotations, the Azure Activity Log, deploy history</td></tr>
+      <tr><td>Are users still using the feature, or giving up?</td><td>Pendo (feature usage, funnels, retention)</td></tr>
+      <tr><td>Who got paged, and when?</td><td>PagerDuty incident timeline</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Ops Telemetry vs Product Analytics</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th></th><th>OpenTelemetry → Azure Monitor</th><th>Pendo</th></tr></thead>
+      <tbody>
+      <tr><td>Purpose</td><td>Is the system healthy and fast?</td><td>What do users do, and do they succeed?</td></tr>
+      <tr><td>Speed</td><td>Near real time, for alerting</td><td>Usually slower, for analysis and trends</td></tr>
+      <tr><td>Detail</td><td>Every request (or a sample) through every service</td><td>User actions in the app UI</td></tr>
+      <tr><td>Privacy</td><td>Should avoid personal data in attributes and logs</td><td>User-level by design, so handle personal data carefully and follow your privacy rules</td></tr>
+      <tr><td>Owner (typically)</td><td>Engineering and SRE</td><td>Product</td></tr>
+      </tbody>
+      </table></div>
+      <p><strong>In an incident, use both:</strong> OTel tells you the system broke and when. Pendo shows how much it changed user behaviour (feature usage dropping, people retrying), and how fast they came back. That's the impact story leadership wants.</p>
+
+      <h2>Map Your Own Setup: 12 Questions for an Engineer</h2>
+      <ol>
+      <li>Which services are instrumented with OpenTelemetry, and which aren't yet?</li>
+      <li>Is it auto-instrumentation, manual, or both? What business detail do we add manually?</li>
+      <li>Do we run an OpenTelemetry Collector, or do services export straight to Azure Monitor?</li>
+      <li>What's our sampling rate, and do we keep 100% of errors?</li>
+      <li>Is <code>service.name</code> consistent across services and environments?</li>
+      <li>Do the device apps propagate the trace ID to the backend, or does only Pendo see the client side?</li>
+      <li>Do model calls record TTFT, TTLT, model name, and token counts?</li>
+      <li>Are logs correlated with trace IDs?</li>
+      <li>How long do we keep traces and logs, and what does telemetry cost per month?</li>
+      <li>Which Grafana dashboards are the official ones for each critical service?</li>
+      <li>Which alerts route to PagerDuty, and which go to chat or email?</li>
+      <li>Who owns Pendo, and can SRE see the assistant's usage and feedback data?</li>
+      </ol>
+
+      <h2>A 2-Week Learning Plan (15 Minutes a Day)</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Day</th><th>Do this</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>With an engineer, draw the diagram above for your real system. Correct the boxes that differ.</td></tr>
+      <tr><td>2</td><td>Ask the 12 questions above (spread over two sessions if needed).</td></tr>
+      <tr><td>3</td><td>Open one real request's end-to-end transaction in Application Insights. Name each span.</td></tr>
+      <tr><td>4</td><td>Find the model-call span. What were TTFT, TTLT, and the token counts?</td></tr>
+      <tr><td>5</td><td>Find the same time window in Grafana. Which panel shows it?</td></tr>
+      <tr><td>6</td><td>Look at one alert rule in Grafana or Azure Monitor. Trace where it routes in PagerDuty.</td></tr>
+      <tr><td>7</td><td>Open Pendo for the assistant: one funnel, and the feedback for the last week.</td></tr>
+      <tr><td>8</td><td>Pick a past incident. Find it in Grafana, PagerDuty, and Pendo.</td></tr>
+      <tr><td>9</td><td>Ask: "What couldn't we see during that incident?" Write down the gap.</td></tr>
+      <tr><td>10</td><td><strong>Teach it back:</strong> explain the whole flow to your boss or a peer in 5 minutes, without notes.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>What Good Looks Like</h2>
+      <div class="callout"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every critical service is instrumented with OpenTelemetry, with a consistent <code>service.name</code>.</li>
+      <li>Traces run end to end, from the client app (or front door) to the model provider call.</li>
+      <li>Model calls record TTFT, TTLT, model, and token counts.</li>
+      <li>Logs carry trace IDs.</li>
+      <li>Each critical service has one official Grafana dashboard, and everyone knows which it is.</li>
+      <li>Sampling, retention, and monthly telemetry cost are written down.</li>
+      <li>Pendo usage and feedback are part of incident impact reporting.</li>
+      </ul>
+      </div>
+
+      <p><strong>Ask this:</strong> <em>"Can you show me one request end to end?"</em> · <em>"What couldn't we see during the last incident?"</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a> · <a href="observability.html">Observability concepts</a></p>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview" target="_blank" rel="noopener">Microsoft Learn: OpenTelemetry in Azure Monitor<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data" target="_blank" rel="noopener">Microsoft Learn: Distributed tracing<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://opentelemetry.io/docs/concepts/" target="_blank" rel="noopener">OpenTelemetry concepts<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://grafana.com/docs/grafana/latest/datasources/azure-monitor/" target="_blank" rel="noopener">Grafana: Azure Monitor data source<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://support.pendo.io/hc/en-us" target="_blank" rel="noopener">Pendo Help Center<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/monitoring/" target="_blank" rel="noopener">Workbook, Ch. 4: Monitoring<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

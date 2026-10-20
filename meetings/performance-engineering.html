@@ -34,7 +34,7 @@
 
       <h2>Before the Meeting</h2>
       <ul>
-        <li><strong>24 hours before:</strong> the performance lead updates the scorecard in the same format as every week. For each of the top 3 user journeys, it shows the slowest 5% of requests against its target, along with peak traffic, error rate under load, and cost per request.</li>
+        <li><strong>24 hours before:</strong> the performance lead updates the scorecard in the same format as every week. For each of the top 3 user journeys, it shows the slowest 5% of requests against its target, along with peak traffic, error rate under load, and cost per request. For AI journeys, it also shows <strong>p95 TTFT</strong> (time until the answer starts), <strong>p95 TTLT</strong> (time until it's done), and <strong>tokens per request</strong>. See <a href="../ai/latency.html">AI Latency</a>.</li>
         <li><strong>Anyone with a regression</strong> brings one graph and one sentence about what changed.</li>
         <li><strong>You:</strong> read the scorecard and pick three questions from the <a href="#questions">Performance Engineering Meeting</a> questions.</li>
       </ul>
@@ -44,7 +44,7 @@
         <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
         <tbody>
           <tr><td>00–03</td><td><strong>Last week's actions</strong>Done, slipped, or dropped, and what each one changed.</td><td><em>"What did it change?"</em> If something slipped: "What's in the way, and is it mine to unblock?"</td></tr>
-          <tr><td>03–10</td><td><strong>Scorecard</strong>Top 3 user journeys against targets, plus peak traffic, errors under load, and cost per request. Only look at what's off target or trending the wrong way.</td><td><em>"Are we faster or slower than last week, against what target?"</em></td></tr>
+          <tr><td>03–10</td><td><strong>Scorecard</strong>Top 3 user journeys against targets: for AI journeys, p95 TTFT and TTLT. Plus peak traffic, errors under load, tokens per request, and cost per request. Only look at what's off target or trending the wrong way.</td><td><em>"Are we faster or slower than last week, against what target?"</em> For AI: <em>"Did TTFT or only TTLT move?"</em></td></tr>
           <tr><td>10–17</td><td><strong>Regressions</strong>What got slower, what changed right before it, and whether it's our code, our capacity, or a dependency such as the model provider.</td><td><em>"What changed right before it?"</em> Then: <em>"Code, capacity, or dependency?"</em></td></tr>
           <tr><td>17–24</td><td><strong>Look ahead</strong>Launches, campaigns, new customers, and model changes in the next 30 days, plus load test status for each.</td><td><em>"When did we last load test this, and at what multiple of peak?"</em></td></tr>
           <tr><td>24–28</td><td><strong>Decide</strong>Pick the one fix that most improves what users feel for the least effort.</td><td><em>"If we only did one this month, which, who, and by when?"</em></td></tr>
@@ -56,7 +56,8 @@
       Purpose: keep the product fast and affordable at the load that's coming. Leave with one owned fix.
 
       00-03  Last week's actions: done / slipped / dropped, and what each one changed
-      03-10  Scorecard: top 3 user journeys vs target (slowest 5%), peak traffic, errors under load, cost per request
+      03-10  Scorecard: top 3 user journeys vs target (slowest 5%; for AI: p95 TTFT + TTLT), peak traffic,
+             errors under load, tokens per request, cost per request
       10-17  Regressions: what got slower, what changed, code / capacity / dependency?
       17-24  Look ahead: launches and load changes in the next 30 days, load test status
       24-28  Decide: the one fix for this week (owner, date, done means)

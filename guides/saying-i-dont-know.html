@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saying "I Don't Know" · SRE Leader's Field Guide</title>
+  <meta name="description" content="A formula and a phrase bank for the moments you don't have the answer: technical deep-dives, exec questions, incidents, reviews, your team, and the NOC.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="g-idk">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Saying "I Don't Know" Without Losing Credibility</h1>
+      <p class="summary">A formula and a phrase bank for the moments you don't have the answer: technical deep-dives, exec questions, incidents, reviews, your team, and the NOC.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>Someone asks you something you can't answer in a meeting, and you can feel the room waiting. Bluffing feels safer in the moment and costs far more later. Said the right way, "I don't know" is one of the strongest credibility moves a non-coding leader has.</p>
+      </div>
+
+      <h2>The Formula: Admit · Add Judgment · Commit</h2>
+      <ol>
+      <li><strong>Admit</strong> it plainly, in a few words. No apology, no long preamble: "I don't know."</li>
+      <li><strong>Add judgment:</strong> what you <em>do</em> know, a sharp question, or who would know. This is what shows you're thinking, not lost.</li>
+      <li><strong>Commit</strong> to a specific follow-up, with who and by when: "I'll find out and send it by 3."</li>
+      </ol>
+      <p><strong>Why it works:</strong> people trust the person who's honest about the edges of their knowledge, because it makes everything else they say more believable. Bluffing works until the first time it's caught. After that, everything you say gets double-checked. The commitment is what turns a gap into reliability: every time you follow up when you said you would, your credibility goes <em>up</em>.</p>
+
+      <h2>In a Technical Deep-Dive or a Jargon Test</h2>
+      <ul>
+      <li><em>"I don't know how that works under the hood. Help me with the part I need: if it fails, what do users see?"</em></li>
+      <li><em>"I'm not the right person to judge that design choice. What would you want monitored if you were on call for it?"</em></li>
+      <li><em>"Walk me through it like I'm new. Then tell me the one risk I should care about."</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> "I'm not technical" (it invites dismissal), nodding along, or "makes sense" when it doesn't.</p>
+
+      <h2>When an Exec Asks for a Number You Don't Have</h2>
+      <ul>
+      <li><em>"I don't have that number in front of me. My best estimate is around X, low confidence. I'll confirm the real number by 3 p.m."</em></li>
+      <li><em>"I don't want to give you a guess on that. I'll have it in your inbox within the hour, with where it came from."</em></li>
+      <li><em>"I don't know yet. What decision does it feed, so I bring you the right version of it?"</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> a confident made-up number, "it's fine," or "I'll check with the team" with no time attached.</p>
+
+      <h2>During a Live Incident</h2>
+      <ul>
+      <li><em>"We don't know the cause yet. What we know: impact is X since 14:05, and the owning team is engaged. Next update at 14:30."</em></li>
+      <li><em>"I don't know if rolling back will fix it. What's the risk if we try it?"</em></li>
+      <li><em>"I can't judge the technical fix. Who can? I'll get them on the bridge now."</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> an ETA you can't back up, or "it should be fixed soon." See <a href="../questions/incidents.html#inc-comms">Escalation &amp; Exec Comms</a>.</p>
+
+      <h2>In a Design Review</h2>
+      <ul>
+      <li><em>"I don't know enough about this component to weigh in on the approach. I do want to know how it fails and how we'd roll it back."</em></li>
+      <li><em>"I haven't seen this pattern before. Has anyone run it in production? What happened?"</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> opinions on the implementation you can't defend. Stay on failure modes, monitoring, and ownership.</p>
+
+      <h2>When Your Boss Asks "Why Did This Happen?"</h2>
+      <ul>
+      <li><em>"I don't know the full cause yet. Here's what we know so far, and the RCA review is on Thursday. I'll send you the summary that afternoon."</em></li>
+      <li><em>"Honestly, I don't know yet. And I'd rather tell you that than give you a theory we have to walk back."</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> blaming a person or a team before the RCA, or a cause you'll have to retract.</p>
+
+      <h2>In an RCA or Postmortem Review</h2>
+      <ul>
+      <li><em>"I don't know whether that's the root cause or a symptom. What would we expect to see if it were the cause?"</em></li>
+      <li><em>"I'm not sure we know that. Where did that timestamp come from?"</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> accepting "human error" because you can't challenge the technical detail. You can always ask "what made that possible?"</p>
+
+      <h2>In a 1:1 With Your Team</h2>
+      <ul>
+      <li><em>"I don't know the answer to that. Let me find out, and I'll come back to you by Friday."</em></li>
+      <li><em>"I don't know. What do you think? You're closer to it than I am."</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> a vague promise to "look into it" that you never close. Your team tracks those more closely than you think.</p>
+
+      <h2>With the Offshore NOC</h2>
+      <ul>
+      <li><em>"I don't know either. Good question. Let's find out together, and I'll update the runbook so the next shift knows."</em></li>
+      <li><em>"I wasn't sure about that step myself, so thank you for asking."</em></li>
+      </ul>
+      <p>Saying it yourself shows the team that not knowing is safe. That's the single most important thing for a team that's afraid to admit confusion. See <a href="../questions/offshore-noc.html#noc-instructions">Instructions That Stick</a>.</p>
+      <p class="go-deeper"><strong>Avoid saying:</strong> "that should be obvious," or answering with a guess the team will treat as a rule.</p>
+
+      <h2>When You Were Wrong Earlier</h2>
+      <ul>
+      <li><em>"I said X on Tuesday. I was wrong. It's Y. Here's what changed my mind."</em></li>
+      <li><em>"Correction to what I said earlier: the number is X, not Y. Sorry for the confusion."</em></li>
+      </ul>
+      <p class="go-deeper"><strong>Avoid saying:</strong> quietly hoping nobody noticed. Correcting yourself fast and in public builds more trust than the original mistake cost.</p>
+
+      <h2>Ranges, Not Guesses</h2>
+      <p>When you're pushed for an answer you don't have, give a <strong>range, a confidence level, and a confirm-by time</strong> instead of a single guessed number:</p>
+      <div class="callout"><p class="callout-title">Say This</p>
+      <p><em>"Somewhere between 10 and 25% of users, low confidence. I'll have the real number from the dashboards by 2:30."</em></p>
+      </div>
+      <p>A range with a confidence level is honest and still useful for a decision. A precise-sounding guess that turns out wrong damages your next ten answers.</p>
+
+      <h2>Close the Loop</h2>
+      <p>The follow-up is where the credibility is earned. Send it when you said you would, even if the answer is "still working on it."</p>
+      <div class="code-card"><div class="code-head">Follow-up after "I don't know"</div><pre>Following up on your question in [meeting] about [topic]:
+
+      Answer: [the answer, in one or two sentences]
+      Source: [dashboard / query / person it came from]
+      What it means: [the so-what, or the decision it supports]
+
+      [If not ready yet:] Still confirming [what]. I'll have it by [new time].</pre></div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>In a leadership review, the VP asks: "What percentage of users hit the timeouts last week?" You don't know.</p>
+      <p><strong>You:</strong> "I don't have that exact number. I know it peaked Thursday afternoon, and it was mostly the latest app version. I'll send you the percentage by 3 p.m. today."</p>
+      <p>At 2:40 you send it: "14% of requests between 13:00 and 16:00 Thursday, from App Insights. Fixed by Friday's rollback." The VP replies "thanks, super clear." Next time, they'll trust your estimate without asking for the source.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>Someone uses your "I don't know" to make a point.</dt>
+      <dd>Counter: stay calm and move to judgment: "Right, which is why I want to know how it fails." Your composure is what the room remembers.</dd>
+      <dt>You say it too often on things you should know.</dt>
+      <dd>Counter: track your "I don't know" moments for a week. The repeats are your learning list. See <a href="../concepts/index.html">SRE Concepts</a>.</dd>
+      <dt>You commit to follow-ups and miss them.</dt>
+      <dd>Counter: this is where "I don't know" actually hurts you. Only commit to times you'll meet, and write them down immediately.</dd>
+      </dl>
+      </div>
+
+      <p><strong>Related:</strong> <a href="../questions/credibility.html#cred-dontknow">When You Don't Know: questions</a> · <a href="how-to-ask.html">How to Ask</a> · <a href="../questions/credibility.html#cred-tested">When You're Tested or Dismissed</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

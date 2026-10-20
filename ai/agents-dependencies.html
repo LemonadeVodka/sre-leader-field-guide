@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agents, Tools & Model Providers · SRE Leader's Field Guide</title>
+  <meta name="description" content="Reliability for agent-style assistants: tool calls, multi-step tasks, model provider dependence, fallbacks, degraded modes, and cloud vs on-device paths.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="ai-agents">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Agents, Tools & Model Providers</h1>
+      <p class="summary">Reliability for agent-style assistants: tool calls, multi-step tasks, model provider dependence, fallbacks, degraded modes, and cloud vs on-device paths.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>The assistant takes actions or calls tools (an agent), depends on a third-party model provider, or runs some work on the device and some in the cloud. Each of these adds ways to fail that a simple "is the API up?" check won't catch.</p>
+      </div>
+
+      <h2>Agents and Tools</h2>
+      <p>An <strong>agent</strong> is an assistant that plans and takes steps, such as searching, reading a calendar, or changing a device setting, by calling <strong>tools</strong>. One user request can turn into 5–10 calls, and any one of them can fail or be slow.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Measure</th><th>What it tells you</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Tool-call success rate</strong>, per tool</td><td>Which tools are failing, and the owner of each</td></tr>
+      <tr><td><strong>Task completion rate</strong></td><td>Of multi-step requests, how many finished successfully</td></tr>
+      <tr><td><strong>Steps per task</strong></td><td>Rising steps means more cost, more latency, and possible loops</td></tr>
+      <tr><td><strong>Time per step</strong>, and timeouts</td><td>Where the time goes in a slow agent task</td></tr>
+      </tbody>
+      </table></div>
+      <ul>
+      <li><strong>Every step needs a timeout,</strong> and retries with exponential backoff and a cap, to avoid retry storms.</li>
+      <li><strong>Cap the number of steps</strong> per task, so a confused agent can't loop forever and burn tokens.</li>
+      <li><strong>Trace the whole task</strong> as one OpenTelemetry trace, with a span per step and per tool call, so one slow task can be opened end to end in Application Insights.</li>
+      </ul>
+
+      <h2>Model Provider Dependence</h2>
+      <p>For most AI assistants, the model provider is the biggest single point of failure. Plan for it the way you'd plan for any critical vendor.</p>
+      <ul>
+      <li><strong>Measure it yourself.</strong> Track the success rate and latency of your calls to the provider in Application Insights. Status pages lag behind real problems.</li>
+      <li><strong>Fallback routing.</strong> A backup model, deployment, or region to route to when the primary is failing or throttling. Make it a <a href="../playbooks/stuck-incident.html#mitigation-without-writing-code-pre-approved-levers">pre-approved lever</a>.</li>
+      <li><strong>Degraded modes.</strong> Decide in advance what a "good enough" answer looks like when things are failing: answer without tools, give a shorter answer, or show a clear "try again" message instead of a spinner.</li>
+      <li><strong>Contacts and contracts.</strong> Know the support path, the SLA, and the quota process for each provider. This is vendor management, which is your home turf.</li>
+      </ul>
+
+      <h2>Cloud vs On-Device</h2>
+      <p>Cross-device assistants may run some requests on the device and some in the cloud. Confirm with your team which requests run where, because it changes what you can see:</p>
+      <ul>
+      <li><strong>Cloud requests</strong> show up in your backend telemetry (OTel → Application Insights).</li>
+      <li><strong>On-device work</strong> may only appear in client telemetry or Pendo, if anywhere. An on-device failure can look like "the backend is fine" while users struggle.</li>
+      <li>Ask: "If the on-device path broke, how would we know?"</li>
+      </ul>
+
+      <div class="callout"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Success rate and latency are tracked per tool, with an owner for each tool.</li>
+      <li>Task completion rate and steps per task are on the AI dashboard.</li>
+      <li>Every agent step has a timeout, capped retries with backoff, and a step limit.</li>
+      <li>A tested fallback model or route, usable as a pre-approved lever.</li>
+      <li>Written degraded modes, agreed with product.</li>
+      <li>You know which requests run on the device, and how failures there would be detected.</li>
+      </ul>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>One flaky tool makes the whole assistant look broken.</dt>
+      <dd>Counter: let the agent continue without a failing tool where possible, and show the per-tool success rate.</dd>
+      <dt>The fallback model has never been tested.</dt>
+      <dd>Counter: switch to it in a drill once a quarter. An untested fallback is a guess.</dd>
+      <dt>"The provider is down" ends the conversation.</dt>
+      <dd>Counter: ask "what's our degraded mode, and who decides to switch to it?"</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/api-management/genai-gateway-capabilities" target="_blank" rel="noopener">Microsoft Learn: AI gateway capabilities (load balancing, quotas, failover)<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/addressing-cascading-failures/" target="_blank" rel="noopener">SRE Book, Ch. 22: Addressing Cascading Failures<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data" target="_blank" rel="noopener">Microsoft Learn: Distributed tracing in Application Insights<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

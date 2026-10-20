@@ -12,24 +12,35 @@
     { section: "Question Bank", items: [
       { id: "q-meetings", href: "questions/technical-meetings.html", title: "In Technical Meetings" },
       { id: "q-incidents", href: "questions/incidents.html", title: "During & After Incidents" },
+      { id: "q-ai", href: "questions/ai-product.html", title: "Supporting the AI Product" },
       { id: "q-peers", href: "questions/peers-leaders.html", title: "With Peers & Leaders" },
       { id: "q-team", href: "questions/sre-team.html", title: "With Your SRE Team" },
       { id: "q-noc", href: "questions/offshore-noc.html", title: "With the Offshore NOC" },
       { id: "q-cred", href: "questions/credibility.html", title: "Building Credibility" }
     ]},
     { section: "Root Cause Analysis", items: [
+      { id: "rca-day1", href: "rca/day-one.html", title: "RCA Day One" },
       { id: "rca", href: "rca/index.html", title: "RCA the SRE Way" },
       { id: "rca-run", href: "rca/run-an-rca.html", title: "Running an RCA" },
       { id: "rca-judge", href: "rca/judge-an-rca.html", title: "Judging an RCA" },
       { id: "rca-example", href: "rca/worked-example.html", title: "Worked Example" },
       { id: "rca-template", href: "rca/template.html", title: "RCA Template" }
     ]},
-    { section: "Meeting Playbooks", items: [
+    { section: "Playbooks", items: [
+      { id: "p-stuck", href: "playbooks/stuck-incident.html", title: "When an Incident Is Stuck" },
       { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
       { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" }
     ]},
+    { section: "AI Reliability", items: [
+      { id: "ai", href: "ai/index.html", title: "What's Different About AI" },
+      { id: "ai-latency", href: "ai/latency.html", title: "Latency: TTFT & TTLT" },
+      { id: "ai-tokens", href: "ai/tokens-quotas-cost.html", title: "Tokens, Quotas & Cost" },
+      { id: "ai-quality", href: "ai/quality-safety.html", title: "Quality & Safety" },
+      { id: "ai-agents", href: "ai/agents-dependencies.html", title: "Agents & Model Providers" }
+    ]},
     { section: "SRE Concepts", items: [
       { id: "c-index", href: "concepts/index.html", title: "Overview & Roadmap" },
+      { id: "c-obs-day1", href: "concepts/observability-day-one.html", title: "Observability Day One" },
       { id: "c-targets", href: "concepts/reliability-targets.html", title: "Reliability Targets" },
       { id: "c-obs", href: "concepts/observability.html", title: "Observability & Telemetry" },
       { id: "c-alerting", href: "concepts/alerting-incidents.html", title: "Alerting & Incidents" },
@@ -37,6 +48,7 @@
       { id: "c-capacity", href: "concepts/capacity-readiness.html", title: "Capacity & Readiness" }
     ]},
     { section: "Guides", items: [
+      { id: "g-idk", href: "guides/saying-i-dont-know.html", title: "Saying \"I Don't Know\"" },
       { id: "g-ask", href: "guides/how-to-ask.html", title: "How to Ask" },
       { id: "g-path", href: "guides/it-ops-to-sre.html", title: "From IT Ops to SRE Leader" }
     ]}
@@ -90,7 +102,8 @@
   var SECTION_ICONS = {
     "Question Bank": icon('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M10 9.5a2.2 2.2 0 1 1 3 2c-.6.3-1 .8-1 1.5"/><path d="M12 16h.01"/>'),
     "Root Cause Analysis": icon('<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/><path d="M11 8v3l2 1.5"/>'),
-    "Meeting Playbooks": icon('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+    "Playbooks": icon('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
+    "AI Reliability": icon('<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18.5 15.5l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/>'),
     "SRE Concepts": icon('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>'),
     "Guides": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
   };

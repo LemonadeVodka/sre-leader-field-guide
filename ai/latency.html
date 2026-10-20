@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Latency: TTFT, TTLT & Streaming · SRE Leader's Field Guide</title>
+  <meta name="description" content="Time to first token, time to last token, and streaming speed: what each means, what drives it, how to measure it on your stack, and what to do when the assistant is slow.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="ai-latency">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>AI Latency: TTFT, TTLT & Streaming</h1>
+      <p class="summary">Time to first token, time to last token, and streaming speed: what each means, what drives it, how to measure it on your stack, and what to do when the assistant is slow.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>Someone says "the assistant feels slow," you're setting latency targets, or you're reviewing the Performance Engineering scorecard. For streaming AI answers, "latency" is not one number. It's at least three, and they have different causes and fixes.</p>
+      </div>
+
+      <h2>The Latency Measures, Defined</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Measure</th><th>Plain meaning</th><th>What users feel</th></tr></thead>
+      <tbody>
+      <tr><td><strong>TTFT</strong>: time to first token</td><td>From sending the request until the first piece of the answer arrives</td><td>"Is it working?" The most important number for perceived speed.</td></tr>
+      <tr><td><strong>Time per output token</strong> (inter-token latency)</td><td>The gap between pieces of the answer as it streams</td><td>"It's typing slowly."</td></tr>
+      <tr><td><strong>TTLT</strong>: time to last token (end-to-end)</td><td>From sending the request until the full answer is done</td><td>"How long until I can use the answer?"</td></tr>
+      <tr><td><strong>Tokens per second</strong></td><td>Streaming speed, the inverse of time per output token</td><td>Same as above, often quoted by providers</td></tr>
+      <tr><td><strong>Queue or wait time</strong></td><td>Time waiting before any work starts (rate limits, busy capacity)</td><td>Adds directly to TTFT</td></tr>
+      </tbody>
+      </table></div>
+      <p>Roughly, <strong>TTLT ≈ TTFT + (number of output tokens × time per output token)</strong>. So a long answer can have a great TTFT and still a slow TTLT.</p>
+
+      <h2>What Drives Each One</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Driver</th><th>Affects</th><th>Question to ask</th></tr></thead>
+      <tbody>
+      <tr><td>Prompt and context length (instructions, history, retrieved documents)</td><td>TTFT</td><td>"How many input tokens per request, and is it growing?"</td></tr>
+      <tr><td>Retrieval and tool calls before generation</td><td>TTFT</td><td>"How much of TTFT is retrieval and tools vs the model?"</td></tr>
+      <tr><td>Model choice (larger is usually slower)</td><td>TTFT and streaming speed</td><td>"Did the model or model version change?"</td></tr>
+      <tr><td>Provider load, throttling, region</td><td>TTFT, errors</td><td>"Are we being throttled? Which region are we calling?"</td></tr>
+      <tr><td>Output length</td><td>TTLT</td><td>"Are answers getting longer? Is there a max token limit?"</td></tr>
+      <tr><td>Cold starts and scaling on our side</td><td>TTFT, mostly at the slowest percentiles</td><td>"Is it worse after quiet periods or deploys?"</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Example SLOs</h2>
+      <p>These are starting points. Confirm the numbers with product, based on what users accept, and on your own last 4 weeks of data.</p>
+      <ul>
+      <li><strong>TTFT:</strong> 95% of responses start streaming within <strong>1.5 seconds</strong>.</li>
+      <li><strong>TTLT:</strong> 95% of responses complete within <strong>12 seconds</strong>.</li>
+      <li><strong>Success:</strong> 99.5% of requests return a usable answer (not an error, a timeout, or an empty answer).</li>
+      </ul>
+      <p>Measure them per user journey: a quick question and a multi-step agent task deserve different targets. See <a href="../concepts/reliability-targets.html#slo">SLOs</a>.</p>
+
+      <h2>How to Measure It on Your Stack</h2>
+      <ol>
+      <li><strong>Pod engineers:</strong> wrap each model call in an OpenTelemetry span with the model name and token counts as attributes. Record the moment the first streamed chunk arrives as a span event or a metric, which gives you TTFT. The span's total duration gives you TTLT.</li>
+      <li><strong>Standards note:</strong> OpenTelemetry's GenAI semantic conventions define names such as <code>gen_ai.request.model</code>, and server-side metrics such as <code>gen_ai.server.time_to_first_token</code>. They're still marked <em>Development</em> and changing, and the server metrics are for teams that run their own models. If you call a third-party provider, measure TTFT in your own client code. Use whatever names your SDK emits, consistently.</li>
+      <li><strong>Storage:</strong> the data lands in <strong>Application Insights</strong> via the Azure Monitor OpenTelemetry exporter.</li>
+      <li><strong>Dashboard:</strong> <strong>Grafana</strong> panels for p50, p95, and p99 TTFT and TTLT, split by model, region, and app version, with deploy and prompt-change annotations.</li>
+      <li><strong>Alerting:</strong> burn-rate alerts on the TTFT SLO route to <strong>PagerDuty</strong>. See <a href="../concepts/alerting-incidents.html#alerting">Alerting</a>.</li>
+      </ol>
+
+      <h2>When the Assistant Is Slow</h2>
+      <p>A five-question triage you can run on the bridge without touching a keyboard:</p>
+      <ol>
+      <li><strong>Slow to start, or slow to finish?</strong> TTFT up points to the prompt, retrieval, queueing, or provider. Only TTLT up points to longer answers or slower streaming.</li>
+      <li><strong>Everyone, or a segment?</strong> Split by region, app version, model, and journey in App Insights or Grafana.</li>
+      <li><strong>Is the provider throttling or slow?</strong> Check the 429 rate and the duration of dependency calls to the provider.</li>
+      <li><strong>Did the prompt or model change?</strong> Look for an annotation or deploy in the last 24 hours. Has input token count jumped?</li>
+      <li><strong>Is retrieval or a tool call slow?</strong> Open one slow request's end-to-end trace in Application Insights and see where the time went.</li>
+      </ol>
+      <p>If the answer points somewhere your team can't change, switch to the <a href="../playbooks/stuck-incident.html">Stuck Incident playbook</a>.</p>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>Support reports "the assistant is slow since this morning." p95 TTLT is up 40%, but <strong>TTFT is flat</strong>. In other words, answers start on time but take longer to finish. Output tokens per answer are up 60% since a prompt change at 08:10 that asked for "more detailed answers." The fix is a product decision about answer length, not an infrastructure problem. Without separating TTFT from TTLT, the team would have spent the morning blaming the provider.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>Only average latency is tracked.</dt>
+      <dd>Counter: averages hide the slowest users. Always ask for p95 and p99.</dd>
+      <dt>Latency is measured at the server, not as the user feels it.</dt>
+      <dd>Counter: ask whether the device apps report TTFT too (or Pendo-side timing). Network and on-device time can be large.</dd>
+      <dt>"The provider is slow."</dt>
+      <dd>Counter: ask for one trace broken down by hop before accepting that.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/latency" target="_blank" rel="noopener">Microsoft Learn: Performance and latency for Azure OpenAI<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://github.com/open-telemetry/semantic-conventions-genai" target="_blank" rel="noopener">OpenTelemetry GenAI semantic conventions<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview" target="_blank" rel="noopener">Microsoft Learn: OpenTelemetry in Azure Monitor<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6: Monitoring Distributed Systems<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

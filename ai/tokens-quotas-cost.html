@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tokens, Quotas & Cost · SRE Leader's Field Guide</title>
+  <meta name="description" content="How tokens connect speed, cost, and capacity, and how to stop quota throttling, the most common AI outage, before it happens.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="ai-tokens">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Tokens, Quotas & Cost</h1>
+      <p class="summary">How tokens connect speed, cost, and capacity, and how to stop quota throttling, the most common AI outage, before it happens.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>The assistant is failing with throttling errors, a launch is coming, the cloud bill is questioned, or someone proposes a longer prompt or a bigger model. Tokens connect reliability, speed, and cost, and quotas are the most common cause of AI outages.</p>
+      </div>
+
+      <h2>Tokens in Plain Terms</h2>
+      <ul>
+      <li>A <strong>token</strong> is a chunk of text, roughly ¾ of a word. "Reliability engineering" is about 3–4 tokens.</li>
+      <li><strong>Input tokens</strong> are everything sent to the model: instructions, conversation history, retrieved documents, and the user's question.</li>
+      <li><strong>Output tokens</strong> are the answer.</li>
+      <li>Providers <strong>charge</strong> per token (output usually costs more), <strong>limit</strong> you per token, and take longer for more tokens.</li>
+      </ul>
+      <p>In other words, a prompt that grows from 2,000 to 6,000 tokens makes every request slower, costlier, and three times closer to your quota.</p>
+
+      <h2>Quotas and Throttling</h2>
+      <ul>
+      <li><strong>Tokens per minute (TPM)</strong> and <strong>requests per minute (RPM)</strong> are the usual limits on a model deployment.</li>
+      <li>Exceed them and the provider returns <strong>HTTP 429 (Too Many Requests)</strong>, which is throttling. Users see errors or long waits as the client retries.</li>
+      <li><strong>Retries without backoff</strong> make throttling worse: every failed call is retried immediately, adding load (a "retry storm").</li>
+      <li>Quotas are usually <strong>per region and per deployment</strong>, so traffic can be spread across them. Confirm how yours is set up.</li>
+      </ul>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Capacity model</th><th>How it works</th><th>Trade-off</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Pay-as-you-go (standard)</strong></td><td>Pay per token, within shared capacity and quota limits</td><td>Flexible and cheap at low volume. Latency and throttling can vary at peak.</td></tr>
+      <tr><td><strong>Provisioned (reserved) throughput</strong></td><td>Reserve dedicated model capacity for a fixed price</td><td>More predictable latency and capacity. You pay for it whether you use it or not.</td></tr>
+      </tbody>
+      </table></div>
+      <p>The decision between them is a business one. Bring the throttling rate, TTFT at peak, and the cost per 1,000 requests.</p>
+
+      <h2>Prompt-Length Governance</h2>
+      <ul>
+      <li><strong>Track input tokens per request</strong> as a metric on the scorecard. Any prompt change that raises it by more than an agreed amount (for example, 20%) needs a review.</li>
+      <li><strong>Cap conversation history and retrieved context.</strong> More context isn't always better answers, but it's always more tokens.</li>
+      <li><strong>Set a maximum output length</strong> per journey.</li>
+      <li><strong>Use caching</strong> where it applies: repeated instructions, common answers. Confirm what your provider and orchestration support.</li>
+      </ul>
+
+      <h2>Cost per Request</h2>
+      <p>Track <strong>cost per 1,000 requests</strong> and <strong>cost per active user</strong> monthly: model spend from Azure Cost Management, divided by request volume from Application Insights (or active users from Pendo). Flag any change that moves it by more than 10%. See <a href="../concepts/capacity-readiness.html#cost-per-request">Cost per Request</a>.</p>
+
+      <h2>Alerting</h2>
+      <div class="callout"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>An alert at <strong>80% of TPM or RPM quota</strong>, per deployment, at low urgency, so someone acts before users notice.</li>
+      <li>A paging alert when the <strong>throttling rate goes above 1% for 5 minutes</strong>, routed to PagerDuty.</li>
+      <li>Retries use exponential backoff with jitter, with a capped retry count.</li>
+      <li>Input tokens per request, output tokens per request, and cost per 1,000 requests are on the scorecard.</li>
+      <li>Quota headroom is checked before every launch, along with load testing. See <a href="../concepts/capacity-readiness.html#capacity">Capacity</a>.</li>
+      </ul>
+      </div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>A new feature adds the user's last 20 messages to every prompt, and input tokens per request triple. Nothing breaks at 10 a.m. At the 2 p.m. peak, the deployment hits its TPM quota and 18% of calls get 429s. The 80% quota alert would have fired at 1:20 p.m. That's 40 minutes to shift traffic to a second deployment, or turn the feature off with a flag.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>Nobody owns the quota.</dt>
+      <dd>Counter: write it into the ownership map. The owning pod requests increases; SRE alerts on headroom.</dd>
+      <dt>Quota increases are requested during the outage.</dt>
+      <dd>Counter: they can take time. Check headroom monthly and before launches.</dd>
+      <dt>Cost is someone else's problem until finance asks.</dt>
+      <dd>Counter: show cost per 1,000 requests next to the reliability numbers every month, so you raise it before finance does.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits" target="_blank" rel="noopener">Microsoft Learn: Azure OpenAI quotas and limits<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/quota" target="_blank" rel="noopener">Microsoft Learn: Manage Azure OpenAI quota<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/provisioned-throughput" target="_blank" rel="noopener">Microsoft Learn: Provisioned throughput<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/addressing-cascading-failures/" target="_blank" rel="noopener">SRE Book, Ch. 22: Addressing Cascading Failures<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

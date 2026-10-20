@@ -37,6 +37,7 @@
   function extras(s) {
     var bits = [];
     if (s.concept) bits.push('Concept: <a href="' + root + esc(s.concept.u) + '">' + esc(s.concept.t) + '</a>');
+    if (s.also && s.also.length) bits.push('See also: ' + s.also.map(function (a) { return '<a href="' + root + esc(a.u) + '">' + esc(a.t) + '</a>'; }).join(" · "));
     if (s.read && s.read.length) bits.push('Go deeper: ' + s.read.map(function (r) { return '<a href="' + esc(r.u) + '" target="_blank" rel="noopener">' + esc(r.t) + '<span class="visually-hidden"> (opens in a new tab)</span></a>'; }).join(" · "));
     return bits.length ? '<p class="q-where">' + bits.join(" &nbsp;|&nbsp; ") + '</p>' : "";
   }
