@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Ask · SRE Leader's Field Guide</title>
+  <meta name="description" content="The same question can build credibility or cost it. Here's how to ask so it lands, including with an offshore NOC team.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="g-ask">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>How to Ask</h1>
+      <p class="summary">The same question can build credibility or cost it. Here's how to ask so it lands, including with an offshore NOC team.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+        <p>You have the right question but worry how it will land. The same question can build credibility or cost it, depending on when you ask it, how you say it, and what you do with the answer.</p>
+      </div>
+
+      <h2>The Six Habits</h2>
+      <div class="callout"><p class="callout-title">Do This</p>
+        <ol>
+          <li><strong>Ask about outcomes, not internals.</strong> "What do users see?" and "How would we know?" are questions you can always own. "Why did you pick that database?" is a fight you'll lose.</li>
+          <li><strong>One question at a time.</strong> Stacking three questions lets them answer the easiest one.</li>
+          <li><strong>Ask, then go quiet.</strong> Count to five in your head. The real answer often comes after the first, safer one.</li>
+          <li><strong>Follow the weak answer.</strong> "It depends," "the team," and "soon" are invitations. Every question in the bank has a follow-up for exactly this moment.</li>
+          <li><strong>Say "I don't know" out loud, then ask something sharp.</strong> "I don't know how that works. What happens to users if it fails?" Admitting you don't know and then showing judgment builds more trust than bluffing ever could.</li>
+          <li><strong>Close it.</strong> End with an owner and a date ("Who's taking that, and by when?"), then send a two-line written recap within the hour.</li>
+        </ol>
+      </div>
+
+      <h2>Tone: Curious, Not Prosecuting</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Lands badly</th><th>Lands well</th></tr></thead>
+        <tbody>
+          <tr><td>"Why didn't anyone catch this?"</td><td>"How did we find out, and what would have caught it sooner?"</td></tr>
+          <tr><td>"Is this going to be late again?"</td><td>"What's the earliest sign it might slip?"</td></tr>
+          <tr><td>"Who made this change?"</td><td>"What made it possible for this change to go out without a canary?"</td></tr>
+          <tr><td>"That doesn't make sense."</td><td>"Help me understand the failure case."</td></tr>
+          <tr><td>"Do you understand?" (to the NOC)</td><td>"Tell me back what you'll do, so I know I explained it well."</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>With an Offshore NOC L1 Team</h2>
+      <div class="callout"><p class="callout-title">Do This</p>
+        <ul>
+          <li><strong>Short sentences, one idea each.</strong> Avoid idioms like "ballpark" and "circle back," and avoid sarcasm. Remember, many analysts work in their second language.</li>
+          <li><strong>Never accept "yes, understood" as confirmation.</strong> Ask for teach-back or a show-me instead.</li>
+          <li><strong>Ask about the instruction, not the person.</strong> "Which step was confusing?" gets a true answer. "Why did you get it wrong?" gets silence.</li>
+          <li><strong>Make it safe to say "I don't know."</strong> In many cultures, saying no or admitting confusion to a senior manager feels risky. Thank people who do it, publicly.</li>
+          <li><strong>Put it in writing after you say it.</strong> A short written summary in the team channel reaches the next shift and helps anyone who missed something on the call.</li>
+        </ul>
+      </div>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+        <p><strong>The moment:</strong> the NOC missed an escalation overnight. The assistant was timing out for 40 minutes before SRE was paged.</p>
+        <p><strong>The question that gets silence:</strong> "Why didn't you escalate?"</p>
+        <p><strong>The questions that get the truth:</strong> "Walk me through what you saw at 02:10. … What did the runbook tell you to do at that point? … Was there a moment you thought about escalating? What stopped you?"</p>
+        <p><strong>What you learn:</strong> the runbook said "escalate if the issue is serious," and last month someone was criticized for paging SRE over nothing. In other words, the process and the culture caused the miss, not the analyst. You fix the runbook ("if timeouts exceed 5% for 10 minutes, page SRE"), and you tell the whole team that early escalation is never wrong.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+        <dl>
+          <dt>Someone answers a different, easier question than the one you asked.</dt>
+          <dd>Counter: "That's helpful. And on my question: what do users see?" Calmly asking again is a credibility move.</dd>
+          <dt>The room goes silent and you feel the urge to fill it.</dt>
+          <dd>Counter: don't. Silence after a good question is the question working.</dd>
+          <dt>Someone uses your question to make you look uninformed ("Well, obviously…").</dt>
+          <dd>Counter: "Great, then it should be quick to answer. What's the number?" Stay pleasant and keep the focus on the answer, not on you.</dd>
+          <dt>You ask the right question and nothing happens afterwards.</dt>
+          <dd>Counter: a question without an owner and a date is just conversation. Always close it.</dd>
+        </dl>
+      </div>
+
+      <div class="callout"><p class="callout-title">Do It This Week</p>
+        <ul>
+          <li>Ask one question from <a href="../questions/credibility.html#cred-tested">When You're Tested or Dismissed</a> in a technical meeting.</li>
+          <li>Use teach-back once with the NOC: <a href="../questions/offshore-noc.html#noc-instructions">Instructions That Stick</a>.</li>
+          <li>Send a two-line recap after one meeting.</li>
+        </ul>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

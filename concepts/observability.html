@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Observability & Telemetry · SRE Leader's Field Guide</title>
+  <meta name="description" content="How you know what your system is doing: telemetry, metrics, logs, traces, the golden signals, dashboards, and quality signals for an AI product.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="c-obs">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Observability & Telemetry</h1>
+      <p class="summary">How you know what your system is doing: telemetry, metrics, logs, traces, the golden signals, dashboards, and quality signals for an AI product.</p>
+      <section class="concept" aria-labelledby="monitoring-vs-observability">
+      <h2 id="monitoring-vs-observability">Monitoring vs Observability</h2>
+      <p class="one-liner" data-block="sentence">Monitoring tells you <em>that</em> something is wrong. Observability lets you work out <em>why</em>, including for problems nobody predicted.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Monitoring is your classic NOC: thresholds on known things like CPU or disk. Observability is being able to ask new questions of the data during an incident without shipping new code.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Unreliable products fail in new ways. If your team can only see what was pre-configured, every new failure means guessing. That's what makes incidents long.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>You:</strong> after each major incident, ask "what question couldn't we answer during it?" That's your observability gap list.</li>
+      <li><strong>SRE + pod:</strong> make sure requests carry an ID that follows them across services, so one slow request can be traced end to end (see Traces).</li>
+      <li><strong>SRE:</strong> make logs searchable by that request ID and by user-impacting fields such as region and app version.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Monitoring: <strong>Azure Monitor</strong> metrics and alerts. Observability: <strong>Application Insights</strong> (requests, dependencies, exceptions, distributed traces) plus <strong>Log Analytics</strong> KQL for asking new questions.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>During an incident, the team can split errors by region, app version, and dependency within minutes.</li>
+      <li>One slow request can be followed end to end.</li>
+      <li>The "questions we couldn't answer" list shrinks quarter over quarter.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What question couldn't we answer during the last incident?”</em> · <em>“Can we split the error rate by region and app version right now?”</em> · <a href="../questions/incidents.html#inc-mitigate">Driving to Mitigation questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6: Monitoring Distributed Systems<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/overview" target="_blank" rel="noopener">Microsoft Learn: Azure Monitor overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="telemetry">
+      <h2 id="telemetry">Telemetry</h2>
+      <p class="one-liner" data-block="sentence">The data your systems emit about themselves: metrics, logs, and traces. Observability is built from it.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Like the event logs and performance counters you collected from servers, but emitted by the application itself, about every request.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Telemetry costs money (ingestion and storage) and engineering time. Too little and you're blind. Too much and the bill spikes. Deciding the balance is a leadership call.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE:</strong> agree a standard: every service emits request metrics, structured logs, and traces using one approach. OpenTelemetry is the open standard Application Insights supports.</li>
+      <li><strong>You:</strong> ask for the monthly telemetry bill from Azure Cost Management, and who is generating the most data.</li>
+      <li><strong>SRE + pods:</strong> set retention and sampling rules. Keep everything for errors; sample routine successful requests.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Instrumentation via the <strong>Azure Monitor OpenTelemetry</strong> distro into <strong>Application Insights</strong>. Data lands in a <strong>Log Analytics</strong> workspace. Cost appears in <strong>Azure Cost Management</strong>.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every production service emits metrics, logs, and traces in the agreed format.</li>
+      <li>Telemetry cost is known monthly, with an owner.</li>
+      <li>Sampling and retention rules are written down.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“How does our telemetry bill grow as traffic grows?”</em> · <em>“Which service generates the most log data, and do we use it?”</em> · <a href="../questions/peers-leaders.html#vendor">Vendor &amp; Tool Pitch questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/opentelemetry-overview" target="_blank" rel="noopener">Microsoft Learn: OpenTelemetry in Azure Monitor<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/monitoring/" target="_blank" rel="noopener">Workbook, Ch. 4: Monitoring<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="metrics-logs-traces">
+      <h2 id="metrics-logs-traces">Metrics, Logs &amp; Traces</h2>
+      <p class="one-liner" data-block="sentence">The three kinds of telemetry. <strong>Metrics</strong> are numbers over time. <strong>Logs</strong> are detailed records of events. <strong>Traces</strong> show one request's path through every service it touched.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Metrics are your performance graphs. Logs are your event logs. Traces are new: like following one ticket through every queue it touched, with a timestamp at each hop.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Each answers a different question in an incident. Metrics answer "is it bad and since when?" Logs answer "what exactly failed?" Traces answer "where in the chain did the time go?" Knowing which to ask for makes you useful on the bridge.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>You:</strong> in the next incident, ask "what do the metrics show, what do the logs show, and do we have a trace?" Note which of the three were missing.</li>
+      <li><strong>SRE:</strong> make sure traces cover the call to the model provider, since that's where AI requests often spend most of their time.</li>
+      <li><strong>SRE:</strong> link from Grafana panels to the matching Log Analytics query, so moving from graph to detail takes one click.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Metrics: <strong>Azure Monitor metrics</strong> and Application Insights, graphed in <strong>Grafana</strong>. Logs: <strong>Log Analytics</strong> (KQL). Traces: Application Insights <strong>distributed tracing</strong> (the end-to-end transaction view).</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>All three exist for every critical journey.</li>
+      <li>A trace shows time spent in the model provider call.</li>
+      <li>Grafana panels link straight to the relevant logs.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“Where does the time go in one slow request?”</em> · <em>“Do we have a trace for the request that failed?”</em> · <a href="../questions/incidents.html#inc-stuck">When It's Stuck questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/distributed-trace-data" target="_blank" rel="noopener">Microsoft Learn: Distributed tracing in Application Insights<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview" target="_blank" rel="noopener">Microsoft Learn: Log Analytics overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="golden-signals">
+      <h2 id="golden-signals">The Four Golden Signals</h2>
+      <p class="one-liner" data-block="sentence">The four things to watch for any user-facing service: <strong>latency</strong> (how slow), <strong>traffic</strong> (how much), <strong>errors</strong> (how many fail), and <strong>saturation</strong> (how full).</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>A short, standard version of your service health checks, focused on what users feel rather than on every component.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>If every critical service shows these four on the top row of its dashboard, anyone, including you and the NOC, can tell healthy from unhealthy in seconds.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE:</strong> put the four golden signals on the top row of each critical service's Grafana dashboard. Show latency as the slowest 5% of requests, not the average.</li>
+      <li><strong>SRE + NOC lead:</strong> mark the normal range on each panel, so the NOC can see when a signal leaves it.</li>
+      <li><strong>You:</strong> use the top row for your green, yellow, or red call in the SRE Daily.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> <strong>Grafana</strong> dashboards using the Azure Monitor data source. Latency, traffic, and errors come from Application Insights requests. Saturation comes from Azure Monitor metrics: CPU, memory, queue depth, and provider quota usage.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every critical service has the four signals on its top row.</li>
+      <li>Latency shows the slowest 5% or 1%, not just the average.</li>
+      <li>Normal ranges are marked, so the NOC can read them.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What does a normal day look like on this graph?”</em> · <em>“Which three graphs would you look at first at 3 a.m.?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/monitoring-distributed-systems/" target="_blank" rel="noopener">SRE Book, Ch. 6: Monitoring Distributed Systems<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="dashboards">
+      <h2 id="dashboards">Dashboards</h2>
+      <p class="one-liner" data-block="sentence">Pages of graphs that help someone answer a specific question quickly. A good dashboard has a purpose and an audience. A bad one is a wall of every metric.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Like NOC wallboards, with the same lesson: the board that shows everything ends up helping nobody.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Your team, the NOC, and leadership need different views. One cluttered dashboard slows every incident and makes you look less in control in reviews.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE:</strong> create three levels: an <em>executive</em> view (SLOs and budget), a <em>service</em> view (golden signals per service), and <em>debug</em> views (deep detail, linked from the service view).</li>
+      <li><strong>SRE:</strong> give every dashboard an owner and a one-line purpose at the top. Delete any that haven't been viewed in 90 days.</li>
+      <li><strong>SRE:</strong> add deploy and change annotations, so changes show as markers on every graph.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> <strong>Azure Managed Grafana</strong>: folders per level, an owner in each dashboard description, and annotations from the deploy pipeline or Activity Log queries.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Exec, service, and debug levels exist and link to each other.</li>
+      <li>Every dashboard has an owner and a purpose line.</li>
+      <li>Deploys and changes show as annotations.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“Who owns this dashboard, and when was it last changed?”</em> · <em>“Is there an annotation for the change before this spike?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/best-practices/" target="_blank" rel="noopener">Grafana docs: Dashboard best practices<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/annotate-visualizations/" target="_blank" rel="noopener">Grafana docs: Annotations<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="ai-quality-signals">
+      <h2 id="ai-quality-signals">AI Quality Signals</h2>
+      <p class="one-liner" data-block="sentence">Measures of whether the assistant's answers are <em>good</em>, not just fast and error-free. An AI product can be up and still wrong.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>There's no direct IT Ops equivalent. The closest is a service desk satisfaction score, but measured continuously and per answer.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Quality problems from model or prompt changes often don't trip any error alert. If you're not measuring quality, customers find these incidents before you do.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>Pod + product:</strong> pick one or two quality signals. Examples: thumbs-down rate, "I couldn't help with that" rate, fallback-answer rate, or scores from an automated evaluation of sampled answers.</li>
+      <li><strong>SRE:</strong> chart them next to the golden signals, with deploy and prompt-change annotations.</li>
+      <li><strong>You:</strong> agree a threshold that counts as an incident, such as "thumbs-down rate doubles for an hour," so quality problems get declared, not just discussed.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Custom events and metrics sent to <strong>Application Insights</strong> by the pod's code (confirm with your team what they already log), charted in <strong>Grafana</strong> next to latency and errors.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>At least one quality signal on the service dashboard.</li>
+      <li>A written threshold that makes a quality drop an incident.</li>
+      <li>Prompt and model changes appear as annotations.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“If the assistant gave wrong answers fast, would anything turn red?”</em> · <em>“What changed in the prompts or model this week?”</em> · <a href="../questions/technical-meetings.html#dashboard">Dashboard Review questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview" target="_blank" rel="noopener">Microsoft Learn: Application Insights overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RCA Worked Example · SRE Leader's Field Guide</title>
+  <meta name="description" content="A fictional incident taken from raw evidence to a finished RCA, step by step, with the questions you'd ask at each stage.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca-example">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Worked Example: Assistant Timeouts at Peak</h1>
+      <p class="summary">A fictional incident taken from raw evidence to a finished RCA, step by step, with the questions you'd ask at each stage.</p>
+      <div class="callout"><p class="callout-title">About This Example</p>
+      <p>The incident is fictional, but realistic for a cross-device AI assistant running on Azure, with Grafana dashboards, PagerDuty paging, an offshore NOC, and a third-party model provider. It follows the eight steps in <a href="run-an-rca.html">Running an RCA</a>. Your questions at each step are in italics.</p>
+      </div>
+
+      <h2>Step 1: Does It Need an RCA?</h2>
+      <p>Yes. It was a Sev 2 with 83 minutes of customer-visible impact, and it was the second throttling-related incident in 60 days. The incident lead (Sam, SRE) writes the draft by Monday, and the review is booked for Wednesday.</p>
+      <p><em>You: "Sam, can you own the draft? Priya, can you join to cover the pod side? I've booked Wednesday at 10."</em></p>
+
+      <h2>Step 2: Timeline From Evidence</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Time</th><th>Event</th><th>Source</th></tr></thead>
+      <tbody>
+      <tr><td>13:52</td><td>New prompt template deployed to 100% of traffic.</td><td>Deploy history + Grafana annotation</td></tr>
+      <tr><td>14:03</td><td>Provider calls start returning "throttled" (HTTP 429).</td><td>Application Insights, dependency calls</td></tr>
+      <tr><td><strong>14:05</strong></td><td><strong>Impact starts:</strong> failed and slow requests rise.</td><td>Grafana, assistant error-rate panel</td></tr>
+      <tr><td><strong>14:12</strong></td><td><strong>Detected:</strong> "Assistant latency high" alert fires and goes to the NOC.</td><td>PagerDuty incident log</td></tr>
+      <tr><td>14:12–14:31</td><td>NOC follows its runbook: "monitor for 15 minutes before escalating."</td><td>NOC ticket notes</td></tr>
+      <tr><td><strong>14:34</strong></td><td><strong>Acknowledged:</strong> SRE on-call acknowledges.</td><td>PagerDuty</td></tr>
+      <tr><td><strong>14:50</strong></td><td><strong>Escalated:</strong> Assistant pod paged, after 16 minutes spent working out who owns provider quotas.</td><td>PagerDuty, incident channel</td></tr>
+      <tr><td>15:05</td><td>Throttling linked to the prompt change, using the Grafana annotation.</td><td>Incident channel</td></tr>
+      <tr><td><strong>15:20</strong></td><td><strong>Mitigated:</strong> prompt template rolled back.</td><td>Deploy history</td></tr>
+      <tr><td><strong>15:28</strong></td><td><strong>Resolved:</strong> error rate back to normal once the queued retries clear.</td><td>Grafana</td></tr>
+      </tbody>
+      </table></div>
+      <p><strong>Time to detect:</strong> 7 minutes (good). <strong>Time from detection to mitigation:</strong> 68 minutes (the problem). Most of it was lost in NOC escalation (19 minutes) and in finding an owner (16 minutes).</p>
+      <div class="code-card"><div class="code-head">The kind of query an engineer ran (you don't need to write it)</div><pre>// Application Insights / Log Analytics (KQL): throttled calls to the model provider, per minute
+      dependencies
+      | where timestamp between (datetime(2026-10-08 13:30) .. datetime(2026-10-08 15:45))
+      | where target has "model-provider"
+      | summarize throttled = countif(resultCode == "429"), total = count() by bin(timestamp, 1m)
+      | render timechart</pre></div>
+      <p><em>You: "Where did 14:05 come from, the graph or someone's memory?" "Can we link the PagerDuty entry for the acknowledgement time?"</em></p>
+
+      <h2>Step 3: Impact in User Terms</h2>
+      <p>"From 14:05 to 15:28 (83 minutes), about 22% of assistant requests (about 180,000) failed or took over 30 seconds. Users saw 'Something went wrong. Try again.' All regions and device types were affected."</p>
+      <p><em>You: "Would support recognize this description from the tickets they got?"</em></p>
+
+      <h2>Step 4: Trigger vs Conditions</h2>
+      <ul>
+      <li><strong>Trigger (why now):</strong> the new prompt template sends about 40% more tokens per request, and it shipped just before the afternoon peak.</li>
+      <li><strong>Contributing factors (why we were vulnerable):</strong>
+      <ul>
+      <li>Prompt templates are treated as config and skip the canary.</li>
+      <li>There's no alert on throttling or on token usage approaching the quota.</li>
+      <li>Clients retry 3 times immediately, without backoff, which makes throttling worse.</li>
+      <li>The NOC runbook says "monitor for 15 minutes."</li>
+      <li>Nobody had written down who owns the provider quota.</li>
+      </ul></li>
+      </ul>
+      <p><em>You: "If someone else had shipped a different long prompt, would we have had the same outage?" (Yes. So the problem is the conditions, not the person.)</em></p>
+
+      <h2>Step 5: The Four Defenses</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Defense</th><th>What failed</th><th>What held</th></tr></thead>
+      <tbody>
+      <tr><td>Prevent</td><td>No canary for prompt changes. No token estimate before deploy.</td><td>Not applicable</td></tr>
+      <tr><td>Detect</td><td>No throttling or quota alert, so we only saw the symptom.</td><td>The latency alert fired within 7 minutes.</td></tr>
+      <tr><td>Mitigate</td><td>Retries without backoff amplified the problem and slowed recovery.</td><td>Rollback worked in minutes once it was decided.</td></tr>
+      <tr><td>Respond</td><td>The NOC waited 15 minutes. Ownership of the quota was unclear.</td><td>SRE acknowledged 3 minutes after the escalation.</td></tr>
+      </tbody>
+      </table></div>
+      <p><em>You: "Every defense except detection failed somewhere. Do we have an action for each one?"</em></p>
+
+      <h2>Step 6: 5 Whys, With Two Branches</h2>
+      <ol>
+      <li>Why did requests fail? <strong>Provider calls were throttled.</strong></li>
+      <li>Why? <strong>We exceeded the token-per-minute quota at peak.</strong></li>
+      <li>Why? <strong>The new prompt uses about 40% more tokens, and it went to 100% of traffic at once.</strong></li>
+      <li>Why at once? <strong>Prompt changes skip the canary.</strong> → <em>Prevent branch</em></li>
+      <li>Why didn't we see the quota coming? <strong>We don't alert on token usage or throttling.</strong> → <em>Detect branch</em></li>
+      </ol>
+      <p>A third branch, "Why did it take 68 minutes to mitigate?", leads to the NOC runbook rule and the unclear ownership. That's the <em>respond branch</em>.</p>
+
+      <h2>Step 7: Actions (Ranked)</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>Defense</th><th>Action</th><th>Owner</th><th>Due</th><th>Done means</th></tr></thead>
+      <tbody>
+      <tr><td>1</td><td>Prevent</td><td>Prompt and template changes use the canary pipeline.</td><td>Priya (pod)</td><td>3 weeks</td><td>The next prompt change rolls to 5% first, with automatic rollback on errors.</td></tr>
+      <tr><td>2</td><td>Detect</td><td>Alert when provider throttling exceeds 1% for 5 minutes, and when token usage passes 80% of quota, routed to the SRE PagerDuty service.</td><td>Sam (SRE)</td><td>1 week</td><td>Tested by simulating throttling. The alert visibly reaches PagerDuty.</td></tr>
+      <tr><td>3</td><td>Respond</td><td>NOC runbook: if the slowest 5% of requests are over 8 seconds for 5 minutes, page SRE. Never wait 15.</td><td>NOC shift lead</td><td>1 week</td><td>Runbook updated. Every shift passes a teach-back.</td></tr>
+      <tr><td>4</td><td>Mitigate</td><td>Retries use exponential backoff with jitter (small random delays), max 2.</td><td>Priya (pod)</td><td>2 weeks</td><td>A load test with provider throttling shows no retry storm.</td></tr>
+      <tr><td>5</td><td>Respond</td><td>Ownership map: provider quota is owned by the Assistant pod, with a PagerDuty escalation path written down.</td><td>You and the pod manager</td><td>1 week</td><td>Published, and linked from the NOC and SRE runbooks.</td></tr>
+      </tbody>
+      </table></div>
+      <p><em>You: "If we only did one, which? Is #2 really a week? What does Priya need to hit three weeks?"</em></p>
+
+      <h2>Step 8: Review and Follow-Through</h2>
+      <ul>
+      <li><strong>Review:</strong> 45 minutes. The NOC analyst who took the first alert walked through the first 15 minutes, and they were thanked for following the runbook exactly as written.</li>
+      <li><strong>Shared:</strong> a 5-line summary went to leadership, support, and the NOC.</li>
+      <li><strong>Tracked:</strong> actions are on the monthly reliability review. Two weeks later, #2 and #3 are done. #2 was verified with a simulated throttle in staging.</li>
+      <li><strong>Verified:</strong> the next prompt change went through the canary, hit throttling at 5% of traffic, and rolled back automatically. Users never noticed. Log that as a win.</li>
+      </ul>
+
+      <div class="callout watch"><p class="callout-title">What the Weak Version Would Have Said</p>
+      <p>"Root cause: an engineer deployed a prompt change without testing. Action: test prompt changes more carefully." That fixes nothing on the list above, and the next long prompt, from anyone, causes the same outage.</p>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/example-postmortem/" target="_blank" rel="noopener">SRE Book, Appendix D: Example Postmortem<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/addressing-cascading-failures/" target="_blank" rel="noopener">SRE Book, Ch. 22: Addressing Cascading Failures (retry storms)<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+
+      <p><strong>Next:</strong> <a href="template.html">Use the template for your next RCA</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

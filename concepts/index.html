@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SRE Concepts · SRE Leader's Field Guide</title>
+  <meta name="description" content="Every core SRE concept in one sentence, and the order to roll them out. Each links to a practical page: what it means, how to implement it in Azure and Grafana, and what done looks like.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="c-index">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>SRE Concepts: Overview & Roadmap</h1>
+      <p class="summary">Every core SRE concept in one sentence, and the order to roll them out. Each links to a practical page: what it means, how to implement it in Azure and Grafana, and what done looks like.</p>
+      <div class="callout"><p class="callout-title">How to Use This Section</p>
+      <p>Each concept is written for a senior manager: what it means in one sentence, the IT Ops equivalent, why it matters at your level, how to implement it in an Azure + Azure Managed Grafana + PagerDuty environment, what done looks like, what to ask, and where to read more in Google's free SRE books.</p>
+      </div>
+
+      <h2>A Rollout Order That Works</h2>
+      <p>If you're starting from firefighting, roll these out in order. Each one makes the next one possible.</p>
+      <ol>
+      <li><a href="reliability-targets.html#sli"><strong>SLIs</strong></a> for your 2–3 most important user journeys.</li>
+      <li><a href="reliability-targets.html#slo"><strong>SLOs</strong></a> agreed with pods and product, shown on a Grafana dashboard.</li>
+      <li><a href="alerting-incidents.html#alerting"><strong>Alerting on SLOs</strong></a>: burn-rate pages in PagerDuty, and delete the noise.</li>
+      <li><a href="reliability-targets.html#error-budget-policy"><strong>An error budget policy</strong></a> signed by leadership.</li>
+      <li><a href="alerting-incidents.html#postmortems"><strong>Postmortems</strong></a> with tracked, verified actions (see <a href="../rca/index.html">Root Cause Analysis</a>).</li>
+      <li><a href="change-and-toil.html#toil"><strong>Toil</strong></a> measured and cut, with the time reinvested in prevention.</li>
+      </ol>
+
+      <h2>Reliability Targets</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Concept</th><th>In one sentence</th></tr></thead>
+      <tbody>
+      <tr><td><a href="reliability-targets.html#sli">SLI (Service Level Indicator)</a></td><td>A number that measures how well the service is working from the user's point of view, usually "the percentage of requests that were good."</td></tr>
+      <tr><td><a href="reliability-targets.html#slo">SLO (Service Level Objective)</a></td><td>The target for an SLI over a time window, for example "99.5% of assistant requests are good, measured over 28 days."</td></tr>
+      <tr><td><a href="reliability-targets.html#sla">SLA (Service Level Agreement)</a></td><td>A promise to customers, usually in a contract, with consequences such as credits if it's broken.</td></tr>
+      <tr><td><a href="reliability-targets.html#error-budget">Error Budget</a></td><td>The amount of unreliability your SLO allows. A 99.5% SLO means 0.5% of requests can fail before you've missed it.</td></tr>
+      <tr><td><a href="reliability-targets.html#error-budget-policy">Error Budget Policy</a></td><td>A written agreement about what happens when the error budget runs low or is spent, for example "pause risky launches and put engineers on reliability fixes."</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Observability & Telemetry</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Concept</th><th>In one sentence</th></tr></thead>
+      <tbody>
+      <tr><td><a href="observability.html#monitoring-vs-observability">Monitoring vs Observability</a></td><td>Monitoring tells you that something is wrong. Observability lets you work out why, including for problems nobody predicted.</td></tr>
+      <tr><td><a href="observability.html#telemetry">Telemetry</a></td><td>The data your systems emit about themselves: metrics, logs, and traces. Observability is built from it.</td></tr>
+      <tr><td><a href="observability.html#metrics-logs-traces">Metrics, Logs &amp; Traces</a></td><td>The three kinds of telemetry. Metrics are numbers over time. Logs are detailed records of events. Traces show one request's path through every service it touched.</td></tr>
+      <tr><td><a href="observability.html#golden-signals">The Four Golden Signals</a></td><td>The four things to watch for any user-facing service: latency (how slow), traffic (how much), errors (how many fail), and saturation (how full).</td></tr>
+      <tr><td><a href="observability.html#dashboards">Dashboards</a></td><td>Pages of graphs that help someone answer a specific question quickly. A good dashboard has a purpose and an audience. A bad one is a wall of every metric.</td></tr>
+      <tr><td><a href="observability.html#ai-quality-signals">AI Quality Signals</a></td><td>Measures of whether the assistant's answers are good, not just fast and error-free. An AI product can be up and still wrong.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Alerting & Incidents</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Concept</th><th>In one sentence</th></tr></thead>
+      <tbody>
+      <tr><td><a href="alerting-incidents.html#alerting">Alerting (Symptom-Based and Burn-Rate)</a></td><td>Alerts should wake a person only when users are being hurt, or soon will be, and the person can do something about it.</td></tr>
+      <tr><td><a href="alerting-incidents.html#on-call">On-Call</a></td><td>A rotation of people who respond when production breaks, with clear hours, escalation paths, and limits on load.</td></tr>
+      <tr><td><a href="alerting-incidents.html#incident-management">Incident Management</a></td><td>A standard way to run an incident: declare it, assign roles, communicate on a rhythm, stop the bleeding, then learn from it.</td></tr>
+      <tr><td><a href="alerting-incidents.html#postmortems">Postmortems (RCAs)</a></td><td>A written, blameless review after an incident that explains what happened and produces a few owned actions that make a repeat less likely.</td></tr>
+      <tr><td><a href="alerting-incidents.html#mttx">MTTD, MTTA, MTTR (and Their Limits)</a></td><td>Average times to detect, acknowledge, and resolve incidents. They're useful for spotting where time goes, and misleading as targets.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Change & Toil</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Concept</th><th>In one sentence</th></tr></thead>
+      <tbody>
+      <tr><td><a href="change-and-toil.html#change-management">Change Management (the SRE Way)</a></td><td>Making change safe by making it small, tested, gradual, and easy to undo, rather than by adding approval meetings.</td></tr>
+      <tr><td><a href="change-and-toil.html#safe-deploys">Canary, Feature Flags &amp; Rollback</a></td><td>Canary: release to a small slice of users first. Feature flag: turn a feature on or off without a deploy. Rollback: return to the last good version quickly.</td></tr>
+      <tr><td><a href="change-and-toil.html#toil">Toil</a></td><td>Manual, repetitive operational work that scales with traffic and leaves nothing lasting behind, like restarting the same service every week.</td></tr>
+      <tr><td><a href="change-and-toil.html#automation">Automation</a></td><td>Replacing a repeated manual task with something that runs itself, done when the time saved is clearly worth the effort and the risk.</td></tr>
+      <tr><td><a href="change-and-toil.html#runbooks">Runbooks</a></td><td>Step-by-step instructions for handling a specific alert or task, written so the person on shift can follow them under pressure.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Capacity & Readiness</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Concept</th><th>In one sentence</th></tr></thead>
+      <tbody>
+      <tr><td><a href="capacity-readiness.html#capacity">Capacity Planning &amp; Load Testing</a></td><td>Knowing how much traffic the system can handle, what breaks first, and making sure there's room for the load that's coming.</td></tr>
+      <tr><td><a href="capacity-readiness.html#prr">Production Readiness Review (PRR)</a></td><td>A checklist review before a new service or major feature goes live, to confirm it can be run safely: monitored, alerted, documented, owned, and reversible.</td></tr>
+      <tr><td><a href="capacity-readiness.html#dependencies">Dependency Management</a></td><td>Knowing what your service relies on but doesn't control (the model provider, identity, third-party APIs), and what happens when each one is slow or down.</td></tr>
+      <tr><td><a href="capacity-readiness.html#cost-per-request">Cost per Request</a></td><td>What it costs to serve one user request, or 1,000 of them. For AI products this is driven heavily by model and token usage.</td></tr>
+      </tbody>
+      </table></div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

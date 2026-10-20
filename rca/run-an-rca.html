@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Running an RCA · SRE Leader's Field Guide</title>
+  <meta name="description" content="A step-by-step method you can lead without being the most technical person in the room, plus a 45-minute facilitation script.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca-run">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Running an RCA</h1>
+      <p class="summary">A step-by-step method you can lead without being the most technical person in the room, plus a 45-minute facilitation script.</p>
+      <div class="callout"><p class="callout-title">Your Role</p>
+      <p>You usually shouldn't write the RCA. The incident lead or an engineer from the owning pod should. Your job is to make sure it happens on time, that it follows these steps, and that the right questions get asked. You can run every step below without reading code.</p>
+      </div>
+
+      <h2>Step 1: Decide Whether It Needs an RCA</h2>
+      <p>Write the trigger criteria down once, so it's never a debate. A sensible starting set:</p>
+      <ul>
+      <li>Any Sev 1 or Sev 2 incident.</li>
+      <li>Customer-visible impact longer than 30 minutes.</li>
+      <li>Any repeat of an incident from the last 90 days.</li>
+      <li>A near miss that could have been major.</li>
+      <li>Any data loss or security exposure.</li>
+      </ul>
+      <p><strong>Name the author and the review date</strong> before the incident channel goes quiet: a draft within 3 working days, a review within 5.</p>
+
+      <h2>Step 2: Build the Timeline From Evidence</h2>
+      <p>The timeline is the foundation. Build it from systems, not memory, because people are reliably wrong about times.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Source</th><th>What it tells you</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Grafana</strong> dashboards and annotations</td><td>When impact started and ended, and deploy or change markers</td></tr>
+      <tr><td><strong>Application Insights / Log Analytics</strong></td><td>Failed requests, slow requests, and calls to dependencies such as the model provider, by minute</td></tr>
+      <tr><td><strong>Azure Activity Log</strong></td><td>Infrastructure and configuration changes in Azure, and who or what made them</td></tr>
+      <tr><td><strong>Deploy pipeline history</strong></td><td>What code, config, or prompt changes shipped, and when</td></tr>
+      <tr><td><strong>PagerDuty incident log</strong></td><td>When alerts fired, who was paged, acknowledgement times, and escalations</td></tr>
+      <tr><td><strong>Incident channel and bridge notes</strong></td><td>Decisions, who joined when, and what was tried</td></tr>
+      </tbody>
+      </table></div>
+      <p>Mark these six timestamps, because they make the gaps visible:</p>
+      <ol>
+      <li><strong>Impact started</strong> (from the graph, not from when someone noticed)</li>
+      <li><strong>Detected</strong> (first alert, or first human report)</li>
+      <li><strong>Acknowledged</strong> (someone owned it in PagerDuty)</li>
+      <li><strong>Escalated</strong> (the right team engaged)</li>
+      <li><strong>Mitigated</strong> (user impact stopped)</li>
+      <li><strong>Resolved</strong> (cause fixed or safely contained)</li>
+      </ol>
+      <p>Then calculate <strong>time to detect</strong> (1→2) and <strong>time to mitigate</strong> (2→5). The bigger gap tells you where to invest.</p>
+
+      <h2>Step 3: State the Impact in User Terms</h2>
+      <p>One or two sentences a support agent would understand: who was affected, how many, for how long, and what they saw. For example: "From 14:05 to 15:28, about 22% of assistant requests failed or took over 30 seconds. Users saw 'Something went wrong.'" Get the numbers from Application Insights. Rough beats missing.</p>
+
+      <h2>Step 4: Separate the Trigger From the Conditions</h2>
+      <p>Ask two different questions and write both answers down:</p>
+      <ul>
+      <li><strong>"Why did this happen now?"</strong> gives you the trigger: the change, the traffic spike, the provider event.</li>
+      <li><strong>"Why were we vulnerable to it?"</strong> gives you the contributing factors: the missing canary, alert, limit, or runbook step.</li>
+      </ul>
+      <p>If the analysis lists only a trigger, it isn't finished.</p>
+
+      <h2>Step 5: Walk the Four Defenses</h2>
+      <p>For each layer, ask what failed and what held. (See <a href="index.html#the-four-defenses">The Four Defenses</a>.)</p>
+      <ul>
+      <li><strong>Prevent:</strong> what would have stopped this change or condition from reaching production?</li>
+      <li><strong>Detect:</strong> what signal would have told us sooner? Did the alert go to the right place in PagerDuty?</li>
+      <li><strong>Mitigate:</strong> what would have limited how many users were hurt, or for how long? Rollback, feature flags, failover, rate limits.</li>
+      <li><strong>Respond:</strong> where did humans lose time? Unclear ownership, runbook gaps, waiting on the wrong team, NOC escalation rules.</li>
+      </ul>
+
+      <h2>Step 6: Use "5 Whys" Without Falling Into Its Traps</h2>
+      <p>Asking "why" repeatedly is useful, as long as you avoid the traps below. Done well, it looks like this:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Why?</th><th>Because…</th></tr></thead>
+      <tbody>
+      <tr><td>Why did requests time out?</td><td>Calls to the model provider were throttled.</td></tr>
+      <tr><td>Why were they throttled?</td><td>We exceeded our token-per-minute quota.</td></tr>
+      <tr><td>Why did we exceed it?</td><td>The new prompt template sends about 40% more tokens per request, at peak traffic.</td></tr>
+      <tr><td>Why did that reach all users at once?</td><td>Prompt changes are treated as config and skip the canary. <em>(Contributing factor → prevent action)</em></td></tr>
+      <tr><td>Why didn't we see the quota approaching?</td><td>There's no alert on token usage or throttling. <em>(A second branch → detect action)</em></td></tr>
+      </tbody>
+      </table></div>
+      <div class="callout watch"><p class="callout-title">The Traps</p>
+      <dl>
+      <dt>Stopping at a person ("because Sam deployed it").</dt>
+      <dd>Ask instead: "What allowed that deploy to reach every user?"</dd>
+      <dt>Following a single chain.</dt>
+      <dd>Real incidents branch. Follow at least the prevent branch and the detect branch.</dd>
+      <dt>Going too deep ("because of budget").</dt>
+      <dd>Stop at the level where your team or a pod can own a concrete action.</dd>
+      <dt>Asking "who" instead of "what."</dt>
+      <dd>"Who" gets defensiveness. "What made this possible" gets facts.</dd>
+      </dl>
+      </div>
+
+      <h2>Step 7: Write Fewer, Better Actions</h2>
+      <p>Three to five actions, ranked, each labeled with the defense it strengthens. Every one needs a <strong>named person</strong>, a <strong>date</strong>, and what <strong>done</strong> means. Include at least one Detect action.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Weak action</th><th>Strong action</th></tr></thead>
+      <tbody>
+      <tr><td>Investigate root cause further.</td><td>Prompt changes use the canary pipeline. Owner: Priya. Due in 3 weeks. Done means the next prompt change rolls to 5% first and rolls back automatically on errors.</td></tr>
+      <tr><td>Improve monitoring.</td><td>Alert when provider throttling exceeds 1% for 5 minutes, routed to the SRE PagerDuty service. Owner: Sam. Due in 1 week. Done means it's tested by simulating throttling.</td></tr>
+      <tr><td>Engineers to be more careful.</td><td>Remove this as an action. Replace it with the system change that makes care unnecessary.</td></tr>
+      <tr><td>NOC to escalate faster.</td><td>NOC runbook: "if the slowest 5% of requests are over 8 seconds for 5 minutes, page SRE." Owner: NOC lead. Due in 1 week. Done means it's verified by teach-back with every shift.</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Step 8: Run the Review (45 Minutes)</h2>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Time</th><th>Block</th><th>Ask</th></tr></thead>
+      <tbody>
+      <tr><td>00–05</td><td><strong>Ground rules &amp; impact</strong>Read the blameless rule aloud, then the impact statement.</td><td><em>"Does everyone agree with the impact numbers?"</em></td></tr>
+      <tr><td>05–20</td><td><strong>Timeline walk</strong>The author walks the evidence-backed timeline. Mark the gaps.</td><td><em>"Where did we lose the most time?"</em></td></tr>
+      <tr><td>20–30</td><td><strong>Trigger, factors &amp; defenses</strong>Confirm the trigger, the contributing factors, and the four defenses.</td><td><em>"Which defenses failed?"</em></td></tr>
+      <tr><td>30–40</td><td><strong>Actions</strong>Rank, then assign an owner, a date, and what done means.</td><td><em>"If we only did one, which?"</em></td></tr>
+      <tr><td>40–45</td><td><strong>Close</strong>Agree who it gets shared with, and when actions are reviewed.</td><td><em>"Who outside this room needs to read this?"</em></td></tr>
+      </tbody>
+      </table></div>
+      <div class="code-card"><div class="code-head">Opening script (read it aloud)</div><pre>We're here to understand how our system allowed this to happen, not to find someone to blame.
+      Assume everyone did what made sense with what they knew at the time.
+      We'll leave with a few actions, each with an owner, a date, and what "done" means.</pre></div>
+      <p><strong>After the review:</strong> put the actions into your tracking system, review open ones in the monthly reliability review, and verify the top action actually reduces the risk. That could be a drill, a test, or watching the metric that failed.</p>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>See the full <a href="worked-example.html">worked example</a>. It takes one fictional incident through all eight steps.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The review turns into re-debugging the incident.</dt>
+      <dd>Counter: "Good question for after. Let's park it and finish the timeline."</dd>
+      <dt>The most senior engineer dominates, and the NOC analyst never speaks.</dt>
+      <dd>Counter: ask the person closest to the first alert to walk the first 15 minutes. You'll learn the most from them.</dd>
+      <dt>Actions get assigned to "the team."</dt>
+      <dd>Counter: no name, no action. If the right person isn't in the room, the action becomes "[pod manager] names an owner by Friday," and it's yours to chase.</dd>
+      <dt>The review slips a week, then two.</dt>
+      <dd>Counter: book it while the incident channel is still open.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">SRE Book, Ch. 15: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/effective-troubleshooting/" target="_blank" rel="noopener">SRE Book, Ch. 12: Effective Troubleshooting<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/incident-document/" target="_blank" rel="noopener">SRE Book, Appendix C: Example Incident State Document<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+
+      <p><strong>Next:</strong> <a href="judge-an-rca.html">Judging an RCA you're handed</a> · <a href="template.html">RCA template</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

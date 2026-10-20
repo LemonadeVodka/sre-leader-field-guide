@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RCA the SRE Way · SRE Leader's Field Guide</title>
+  <meta name="description" content="What a root cause analysis is really for, why there's rarely one root cause, and what a good RCA produces.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>RCA the SRE Way</h1>
+      <p class="summary">What a root cause analysis is really for, why there's rarely one root cause, and what a good RCA produces.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You're expected to lead, review, or sign off root cause analyses and you're not sure what "good" looks like. This page gives you the mental model. <a href="run-an-rca.html">Running an RCA</a> gives you the steps.</p>
+      </div>
+
+      <h2>What an RCA Is Actually For</h2>
+      <p>An RCA (root cause analysis, also called a postmortem or post-incident review) has one job: <strong>make the same kind of incident less likely, and less damaging if it happens anyway.</strong> The document is just the record. What it should produce:</p>
+      <ul>
+      <li><strong>A shared, accurate story</strong> of what happened, backed by evidence rather than memory.</li>
+      <li><strong>A few strong actions</strong> that improve your defenses, each with an owner, a date, and what "done" means.</li>
+      <li><strong>Learning that spreads</strong> beyond the people who were on the bridge: other pods, the NOC, leadership.</li>
+      </ul>
+      <p>An RCA that produces a nice document and no completed actions has failed, however well written it is.</p>
+
+      <h2>Why There's Rarely One Root Cause</h2>
+      <p>In IT Ops problem management you may have been trained to find <em>the</em> root cause. In modern systems, incidents almost always come from <strong>a trigger meeting a set of conditions</strong> that let it become an outage. SRE calls those conditions <strong>contributing factors</strong>.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Term</th><th>Plain meaning</th><th>Example (AI assistant)</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Trigger</strong></td><td>What changed or happened right before</td><td>A longer prompt template was deployed at 13:52.</td></tr>
+      <tr><td><strong>Contributing factors</strong></td><td>Conditions that turned the trigger into an outage</td><td>No canary for prompt changes. No alert on the model provider's rate limits. Retries with no backoff.</td></tr>
+      <tr><td><strong>Impact</strong></td><td>What users experienced, how many, for how long</td><td>22% of requests failed or took over 30 seconds, for 83 minutes.</td></tr>
+      <tr><td><strong>Detection</strong></td><td>How and when we found out</td><td>An alert fired after 7 minutes. Escalation took another 19.</td></tr>
+      <tr><td><strong>Mitigation</strong></td><td>What stopped the bleeding</td><td>Rolling back the prompt template.</td></tr>
+      </tbody>
+      </table></div>
+      <p>Fixing only the trigger ("don't ship long prompts") leaves every condition in place for the next trigger. Strong RCAs fix conditions.</p>
+
+      <h2>The Four Defenses</h2>
+      <p>Think of reliability as layers. An incident means several layers failed at once. For every RCA, ask which layers failed, and make sure there's at least one action for each.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Defense</th><th>The question</th><th>Example action</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Prevent</strong></td><td>Why could this happen at all?</td><td>Prompt changes go through the same canary as code.</td></tr>
+      <tr><td><strong>Detect</strong></td><td>Why didn't we know sooner?</td><td>Alert on model-provider throttling, routed to PagerDuty.</td></tr>
+      <tr><td><strong>Mitigate</strong></td><td>Why did it hurt this much, or for this long?</td><td>Retries with backoff, so a provider hiccup doesn't snowball.</td></tr>
+      <tr><td><strong>Respond</strong></td><td>Why did the human response take this long?</td><td>The NOC runbook says "page SRE after 5 minutes," not "monitor for 15."</td></tr>
+      </tbody>
+      </table></div>
+      <p>Most weak RCAs only have Prevent actions. Detection and response actions are often cheaper and pay off on <em>every</em> future incident, not just this one.</p>
+
+      <h2>Blameless Doesn't Mean Accountability-Free</h2>
+      <ul>
+      <li><strong>Blameless</strong> means people aren't punished for honest mistakes made in a system that allowed them. If a different person on the same shift could have made the same mistake, it's a system problem.</li>
+      <li><strong>Accountable</strong> means every action has an owner who delivers it, and leaders follow through. You can, and should, be strict about follow-through.</li>
+      <li>Blameless is also practical. If people get punished for being honest in RCAs, the next RCA will be missing the facts you most need.</li>
+      </ul>
+      <div class="callout"><p class="callout-title">Say This When Someone Names a Person</p>
+      <p>"Let's assume they did what made sense with what they knew at the time. What made that the reasonable choice? What would have stopped anyone from making it?"</p>
+      </div>
+
+      <h2>What Good Looks Like</h2>
+      <ul class="done-list">
+      <li>Drafted within 3 working days and reviewed within 5, while memories are fresh.</li>
+      <li>Every timeline entry is backed by evidence from Grafana, Application Insights, the Azure Activity Log, PagerDuty, or the incident channel.</li>
+      <li>User impact is quantified: who, how many, how long, what they saw.</li>
+      <li>Both the trigger and the contributing factors are named. "Human error" is never the end of the analysis.</li>
+      <li>All four defenses are examined.</li>
+      <li>3–5 ranked actions, each with a named owner, a date, and a checkable definition of done. At least one improves detection.</li>
+      <li>Reviewed in a meeting and shared beyond the team.</li>
+      <li>Actions are tracked to closure in your monthly reliability review, and the top action is verified to actually reduce the risk.</li>
+      </ul>
+
+      <h2>From IT Ops Problem Management to SRE RCAs</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>IT Ops habit</th><th>SRE version</th></tr></thead>
+      <tbody>
+      <tr><td>Find the root cause</td><td>Find the trigger and the contributing factors</td></tr>
+      <tr><td>Problem ticket stays open until the fix ships</td><td>The RCA closes with a few owned actions, which are tracked separately until verified</td></tr>
+      <tr><td>Known error database</td><td>A searchable RCA library, plus repeat-incident tracking</td></tr>
+      <tr><td>Change caused it, so tighten the CAB</td><td>Make changes smaller, canaried, and easy to roll back</td></tr>
+      </tbody>
+      </table></div>
+      <p>Your problem management background is an advantage: you already know how to drive problems to closure. The SRE shift is in what you look for.</p>
+
+      <div class="callout example"><p class="callout-title">Example in Practice</p>
+      <p>An RCA lands on your desk: "Root cause: engineer deployed a bad config. Action: engineers to double-check configs."</p>
+      <p><strong>You ask:</strong> "Could anyone on the team have made the same change? What would have caught it before users did?" The answers: there's no automated config validation, the change went to 100% of traffic at once, and the error-rate alert was set too loose to fire.</p>
+      <p><strong>The rewritten actions:</strong> config validation in the pipeline (prevent), a canary for config changes (mitigate), and tightening the error-rate alert (detect). Each has an owner and a date. The engineer who deployed it ran the review, and became the person most committed to the fixes.</p>
+      </div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>RCAs get written for the record and nobody reads them.</dt>
+      <dd>Counter: hold a short review meeting for every major incident. Send a 5-line summary to leadership and the NOC.</dd>
+      <dt>The same "root cause" shows up again three months later.</dt>
+      <dd>Counter: track RCA actions like commitments, and review open ones monthly. A repeat incident with an open action is the strongest argument you'll ever have for prioritization.</dd>
+      <dt>Pods push back on actions that land in their code.</dt>
+      <dd>Counter: the RCA names the action and the owning team. Agreeing the date is a manager-to-manager conversation, and you own having it.</dd>
+      <dt>People get defensive, so the facts get vague.</dt>
+      <dd>Counter: open every review with the blameless ground rule, out loud, every time.</dd>
+      </dl>
+      </div>
+
+      <div class="go-deeper-box"><p class="go-deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/postmortem-culture/" target="_blank" rel="noopener">SRE Book, Ch. 15: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/postmortem-culture/" target="_blank" rel="noopener">Workbook, Ch. 10: Postmortem Culture<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/postmortem-analysis/" target="_blank" rel="noopener">Workbook, Appendix C: Results of Postmortem Analysis<span class="visually-hidden"> (opens in a new tab)</span></a></p></div>
+
+      <p><strong>Next:</strong> <a href="run-an-rca.html">Running an RCA, step by step</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

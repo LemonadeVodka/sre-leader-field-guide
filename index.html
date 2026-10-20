@@ -3,30 +3,52 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Question Bank · SRE Leader's Field Guide</title>
-  <meta name="description" content="Questions that build credibility as an SRE leader without a coding background: for technical rooms, peers and execs, your SRE team, and an offshore NOC L1 team. Each comes with a follow-up for weak answers and what asking it signals.">
+  <title>SRE Leader's Field Guide</title>
+  <meta name="description" content="A field guide for leading SRE without a software engineering background: question bank, RCA guide, meeting playbooks, and SRE concepts.">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/style.css">
   <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
 </head>
-<body class="wide" data-root="./" data-page="index">
+<body data-root="./" data-page="home" data-toc="deferred">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header" id="site-header"><a class="brand" href="./index.html">SRE Leader's Field Guide</a></header>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
   <main class="content" id="main">
     <article class="prose">
-      <div class="eyebrow">SRE Leader's Field Guide</div>
-      <h1 data-notoc>Question Bank</h1>
-      <p class="lede">You don't need to be the most technical person in the room. You need to ask the question that changes the conversation, recognize a weak answer, and know what to ask next. Every question here comes with all three, plus what asking it says about you.</p>
-      <div class="howto">
-        <div><strong>Pick three, not ten.</strong> Choose the situation you're walking into and bring three questions.</div>
-        <div><strong>Ask, then go quiet.</strong> Let the silence work. Don't rescue them with options.</div>
-        <div><strong>Follow the weak answer.</strong> The follow-up is where credibility is won. <a href="how-to-ask.html">How to ask →</a></div>
+      <h1>SRE Leader's Field Guide</h1>
+      <p class="summary">Lead reliability by asking the right questions. Questions for every room you're in, a practical RCA guide, meeting playbooks, and SRE concepts explained for a senior manager.</p>
+      <div class="search" data-qsearch>
+      <p><a href="questions/technical-meetings.html">Browse the Question Bank</a> (search needs JavaScript).</p>
       </div>
-      <div id="qbank"></div>
+
+      <h2>Right Now, I'm…</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Situation</th><th>Go to</th></tr></thead>
+      <tbody>
+      <tr><td>In a live incident</td><td><a href="questions/incidents.html#inc-first15">First 15 Minutes</a>, then <a href="questions/incidents.html#inc-stuck">When It's Stuck</a></td></tr>
+      <tr><td>Writing or reviewing an RCA</td><td><a href="rca/run-an-rca.html">Running an RCA</a> or <a href="rca/judge-an-rca.html">Judging an RCA</a></td></tr>
+      <tr><td>Running the SRE Daily or Performance Engineering meeting</td><td><a href="meetings/sre-daily.html">SRE Daily</a> · <a href="meetings/performance-engineering.html">Performance Engineering</a></td></tr>
+      <tr><td>Dealing with an offshore NOC that missed something</td><td><a href="questions/offshore-noc.html#noc-diagnose">Diagnose the Real Problem</a></td></tr>
+      <tr><td>Being dismissed as "not technical"</td><td><a href="questions/credibility.html#cred-tested">When You're Tested or Dismissed</a></td></tr>
+      <tr><td>Asked "how reliable are we?"</td><td><a href="concepts/reliability-targets.html#slo">SLOs</a> and <a href="questions/credibility.html#cred-story">Owning the Reliability Story</a></td></tr>
+      <tr><td>Pushing a pod to own a recurring problem</td><td><a href="questions/peers-leaders.html#pod">Pod &amp; Peer Sync</a></td></tr>
+      <tr><td>Unsure what an SRE term means</td><td><a href="concepts/index.html">SRE Concepts</a></td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>What's in the Guide</h2>
+      <ul class="section-grid">
+      <li><a class="section-link" href="questions/technical-meetings.html"><strong>Question Bank</strong><span>172 questions organized by who you're with. Each one comes with a follow-up for weak answers and coaching notes.</span></a></li>
+      <li><a class="section-link" href="rca/index.html"><strong>Root Cause Analysis</strong><span>RCA the SRE way: run one, judge one, a worked example, and a template.</span></a></li>
+      <li><a class="section-link" href="meetings/sre-daily.html"><strong>Meeting Playbooks</strong><span>30-minute agendas for the SRE Daily and Performance Engineering, with their questions.</span></a></li>
+      <li><a class="section-link" href="concepts/index.html"><strong>SRE Concepts</strong><span>SLIs, SLOs, observability, alerting, toil, and more. What each one means, how to implement it in Azure and Grafana, and what done looks like.</span></a></li>
+      <li><a class="section-link" href="guides/how-to-ask.html"><strong>Guides</strong><span>How to ask so it lands, and the path from IT Ops to SRE leader.</span></a></li>
+      </ul>
     </article>
+    <nav class="pager" id="pager"></nav>
   </main>
+  <aside class="toc" id="toc"></aside>
 </div>
 <footer class="site-footer" id="footer"></footer>
 <script src="./assets/store.js"></script>

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Change & Toil · SRE Leader's Field Guide</title>
+  <meta name="description" content="Making change safe, and getting the team's time back: change management, safe deploys, toil, automation, and runbooks.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="c-change">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Change & Toil</h1>
+      <p class="summary">Making change safe, and getting the team's time back: change management, safe deploys, toil, automation, and runbooks.</p>
+      <section class="concept" aria-labelledby="change-management">
+      <h2 id="change-management">Change Management (the SRE Way)</h2>
+      <p class="one-liner" data-block="sentence">Making change safe by making it small, tested, gradual, and easy to undo, rather than by adding approval meetings.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>The CAB's goal (safe change) with a different method. Approvals catch little. Canaries, automated checks, and fast rollback catch most problems.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Most incidents start with a change. For an AI product, that includes prompt and model changes. How changes ship is the biggest lever on your incident count.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>You + pods:</strong> list every type of production change: code, config, infrastructure, prompts, model versions, and feature flags. Ask how each one ships today.</li>
+      <li><strong>SRE + pods:</strong> make every change type visible as a Grafana annotation, so it shows up during incidents.</li>
+      <li><strong>Pods:</strong> move the riskiest change types onto canary and rollback (see next).</li>
+      <li><strong>You:</strong> agree change freeze rules for peak events, tied to the error budget policy.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Deploy pipelines (confirm which tool your pods use), the <strong>Azure Activity Log</strong> for infrastructure changes, and <strong>Grafana annotations</strong> for every change type.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every change type is listed, with how it ships.</li>
+      <li>All change types appear as annotations.</li>
+      <li>Prompt and model changes go through the same safety steps as code.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What changed in the last 24 hours?”</em> · <em>“How do we roll this back, and how long does it take?”</em> · <a href="../questions/technical-meetings.html#design">Design Review questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/release-engineering/" target="_blank" rel="noopener">SRE Book, Ch. 8: Release Engineering<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/platform/activity-log" target="_blank" rel="noopener">Microsoft Learn: Activity Log<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="safe-deploys">
+      <h2 id="safe-deploys">Canary, Feature Flags &amp; Rollback</h2>
+      <p class="one-liner" data-block="sentence"><strong>Canary:</strong> release to a small slice of users first. <strong>Feature flag:</strong> turn a feature on or off without a deploy. <strong>Rollback:</strong> return to the last good version quickly.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Like a pilot group for a patch, a kill switch, and a tested backout plan, all automated.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>These are the fastest ways to stop the bleeding in an incident, and the best way to keep a bad change from ever reaching all users.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>Pods:</strong> release to 5% first, watch error rate and latency for an agreed time, then expand. Roll back automatically if the SLI drops.</li>
+      <li><strong>Pods:</strong> put risky features, including new prompts and models, behind flags that SRE can turn off during an incident.</li>
+      <li><strong>SRE:</strong> test rollback regularly and time it.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Feature flags via <strong>Azure App Configuration feature management</strong> or your pods' flag tool (confirm with your team). Canary health is checked against Application Insights SLIs. Rollback lives in the deploy pipeline.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Critical services canary every release.</li>
+      <li>SRE can turn risky features off without a deploy.</li>
+      <li>Rollback is tested and takes minutes, not hours.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What are our options to reduce impact right now?”</em> · <em>“Has anyone actually tried the rollback?”</em> · <a href="../questions/incidents.html#inc-mitigate">Driving to Mitigation questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/workbook/canarying-releases/" target="_blank" rel="noopener">Workbook, Ch. 16: Canarying Releases<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-app-configuration/concept-feature-management" target="_blank" rel="noopener">Microsoft Learn: Feature management<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="toil">
+      <h2 id="toil">Toil</h2>
+      <p class="one-liner" data-block="sentence">Manual, repetitive operational work that scales with traffic and leaves nothing lasting behind, like restarting the same service every week.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>The "keep the lights on" work you know well. SRE puts a cap on it: if toil takes most of the team's time, nothing ever improves.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Toil is why central SRE teams stay stuck firefighting. Measuring it gives you the data to win headcount or push work back to the pods that cause it.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE:</strong> for two weeks, tag time roughly as project, toil, or interrupts. Rough is fine.</li>
+      <li><strong>You:</strong> set a target, such as toil below 50% of team time, and report it monthly.</li>
+      <li><strong>SRE:</strong> rank the top toil items by hours. Automate them, fix them, or hand them back to the owning pod.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Time tracking in your work tracker. Many toil items show up as repeat <strong>PagerDuty</strong> incidents, which gives you hard counts.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Toil percentage is measured and reported monthly.</li>
+      <li>The top 3 toil items each have an owner and a plan.</li>
+      <li>The percentage is trending down.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What percentage of the team's time goes to unplanned work?”</em> · <em>“What do you do every week that a script could do?”</em> · <a href="../questions/peers-leaders.html#roadmap">Roadmap &amp; Priorities questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/eliminating-toil/" target="_blank" rel="noopener">SRE Book, Ch. 5: Eliminating Toil<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/eliminating-toil/" target="_blank" rel="noopener">Workbook, Ch. 6: Eliminating Toil<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="automation">
+      <h2 id="automation">Automation</h2>
+      <p class="one-liner" data-block="sentence">Replacing a repeated manual task with something that runs itself, done when the time saved is clearly worth the effort and the risk.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Like scripting your runbooks, but done deliberately: automate the frequent, well-understood steps first, and keep a human in the loop for risky ones.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Automation is how SRE scales without adding headcount, and how you lift work off a struggling L1 NOC. It needs prioritizing, or it never happens.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE:</strong> take the top toil list and estimate hours saved per month against the effort to build.</li>
+      <li><strong>You:</strong> protect time for the top item. Fund it from the toil budget, not engineers' evenings.</li>
+      <li><strong>SRE + NOC lead:</strong> automate NOC runbook steps that are pure lookups or restarts, so L1 does less copying and more escalating.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> Azure-native options such as <strong>Azure Monitor alert actions</strong> (Action Groups can trigger automation), or scripts in your pipelines (confirm with your team).</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>One automation is shipped per quarter from the top-toil list.</li>
+      <li>Hours saved are measured afterwards.</li>
+      <li>At least one NOC runbook step is automated.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What's a piece of toil you'd automate first, and what would it save?”</em> · <em>“What should we decide not to automate?”</em> · <a href="../questions/sre-team.html#hiring">Hiring Loop questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/automation-at-google/" target="_blank" rel="noopener">SRE Book, Ch. 7: The Evolution of Automation at Google<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups" target="_blank" rel="noopener">Microsoft Learn: Action groups<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="runbooks">
+      <h2 id="runbooks">Runbooks</h2>
+      <p class="one-liner" data-block="sentence">Step-by-step instructions for handling a specific alert or task, written so the person on shift can follow them under pressure.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Your SOPs. The bar is higher for an L1 team that struggles with instructions: one action per step, exact if/then rules, and a clear point where you stop and escalate.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Unclear runbooks are the most common reason an offshore NOC "doesn't follow instructions." Fixing them improves NOC performance faster than any training.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE + NOC lead:</strong> every paging alert gets a runbook link in the alert itself (PagerDuty or Grafana).</li>
+      <li><strong>SRE:</strong> write steps as action, expected result, then if not, do this, with a <strong>STOP: page SRE</strong> point and a time limit.</li>
+      <li><strong>NOC lead:</strong> test each runbook with the least experienced analyst using teach-back, and fix any step they stumble on.</li>
+      <li><strong>You:</strong> after each incident, ask "did the runbook help?" and update it within a week.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> A shared wiki or doc space, linked from <strong>PagerDuty</strong> incidents and <strong>Grafana</strong> alert notifications. Screenshots come from the actual Grafana and Azure screens.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Every paging alert links to a runbook.</li>
+      <li>Each runbook has been tested by an L1 analyst with teach-back.</li>
+      <li>Each has a clear escalation point with a time limit.</li>
+      <li>Runbooks are updated after incidents.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“Could a brand-new analyst follow this at 3 a.m. without asking anyone?”</em> · <em>“At what step do you stop and escalate?”</em> · <a href="../questions/offshore-noc.html#noc-instructions">Instructions That Stick questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/being-on-call/" target="_blank" rel="noopener">SRE Book, Ch. 11: Being On-Call<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

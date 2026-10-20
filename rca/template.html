@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RCA Template · SRE Leader's Field Guide</title>
+  <meta name="description" content="A copy-ready RCA template, plus a one-page summary for execs.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca-template">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>RCA Template</h1>
+      <p class="summary">A copy-ready RCA template, plus a one-page summary for execs.</p>
+      <div class="callout"><p class="callout-title">How to Use It</p>
+      <ul>
+      <li>Copy it into your team's doc tool. The incident lead or the owning pod's engineer fills it in. You review it with the <a href="judge-an-rca.html">5-minute check</a>.</li>
+      <li>Keep it short: a strong RCA is usually 2–3 pages.</li>
+      <li>Send the one-page summary below to leadership, support, and the NOC once actions are agreed.</li>
+      </ul>
+      </div>
+
+      <h2>Full RCA Template</h2>
+      <div class="code-card"><div class="code-head">RCA template</div><pre>RCA: [Short title, e.g. "Assistant timeouts at afternoon peak"]
+      Incident date: [YYYY-MM-DD]    Severity: [Sev 1/2/3]    Status: [Draft / Reviewed / Actions complete]
+      Author: [name]    Review date: [date]    PagerDuty incident: [link]
+
+      1. SUMMARY (3-5 sentences anyone can understand)
+      What users experienced, for how long, the trigger, the main contributing factors, and how it was mitigated.
+
+      2. IMPACT
+      - Who / where: [regions, devices, app versions, customer segments]
+      - How many: [% of requests, approx. number of users or requests]
+      - Duration: [start - end, total minutes]
+      - What users saw: [error message / behaviour]
+      - Source of numbers: [Application Insights query / Grafana panel link]
+
+      3. TIMELINE (every row needs a source)
+      Time  | Event                                   | Source (Grafana / App Insights / Activity Log / PagerDuty / channel)
+      ----- | --------------------------------------- | ------
+            | Trigger: [change / event]               |
+            | Impact started                          |
+            | Detected (first alert or report)        |
+            | Acknowledged                            |
+            | Escalated to owning team                |
+            | Mitigated (user impact stopped)         |
+            | Resolved                                |
+      Time to detect: [min]    Time from detection to mitigation: [min]
+
+      4. TRIGGER
+      Why did this happen now?
+
+      5. CONTRIBUTING FACTORS
+      Why were we vulnerable to it? (List each condition. "Human error" is not a contributing factor;
+      ask what made the error possible.)
+      -
+      -
+
+      6. THE FOUR DEFENSES
+      Prevent:  what failed / what held
+      Detect:   what failed / what held
+      Mitigate: what failed / what held
+      Respond:  what failed / what held
+
+      7. HAS THIS HAPPENED BEFORE?
+      Links to previous incidents, and what happened to their action items.
+
+      8. ACTIONS (3-5, ranked; at least one Detect)
+      # | Defense  | Action | Owner (person) | Due | Done means (checkable)
+      1 |          |        |                |     |
+      2 |          |        |                |     |
+      3 |          |        |                |     |
+
+      9. WHAT WENT WELL
+      What helped: alerts that fired, people who escalated early, runbooks that worked.
+
+      10. LESSONS FOR OTHER TEAMS
+      What should other pods, SRE, or the NOC know?</pre></div>
+
+      <h2>One-Page Summary for Leadership</h2>
+      <div class="code-card"><div class="code-head">Exec summary</div><pre>Incident summary: [title], [date], Sev [x]
+
+      What happened: [one sentence in user terms]
+      Impact: [% / number affected], [duration], [what users saw]
+      Why: [trigger] + [top 1-2 contributing factors]
+      Fixed by: [mitigation] at [time]
+
+      What we're changing:
+      1. [Top action]: [owner], [date]
+      2. [Detection action]: [owner], [date]
+      3. [Third action]: [owner], [date]
+
+      Ask / decision needed: [anything you need from leadership, or "none"]
+      Full RCA: [link]</pre></div>
+
+      <h2>Before You Mark an RCA "Done"</h2>
+      <ul class="done-list">
+      <li>All actions have a person, a date, and a checkable definition of done.</li>
+      <li>Actions are in the tracker, and on the agenda for the monthly reliability review.</li>
+      <li>The summary went to leadership, support, and the NOC.</li>
+      <li>The top action has been verified to reduce the risk: a drill, a test, or watching the metric that failed.</li>
+      </ul>
+
+      <p><strong>Related:</strong> <a href="run-an-rca.html">Running an RCA</a> · <a href="worked-example.html">Worked example</a> · <a href="../questions/incidents.html#incident">Post-Incident Review questions</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

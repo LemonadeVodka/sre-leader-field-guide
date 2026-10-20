@@ -1,35 +1,67 @@
 /* SRE Leader's Field Guide — shared page chrome.
-   Pages provide <body data-root="./" data-page="id"> and empty #site-header, #sidebar, #pager, #toc, #footer slots.
-   Load store.js and questions.js before this file: the sidebar lists every Question Bank situation. */
+   Pages provide <body data-root="./|../" data-page="id"> and empty #site-header, #sidebar, #crumbs, #pager, #toc, #footer slots.
+   Pages whose content is rendered by script set data-toc="deferred" and call SRL_buildToc() themselves (qbank.js does). */
 (function () {
   "use strict";
 
-  var UPDATED = "October 19, 2026"; /* bump on each release */
-  var PAGES = [
-    { id: "index", href: "index.html", title: "Question Bank" },
-    { id: "meetings", href: "meetings.html", title: "Meeting Agendas" },
-    { id: "how-to-ask", href: "how-to-ask.html", title: "How to Ask" },
-    { id: "your-path", href: "your-path.html", title: "Your Path: IT Ops → SRE Leader" }
+  var UPDATED = "October 20, 2026"; /* bump on each release */
+  var NAV = [
+    { section: "", items: [
+      { id: "home", href: "index.html", title: "Home" }
+    ]},
+    { section: "Question Bank", items: [
+      { id: "q-meetings", href: "questions/technical-meetings.html", title: "In Technical Meetings" },
+      { id: "q-incidents", href: "questions/incidents.html", title: "During & After Incidents" },
+      { id: "q-peers", href: "questions/peers-leaders.html", title: "With Peers & Leaders" },
+      { id: "q-team", href: "questions/sre-team.html", title: "With Your SRE Team" },
+      { id: "q-noc", href: "questions/offshore-noc.html", title: "With the Offshore NOC" },
+      { id: "q-cred", href: "questions/credibility.html", title: "Building Credibility" }
+    ]},
+    { section: "Root Cause Analysis", items: [
+      { id: "rca", href: "rca/index.html", title: "RCA the SRE Way" },
+      { id: "rca-run", href: "rca/run-an-rca.html", title: "Running an RCA" },
+      { id: "rca-judge", href: "rca/judge-an-rca.html", title: "Judging an RCA" },
+      { id: "rca-example", href: "rca/worked-example.html", title: "Worked Example" },
+      { id: "rca-template", href: "rca/template.html", title: "RCA Template" }
+    ]},
+    { section: "Meeting Playbooks", items: [
+      { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
+      { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" }
+    ]},
+    { section: "SRE Concepts", items: [
+      { id: "c-index", href: "concepts/index.html", title: "Overview & Roadmap" },
+      { id: "c-targets", href: "concepts/reliability-targets.html", title: "Reliability Targets" },
+      { id: "c-obs", href: "concepts/observability.html", title: "Observability & Telemetry" },
+      { id: "c-alerting", href: "concepts/alerting-incidents.html", title: "Alerting & Incidents" },
+      { id: "c-change", href: "concepts/change-and-toil.html", title: "Change & Toil" },
+      { id: "c-capacity", href: "concepts/capacity-readiness.html", title: "Capacity & Readiness" }
+    ]},
+    { section: "Guides", items: [
+      { id: "g-ask", href: "guides/how-to-ask.html", title: "How to Ask" },
+      { id: "g-path", href: "guides/it-ops-to-sre.html", title: "From IT Ops to SRE Leader" }
+    ]}
   ];
 
   var body = document.body;
   var root = body.getAttribute("data-root") || "./";
   var page = body.getAttribute("data-page") || "";
   var esc = SRL.esc;
-  var GROUPS = window.SRL_GROUPS || [], SITS = window.SRL_SITUATIONS || [];
+  var curSection = null, curItem = null;
+  NAV.forEach(function (s) { s.items.forEach(function (i) { if (i.id === page) { curSection = s; curItem = i; } }); });
 
   var LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--accent)"/>' +
-    '<path d="M5 18h5l3-8 4 13 3-9 2 4h5" fill="none" stroke="var(--accent-fg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    '<path d="M5 18h5l3-8 4 13 3-9 2 4h5" fill="none" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
   var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
   var MENU = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
 
   /* ---------- Header ---------- */
   var header = document.getElementById("site-header");
+  var menuBtn = null;
   if (header) {
     header.innerHTML =
-      '<button class="icon-btn menu-btn" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">' + MENU + '</button>' +
-      '<a class="brand" href="' + root + 'index.html">' + LOGO + '<span>SRE Leader\'s Field Guide<small>Lead reliability by asking the right questions</small></span></a>' +
+      '<button class="icon-btn menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">' + MENU + '</button>' +
+      '<a class="brand" href="' + root + 'index.html">' + LOGO + '<span class="brand-full">SRE Leader\'s Field Guide</span><span class="brand-short" aria-hidden="true">SRE Field Guide</span></a>' +
       '<div class="header-spacer"></div>' +
       '<button class="icon-btn theme-btn" type="button"></button>';
     var themeBtn = header.querySelector(".theme-btn");
@@ -50,76 +82,84 @@
       SRL.set("theme", next);
       paintTheme();
     });
-    var menuBtn = header.querySelector(".menu-btn");
-    menuBtn.addEventListener("click", function () {
-      var open = body.classList.toggle("nav-open");
-      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-    });
+    menuBtn = header.querySelector(".menu-btn");
   }
 
-  /* ---------- Sidebar: the pages, then every situation grouped by audience ---------- */
+  /* ---------- Sidebar ---------- */
   var sidebar = document.getElementById("sidebar");
-  function paintSidebar() {
-    if (!sidebar) return;
-    var hash = location.hash.slice(1);
-    var curSit = page === "index" && SITS.some(function (s) { return s.id === hash; }) ? hash : "";
-    var html = '<div class="nav-group open"><h4><span class="nav-head">Guide</span></h4><div class="nav-items">' + PAGES.map(function (p) {
-      var cur = p.id === page && !curSit ? ' aria-current="page"' : "";
-      return '<a href="' + root + p.href + '"' + cur + '><span>' + esc(p.title) + '</span></a>';
-    }).join("") + '</div></div>';
-    html += GROUPS.map(function (g) {
-      var sits = SITS.filter(function (s) { return s.group === g.id; });
-      var open = sits.some(function (s) { return s.id === curSit; });
-      return '<div class="nav-group' + (open ? " open" : "") + '"><h4><button type="button" class="nav-toggle" aria-expanded="' + open + '">' + esc(g.label) + '</button></h4><div class="nav-items">' + sits.map(function (s) {
-        var cur = s.id === curSit ? ' aria-current="page"' : "";
-        return '<a href="' + root + 'index.html#' + s.id + '"' + cur + '><span>' + esc(s.label.replace(/^NOC: /, "")) + '</span></a>';
-      }).join("") + '</div></div>';
-    }).join("");
-    sidebar.innerHTML = html;
-  }
   if (sidebar) {
-    paintSidebar();
-    window.addEventListener("hashchange", paintSidebar);
-    sidebar.addEventListener("click", function (e) {
-      var t = e.target.closest(".nav-toggle");
-      if (t) { var grp = t.closest(".nav-group"); var o = grp.classList.toggle("open"); t.setAttribute("aria-expanded", o ? "true" : "false"); return; }
-      if (e.target.closest("a")) body.classList.remove("nav-open");
-    });
+    sidebar.setAttribute("aria-label", "Site");
+    sidebar.innerHTML = NAV.map(function (s, n) {
+      var labelId = "nav-sec-" + n;
+      return '<div class="nav-section">' + (s.section ? '<p class="nav-title" id="' + labelId + '">' + esc(s.section) + '</p>' : "") +
+        '<ul' + (s.section ? ' aria-labelledby="' + labelId + '"' : "") + '>' + s.items.map(function (i) {
+          return '<li><a href="' + root + i.href + '"' + (i.id === page ? ' aria-current="page"' : "") + '>' + esc(i.title) + '</a></li>';
+        }).join("") + '</ul></div>';
+    }).join("");
   }
 
-  /* ---------- Pager across the guide pages ---------- */
+  /* ---------- Mobile menu: Esc closes and returns focus ---------- */
+  function setMenu(open) {
+    body.classList.toggle("nav-open", open);
+    if (!menuBtn) return;
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    menuBtn.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+    if (open) { var first = sidebar && sidebar.querySelector("a"); if (first) first.focus(); }
+  }
+  if (menuBtn) menuBtn.addEventListener("click", function () { setMenu(!body.classList.contains("nav-open")); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && body.classList.contains("nav-open")) { setMenu(false); menuBtn.focus(); }
+  });
+  document.addEventListener("click", function (e) {
+    if (!body.classList.contains("nav-open")) return;
+    if (sidebar.contains(e.target) || (menuBtn && menuBtn.contains(e.target))) return;
+    setMenu(false);
+  });
+
+  /* ---------- Breadcrumb ---------- */
+  var crumbs = document.getElementById("crumbs");
+  if (crumbs && curItem && page !== "home") {
+    var first = curSection.items[0];
+    var trail = '<li><a href="' + root + 'index.html">Home</a></li>';
+    if (curSection.section) trail += '<li>' + (first.id !== page ? '<a href="' + root + first.href + '">' + esc(curSection.section) + '</a>' : esc(curSection.section)) + '</li>';
+    trail += '<li><span aria-current="page">' + esc(curItem.title) + '</span></li>';
+    crumbs.innerHTML = '<ol>' + trail + '</ol>';
+    crumbs.setAttribute("aria-label", "Breadcrumb");
+  }
+
+  /* ---------- Pager (stays inside the section) ---------- */
   var pager = document.getElementById("pager");
-  var idx = PAGES.map(function (p) { return p.id; }).indexOf(page);
-  if (pager && idx >= 0) {
-    var html = "";
-    if (idx > 0) html += '<a class="prev" href="' + root + PAGES[idx - 1].href + '"><small>← Previous</small>' + esc(PAGES[idx - 1].title) + '</a>';
-    if (idx < PAGES.length - 1) html += '<a class="next" href="' + root + PAGES[idx + 1].href + '"><small>Next →</small>' + esc(PAGES[idx + 1].title) + '</a>';
+  if (pager && curSection && curSection.items.length > 1) {
+    var seq = curSection.items, idx = seq.indexOf(curItem), html = "";
+    if (idx > 0) html += '<a class="prev" href="' + root + seq[idx - 1].href + '"><small>Previous</small>' + esc(seq[idx - 1].title) + '</a>';
+    if (idx < seq.length - 1) html += '<a class="next" href="' + root + seq[idx + 1].href + '"><small>Next</small>' + esc(seq[idx + 1].title) + '</a>';
     pager.innerHTML = html;
-    pager.setAttribute("aria-label", "Previous and next pages");
+    pager.setAttribute("aria-label", "Previous and next in " + (curSection.section || "this section"));
   }
 
   /* ---------- Footer ---------- */
   var footer = document.getElementById("footer");
-  if (footer) footer.innerHTML = "&copy; 2026 SRE Leader's Field Guide · Examples are fictional · Updated " + UPDATED;
+  if (footer) footer.innerHTML = "SRE Leader's Field Guide · Examples are fictional · Updated " + UPDATED;
 
-  /* ---------- Copy buttons on .code-card blocks (e.g. agendas to paste into an invite) ---------- */
+  /* ---------- Copy buttons on .code-card blocks ---------- */
   Array.prototype.forEach.call(document.querySelectorAll(".code-card"), function (card) {
     var head = card.querySelector(".code-head"), pre = card.querySelector("pre");
     if (!head || !pre) return;
     var btn = document.createElement("button");
     btn.type = "button"; btn.className = "copy-btn"; btn.textContent = "Copy";
-    btn.setAttribute("aria-label", "Copy " + head.textContent.trim());
+    btn.setAttribute("aria-label", "Copy: " + head.textContent.trim());
     btn.addEventListener("click", function () { SRL.copy(pre.innerText.replace(/\n$/, "")); });
     head.appendChild(btn);
   });
 
-  /* ---------- Heading anchors + "On this page" ---------- */
-  var article = document.querySelector("main.content article");
-  var toc = document.getElementById("toc");
-  if (article) {
-    var used = {}, tocLinks = [];
-    Array.prototype.forEach.call(article.querySelectorAll("h2, h3"), function (h) {
-      if (h.closest(".card, .box, .q")) return;
+  /* ---------- Heading anchors + "On this page" (H2s only) ---------- */
+  function buildToc() {
+    var article = document.querySelector("main.content article");
+    var toc = document.getElementById("toc");
+    if (!article) return;
+    var used = {}, links = [];
+    Array.prototype.forEach.call(article.querySelectorAll("h2"), function (h) {
+      if (h.closest(".callout")) return;
       if (!h.id) {
         var base = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "section";
         var id = base, n = 2;
@@ -130,21 +170,30 @@
       if (!h.querySelector(".anchor")) {
         var a = document.createElement("a");
         a.className = "anchor"; a.href = "#" + h.id; a.textContent = "#";
-        a.setAttribute("aria-label", "Link to this section");
+        a.setAttribute("aria-label", "Link to " + h.textContent.trim());
         h.appendChild(a);
       }
-      if (h.hasAttribute("data-notoc")) return;
       var clone = h.cloneNode(true);
       Array.prototype.forEach.call(clone.querySelectorAll(".anchor"), function (el) { el.remove(); });
-      tocLinks.push({ id: h.id, text: clone.textContent.trim(), depth: h.tagName === "H2" ? 2 : 3 });
+      links.push({ id: h.id, text: clone.textContent.trim() });
     });
-    if (toc) {
-      if (tocLinks.length > 2) {
-        toc.innerHTML = "<h4>On this page</h4>" + tocLinks.map(function (t) {
-          return '<a class="depth-' + t.depth + '" href="#' + t.id + '">' + esc(t.text) + "</a>";
-        }).join("");
-        toc.setAttribute("aria-label", "On this page");
-      } else toc.style.visibility = "hidden";
-    }
+    if (!toc) return;
+    if (links.length > 1) {
+      toc.innerHTML = '<h2 id="toc-title">On This Page</h2><nav aria-labelledby="toc-title">' + links.map(function (t) {
+        return '<a href="#' + t.id + '">' + esc(t.text) + "</a>";
+      }).join("") + '</nav>';
+    } else { toc.innerHTML = ""; toc.hidden = true; }
+    /* Re-apply the hash now that ids exist (content may have been rendered by script). */
+    if (location.hash) { var target = document.getElementById(location.hash.slice(1)); if (target) target.scrollIntoView(); }
   }
+  window.SRL_buildToc = buildToc;
+  if (body.getAttribute("data-toc") !== "deferred") buildToc();
+
+  /* ---------- Print: open coaching notes ---------- */
+  window.addEventListener("beforeprint", function () {
+    Array.prototype.forEach.call(document.querySelectorAll("details"), function (d) { d.setAttribute("data-was", d.open ? "1" : "0"); d.open = true; });
+  });
+  window.addEventListener("afterprint", function () {
+    Array.prototype.forEach.call(document.querySelectorAll("details[data-was]"), function (d) { d.open = d.getAttribute("data-was") === "1"; d.removeAttribute("data-was"); });
+  });
 })();

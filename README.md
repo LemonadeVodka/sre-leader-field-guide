@@ -1,41 +1,42 @@
 # SRE Leader's Field Guide
 
-A question bank for leading Site Reliability Engineering **without a software engineering background**. It's written for leaders who came up through IT Operations and want to build credibility with engineers, peers, leadership, and their own teams by asking the right questions.
+A handbook for leading Site Reliability Engineering **without a software engineering background**. It's written for leaders who came up through IT Operations and want to build credibility with engineers, peers, leadership, and their own teams by asking the right questions.
 
 **Live site:** https://lemonadevodka.github.io/sre-leader-field-guide/
 
-## The Question Bank
+## What's Inside
 
-126 questions across 23 situations, in six groups:
-
-| Group | Situations |
+| Section | Pages |
 |---|---|
-| **Technical Rooms** | Dashboard Review · During an Incident · Post-Incident Review · Design Review |
-| **Peers & Leaders** | Pod & Peer Sync · Status & Commitments · Boss & Execs · Roadmap & Priorities · Vendor & Tool Pitch |
-| **Recurring Meetings** | Performance Engineering Meeting · SRE Daily |
-| **Credibility Moments** | New to the Room · When You're Tested or Dismissed · When You Don't Know · Owning the Reliability Story |
-| **Your SRE Team** | 1:1 With an Engineer · Hiring Loop |
-| **Offshore NOC L1** | Diagnose the Real Problem · Instructions That Stick · Triage & Escalation · Shift Handoff · Performance & Accountability · Through the Shift Lead or Vendor |
+| **Question Bank** (172 questions) | In Technical Meetings · During & After Incidents · With Peers & Leaders · With Your SRE Team · With the Offshore NOC · Building Credibility |
+| **Root Cause Analysis** | RCA the SRE Way · Running an RCA · Judging an RCA · Worked Example · RCA Template |
+| **Meeting Playbooks** | SRE Daily · Performance Engineering (30-minute agendas plus their questions) |
+| **SRE Concepts** (25 concepts) | Overview & Roadmap · Reliability Targets · Observability & Telemetry · Alerting & Incidents · Change & Toil · Capacity & Readiness |
+| **Guides** | How to Ask · From IT Ops to SRE Leader |
 
-Every question comes with:
-- **If the answer is weak, ask next:** the follow-up question.
-- **What asking this signals:** why it builds your credibility.
-- **Strong vs weak answers:** what good sounds like, and the red flags.
+- **Questions:** every question has an **Ask next** follow-up for weak answers, plus collapsed **Coaching notes**: what asking it signals, and what strong and weak answers sound like.
+- **Concepts:** every concept follows the same seven parts:
+  1. in one sentence
+  2. in IT Ops terms
+  3. why it matters at your level
+  4. how to implement it in Azure + Azure Managed Grafana + PagerDuty
+  5. what done looks like
+  6. what to ask
+  7. links to Google's free SRE Book and Workbook, plus official docs
 
-Every situation has its own link (for example, `index.html#noc-instructions`), so you can bookmark the ones you use most.
+The home page searches all questions; press `/` to jump to the search box.
 
-## Other Pages
+## Editing
 
-- **Meeting Agendas:** time-boxed 30-minute agendas for a weekly Performance Engineering meeting and the SRE Daily, with the question to ask in each block and calendar-invite text to copy.
-- **How to Ask:** six habits, tone that lands, and how to ask questions of an offshore NOC team.
-- **Your Path: IT Ops → SRE Leader:** what carries over, what to unlearn, and where your background is an advantage.
+- **Questions:** `assets/questions.js`. Each group is a Question Bank page; each situation is a section on it. Add a question with `q`, `tags` (situation ids), `strong`, `weak`, `next`, and `signal`.
+- **Pages:** plain HTML. Every page uses the same frame: breadcrumb, H1, one-line summary, then H2 sections. Only three callout styles are used: `callout` (key point), `callout example`, and `callout watch`.
+- **Navigation:** the `NAV` array in `assets/site.js`.
 
-## Editing Questions
+Old URLs (`meetings.html`, `how-to-ask.html`, `your-path.html`, `daily/questions.html`, and `index.html#<situation>`) redirect to their new homes.
 
-All questions live in `assets/questions.js`. Add an entry with `q`, `tags` (situation ids), `strong`, `weak`, `next`, and `signal`. Prefix a question with `(To yourself)`, `(To the shift lead)`, etc. to label who you're asking.
+## Standards
 
-## Notes
-
-- Static HTML, no build step, no dependencies. The only thing stored is your light/dark theme choice, in your browser.
-- Open `index.html` locally, or run `npx serve .`.
-- All examples use a generic "AI assistant" product and invented details. Links go to the free official [SRE Book](https://sre.google/sre-book/table-of-contents/) and [Workbook](https://sre.google/workbook/table-of-contents/) chapters where they help.
+- **Accessibility:** WCAG 2.2 AA. Checked with axe-core on every page, in light and dark themes, plus a keyboard walkthrough.
+- **Layout:** works from 320px wide, and prints cleanly.
+- **Build:** static HTML, no build step, no dependencies. The only thing stored is your light/dark theme choice.
+- **Content:** all examples are fictional and use a generic "AI assistant."

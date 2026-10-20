@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capacity & Readiness · SRE Leader's Field Guide</title>
+  <meta name="description" content="Being ready for the load and the launches that are coming: capacity and load testing, production readiness reviews, dependencies, and cost per request.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="c-capacity">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Capacity & Readiness</h1>
+      <p class="summary">Being ready for the load and the launches that are coming: capacity and load testing, production readiness reviews, dependencies, and cost per request.</p>
+      <section class="concept" aria-labelledby="capacity">
+      <h2 id="capacity">Capacity Planning &amp; Load Testing</h2>
+      <p class="one-liner" data-block="sentence">Knowing how much traffic the system can handle, what breaks first, and making sure there's room for the load that's coming.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Classic capacity planning, with two cloud twists. Limits are often quotas (like model-provider tokens per minute) rather than hardware. And testing beats estimating.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Launches, campaigns, and new device rollouts arrive on business timelines. Without tested limits, you find out at peak, in front of customers.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE + pods:</strong> list the limits that matter: compute scaling limits, database limits, and especially model provider quotas.</li>
+      <li><strong>SRE:</strong> load test critical journeys at 2–3× today's peak before major launches, and record the first thing that breaks.</li>
+      <li><strong>You:</strong> get the launch calendar from product monthly, so load tests happen before launches, not after.</li>
+      <li><strong>SRE:</strong> alert when usage passes 80% of any hard quota.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> <strong>Azure Load Testing</strong> for load tests, <strong>Azure Monitor</strong> metrics for saturation, and provider quotas (for Azure OpenAI, tokens and requests per minute) tracked on a Grafana panel.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>Known limits are listed with current headroom.</li>
+      <li>A load test at 2× or more of peak ran before the last major launch.</li>
+      <li>Quota alerts fire at 80%.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“When did we last load test this, and at what multiple of peak?”</em> · <em>“What's the first thing to break at 10× traffic?”</em> · <a href="../meetings/performance-engineering.html#questions">Performance Engineering questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/handling-overload/" target="_blank" rel="noopener">SRE Book, Ch. 21: Handling Overload<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/managing-load/" target="_blank" rel="noopener">Workbook, Ch. 11: Managing Load<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/load-testing/overview-what-is-azure-load-testing" target="_blank" rel="noopener">Microsoft Learn: Azure Load Testing<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/ai-services/openai/quotas-limits" target="_blank" rel="noopener">Microsoft Learn: Azure OpenAI quotas and limits<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="prr">
+      <h2 id="prr">Production Readiness Review (PRR)</h2>
+      <p class="one-liner" data-block="sentence">A checklist review before a new service or major feature goes live, to confirm it can be run safely: monitored, alerted, documented, owned, and reversible.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Like an operational acceptance or service transition checklist, focused on what on-call will need at 3 a.m.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>As central SRE, you inherit whatever gets launched. A PRR is your one chance to say "not yet" before the pager lands on your team and the NOC.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>You:</strong> agree a short PRR checklist: SLIs and SLO defined, golden-signal dashboard, paging alerts with runbooks, a PagerDuty service and owning on-call, a tested rollback, a load test, and known dependencies.</li>
+      <li><strong>You + pod managers:</strong> agree that launches of new critical services need a PRR sign-off, and that exceptions need your boss's approval.</li>
+      <li><strong>SRE:</strong> run the review with the pod 2 weeks before launch. Track gaps as launch blockers or dated follow-ups.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> A checklist document. Evidence links point to Grafana dashboards, PagerDuty services, runbooks, and Azure Load Testing results.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>A written PRR checklist, agreed with pod leadership.</li>
+      <li>Every new critical launch had a PRR.</li>
+      <li>Gaps were either fixed or accepted in writing by someone accountable.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“Who gets paged for this, and can they actually do anything about it?”</em> · <em>“How will we know it's working in production?”</em> · <a href="../questions/technical-meetings.html#design">Design Review questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/launch-checklist/" target="_blank" rel="noopener">SRE Book, Appendix E: Launch Coordination Checklist<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/sre-book/evolving-sre-engagement-model/" target="_blank" rel="noopener">SRE Book, Ch. 32: The Evolving SRE Engagement Model<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://sre.google/workbook/engagement-model/" target="_blank" rel="noopener">Workbook, Ch. 18: SRE Engagement Model<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="dependencies">
+      <h2 id="dependencies">Dependency Management</h2>
+      <p class="one-liner" data-block="sentence">Knowing what your service relies on but doesn't control (the model provider, identity, third-party APIs), and what happens when each one is slow or down.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Vendor and supplier management, which is your home turf, applied to runtime dependencies: contracts, status, contacts, and a fallback for each.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>For an AI assistant, the model provider is often the biggest single point of failure. "It's a dependency issue" should never be a surprise.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>SRE + pods:</strong> list the critical dependencies for each journey, with an owner, a support contact, and the status page for each.</li>
+      <li><strong>SRE:</strong> track success rate and latency for calls to each dependency.</li>
+      <li><strong>Pods:</strong> design a fallback for the top dependency, such as a backup model or a degraded but helpful response. Use timeouts and retries with backoff.</li>
+      <li><strong>You:</strong> review the dependency list quarterly, including contract limits and quotas.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> <strong>Application Insights</strong> dependency tracking (success rate and duration per target), shown in <strong>Grafana</strong>. Azure service health appears in Azure Monitor.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>A dependency list with owners and contacts.</li>
+      <li>A panel for the success rate and latency of each critical dependency.</li>
+      <li>A tested fallback for the model provider.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What does this depend on that we don't control?”</em> · <em>“Is the model provider healthy, and how would we know?”</em> · <a href="../questions/incidents.html#inc-mitigate">Driving to Mitigation questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://sre.google/sre-book/addressing-cascading-failures/" target="_blank" rel="noopener">SRE Book, Ch. 22: Addressing Cascading Failures<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="https://learn.microsoft.com/en-us/azure/well-architected/reliability/" target="_blank" rel="noopener">Microsoft Learn: Reliability in the Well-Architected Framework<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+
+      <hr>
+
+      <section class="concept" aria-labelledby="cost-per-request">
+      <h2 id="cost-per-request">Cost per Request</h2>
+      <p class="one-liner" data-block="sentence">What it costs to serve one user request, or 1,000 of them. For AI products this is driven heavily by model and token usage.</p>
+      <div class="concept-grid">
+      <div data-block="itops"><h3>In IT Ops Terms</h3><p>Unit cost, like cost per ticket or per seat, applied to cloud and AI spend.</p></div>
+      <div data-block="why"><h3>Why It Matters at Your Level</h3><p>Speed, reliability, and cost trade against each other. Showing cost per request alongside the SLOs lets you argue for (or against) changes with the number finance cares about.</p></div>
+      </div>
+      <div data-block="implement"><h3>How to Implement It</h3>
+      <ol>
+      <li><strong>You + finance:</strong> get the monthly cost for the assistant's backend and model usage from Azure Cost Management.</li>
+      <li><strong>SRE:</strong> divide by monthly request volume from Application Insights. Rough is fine to start.</li>
+      <li><strong>You:</strong> track it monthly on the Performance Engineering scorecard, and flag changes that move it, such as longer prompts or a new model.</li>
+      </ol>
+      <p class="where"><strong>Where it lives in Azure + Grafana:</strong> <strong>Azure Cost Management</strong> for spend, <strong>Application Insights</strong> for volume, and a monthly number on the Grafana or scorecard view.</p>
+      </div>
+      <div class="callout" data-block="done"><p class="callout-title">What Done Looks Like</p>
+      <ul class="done-list">
+      <li>A monthly cost-per-request number exists, with a trend.</li>
+      <li>It's on the Performance Engineering scorecard.</li>
+      <li>Major changes are checked for their effect on cost.</li>
+      </ul>
+      </div>
+      <p data-block="ask"><strong>Ask this:</strong> <em>“What does each request cost us, and is it going up?”</em> · <em>“How does pricing grow as our data grows?”</em> · <a href="../meetings/performance-engineering.html#questions">Performance Engineering questions</a></p>
+      <p class="go-deeper" data-block="deeper"><strong>Go deeper:</strong> <a href="https://learn.microsoft.com/en-us/azure/cost-management-billing/costs/overview-cost-management" target="_blank" rel="noopener">Microsoft Learn: Cost Management overview<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

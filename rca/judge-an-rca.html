@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Judging an RCA · SRE Leader's Field Guide</title>
+  <meta name="description" content="Someone hands you an RCA. Here's how to tell in five minutes whether it will actually prevent a repeat, and what to send back.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="rca-judge" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Judging an RCA</h1>
+      <p class="summary">Someone hands you an RCA. Here's how to tell in five minutes whether it will actually prevent a repeat, and what to send back.</p>
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>An RCA lands in your inbox, or you're asked to approve one. You don't need to understand every technical detail to tell whether it will prevent a repeat. You need to check its structure.</p>
+      </div>
+
+      <h2>The 5-Minute Check</h2>
+      <ul class="done-list">
+      <li><strong>Impact</strong> is stated in user terms, with numbers: who, how many, how long, what they saw.</li>
+      <li><strong>Timeline</strong> entries link to evidence: Grafana, Application Insights, the Activity Log, PagerDuty.</li>
+      <li><strong>Time to detect and time to mitigate</strong> are both stated.</li>
+      <li><strong>Trigger and contributing factors</strong> are both named, and "human error" isn't the conclusion.</li>
+      <li><strong>All four defenses</strong> (prevent, detect, mitigate, respond) were examined.</li>
+      <li><strong>Previous incidents</strong> of the same kind are linked, along with what happened to their actions.</li>
+      <li><strong>3–5 ranked actions</strong>, each with a person, a date, and a checkable definition of done. At least one improves detection.</li>
+      <li><strong>The summary</strong> makes sense to someone outside the team.</li>
+      </ul>
+      <p>If it fails three or more of these, send it back before the review meeting. That's not bureaucracy. A weak RCA wastes the review.</p>
+
+      <h2>Red Flags and What to Send Back</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Red flag</th><th>Why it matters</th><th>Send back</th></tr></thead>
+      <tbody>
+      <tr><td>"Root cause: human error"</td><td>It prevents nothing. The next person will make the same mistake.</td><td>"What made that error possible, and what would have caught it?"</td></tr>
+      <tr><td>"Action: be more careful" or "add more review"</td><td>It relies on people never having a bad day.</td><td>"What system change would make care unnecessary?"</td></tr>
+      <tr><td>15 actions, unranked</td><td>None of them will get done.</td><td>"Rank them. Keep the top 3–5 and move the rest to the backlog."</td></tr>
+      <tr><td>No detection action</td><td>The next incident will also be found late.</td><td>"What would have told us 10 minutes sooner?"</td></tr>
+      <tr><td>Owners are teams ("Assistant pod")</td><td>Nobody owns it.</td><td>"Which person on the pod?"</td></tr>
+      <tr><td>"Investigate further" as an action</td><td>There's no end state.</td><td>"What will be different in production when this is done?"</td></tr>
+      <tr><td>Timeline with no sources</td><td>It's memory, which is unreliable and invites argument.</td><td>"Link the graph, query, or PagerDuty entry for each time."</td></tr>
+      <tr><td>Treated as a first occurrence when it isn't</td><td>Hides a follow-through problem.</td><td>"Link the previous incident. Why didn't its actions prevent this?"</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>Weak vs Strong, Side by Side</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Section</th><th>Weak</th><th>Strong</th></tr></thead>
+      <tbody>
+      <tr><td>Summary</td><td>"The assistant had issues due to a config change. Fixed by rollback."</td><td>"From 14:05 to 15:28, about 22% of assistant requests failed or took over 30 seconds. A longer prompt template pushed us past the model provider's rate limit at peak. We had no canary for prompt changes and no alert on throttling. Rolled back at 15:20."</td></tr>
+      <tr><td>Root cause</td><td>"Engineer deployed a prompt change without testing."</td><td>"Trigger: a prompt change. Contributing factors: prompt changes skip the canary, no throttling alert, retries without backoff, and a NOC runbook that said wait 15 minutes."</td></tr>
+      <tr><td>Actions</td><td>"1. Test changes better. 2. Improve monitoring. 3. Investigate retries."</td><td>"1. Prevent: canary for prompt changes (Priya, 3 weeks). 2. Detect: throttling alert to PagerDuty (Sam, 1 week). 3. Mitigate: backoff on retries (Priya, 2 weeks). 4. Respond: new NOC escalation rule (NOC lead, 1 week)."</td></tr>
+      </tbody>
+      </table></div>
+
+      <h2>A Reply You Can Send</h2>
+      <div class="code-card"><div class="code-head">Feedback on an RCA draft</div><pre>Thanks for pulling this together. Before the review, a few things would make it stronger:
+
+      1. Impact: can we add numbers (% of requests affected, duration, what users saw)?
+      2. Timeline: please link the Grafana panel / App Insights query / PagerDuty entry for each timestamp.
+      3. Causes: "human error" isn't where we stop. What made the error possible, and what would have caught it?
+      4. Defenses: is there at least one action that helps us DETECT this sooner next time?
+      5. Actions: please rank them and keep the top 3-5, each with a person, a date, and what "done" means.
+
+      Happy to talk any of this through.</pre></div>
+
+      <h2 id="questions">Questions to Ask</h2>
+      <p class="qsit-intro">Use these in the review meeting, or when you're replying to a draft.</p>
+      <div data-qsit="rca-judge"></div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <dl>
+      <dt>The author is senior and pushes back on your feedback.</dt>
+      <dd>Counter: ask questions instead of judging. "What would have caught this sooner?" is hard to argue with, and it doesn't need technical depth.</dd>
+      <dt>You approve weak RCAs because everyone is exhausted.</dt>
+      <dd>Counter: approve the timeline and impact now, and give the actions 48 more hours. Never approve vague actions.</dd>
+      <dt>The RCA is strong, but nothing happens afterwards.</dt>
+      <dd>Counter: the RCA isn't done when it's approved. It's done when the top action is verified.</dd>
+      </dl>
+      </div>
+
+      <p><strong>Next:</strong> <a href="worked-example.html">See a full worked example</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>
