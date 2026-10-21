@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Owning Postmortems: PREP, SAFER, CLOSE · SRE Leader's Field Guide</title>
+  <meta name="description" content="The whole postmortem, from invite to closure: PREP before the meeting, SAFER during it, and CLOSE after. Every invite and follow-up message is ready to copy.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-pmprog">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Owning Postmortems</h1>
+      <p class="summary">The whole postmortem, from invite to closure: PREP before the meeting, SAFER during it, and CLOSE after. Every invite and follow-up message is ready to copy.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: PREP → SAFER → CLOSE</h2>
+      <ol class="fw-steps fw-pm">
+      <li><span class="fw-letter" aria-hidden="true">1</span> <strong>PREP, before (days 1–5):</strong> <strong>P</strong>ick the author and date · <strong>R</strong>equest: invites and asks · <strong>E</strong>vidence: check the draft a day early · <strong>P</strong>re-wire the people involved.</li>
+      <li><span class="fw-letter" aria-hidden="true">2</span> <strong>SAFER, the meeting (45 min):</strong> <strong>S</strong>et the rules · <strong>A</strong>gree the impact · <strong>F</strong>ollow the timeline · <strong>E</strong>xplain what let it happen · <strong>R</strong>ank the actions.</li>
+      <li><span class="fw-letter" aria-hidden="true">3</span> <strong>CLOSE, after (1 hour to 30 days):</strong> <strong>C</strong>apture notes · <strong>L</strong>og actions · <strong>O</strong>wn the follow-up · <strong>S</strong>hare what we learned · <strong>E</strong>nd it: verify, close, check for repeats.</li>
+      </ol>
+      </section>
+
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You own postmortems now: not just running the meeting, but making sure every one happens, on time, and ends in fixes that actually land. Every message you'll need is below, ready to copy. For the meeting itself, see <a href="postmortem-meeting.html">Running the Postmortem Meeting</a>, and for a realistic run-through, <a href="example-postmortem.html">Thursday's postmortem</a>.</p>
+      </div>
+
+      <section class="fold">
+      <h2 id="timeline">The Timeline at a Glance</h2>
+      <div class="fold-body">
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>Step</th><th>What you do</th></tr></thead>
+      <tbody>
+      <tr><td>Day 0</td><td>Incident closes</td><td>In the close-out message, say whether there'll be a postmortem and who's drafting.</td></tr>
+      <tr><td>Day 1</td><td><strong>P</strong>ick, <strong>R</strong>equest</td><td>Confirm it qualifies. Name author and facilitator. Send the invite and the asks.</td></tr>
+      <tr><td>Day 3</td><td><strong>E</strong>vidence</td><td>Draft due (24 hours before the meeting at the latest). NOC timeline in.</td></tr>
+      <tr><td>Day 4</td><td><strong>E</strong>vidence, <strong>P</strong>re-wire</td><td>Comment on the draft. Short 1:1s with the people closest to it.</td></tr>
+      <tr><td>Day 5</td><td><strong>SAFER</strong></td><td>The 45-minute meeting.</td></tr>
+      <tr><td>Day 5, +1 hour</td><td><strong>C</strong>apture</td><td>Notes posted.</td></tr>
+      <tr><td>Day 6</td><td><strong>L</strong>og, <strong>S</strong>hare</td><td>Actions in the tracker. Exec readout. Learnings post.</td></tr>
+      <tr><td>Every week</td><td><strong>O</strong>wn</td><td>Actions checked in your PACE sweep. Overdue nudges.</td></tr>
+      <tr><td>Day 30</td><td><strong>E</strong>nd</td><td>Verify done-means. Recurrence check. Close the RCA.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="prep">PREP: Before the Meeting</h2>
+      <div class="fold-body">
+      <h3 id="prep-pick">P: Pick</h3>
+      <p>Decide quickly and by the rules, so it's never a debate about whose incident "deserves" one.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Postmortem?</th><th>When</th><th>Format</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Always</strong></td><td>Sev 1 or Sev 2; anything customers were told about; data loss or a security angle</td><td>Full 45 minutes</td></tr>
+      <tr><td><strong>Always</strong></td><td>The same thing happened twice in 90 days</td><td>Full, with a "why didn't the last fix work?" section</td></tr>
+      <tr><td><strong>Usually</strong></td><td>Near misses that could have been a Sev 1</td><td>20-minute <a href="postmortem-meeting.html#variants">lightweight review</a></td></tr>
+      <tr><td><strong>Rarely</strong></td><td>Sev 3 with a known cause and a fix already done</td><td>Written summary only; counted in the monthly pattern review</td></tr>
+      </tbody></table></div>
+      <p><strong>Author:</strong> usually someone from the owning pod who was involved but isn't the most senior person. <strong>Facilitator:</strong> you, or an SRE you've trained. The author and facilitator should never be the same person.</p>
+
+      <h3 id="prep-request">R: Request</h3>
+      <div class="code-card"><div class="code-head">Calendar invite</div><pre>Postmortem: [incident title], [date]. 45 min.
+Purpose: understand how our systems let this happen, and agree a few owned fixes. Blameless.
+Pre-read (please read before): [RCA draft link], available by [day, time].
+
+ 5 min  Ground rules and impact
+15 min  Timeline walk
+10 min  What let it happen
+10 min  Actions: ranked, owned, dated
+ 5 min  Close
+
+Required: [author], [incident commander], [owning pod lead], [NOC shift lead], [anyone who made a change in the timeline]
+Optional: [pod managers, execs who want to listen]</pre></div>
+      <div class="code-card"><div class="code-head">Ask to the RCA author</div><pre>Hi [name], thanks for drafting the RCA for [incident]. Template: [link].
+Draft by [day, time], 24 hours before the meeting, so people can read it.
+Most important parts: impact numbers, a timeline from tool timestamps (PagerDuty, Grafana, chat), and contributing factors, not just one root cause.
+Happy to look at a rough version early. Rough and early beats polished and late.</pre></div>
+      <div class="code-card"><div class="code-head">Ask to the NOC shift lead</div><pre>Hi [name], for the [incident] postmortem on [date], can you send me the NOC timeline by [day]?
+Please use timestamps from the tools (PagerDuty, the ticket, chat), not memory:
+- when the first alert fired, and where it went
+- when the NOC noticed, and what you saw
+- each escalation: to whom, how (page or message), and when they acknowledged
+And please join the meeting, with whoever was on shift if possible. It's blameless; we want your view.</pre></div>
+      <div class="code-card"><div class="code-head">FYI to pod leads and execs</div><pre>FYI: postmortem for [incident] on [date, time]. Pre-read: [link] from [day].
+You're welcome to listen in. Summary and agreed actions will follow within a day either way.</pre></div>
+
+      <h3 id="prep-evidence">E: Evidence</h3>
+      <p>Read the draft the day before. You're checking for four things, and nothing technical:</p>
+      <ol>
+      <li><strong>Impact in numbers</strong> that the pods will agree with: who, how many, how long.</li>
+      <li><strong>A timeline from tool timestamps,</strong> including the gaps (alert fired → noticed → paged → acknowledged).</li>
+      <li><strong>Several contributing factors,</strong> not one "root cause," and no "human error."</li>
+      <li><strong>Candidate actions</strong> that change the system: checks, alerts, runbooks, defaults.</li>
+      </ol>
+      <div class="code-card"><div class="code-head">Comment on a weak draft</div><pre>Thanks for this. Two asks before tomorrow:
+1. Can we add [the change / the gap] as a contributing factor? Not to blame anyone; it's the part we can actually change.
+2. Can we add the timeline gap between [time] and [time]? That one's partly on [my team / the runbook].
+If we're short on time, bring it as-is and we'll fill it in together in the room.</pre></div>
+
+      <h3 id="prep-prewire">P: Pre-wire</h3>
+      <p>Ten minutes each, the day before, with: the person whose change triggered it, the NOC analyst on shift, and any pod lead you expect to be defensive. Also decide now which likely actions need someone who won't be in the room.</p>
+      <div class="code-card"><div class="code-head">Pre-wire note</div><pre>Hi [name], ahead of tomorrow's postmortem: [your change / your shift] will come up, because it's part of the timeline.
+Nobody thinks you did anything wrong. What we want to understand is why our process made it easy to happen.
+Anything you'd like me to know before then, or anything you're worried about?</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="safer">SAFER: The Meeting</h2>
+      <div class="fold-body">
+      <p>Run the 45 minutes with <a href="frameworks.html#safer">SAFER</a>: Set the rules, Agree the impact, Follow the timeline, Explain what let it happen, Rank the actions. Your script, the hard moments, and variants are in <a href="postmortem-meeting.html">Running the Postmortem Meeting</a>. The ground rules to say out loud are in the <a href="meeting-starter.html#rules-postmortem">Meeting Starter</a>.</p>
+      <p>One rule for the R step when you have no controls: <strong>an action only counts if its owner said yes in the room, or their manager said yes in writing.</strong> Everything else goes to the risk register.</p>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="close">CLOSE: After the Meeting</h2>
+      <div class="fold-body">
+      <h3 id="close-capture">C: Capture</h3>
+      <div class="code-card"><div class="code-head">Notes (post within the hour)</div><pre>Postmortem: [incident], [date range]
+Impact: [who, how many, how long]
+What let it happen: [factor 1]; [factor 2]; [factor 3]
+Actions:
+1. [action]. Owner: [name]. Due: [date]. Done means: [evidence].
+2. [action]. Owner: [name]. Due: [date]. Done means: [evidence].
+Not committed: [action]. Decision owner: [name]. Tracked as risk [R-xx].
+Thanks [names] for walking us through it.</pre></div>
+      <h3 id="close-log">L: Log</h3>
+      <p>Every action goes into one tracker within a day: the same place as your other work, so it shows up in your weekly sweep. If nobody will own an action, it goes to the <a href="example-risk.html">risk register</a> with a named decision owner, not into a "backlog" where it dies.</p>
+      <div class="code-card"><div class="code-head">Action tracker row</div><pre>ID      Incident     Action                          Owner (team)     Due      Done means                      Status
+PM-14   [incident]   [action]                        [name] ([pod])   [date]   [evidence that proves it]       open</pre></div>
+      <h3 id="close-own">O: Own the Follow-Up</h3>
+      <p>Check every open action in your weekly <a href="where-are-we.html">PACE sweep</a>. For your own team, ask directly. For other pods' owners, ask lightly and go through their manager if it slips. You can't hold them accountable, but you can make progress visible.</p>
+      <div class="code-card"><div class="code-head">Overdue nudge: your team</div><pre>Hi [name], [PM-14: action] was due [date]. What's left, and what's your confidence in a new date, 1 to 10?
+If something else got more urgent, that's fine. Tell me and we'll reset it publicly.</pre></div>
+      <div class="code-card"><div class="code-head">Overdue nudge: another pod, via their manager</div><pre>Hi [manager], [action] from the [incident] postmortem was due [date], owner [name] on your team.
+I know priorities shift. Can you help me get either a new date or a decision to drop it?
+If it's dropped, I'll log it as a risk with you as the decision owner, so it's visible rather than forgotten.</pre></div>
+      <h3 id="close-share">S: Share</h3>
+      <div class="code-card"><div class="code-head">Exec readout (5 minutes or 5 lines)</div><pre>[Incident]: [impact in one line].
+Why: [the 2-3 factors that matter, in plain words].
+Fixes: [N] agreed, owned, due by [date]. [N] are SRE's, [N] are other teams'.
+Not fixed: [gap], decision owner [name]. I'll bring it back if it stays stuck.</pre></div>
+      <div class="code-card"><div class="code-head">"What we learned" post (engineering channel)</div><pre>Postmortem summary: [incident], [date]
+What happened, in two lines: [plain-language summary].
+One thing every team can check: [e.g. "do your alerts go somewhere the NOC can see?"]
+Full RCA: [link]. Thanks to [names] for a really open review.</pre></div>
+      <h3 id="close-end">E: End It Properly</h3>
+      <ul>
+      <li><strong>Verify each done-means</strong> with evidence: a demo, a test alert, a drill. "Merged" isn't done.</li>
+      <li><strong>Close the RCA</strong> only when every action is done, dropped with a decision, or moved to the risk register.</li>
+      <li><strong>30-day recurrence check:</strong> has it, or anything like it, happened again? If yes, it's an automatic postmortem with "why didn't the last fix work?"</li>
+      <li><strong>Feed the monthly <a href="postmortem-meeting.html#variants">pattern review</a>:</strong> which factors keep showing up across postmortems?</li>
+      </ul>
+      <div class="code-card"><div class="code-head">Closure note</div><pre>Closing the RCA for [incident]. All [N] actions done and verified:
+[action]: [evidence]. [action]: [evidence].
+Not fixed, by decision: [gap], owned by [name], risk [R-xx].
+30-day check: no recurrence. Thanks everyone.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="taking-over">Taking It Over: Your First 30 Days</h2>
+      <div class="fold-body">
+      <ol>
+      <li><strong>Week 1: get it sponsored.</strong> Agree the trigger criteria and the timeline above with your VP, so the policy carries their authority. It should read as "this is how we do postmortems here," not "SRE would like."</li>
+      <li><strong>Week 1: announce it</strong> (message below).</li>
+      <li><strong>Week 2: inventory the backlog.</strong> List every open postmortem and every open action, however old.</li>
+      <li><strong>Weeks 2–3: triage the backlog.</strong> For each old action: close it (done or no longer relevant), re-own it with a new date, or move it to the risk register with a decision owner. Don't carry 60 zombie actions forward.</li>
+      <li><strong>Week 4: train two facilitators</strong> from your team. You stay the sponsor; you can't facilitate every one.</li>
+      </ol>
+      <div class="code-card"><div class="code-head">Announcement</div><pre>From [date], SRE is running postmortems for all Sev 1-2 incidents, with [VP]'s backing.
+What changes for you:
+- We'll book the postmortem within 5 working days and ask the owning team for a draft.
+- Meetings are 45 minutes, blameless, and end with a few owned, dated actions.
+- We track every action weekly until it's verified, and we'll check back at 30 days.
+- If an action can't be done, we'll log it as a risk with a named decision owner, not let it quietly drop.
+Questions or worries: talk to me. We want this to be useful, not more process.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="no-controls">When You Have No Controls</h2>
+      <div class="fold-body">
+      <p>You can't make pods attend, write drafts, or do their actions. Here's what you do instead.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>When</th><th>What you do</th></tr></thead>
+      <tbody>
+      <tr><td>A pod won't come to the meeting</td><td>Reschedule once. Then hold it without them, send them the draft actions, and ask their manager to confirm owners in writing.</td></tr>
+      <tr><td>The author misses the draft</td><td>Don't postpone. Run the meeting from the timeline and the tools; build the RCA together in the room.</td></tr>
+      <tr><td>The draft says "human error"</td><td>Ask what check or design would have caught it. If they can't answer, that's the missing control.</td></tr>
+      <tr><td>Actions slip past their date</td><td>Nudge at due date, go to their manager at +7 days, then log it as a risk with the manager as decision owner.</td></tr>
+      <tr><td>The same factor keeps coming up</td><td>Take the pattern, with counts, to your VP: "This is the 4th postmortem where [X]. It needs a decision."</td></tr>
+      <tr><td>Too many postmortems to run</td><td>Tighten the criteria, use lightweight reviews for Sev 3, and delegate facilitation.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="health">Is It Working? Three Numbers, Monthly</h2>
+      <div class="fold-body">
+      <ul>
+      <li><strong>Days from incident to postmortem.</strong> Target: 5 working days or fewer.</li>
+      <li><strong>Actions done by their due date.</strong> Track the percentage; a falling number is the earliest warning that postmortems are becoming theater.</li>
+      <li><strong>Repeat incidents.</strong> Same cause within 90 days. The number your leaders care about.</li>
+      </ul>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="reality">What Actually Happens</h2>
+      <div class="fold-body">
+      <div class="callout watch"><p class="callout-title">Honest Notes</p>
+      <ul>
+      <li><strong>The first month feels like nagging.</strong> By the third, pods start sending drafts on time because they know you'll check.</li>
+      <li><strong>Some pod leads will see this as SRE policing them.</strong> Pre-wire the leads before your announcement, and keep the blameless rule visibly, especially toward their people.</li>
+      <li><strong>Postmortem fatigue is real.</strong> If every Sev 3 gets 45 minutes, people stop coming. Protect the full format for incidents that deserve it.</li>
+      <li><strong>Your own team's actions will slip too.</strong> Report them the same way you report other teams'. That's what makes it fair.</li>
+      <li><strong>The backlog triage will surface old promises nobody kept.</strong> Close them honestly. A short, real list beats a long, fake one.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

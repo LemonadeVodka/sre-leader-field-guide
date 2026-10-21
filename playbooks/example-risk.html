@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wednesday: Nobody Will Fix It · SRE Leader's Field Guide</title>
+  <meta name="description" content="The most important fix from the postmortem stalls with another team. Climbing the ladder, a casual &quot;yeah fine,&quot; and what happens three weeks later.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="x-risk">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Wednesday: Nobody Will Fix It</h1>
+      <p class="summary">The most important fix from the postmortem stalls with another team. Climbing the ladder, a casual "yeah fine," and what happens three weeks later.</p>
+      <ol class="week-strip" aria-label="One week, three frameworks">
+      <li><a href="example-incident.html"><small>Tue · LEAD</small>The incident</a></li>
+      <li><a href="example-postmortem.html"><small>Thu · SAFER</small>The postmortem</a></li>
+      <li><a href="example-status.html"><small>Mon · PACE</small>The status sweep</a></li>
+      <li><span class="is-here" aria-current="page"><small>Wed · Risk</small>Nobody will fix it</span></li>
+      </ol>
+
+      <div class="callout cast"><p class="callout-title">Who's Involved (fictional)</p>
+      <dl>
+      <dt>Jordan</dt><dd>Platform pod manager. Not a villain: his team is flat out on a launch his VP cares about more.</dd>
+      <dt>Elena</dt><dd>Platform director, Jordan's boss.</dd>
+      <dt>Priya</dt><dd>Your VP.</dd>
+      <dt>Dee</dt><dd>Platform on-call. Agrees the failover should be pre-approved, but it's not her call.</dd>
+      </dl>
+      </div>
+
+      <h2 id="controls">The Problem, and What You Control</h2>
+      <p>On Tuesday, failover took about 20 extra minutes because only a platform manager could approve it. The fix is a <strong>pre-approved failover</strong>: written conditions under which on-call can fail over without asking anyone. It's platform's service, platform's config, and platform's decision. Your team has no access to it.</p>
+      <div class="table-wrap"><table>
+      <caption class="visually-hidden">What you can and can't do about another team's risk</caption>
+      <thead><tr><th>You can</th><th>You can't</th></tr></thead>
+      <tbody>
+      <tr><td>Make the risk visible, in numbers</td><td>Change platform's configuration</td></tr>
+      <tr><td>Ask the person with authority to decide</td><td>Make Jordan's team prioritize it</td></tr>
+      <tr><td>Reduce the damage inside your own area</td><td>Make the risk go away on your own</td></tr>
+      <tr><td>Keep a dated record of who decided what</td><td>Stop people being annoyed by that record</td></tr>
+      </tbody></table></div>
+
+      <h2 id="ladder">Climbing the Ladder</h2>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">1</span><span class="beat-clock">Wed 11:00</span><span class="beat-tag">Ask why it's not a priority</span></p>
+      <p class="say you"><span class="say-who">You (to Jordan, 1:1):</span> "Dee mentioned pre-approved failover isn't happening this quarter. Help me understand what's in the way?"</p>
+      <p class="say them"><span class="say-who">Jordan:</span> "The launch. Every engineer I have is on it until December. And honestly, failover worked on Tuesday."</p>
+      <p class="beat-note"><strong>The nuance:</strong> Jordan does care. He has a legitimate, bigger priority. "Nobody cares" is rarely the real story; "everybody's full" usually is.</p>
+      </div>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">2</span><span class="beat-clock">Wed 11:05</span><span class="beat-tag">Put it in their language</span></p>
+      <p class="say you"><span class="say-who">You:</span> "It did work, after 20 minutes waiting for approval at 22:30, with your on-call's phone on silent. If that happens during the launch week, it's your launch that looks broken."</p>
+      <p class="say them"><span class="say-who">Jordan:</span> "Fair. Still can't staff it."</p>
+      </div>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">3</span><span class="beat-clock">Wed 11:08</span><span class="beat-tag">Offer help</span></p>
+      <p class="say you"><span class="say-who">You:</span> "What if my team writes the conditions and the runbook, and Dee just reviews and approves? Half a day of hers instead of a sprint."</p>
+      <p class="say them"><span class="say-who">Jordan:</span> "The runbook's fine. But approving pre-authorized changes needs Elena's sign-off, and she'll want a change review I don't have time for."</p>
+      <p class="beat-note"><strong>Not yours to decide:</strong> platform's change policy. <strong>The lever you have:</strong> you've now narrowed it to one decision, owned by one named person.</p>
+      </div>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">4</span><span class="beat-clock">Wed 11:10</span><span class="beat-tag">Manager to manager</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Then I think it's Elena's decision, not yours or mine. I'm going to write it up as a risk and ask her and Priya to decide: fix, fund, or accept. I'll send you the draft first, so nothing in it surprises you."</p>
+      <p class="say them"><span class="say-who">Jordan:</span> "…OK. Just don't make it look like we dropped the ball."</p>
+      </div>
+
+      <h2 id="writeup">Writing It Up</h2>
+      <div class="code-card"><div class="code-head">Risk R-07 (as sent)</div><pre>R-07  Failover needs manager approval
+Risk:          If the model provider throttles a region at peak, up to a third of assistant requests in that region fail
+               until a platform manager approves failover, because failover is not pre-approved.
+Evidence:      Incident [date]: 80 min of impact, ~20 min of it waiting for approval at 22:36.
+Likelihood:    2 (provider throttling seen twice this quarter)   Impact: 3 (customer-facing, peak hours)   Score: 6
+Missing control: no pre-approved levers
+Mitigation today: NOC runbook pages platform AND its manager together; pre-written exec update; quota alert at 80% (in progress).
+Fix needs:     platform change review for pre-approved failover (~half a day of Dee's time; SRE writes the runbook).
+Fix owner:     platform pod     Decision owner: Elena (platform director)
+Decision:      requested [date]: fix this quarter / fund next quarter / accept until [date]
+Review:        monthly risk review, [date]</pre></div>
+      <p>You send Jordan the draft at 14:00. He asks you to change "platform didn't prioritize" to "competing with the launch." That's fair and accurate, so you change it.</p>
+      <div class="code-card"><div class="code-head">Decision request to Elena and Priya</div><pre>Hi Elena, Priya. One decision needed, attached as R-07.
+Short version: on [date], failover took ~20 extra minutes because it needs manager approval. Making it pre-approved is about half a day of Dee's time; my team would write the runbook.
+Jordan and I agree it's real, and that the launch comes first for his team.
+Could you choose by [date]: fix it this quarter, plan it for next, or accept the risk until then?
+Any of those is fine. I just want it to be a decision, not something that drifts.</pre></div>
+
+      <h2 id="decision">The "Decision"</h2>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">5</span><span class="beat-clock">Thu 16:40</span><span class="beat-tag">Decision request</span></p>
+      <p class="say them"><span class="say-who">Elena (in Slack):</span> "yeah fine, accept it for now, we'll look in Q1"</p>
+      <p class="say you"><span class="say-who">You:</span> "Thanks Elena. To confirm for the register: accepted until 31 January, revisit in Q1 planning, with the interim mitigations listed. I'll review it monthly and flag it straight away if it happens again. Shout if any of that's wrong."</p>
+      <p class="beat-note"><strong>The nuance:</strong> a casual Slack "yeah fine" isn't a decision until it's written back with a date and conditions. Confirming it politely, in the same thread, turns it into one without making it a big deal.</p>
+      </div>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">6</span><span class="beat-clock">Fri</span><span class="beat-tag">Mitigate inside your control</span></p>
+      <p>Accepted doesn't mean ignored. In your own area, you:</p>
+      <ul>
+      <li>add a NOC runbook step: on provider 429s, page platform on-call <strong>and</strong> Jordan together, with the escalation packet</li>
+      <li>pre-write the exec update for "provider throttling, failover pending approval"</li>
+      <li>ask Kai to make the quota alert go to the bridge as well as platform</li>
+      <li>start counting: every provider throttling event gets a line in R-07's evidence</li>
+      </ul>
+      </div>
+
+      <h2 id="three-weeks-later">Three Weeks Later</h2>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">7</span><span class="beat-clock">Tue 20:15</span><span class="beat-tag">It happened again</span></p>
+      <p>Provider throttling again, this time in the US region. The quota alert fires at 80% first. The NOC follows the new runbook step and pages Dee and Jordan together within 4 minutes. Jordan approves failover from his phone at 20:27. Impact: 12 minutes instead of 80.</p>
+      <div class="code-card"><div class="code-head">"It happened again" note (Wednesday morning)</div><pre>Hi Elena, Priya. R-07 happened again last night (US region). Short version:
+The interim mitigations worked: alert at 80%, NOC paged platform and Jordan together, failover approved in 12 minutes (vs 80 last time).
+It still depended on Jordan answering his phone at 20:15. Given it's now twice in a month, can we revisit the Q1 decision?</pre></div>
+      <p>Elena moves pre-approved failover into the next sprint. It lands five weeks later than planned, because the launch slipped too.</p>
+      </div>
+      <div class="beat" data-fw="LADDER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">7</span><span class="beat-clock">Quarterly review</span><span class="beat-tag">The question you knew was coming</span></p>
+      <p class="say them"><span class="say-who">Someone in the room:</span> "Why didn't SRE just fix failover after the first incident?"</p>
+      <p class="say you"><span class="say-who">You:</span> "We don't own platform's configuration. We raised it the week after, it was accepted as a risk until Q1 with mitigations, and those mitigations cut the second incident from 80 minutes to 12. It's now fixed. R-07 has the full trail."</p>
+      <p class="beat-note"><strong>This is what the register is for.</strong> Not blame: a dated record that turns "why didn't you…?" into a two-sentence answer.</p>
+      </div>
+
+      <h2 id="differently">What I'd Do Differently</h2>
+      <div class="callout watch"><p class="callout-title">Honest Notes</p>
+      <ul>
+      <li><strong>Jordan felt ambushed anyway,</strong> even with the draft in advance. It cost some goodwill. A coffee before the 1:1, not just after, would have helped.</li>
+      <li><strong>I registered one risk and accepted it myself:</strong> no overnight SRE coverage (R-08). It's inside my area, I can't fund it either, and saying so openly made Elena's acceptance feel less one-sided.</li>
+      <li><strong>Keep the register short.</strong> Five live risks that leaders actually read beat thirty they don't.</li>
+      <li><strong>The fix landed late,</strong> and that's normal. The win was a 12-minute second incident instead of an 80-minute one.</li>
+      </ul>
+      </div>
+      <p>The method behind this: <a href="risk-register.html">Risk Register: When Nobody Will Fix It</a>.</p>
+
+      <p class="next-step">Back to the start: <a href="example-incident.html">Tuesday's incident (LEAD)</a> · or <a href="frameworks.html">the Pocket Frameworks</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

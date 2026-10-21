@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tuesday: The Incident (LEAD in practice) · SRE Leader's Field Guide</title>
+  <meta name="description" content="A realistic incident, minute by minute: running LEAD when your central SRE team can see the problem but can't change anything.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="x-incident">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Tuesday 21:40: The Assistant Is Timing Out</h1>
+      <p class="summary">A realistic incident, minute by minute: running LEAD when your central SRE team can see the problem but can't change anything.</p>
+      <ol class="week-strip" aria-label="One week, three frameworks">
+      <li><span class="is-here" aria-current="page"><small>Tue · LEAD</small>The incident</span></li>
+      <li><a href="example-postmortem.html"><small>Thu · SAFER</small>The postmortem</a></li>
+      <li><a href="example-status.html"><small>Mon · PACE</small>The status sweep</a></li>
+      <li><a href="example-risk.html"><small>Wed · Risk</small>Nobody will fix it</a></li>
+      </ol>
+
+      <div class="callout cast"><p class="callout-title">Who's Who (fictional)</p>
+      <dl>
+      <dt>You</dt><dd>Senior manager, central SRE. Your team can see problems but can't change production.</dd>
+      <dt>Ravi</dt><dd>NOC analyst on the offshore night shift. Asha is his shift lead.</dd>
+      <dt>Marco</dt><dd>Your SRE on call. Good at the technical side, quieter about taking charge.</dd>
+      <dt>Sam, Noor</dt><dd>Assistant pod: Sam is the lead, Noor is the engineer who made last week's config change.</dd>
+      <dt>Dee, Jordan</dt><dd>Platform pod: Dee is on call, Jordan is the pod manager.</dd>
+      <dt>Priya</dt><dd>Your VP.</dd>
+      </dl>
+      </div>
+
+      <h2 id="controls">What Your Team Can and Can't Do</h2>
+      <div class="table-wrap"><table>
+      <caption class="visually-hidden">What a central SRE team with no controls can and can't do</caption>
+      <thead><tr><th>Your team can</th><th>Your team can't (yet)</th></tr></thead>
+      <tbody>
+      <tr><td>See it: Azure Monitor, App Insights, Grafana</td><td>Change production or roll anything back</td></tr>
+      <tr><td>Declare and page in PagerDuty</td><td>Approve or block a pod's deploys and config changes</td></tr>
+      <tr><td>Coordinate the bridge and own the comms</td><td>Decide another pod's fix, or its priorities</td></tr>
+      <tr><td>Escalate to managers and execs</td><td>Make the model provider move faster</td></tr>
+      <tr><td>Write things down: timeline, decisions, risks</td><td>Spend budget or buy capacity</td></tr>
+      </tbody></table></div>
+      <p>So every move below works through <strong>influence, not control</strong>: making things visible, asking at the right moment, escalating on a clock, and writing decisions down.</p>
+
+      <h2 id="first-pass">21:40: The First LEAD Pass</h2>
+      <p>You're at home. PagerDuty fires a Sev 2 that the NOC opened at 21:31: "assistant-gateway 5xx above threshold." You join the bridge. Four people are on it, all looking at the same Grafana dashboard. Nobody is talking.</p>
+
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">L</span><span class="beat-clock">21:41</span><span class="beat-tag">Leader</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Hi all, I've just joined. Who's leading this right now?"</p>
+      <p class="say them"><span class="say-who">Marco:</span> "I guess me? I've been looking at the gateway."</p>
+      <p class="say you"><span class="say-who">You:</span> "Great. Marco's incident commander. I'll take comms and escalations so Marco can stay on the problem. Ravi, please keep the incident channel updated with anything you see."</p>
+      <p class="beat-note"><strong>The nuance:</strong> Marco was already doing the work well. Taking over as IC would have slowed him down and told the room you don't trust him. Naming him, and taking the parts he's worst placed to do, is the stronger move.</p>
+      </div>
+
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">21:42</span><span class="beat-tag">Effect</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Ravi, in plain words, what are users seeing?"</p>
+      <p class="say them"><span class="say-who">Ravi:</span> "The alert says 5xx above threshold on assistant-gateway."</p>
+      <p class="say you"><span class="say-who">You:</span> "Thanks. Marco, can you turn that into users: how many, since when, and is it getting worse?"</p>
+      <p class="say them"><span class="say-who">Marco:</span> "About 30% of requests timing out, mostly EU. Started around 21:25. It's climbing."</p>
+      <p class="beat-note"><strong>What Ravi got right and wrong:</strong> right, he declared in PagerDuty within 6 minutes of noticing. Wrong, he read back the alert instead of looking at the impact, and his note had no start time. That's coaching for later, not now.</p>
+      </div>
+
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">A</span><span class="beat-clock">21:44</span><span class="beat-tag">Action</span></p>
+      <p class="say you"><span class="say-who">You:</span> "What have we ruled out, and what's our best guess?"</p>
+      <p class="say them"><span class="say-who">Marco:</span> "Not CPU, not the database. My guess is the model provider."</p>
+      <p class="say you"><span class="say-who">You:</span> "Is anyone checking the provider? And did anything change in the last day?"</p>
+      <p class="say them"><span class="say-who">Marco (a minute later):</span> "There's a Grafana annotation. The Assistant pod changed the retry config at 21:10, retries from 2 to 5."</p>
+      <p class="beat-note"><strong>Not yours to decide:</strong> you can't roll back that change, and neither can Marco. The Assistant pod owns it, and nobody from that pod is on the bridge. <strong>The lever you have:</strong> get them here.</p>
+      </div>
+
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">D</span><span class="beat-clock">21:46</span><span class="beat-tag">Deadline</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Who are we waiting on?"</p>
+      <p class="say them"><span class="say-who">Ravi:</span> "I posted in the platform channel at 21:33."</p>
+      <p class="say you"><span class="say-who">You:</span> "Thanks, Ravi. A channel post isn't a page, so let's page them properly. I'm paging platform and the Assistant pod now in PagerDuty. If nobody acknowledges by 21:56, I'll call their managers. Next exec update at 22:00."</p>
+      <p class="beat-note"><strong>The nuance:</strong> 13 minutes passed between Ravi's Slack post and a real page. The NOC runbook didn't list the platform pager. That's a system gap, and it goes into the postmortem.</p>
+      </div>
+
+      <h2 id="second-pass">21:56: Second Pass, and the Deadline Hits</h2>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">D</span><span class="beat-clock">21:56</span><span class="beat-tag">Deadline</span></p>
+      <p>Sam from the Assistant pod has joined. Platform hasn't acknowledged. You check their escalation policy in PagerDuty: it has <em>one</em> person on it and no secondary.</p>
+      <p class="say you"><span class="say-who">You (calling Jordan, platform manager):</span> "Jordan, sorry to call late. We have a Sev 2, about a third of EU requests failing since 21:25. Dee was paged at 21:46 and hasn't acknowledged. Can you reach her, or anyone else on platform, in the next 10 minutes?"</p>
+      <p class="say them"><span class="say-who">Jordan:</span> "Ugh. Yes, I'll call her."</p>
+      </div>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">21:58</span><span class="beat-tag">Effect</span></p>
+      <p class="say them"><span class="say-who">Marco:</span> "It's 34% now in EU."</p>
+      </div>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">A</span><span class="beat-clock">21:59</span><span class="beat-tag">Action</span></p>
+      <p class="say them"><span class="say-who">Marco:</span> "I'd roll back the retry change. Five retries against a struggling provider makes it worse."</p>
+      <p class="say them"><span class="say-who">Sam:</span> "That change fixed a bug for enterprise customers last week. If we roll back, they get errors again."</p>
+      <p class="say you"><span class="say-who">You:</span> "That's a real trade-off, and it's your call, Sam. Can we compare: a third of EU users failing right now, against that bug for a handful of enterprise users for an hour or two?"</p>
+      <p class="say them"><span class="say-who">Sam (after a pause):</span> "OK. Rolling back to 2 retries. I'll do it."</p>
+      <p class="say you"><span class="say-who">You (in the channel):</span> "Decision 22:02: Sam rolls back retries to 2. Owner Sam. We check the error rate at 22:12."</p>
+      <p class="beat-note"><strong>Not yours to decide:</strong> the rollback. <strong>The lever you have:</strong> putting both risks side by side, out loud, so the owner can decide quickly. Then you write the decision down with a name and a time.</p>
+      </div>
+
+      <h2 id="third-pass">22:12: Third Pass, Partial Progress</h2>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">22:12</span><span class="beat-tag">Effect</span></p>
+      <p class="say them"><span class="say-who">Marco:</span> "Down from 34% to 18%. Better, not fixed."</p>
+      </div>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">A</span><span class="beat-clock">22:14</span><span class="beat-tag">Action</span></p>
+      <p>Dee from platform joined at 22:08. Her phone had been on silent.</p>
+      <p class="say them"><span class="say-who">Dee:</span> "The provider is throttling our EU deployment. We're getting 429s, so we've hit a quota. I can fail EU traffic over to the US region. Latency goes up by maybe 400 milliseconds. But failover isn't pre-approved, so I need Jordan's OK."</p>
+      <p class="say you"><span class="say-who">You:</span> "What's the other option?"</p>
+      <p class="say them"><span class="say-who">Dee:</span> "Ask the provider to raise the quota. That's a support ticket. Could be hours."</p>
+      <p class="beat-note"><strong>Not yours to decide, twice:</strong> the provider's quota isn't in anyone's control tonight, and failover needs a manager's approval because nobody agreed it in advance. <strong>The lever you have:</strong> getting Jordan to the decision fast, with both options laid out.</p>
+      </div>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">D</span><span class="beat-clock">22:16</span><span class="beat-tag">Deadline</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Dee, please open the provider ticket now, in parallel. I'll get Jordan on the bridge for the failover decision. Can we have that decision by 22:30?"</p>
+      </div>
+
+      <h2 id="exec-heat">22:30: Exec Heat</h2>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">D</span><span class="beat-clock">22:31</span><span class="beat-tag">Deadline</span></p>
+      <p>Priya joins the bridge.</p>
+      <p class="say them"><span class="say-who">Priya:</span> "Marco, when will this be fixed? I need to update the CEO."</p>
+      <p class="say you"><span class="say-who">You:</span> "Priya, I've got the updates. Can I give you the full picture in a side thread, so Marco can keep going?"</p>
+      <p class="say them"><span class="say-who">Priya (in the thread):</span> "I need an ETA."</p>
+      <p class="say you"><span class="say-who">You:</span> "I can't give you a reliable one, and I don't want to give you a wrong one. Here's what I can say: we have a failover decision by 22:40. If we fail over, errors should drop within 10 minutes. Next update 22:45, sooner if it changes."</p>
+      <p class="say them"><span class="say-who">Priya:</span> "That's not great."</p>
+      <p class="beat-note"><strong>The nuance:</strong> she's unhappy, and that's OK. An honest "I don't know, here's when I will" costs you a little tonight. A made-up ETA that slips costs you a lot more next time.</p>
+      </div>
+
+      <h2 id="mitigation">22:40: Mitigation, and the Messy Middle</h2>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">A</span><span class="beat-clock">22:36</span><span class="beat-tag">Action</span></p>
+      <p>Jordan approves the failover at 22:36. Dee starts it at 22:41. By 22:49, errors are under 1%. EU responses are about 350 ms slower, so the first word appears later.</p>
+      <p class="say you"><span class="say-who">You:</span> "Is this resolved, or mitigated? What would make us call it resolved?"</p>
+      <p class="say them"><span class="say-who">Marco:</span> "Mitigated. Resolved is when we're back in EU with the quota raised and errors normal."</p>
+      <p class="say you"><span class="say-who">You:</span> "Agreed. We stay on the backup region overnight. Ravi, can you watch the error rate and post it every 15 minutes until 23:30? If it goes over 2%, page Marco."</p>
+      <p class="beat-note"><strong>Why give the NOC a job:</strong> Ravi has been sitting quietly for an hour. A clear, small task keeps him involved, and it's how the NOC learns what "watching" an incident looks like.</p>
+      </div>
+
+      <h2 id="close">23:10: Closing It Out</h2>
+      <div class="beat fw-incident" data-fw="LEAD">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">D</span><span class="beat-clock">23:10</span><span class="beat-tag">Deadline</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Before we drop: failback tomorrow, owner Dee. The provider quota ticket, owner Jordan. Sam, can your pod own the RCA draft, since the retry change is part of it? Postmortem Thursday at 14:00. Thank you, everyone. Marco, great job tonight."</p>
+      <p class="say them"><span class="say-who">Sam:</span> "Fine. Though honestly this was the provider."</p>
+      <p class="beat-note"><strong>The nuance:</strong> Sam is already defending his pod. Don't argue at 23:10. That's what Thursday's postmortem is for, with evidence and ground rules.</p>
+      </div>
+
+      <h2 id="messages">The Messages You Actually Sent</h2>
+      <div class="code-card"><div class="code-head">21:41: roles, in the incident channel</div><pre>Joining. Marco is incident commander. I'm handling comms and escalations.
+Ravi: please keep posting anything new here.
+Impact so far: ~30% of EU assistant requests timing out since ~21:25, rising.</pre></div>
+      <div class="code-card"><div class="code-head">21:46: PagerDuty page note to platform</div><pre>Sev 2: assistant requests failing (~30% EU) since 21:25, rising.
+Suspect: model provider in EU, and a retry config change at 21:10.
+We need: someone who can check provider quota and regional failover.
+Bridge: [link]. Incident commander: Marco.</pre></div>
+      <div class="code-card"><div class="code-head">22:00: exec update</div><pre>Sev 2, assistant: ~1 in 3 EU requests failing since 21:25 (worse at peak).
+Now: rolling back a retry change (Assistant pod) and reaching platform for the provider side.
+Confidence: medium that this improves it, low that it fully fixes it.
+Next update: 22:15, or sooner if it changes.</pre></div>
+      <div class="code-card"><div class="code-head">22:45: exec update</div><pre>Sev 2, assistant: failed over EU traffic to the backup region at 22:41. Errors now under 1%.
+Users in EU see slightly slower responses (~350 ms) until we move back.
+Cause so far: the provider throttled our EU quota, made worse by a retry change. RCA to follow.
+Status: mitigated, not resolved. Next update: 23:15 or at close.</pre></div>
+      <div class="code-card"><div class="code-head">23:12: close-out</div><pre>Mitigated at 22:49. Impact: up to 34% of EU requests failed, 21:25-22:49 (~80 minutes).
+Running on the backup region overnight. Failback tomorrow: Dee. Provider quota ticket: Jordan.
+RCA draft: Assistant pod (Sam). Postmortem: Thursday 14:00.
+Thanks Marco (IC), Sam, Dee, Ravi.</pre></div>
+
+      <h2 id="differently">What I'd Do Differently</h2>
+      <div class="callout watch"><p class="callout-title">Honest Notes</p>
+      <ul>
+      <li><strong>I asked the Deadline question 5 minutes too late.</strong> "Who are we waiting on?" belongs in the first 2 minutes, before anyone gets comfortable.</li>
+      <li><strong>I didn't know platform had one person on its escalation policy.</strong> That's a risk, and it's now on my list for Thursday.</li>
+      <li><strong>Nobody could pull the failover without a manager's OK.</strong> We lost about 20 minutes to that. A pre-approved lever would have saved it, but my team can't create one; it's platform's decision. That thread runs all week, and it ends in the <a href="example-risk.html">risk register</a>.</li>
+      <li><strong>Ravi needs coaching, not blame.</strong> He declared quickly. He needs the platform pager in his runbook and a habit of including the start time.</li>
+      </ul>
+      </div>
+
+      <p class="next-step">Next: <a href="example-postmortem.html">Thursday 14:00, the postmortem (SAFER)</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

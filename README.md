@@ -9,8 +9,19 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 The home page opens with three one-word frameworks, each letter a question to ask out loud (the [Pocket Frameworks](https://lemonadevodka.github.io/sre-leader-field-guide/playbooks/frameworks.html) page prints all three):
 
 - **LEAD**, running an incident: Leader · Effect · Action · Deadline. Repeat every 15 minutes.
-- **SAFER**, postmortem or RCA: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions.
+- **PREP → SAFER → CLOSE**, owning postmortems end to end. Before: Pick · Request · Evidence · Pre-wire. The meeting: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions. After: Capture · Log · Own the follow-up · Share · End it. Every invite and follow-up message is on the Owning Postmortems page.
 - **PACE**, tracking people's work: Progress · Asks · Confidence · End with owners.
+
+**See it used: one realistic week.** Four walkthroughs follow one fictional incident from a central SRE team with no controls (it can see and escalate, but can't change production):
+
+- Tuesday: the incident, run with LEAD
+- Thursday: the postmortem, PREP → SAFER → CLOSE
+- Monday: the status sweep, PACE
+- Wednesday: nobody will fix it (the risk register)
+
+They include the messy parts: a defensive author, a partly right accusation, an exec who wants an ETA, owners who aren't yours, and a casual "yeah fine" that has to become a written decision.
+
+**Risk Register: When Nobody Will Fix It** covers a 7-step "they don't care" ladder, a register template and spreadsheet header, "fix, fund, or accept" decision requests, a monthly 15-minute review, and how to turn the register into the business case for SRE controls.
 
 The site is built around four jobs, in priority order:
 
@@ -23,8 +34,8 @@ The sidebar has four sections:
 
 | Section | Pages |
 |---|---|
-| **Do** (in the moment) | Pocket Frameworks · Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
-| **Ask** (Question Bank, 284 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
+| **Do** (in the moment) | Pocket Frameworks · the one-week walkthroughs · Owning Postmortems · Risk Register · Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
+| **Ask** (Question Bank, 290 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
 | **Learn** (study time) | RCA Day One · Observability Day One · RCA the SRE Way · Worked Example · 25 SRE concepts · AI reliability (5 pages) · Implementation programs grounded in the SRE Workbook (8 pages) |
 | **People** (credibility and politics) | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader · Power & Politics (4 pages, 39 tactics) |
 

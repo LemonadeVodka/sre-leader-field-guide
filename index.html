@@ -19,7 +19,7 @@
       <h1>SRE Leader's Field Guide</h1>
       <p class="summary">Lead reliability by asking the right questions. Start with the framework for the moment you're in. Every question is one you can ask without writing code.</p>
       <h2 class="jobs-title" id="jobs">Your Three Frameworks</h2>
-      <p class="fw-intro">One word for each moment. Each letter is a question you ask out loud. Tap a letter to go deeper, or <a href="playbooks/frameworks.html">print all three</a>.</p>
+      <p class="fw-intro">One word for each moment. Each letter is a question you ask out loud. Tap a letter to go deeper, <a href="playbooks/frameworks.html">print them</a>, or <a href="playbooks/example-incident.html">watch them used across one realistic week</a>.</p>
 
       <div class="fw-grid">
       <section class="fw fw-incident" aria-labelledby="fw-lead"><span class="anchor-spot" id="right-now"></span>
@@ -30,11 +30,12 @@
       <li><a href="playbooks/incident-driver.html#inc-act"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Action.</strong> What's ruled out, best guess, safest step in 15 minutes?</span></a></li>
       <li><a href="playbooks/incident-driver.html#inc-waiting"><span class="fw-letter" aria-hidden="true">D</span><span class="fw-text"><strong>Deadline.</strong> Who are we waiting on, when do we escalate, next update?</span></a></li>
       </ol>
-      <p class="fw-more"><a href="playbooks/incident-driver.html">Stuck? Questions by how it's stuck</a></p>
+      <p class="fw-more"><a href="playbooks/example-incident.html">See it used: Tuesday's incident</a> · <a href="playbooks/incident-driver.html">Stuck? Questions by how it's stuck</a></p>
       </section>
 
       <section class="fw fw-pm" aria-labelledby="fw-safer">
-      <div class="fw-head"><h3 id="fw-safer"><span class="fw-word">SAFER</span> <span class="fw-title">Postmortem or RCA</span></h3><p class="fw-when">Follows the 45-minute postmortem agenda.</p></div>
+      <div class="fw-head"><h3 id="fw-safer"><span class="fw-word">SAFER</span> <span class="fw-title">Postmortems, end to end</span></h3><p class="fw-when">PREP before, SAFER in the 45 minutes, CLOSE after.</p></div>
+      <p class="fw-phase"><a href="playbooks/postmortem-program.html#prep"><strong>Before: PREP</strong> Pick · Request · Evidence · Pre-wire</a></p>
       <ol class="fw-steps">
       <li><a href="playbooks/meeting-starter.html#rules-postmortem"><span class="fw-letter" aria-hidden="true">S</span><span class="fw-text"><strong>Set the rules.</strong> Blameless, facts first, owned actions.</span></a></li>
       <li><a href="playbooks/frameworks.html#safer"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Agree the impact.</strong> Who, how long, how did we find out?</span></a></li>
@@ -42,7 +43,8 @@
       <li><a href="rca/index.html"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>Explain what let it happen.</strong> Trigger, weak spots, why not caught?</span></a></li>
       <li><a href="rca/judge-an-rca.html"><span class="fw-letter" aria-hidden="true">R</span><span class="fw-text"><strong>Rank the actions.</strong> If only one, which? Owner, date, done.</span></a></li>
       </ol>
-      <p class="fw-more"><a href="playbooks/postmortem-meeting.html">Run the postmortem meeting</a></p>
+      <p class="fw-phase"><a href="playbooks/postmortem-program.html#close"><strong>After: CLOSE</strong> Capture · Log · Own · Share · End it</a></p>
+      <p class="fw-more"><a href="playbooks/example-postmortem.html">See it used: Thursday's postmortem</a> · <a href="playbooks/postmortem-program.html">Every invite and message</a> · <a href="playbooks/postmortem-meeting.html">The meeting script</a></p>
       </section>
 
       <section class="fw fw-pace" aria-labelledby="fw-pace"><span class="anchor-spot" id="running-a-task"></span>
@@ -53,12 +55,12 @@
       <li><a href="playbooks/running-a-task.html#when-its-slipping"><span class="fw-letter" aria-hidden="true">C</span><span class="fw-text"><strong>Confidence.</strong> Date confidence 1 to 10? What makes it a 9?</span></a></li>
       <li><a href="playbooks/where-are-we.html#tracking"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>End with owners.</strong> Who does what by when; I'll check on…</span></a></li>
       </ol>
-      <p class="fw-more"><a href="playbooks/where-are-we.html">Run the weekly status sweep</a></p>
+      <p class="fw-more"><a href="playbooks/example-status.html">See it used: Monday's sweep</a> · <a href="playbooks/where-are-we.html">Run the weekly status sweep</a></p>
       </section>
       </div>
 
       <h2 id="more-jobs">Also in Your Week</h2>
-      <ul class="job-grid job-grid-2">
+      <ul class="job-grid">
       <li class="job"><span class="anchor-spot" id="in-a-meeting"></span>
       <a class="job-main" href="playbooks/meeting-starter.html"><strong>Run a Meeting Fast</strong><span>A 60-second agenda, ground rules, and lines to hold the room.</span></a>
       <ul class="chips" aria-label="Meeting shortcuts">
@@ -71,6 +73,12 @@
       <ul class="chips" aria-label="Performance shortcuts">
       <li><a href="meetings/performance-engineering.html#questions">Questions</a></li>
       <li><a href="ai/latency.html">AI latency</a></li>
+      </ul></li>
+      <li class="job">
+      <a class="job-main" href="playbooks/risk-register.html"><strong>Nobody Will Fix It</strong><span>Another team won't act and you have no authority. Make the risk visible and get a decision.</span></a>
+      <ul class="chips" aria-label="Risk shortcuts">
+      <li><a href="playbooks/risk-register.html#ladder">The ladder</a></li>
+      <li><a href="playbooks/example-risk.html">See it used</a></li>
       </ul></li>
       </ul>
 

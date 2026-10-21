@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thursday: The Postmortem (PREP, SAFER, CLOSE in practice) · SRE Leader's Field Guide</title>
+  <meta name="description" content="The same incident's postmortem, from the invite to 30 days later: a defensive author, a partly right accusation, and actions you can't assign.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="x-postmortem">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Thursday 14:00: The Postmortem</h1>
+      <p class="summary">The same incident's postmortem, from the invite to 30 days later: a defensive author, a partly right accusation, and actions you can't assign.</p>
+      <ol class="week-strip" aria-label="One week, three frameworks">
+      <li><a href="example-incident.html"><small>Tue · LEAD</small>The incident</a></li>
+      <li><span class="is-here" aria-current="page"><small>Thu · SAFER</small>The postmortem</span></li>
+      <li><a href="example-status.html"><small>Mon · PACE</small>The status sweep</a></li>
+      <li><a href="example-risk.html"><small>Wed · Risk</small>Nobody will fix it</a></li>
+      </ol>
+
+      <div class="callout cast"><p class="callout-title">Who's in the Room (fictional)</p>
+      <dl>
+      <dt>You</dt><dd>Sponsor and facilitator.</dd>
+      <dt>Sam, Noor</dt><dd>Assistant pod. Sam wrote the RCA draft. Noor made the retry change.</dd>
+      <dt>Dee</dt><dd>Platform on-call. Jordan, her manager, couldn't come.</dd>
+      <dt>Marco, Lin</dt><dd>Your SRE engineers. Marco was incident commander.</dd>
+      <dt>Asha, Ravi</dt><dd>NOC shift lead and the analyst on shift that night (joining from their morning).</dd>
+      </dl>
+      </div>
+
+      <h2 id="controls">What Your Team Can and Can't Do Here</h2>
+      <div class="table-wrap"><table>
+      <caption class="visually-hidden">What central SRE can and can't do in a postmortem</caption>
+      <thead><tr><th>You can</th><th>You can't</th></tr></thead>
+      <tbody>
+      <tr><td>Call the meeting and set the rules</td><td>Make another pod's engineer the owner of an action</td></tr>
+      <tr><td>Insist on evidence and on a real "why"</td><td>Change another pod's review process</td></tr>
+      <tr><td>Own the actions that sit with SRE and the NOC</td><td>Fund work on platform's roadmap</td></tr>
+      <tr><td>Write down what's not getting fixed, and who decided</td><td>Make "the provider" do anything</td></tr>
+      </tbody></table></div>
+
+      <h2 id="before">Wednesday to Thursday Morning: PREP</h2>
+      <p>You own postmortems now, so the meeting starts the morning after the incident. Full method and every message: <a href="postmortem-program.html#prep">PREP → SAFER → CLOSE</a>.</p>
+
+      <div class="beat fw-pm" data-fw="PREP">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">P</span><span class="beat-clock">Wed 09:00</span><span class="beat-tag">Pick</span></p>
+      <p>Sev 2, customer-facing: it qualifies. You'd like Noor's teammate to write the RCA, but Sam insists on writing it himself. You agree; arguing about authorship on day one isn't worth it. You facilitate. Booked for Thursday 14:00.</p>
+      <p class="beat-note"><strong>The nuance:</strong> the person most likely to be defensive is now the author. You'll handle that in the Evidence step, not by overruling him.</p>
+      </div>
+      <div class="beat fw-pm" data-fw="PREP">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">R</span><span class="beat-clock">Wed 09:30</span><span class="beat-tag">Request</span></p>
+      <p>You send the calendar invite with the SAFER agenda, ask Sam for a draft by Wednesday 17:00, and ask Asha for the NOC timeline from tool timestamps. Jordan declines because of the launch; Dee will come instead.</p>
+      <div class="code-card"><div class="code-head">The ask to Asha (NOC shift lead)</div><pre>Hi Asha, for Thursday's postmortem on the assistant timeouts, can you send me the NOC timeline by Wednesday?
+Please use timestamps from PagerDuty and chat, not memory: when the first alert fired and where it went, when the NOC noticed, and each escalation (who, how, when acknowledged).
+Please join with Ravi if you can. It's blameless; we want your view.</pre></div>
+      </div>
+      <div class="beat fw-pm" data-fw="PREP">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">Wed 17:40</span><span class="beat-tag">Evidence</span></p>
+      <p>Sam's draft arrives 40 minutes late. It says: <em>"Root cause: model provider throttling. Contributing factors: none."</em> That's defensive and incomplete. If you accept it, nothing on your side or Sam's changes.</p>
+      <div class="code-card"><div class="code-head">Your comment on the draft (to Sam)</div><pre>Thanks for turning this around fast. Two asks before Thursday:
+1. Can we add the 21:10 retry change as a contributing factor? Not to blame anyone; it turned a provider problem into a bigger one, and that's the part we can actually change.
+2. Can we add the timeline gap between 21:33 and 21:46 (Slack post, not a page)? That one's partly on SRE; our runbook didn't have platform's pager either.</pre></div>
+      <p>Sam replies: <em>"Fine, but the root cause is still the provider."</em> You let that go for now; the meeting will sort it out with evidence.</p>
+      </div>
+      <div class="beat fw-pm" data-fw="PREP">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">P</span><span class="beat-clock">Thu 10:00</span><span class="beat-tag">Pre-wire</span></p>
+      <p>Two short conversations: Noor, whose change is in the timeline, and Ravi, who'll be nervous. You skip Sam; you've already traded comments. (That turns out to be a mistake.)</p>
+      <div class="code-card"><div class="code-head">Pre-wire note to Noor (who made the change)</div><pre>Hi Noor, ahead of this afternoon's postmortem: your retry change will come up, because it's part of the timeline.
+Nobody thinks you did anything wrong. The change made sense, and it went through the normal review.
+What we want to understand is why our review process didn't ask about blast radius. Anything you'd like me to know before then?</pre></div>
+      </div>
+
+      <h2 id="meeting">The 45 Minutes</h2>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>Block</th><th>What actually happened</th></tr></thead>
+      <tbody>
+      <tr><td>5 min</td><td><strong>Set the rules, agree the impact</strong></td><td>Ground rules said aloud. Sam disputed the impact numbers; settled with data.</td></tr>
+      <tr><td>15 min</td><td><strong>Follow the timeline</strong></td><td>The NOC timeline exposed a 12-minute gap. Ravi needed pulling in.</td></tr>
+      <tr><td>10 min</td><td><strong>Explain what let it happen</strong></td><td>Sam blamed the NOC. "Human error" came up. Five real factors found.</td></tr>
+      <tr><td>10 min</td><td><strong>Rank the actions</strong></td><td>Seven suggestions, four kept, two cut, one sent to the risk register.</td></tr>
+      <tr><td>5 min</td><td><strong>Close</strong></td><td>Owners read back. Thanks, by name.</td></tr>
+      </tbody>
+      <tfoot><tr><td>45 min</td><td colspan="2">Total. It ran 3 minutes over; you cut the close short rather than the actions.</td></tr></tfoot>
+      </table></div>
+
+      <div class="beat fw-pm" data-fw="SAFER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">S</span><span class="beat-clock">14:00</span><span class="beat-tag">Set the rules</span></p>
+      <p class="say you"><span class="say-who">You:</span> "Thanks for coming. Three rules. One: blameless. We're looking at how our systems let this happen, not who. Everyone did what made sense with what they knew. Two: facts first; if we're not sure, we say so. Three: we leave with a few actions, each with one owner, a date, and what done means. If anyone hears blame, including from me, call it out."</p>
+      <p class="beat-note"><strong>Why say it every time:</strong> Noor and Ravi are the two people most likely to stay quiet. The rules are mostly for them.</p>
+      </div>
+
+      <div class="beat fw-pm" data-fw="SAFER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">A</span><span class="beat-clock">14:03</span><span class="beat-tag">Agree the impact</span></p>
+      <p class="say them"><span class="say-who">Sam:</span> "I'd push back on '30%.' It was only EU."</p>
+      <p class="say you"><span class="say-who">You:</span> "Fair. Marco, what do the numbers say?"</p>
+      <p class="say them"><span class="say-who">Marco:</span> "EU peaked at 34% failing. Across all regions it was 18% over 80 minutes, about 41,000 failed requests. Support logged 37 tickets."</p>
+      <p class="say you"><span class="say-who">You:</span> "So: 18% overall, 34% in EU at peak, 80 minutes, and we found it ourselves, 6 minutes after it started. Everyone OK with that?"</p>
+      <p class="beat-note"><strong>The nuance:</strong> Sam was partly right. "30%" was the EU number, said under pressure on the bridge. Correcting your own side's numbers in front of him buys you credibility for the harder conversation later.</p>
+      </div>
+
+      <div class="beat fw-pm" data-fw="SAFER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">F</span><span class="beat-clock">14:06</span><span class="beat-tag">Follow the timeline</span></p>
+      <p class="say them"><span class="say-who">Asha:</span> "The first alert fired at 21:25, but into the Assistant pod's alert channel, which the NOC doesn't watch. We saw a gateway alert at 21:31 and opened the incident."</p>
+      <p class="say you"><span class="say-who">You:</span> "Ravi, you were on shift. What did you see, and what did the runbook tell you to do?"</p>
+      <p class="say them"><span class="say-who">Ravi (after a pause):</span> "I saw gateway errors. The runbook said page SRE, so I did. Platform wasn't in the runbook, so I posted in their channel at 21:33."</p>
+      <p class="say you"><span class="say-who">You:</span> "Thank you. That's useful. And that's on SRE as much as anyone; our own runbook didn't have platform's pager either."</p>
+      <p class="beat-note"><strong>Owning your team's gap, out loud,</strong> makes it much easier for Sam to own his.</p>
+      </div>
+
+      <div class="beat fw-pm" data-fw="SAFER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">14:21</span><span class="beat-tag">Explain what let it happen</span></p>
+      <p class="say them"><span class="say-who">Sam:</span> "Honestly, the NOC should have caught this at 21:25."</p>
+      <p class="say you"><span class="say-who">You:</span> "Part of that's true; there's a 6-minute gap between the alert and the incident. Let's look at what made it easy to miss. Where did that alert go?"</p>
+      <p class="say them"><span class="say-who">Asha:</span> "A channel we don't have access to."</p>
+      <p class="say them"><span class="say-who">Sam:</span> "OK. And Noor should have load-tested the retry change."</p>
+      <p class="say you"><span class="say-who">You:</span> "If Noor had load-tested, what test would have shown the provider throttling us at peak? Do we have one?"</p>
+      <p class="say them"><span class="say-who">Noor:</span> "No. Our review checklist doesn't ask about what happens when a dependency is slow. Nobody's does."</p>
+      <p class="say you"><span class="say-who">You:</span> "Then it's not one person's mistake, it's a missing check. Let's write that down."</p>
+      <p>The factors on the whiteboard:</p>
+      <ol>
+      <li>The provider throttled our EU quota, and <strong>nobody was watching quota usage</strong>.</li>
+      <li>The retry change multiplied load on a struggling dependency. <strong>The review had no blast-radius question.</strong></li>
+      <li>The first alert went to <strong>a channel the NOC can't see</strong>.</li>
+      <li><strong>Neither the NOC's nor SRE's runbook had platform's pager</strong>, and platform's escalation policy had one person.</li>
+      <li>Failover worked, but <strong>needed a manager's approval at 22:36</strong> because it was never pre-approved.</li>
+      </ol>
+      </div>
+
+      <div class="beat fw-pm" data-fw="SAFER">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">R</span><span class="beat-clock">14:31</span><span class="beat-tag">Rank the actions</span></p>
+      <p>Seven suggestions come out of the room. You ask: "If we only did one, which?" Then you go through who will actually own each one, which is where it gets real: <strong>only two of them are things your team can do.</strong></p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Suggestion</th><th>What happened</th></tr></thead>
+      <tbody>
+      <tr><td>Route provider-error alerts to a channel the NOC watches, with a page</td><td><strong>Kept, #1.</strong> Owner Kai (SRE). Two weeks. Done means a test alert reaches the NOC and they acknowledge in a drill.</td></tr>
+      <tr><td>Add platform and Assistant pagers and the escalation packet to the NOC runbook</td><td><strong>Kept, #2.</strong> Owner Lin (SRE), with Asha. Two weeks. Done means both NOC shifts have run the drill.</td></tr>
+      <tr><td>Alert at 80% of provider quota</td><td><strong>Kept, #3.</strong> Dee volunteered: "If it's a Grafana alert, I can do it in three weeks." Not your team, so you thank her and write it down.</td></tr>
+      <tr><td>Add a blast-radius question to config change reviews</td><td><strong>Kept, #4,</strong> after negotiating. Sam: "Not a new process." You: "One line in the existing checklist?" Sam: "Fine, two weeks."</td></tr>
+      <tr><td>Pre-approve EU failover so on-call can pull it without a manager</td><td><strong>Not committed.</strong> Dee: "That's Jordan's call, and it touches our launch work." This goes to the risk register. <a href="example-risk.html">See Wednesday.</a></td></tr>
+      <tr><td>Route traffic across two model providers</td><td><strong>Cut, honestly.</strong> A quarter-sized project, not a postmortem action. Sam will raise it in roadmap planning.</td></tr>
+      <tr><td>"Retrain the NOC on reading alerts"</td><td><strong>Cut.</strong> Too vague. Action #2 and its drill do the real job.</td></tr>
+      </tbody></table></div>
+      <p class="beat-note"><strong>The nuance:</strong> the most important fix, pre-approved failover, is the one nobody in the room could commit to. You don't pretend otherwise. You name it, say who decides, and track it somewhere visible.</p>
+      </div>
+
+      <h2 id="after">After the Meeting: CLOSE</h2>
+      <div class="beat fw-pm" data-fw="CLOSE">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">C</span><span class="beat-clock">Thu 15:20</span><span class="beat-tag">Capture</span></p>
+      <p>Notes posted 35 minutes after the meeting, rough but complete.</p>
+      </div>
+      <div class="code-card"><div class="code-head">Notes, posted at 15:20</div><pre>Postmortem: assistant EU timeouts, Tuesday 21:25-22:49
+Impact: 18% of requests overall, 34% in EU at peak, ~80 min, ~41k failed requests, 37 support tickets.
+What let it happen: unwatched provider quota; retry change with no blast-radius check; first alert in a channel the NOC can't see; platform pager missing from runbooks; failover needed manager approval.
+Actions:
+1. Provider-error alerts to NOC + page. Kai. [date]. Done = drill acknowledged.
+2. NOC runbook: platform + Assistant pagers, escalation packet. Lin + Asha. [date]. Done = both shifts drilled.
+3. Provider quota alert at 80%. Dee (platform). [date]. Done = alert live and tested.
+4. Blast-radius line in config review checklist. Sam. [date]. Done = used on next 3 changes.
+Not committed: pre-approved EU failover (platform decision). Tracked as a risk.
+Thank you Noor, Ravi, and Asha for walking us through it so openly.</pre></div>
+      <div class="beat fw-pm" data-fw="CLOSE">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">L</span><span class="beat-clock">Fri 09:00</span><span class="beat-tag">Log</span></p>
+      <p>All four actions go into the same tracker as your team's other work, as PM-1 to PM-4, so they show up in Monday's sweep. The failover gap doesn't go in as an action nobody owns. It becomes a risk with a named decision owner.</p>
+      <p class="beat-note"><strong>The rule:</strong> an action only counts if its owner said yes in the room, or their manager said yes in writing. Dee and Sam said yes; Jordan didn't, so failover isn't an action.</p>
+      </div>
+      <div class="beat fw-pm" data-fw="CLOSE">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">O</span><span class="beat-clock">Every Monday</span><span class="beat-tag">Own the follow-up</span></p>
+      <p>Each action gets the four PACE questions in your weekly sweep: directly for Kai and Lin, by direct message for Dee and Sam. <a href="example-status.html">See Monday's sweep.</a></p>
+      </div>
+      <div class="beat fw-pm" data-fw="CLOSE">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">S</span><span class="beat-clock">Thu 16:00</span><span class="beat-tag">Share</span></p>
+      <div class="code-card"><div class="code-head">5-minute readout to Priya</div><pre>Tuesday's incident: 18% of requests failed for 80 minutes, worst in EU. The provider throttled us; a retry change made it worse.
+Four fixes agreed, owned, due within three weeks. Two are SRE's, two are other pods'.
+One gap isn't fixed: failover still needs a manager's approval, which cost us ~20 minutes. That's platform's decision. I'll bring it to you if it stays stuck.</pre></div>
+      <p class="say them"><span class="say-who">Priya:</span> "Why can't SRE just set up the failover?"</p>
+      <p class="say you"><span class="say-who">You:</span> "Because we don't have access to platform's configuration, and it's their service. We can make the risk visible and help them do it. The decision on whether it's worth doing this quarter belongs to you and the platform director."</p>
+      <div class="code-card"><div class="code-head">"What we learned" post, engineering channel</div><pre>Postmortem summary: assistant timeouts, Tuesday.
+What happened: the model provider throttled our EU quota at peak, and a retry change multiplied the load. ~80 minutes, worst in EU.
+One thing every team can check: do your alerts go somewhere the NOC can actually see?
+Full RCA: [link]. Thanks to Noor, Ravi, and Asha for a really open review.</pre></div>
+      <p class="beat-note"><strong>Hold the line on ownership.</strong> If you quietly take on work you have no control over, you also take the blame when it fails.</p>
+      </div>
+      <div class="beat fw-pm" data-fw="CLOSE">
+      <p class="beat-head"><span class="fw-letter" aria-hidden="true">E</span><span class="beat-clock">30 days later</span><span class="beat-tag">End it properly</span></p>
+      <p>You check each done-means with evidence. Alert routing: drill done. Runbook: both NOC shifts drilled. Quota alert: live, and it fired for real. Checklist: Sam shows it on three changes. The recurrence check finds the provider throttled us <em>again</em>, in a different region, but the new alert and runbook cut it from 80 minutes to 12. You close the RCA and leave the failover risk open. <a href="example-risk.html">That story is Wednesday's.</a></p>
+      </div>
+
+      <h2 id="differently">What I'd Watch Next Time</h2>
+      <div class="callout watch"><p class="callout-title">Honest Notes</p>
+      <ul>
+      <li><strong>Sam's defensiveness wasn't really about the provider.</strong> His pod gets blamed a lot. A 10-minute chat with him on Wednesday, not just a document comment, would have made the meeting easier.</li>
+      <li><strong>I nearly let "human error" slide</strong> because Noor wasn't arguing. Silence isn't agreement.</li>
+      <li><strong>Ravi and Asha joined at their 6 a.m.</strong> Next time, rotate the meeting time or record it.</li>
+      <li><strong>Two of four actions belong to people who don't report to me.</strong> I can't hold them accountable; I can only make progress visible. That's what Monday's sweep is for.</li>
+      </ul>
+      </div>
+
+      <p class="next-step">Next: <a href="example-status.html">Monday 10:00, the status sweep (PACE)</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
