@@ -6,7 +6,13 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 ## What's Inside
 
-The site is built around four jobs, in priority order. The home page shows them first.
+The home page opens with three one-word frameworks, each letter a question to ask out loud (the [Pocket Frameworks](https://lemonadevodka.github.io/sre-leader-field-guide/playbooks/frameworks.html) page prints all three):
+
+- **LEAD**, running an incident: Leader · Effect · Action · Deadline. Repeat every 15 minutes.
+- **SAFER**, postmortem or RCA: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions.
+- **PACE**, tracking people's work: Progress · Asks · Confidence · End with owners.
+
+The site is built around four jobs, in priority order:
 
 1. **Move a Stuck Incident:** questions organized by how the incident is stuck (nobody owns it, going in circles, waiting on someone, the NOC is lost, exec heat, and more).
 2. **Where Are We?** Asking people what they're working on and getting the real status: weekly sweep, decoding "almost done," a one-page tracker.
@@ -17,10 +23,10 @@ The sidebar has four sections:
 
 | Section | Pages |
 |---|---|
-| **Do** (in the moment) | Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
+| **Do** (in the moment) | Pocket Frameworks · Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
 | **Ask** (Question Bank, 284 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
 | **Learn** (study time) | RCA Day One · Observability Day One · RCA the SRE Way · Worked Example · 25 SRE concepts · AI reliability (5 pages) · Implementation programs grounded in the SRE Workbook (8 pages) |
-| **Lead** (people and politics) | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader · Power & Politics (4 pages, 39 tactics) |
+| **People** (credibility and politics) | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader · Power & Politics (4 pages, 39 tactics) |
 
 - **Lighter pages:** the "Do" playbooks open with a one-screen **Quick Card**. The detail below is folded into sections you open as needed (links to a section open it automatically, and printing opens everything).
 - **Questions:** every question card shows **why it builds credibility**, plus an **Ask next** follow-up for weak answers and collapsed **Coaching notes** (what strong and weak answers sound like). Long lists show the top 3 first, with "Show all."

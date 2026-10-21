@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pocket Frameworks: LEAD, SAFER, PACE · SRE Leader's Field Guide</title>
+  <meta name="description" content="Three one-word frameworks you can grab under pressure: LEAD for incidents, SAFER for postmortems and RCAs, and PACE for tracking people's work.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-fw">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Pocket Frameworks</h1>
+      <p class="summary">Three one-word frameworks you can grab under pressure: LEAD for incidents, SAFER for postmortems and RCAs, and PACE for tracking people's work.</p>
+      <div class="callout"><p class="callout-title">How to Use These</p>
+      <p>Three short frameworks for the moments that matter most. Each letter is one question you ask out loud. You don't need the technical answer; you need the next question. Print this page, or keep it open on a second screen.</p>
+      </div>
+
+      <h2 id="lead">LEAD: Running an Incident</h2>
+      <p>Use it the moment you join a bridge, then <strong>run it again every 15 minutes</strong> until it's resolved. If you only remember one thing during an incident, remember LEAD.</p>
+      <div class="table-wrap fw-table fw-incident"><table>
+      <thead><tr><th>Letter</th><th>Ask</th><th>Listen for</th><th>Go deeper</th></tr></thead>
+      <tbody>
+      <tr><td><span class="fw-letter">L</span> <strong>Leader</strong></td><td>"Who's leading this? If nobody, I'll lead until the owning team takes over."</td><td>One name, and everyone on the call knows it.</td><td><a href="incident-driver.html#inc-owner">Nobody owns it</a></td></tr>
+      <tr><td><span class="fw-letter">E</span> <strong>Effect</strong></td><td>"What are users seeing, how many, since when, and is it getting worse?"</td><td>One sentence with a number, a start time, and a direction.</td><td><a href="incident-driver.html#inc-impact">Impact is unclear</a></td></tr>
+      <tr><td><span class="fw-letter">A</span> <strong>Action</strong></td><td>"What have we ruled out, what's our best guess, and what's the safest thing we can do in the next 15 minutes?"</td><td>A ruled-out list, a testable theory, and one action with an owner.</td><td><a href="incident-driver.html#inc-circles">Going in circles</a> · <a href="incident-driver.html#inc-act">Afraid to act</a></td></tr>
+      <tr><td><span class="fw-letter">D</span> <strong>Deadline</strong></td><td>"Who are we waiting on, when do we escalate if they don't answer, and when's the next update?"</td><td>A name, a time, a backup, and an update time. Then you send the exec update.</td><td><a href="incident-driver.html#inc-waiting">Waiting on someone</a> · <a href="incident-driver.html#inc-exec">Exec heat</a></td></tr>
+      </tbody></table></div>
+      <div class="code-card"><div class="code-head">LEAD pocket version</div><pre>LEAD: every 15 minutes until resolved
+L  Leader    Who's leading this? (If nobody: I'll lead until the owning team takes over.)
+E  Effect    What are users seeing, how many, since when, getting worse?
+A  Action    What's ruled out, best guess, safest thing in the next 15 minutes?
+D  Deadline  Who are we waiting on, when do we escalate, when's the next update?</pre></div>
+
+      <h2 id="safer">SAFER: Running a Postmortem or RCA</h2>
+      <p>The goal of a postmortem is a safer system, so the framework is SAFER. It follows the <a href="postmortem-meeting.html">45-minute postmortem agenda</a>, and works just as well when you're reading or <a href="../rca/judge-an-rca.html">judging an RCA document</a>.</p>
+      <div class="table-wrap fw-table fw-pm"><table>
+      <thead><tr><th>Letter</th><th>Ask</th><th>Listen for</th><th>Go deeper</th></tr></thead>
+      <tbody>
+      <tr><td><span class="fw-letter">S</span> <strong>Set the rules</strong></td><td>"Blameless: we're looking at how our system let this happen, not who. Facts first. We leave with owned actions."</td><td>People relax. If anyone hears blame, they say so.</td><td><a href="meeting-starter.html#rules-postmortem">Ground rules to copy</a></td></tr>
+      <tr><td><span class="fw-letter">A</span> <strong>Agree the impact</strong></td><td>"Who was affected, for how long, and how did we find out: us or customers?"</td><td>Numbers everyone agrees with. Settle disagreement now.</td><td><a href="../rca/run-an-rca.html">Running an RCA</a></td></tr>
+      <tr><td><span class="fw-letter">F</span> <strong>Follow the timeline</strong></td><td>"Walk us through it minute by minute. What did you know at that point, and what made sense to do?"</td><td>Times from evidence (alerts, logs, chat), not memory.</td><td><a href="../rca/worked-example.html">Worked example</a></td></tr>
+      <tr><td><span class="fw-letter">E</span> <strong>Explain what let it happen</strong></td><td>"What triggered it, what made us vulnerable, and why didn't we catch it sooner?"</td><td>Several contributing factors and missing defenses. Never "human error" alone.</td><td><a href="../rca/index.html">RCA the SRE way</a></td></tr>
+      <tr><td><span class="fw-letter">R</span> <strong>Rank the actions</strong></td><td>"If we only did one, which? Who owns it, by when, and what does done mean?"</td><td>3 to 5 ranked actions, each with one owner, a date, and a done-means.</td><td><a href="../rca/judge-an-rca.html">Judging an RCA</a></td></tr>
+      </tbody></table></div>
+      <div class="code-card"><div class="code-head">SAFER pocket version</div><pre>SAFER: postmortem meeting or RCA review
+S  Set the rules     Blameless, facts first, we leave with owned actions.
+A  Agree the impact  Who was affected, for how long, how did we find out?
+F  Follow timeline   Minute by minute: what did you know, what made sense?
+E  Explain           What triggered it, what made us vulnerable, why not caught sooner?
+R  Rank actions      If only one, which? Owner, date, what done means.</pre></div>
+
+      <h2 id="pace">PACE: Tracking People's Work</h2>
+      <p>For any meeting where you need to know where work stands: the weekly sweep, a 1:1, the engineering block of the SRE Daily, or a task check-in. Ask each owner the four letters, then write the E line down.</p>
+      <div class="table-wrap fw-table fw-pace"><table>
+      <thead><tr><th>Letter</th><th>Ask</th><th>Listen for</th><th>Go deeper</th></tr></thead>
+      <tbody>
+      <tr><td><span class="fw-letter">P</span> <strong>Progress</strong></td><td>"What moved since last time?"</td><td>Something specific that's done, not "working on it."</td><td><a href="where-are-we.html#decode">Decode the answer</a></td></tr>
+      <tr><td><span class="fw-letter">A</span> <strong>Asks</strong></td><td>"What's blocking you, or who are you waiting on? Is anyone waiting on you?"</td><td>A named blocker you can clear. "Nothing" every week is a warning sign.</td><td><a href="where-are-we.html#questions">Status questions</a></td></tr>
+      <tr><td><span class="fw-letter">C</span> <strong>Confidence</strong></td><td>"How confident are you in the date, 1 to 10? What would make it a 9?"</td><td>An honest number. Under 7 means you act now, not on the due date.</td><td><a href="running-a-task.html#when-its-slipping">When it's slipping</a></td></tr>
+      <tr><td><span class="fw-letter">E</span> <strong>End with owners</strong></td><td>"So: [owner] does [next step] by [date]. I'll check on [date]."</td><td>They agree with the line as you read it back.</td><td><a href="where-are-we.html#tracking">One-page tracker</a></td></tr>
+      </tbody></table></div>
+      <div class="code-card"><div class="code-head">PACE pocket version</div><pre>PACE: for each owner, then write the E line down
+P  Progress    What moved since last time?
+A  Asks        What's blocking you, who are you waiting on, is anyone waiting on you?
+C  Confidence  Date confidence 1-10? What would make it a 9?
+E  End         [Owner] does [next step] by [date]. I'll check on [date].</pre></div>
+
+      <h2 id="why-these-work">Why These Build Credibility</h2>
+      <ul>
+      <li><strong>They're the questions experienced leaders ask.</strong> LEAD is incident command, SAFER is a blameless postmortem, and PACE is how a good program manager runs status. You're using proven practice, in plain words.</li>
+      <li><strong>They work without technical knowledge.</strong> Every letter is about ownership, impact, evidence, or dates, which is exactly where a senior manager adds value.</li>
+      <li><strong>Repetition makes you predictable.</strong> When your team knows you'll ask "what's the Effect?" or "what's your Confidence?", they start bringing the answers before you ask.</li>
+      </ul>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

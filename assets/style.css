@@ -335,3 +335,34 @@ code { overflow-wrap: anywhere; }
   .fold-bar, .q-more-row { display: none !important; }
   .fold-body[hidden], .qitem[hidden] { display: block !important; }
 }
+
+/* ---------- Home: the three frameworks (LEAD, SAFER, PACE) ---------- */
+.fw-intro { color: var(--ink-2); margin: 0 0 14px; }
+.fw-grid { display: grid; gap: 14px; margin: 0 0 8px; }
+.fw { --fw-bar: var(--accent); --fw-bg: var(--key-bg); border: 1px solid var(--line); border-left: 6px solid var(--fw-bar); border-radius: var(--radius); background: var(--surface); padding: 14px 18px 12px; }
+.fw-incident { --fw-bar: var(--watch-bar); --fw-bg: var(--watch-bg); }
+.fw-pm { --fw-bar: var(--ex-bar); --fw-bg: var(--ex-bg); }
+.fw-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 16px; margin-bottom: 8px; }
+.prose .fw h3 { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
+.fw-word { font-size: 30px; font-weight: 600; letter-spacing: .12em; color: var(--fw-bar); line-height: 1; }
+.fw-title { font-size: 18px; }
+.fw-when { margin: 0; font-size: 14px; color: var(--ink-2); }
+.prose .fw-steps { list-style: none; padding: 0; margin: 0; }
+.prose .fw-steps li { margin: 0; max-width: none; }
+.fw-steps a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 6px 8px; margin: 0 -8px; border-radius: 6px; color: var(--ink); text-decoration: none; line-height: 1.35; }
+.fw-steps a:hover { background: var(--fw-bg); }
+.fw-steps a:hover strong { color: var(--fw-bar); }
+.fw-letter { flex: none; display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 6px; background: var(--fw-bar, var(--accent)); color: var(--bg); font-weight: 600; font-size: 17px; }
+.fw-text { font-size: 16px; }
+.fw-text strong { margin-right: 4px; }
+.fw-more { margin: 6px 0 0; font-size: 15px; font-weight: 600; }
+.job-grid.job-grid-2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px) { .job-grid.job-grid-2 { grid-template-columns: 1fr; } .fw { padding: 12px 14px 10px; } .fw-word { font-size: 26px; } }
+
+/* Pocket Frameworks page */
+.fw-table td:first-child { white-space: nowrap; }
+.fw-table .fw-letter { width: 28px; height: 28px; font-size: 15px; margin-right: 6px; }
+@media (max-width: 640px) { .fw-table td:first-child { white-space: normal; } }
+@media print { .fw-letter { color: #fff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+.prose .quick-card .fw-steps li { position: relative; padding-left: 44px; min-height: 32px; margin: 10px 0; }
+.quick-card .fw-steps .fw-letter { position: absolute; left: 0; top: -3px; }

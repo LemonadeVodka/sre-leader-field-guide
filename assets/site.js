@@ -5,12 +5,13 @@
   "use strict";
 
   var UPDATED = "October 20, 2026"; /* bump on each release */
-  /* Four sections by what you're doing. Items with "label" are sub-headings inside a section (not links). */
+  /* Four sections by what you're doing (Do / Ask / Learn / People). Items with "label" are sub-headings inside a section (not links). */
   var NAV = [
     { section: "", items: [
       { id: "home", href: "index.html", title: "Home" }
     ]},
     { section: "Do", hint: "In the moment", items: [
+      { id: "p-fw", href: "playbooks/frameworks.html", title: "Pocket Frameworks" },
       { id: "p-driver", href: "playbooks/incident-driver.html", title: "Move a Stuck Incident" },
       { id: "p-where", href: "playbooks/where-are-we.html", title: "Where Are We? (Status)" },
       { id: "p-starter", href: "playbooks/meeting-starter.html", title: "Meeting Starter" },
@@ -65,7 +66,7 @@
       { id: "impl-change", href: "implement/safe-change.html", title: "Safe Change" },
       { id: "impl-toil", href: "implement/toil-automation.html", title: "Toil & Automation" }
     ]},
-    { section: "Lead", hint: "People & politics", items: [
+    { section: "People", hint: "Credibility & politics", items: [
       { id: "g-idk", href: "guides/saying-i-dont-know.html", title: "Saying \"I Don't Know\"" },
       { id: "g-ask", href: "guides/how-to-ask.html", title: "How to Ask" },
       { id: "g-path", href: "guides/it-ops-to-sre.html", title: "From IT Ops to SRE Leader" },
@@ -127,7 +128,7 @@
     "Do": icon('<path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12z"/>'),
     "Ask": icon('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M10 9.5a2.2 2.2 0 1 1 3 2c-.6.3-1 .8-1 1.5"/><path d="M12 16h.01"/>'),
     "Learn": icon('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>'),
-    "Lead": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
+    "People": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
   };
 
   /* ---------- Sidebar: "Find a page" filter + collapsible sections ----------

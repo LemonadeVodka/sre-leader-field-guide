@@ -17,30 +17,53 @@
   <main class="content" id="main">
     <article class="prose">
       <h1>SRE Leader's Field Guide</h1>
-      <p class="summary">Lead reliability by asking the right questions. Every question here is one you can ask without writing code, and each one says why it builds your credibility.</p>
-      <h2 class="jobs-title" id="jobs">What Are You Doing Right Now?</h2>
-      <ul class="job-grid">
-      <li class="job job-primary"><span class="anchor-spot" id="right-now"></span>
-      <a class="job-main" href="playbooks/incident-driver.html"><strong>Move a Stuck Incident</strong><span>The NOC can't move it and the bridge is going nowhere. Questions that get it unstuck, by how it's stuck.</span></a>
-      <ul class="chips" aria-label="Jump to a stuck pattern">
-      <li><a href="playbooks/incident-driver.html#inc-owner">Nobody owns it</a></li>
-      <li><a href="playbooks/incident-driver.html#inc-circles">Going in circles</a></li>
-      <li><a href="playbooks/incident-driver.html#inc-waiting">Waiting on someone</a></li>
-      <li><a href="playbooks/incident-driver.html#inc-noc">NOC is lost</a></li>
-      <li><a href="playbooks/incident-driver.html#inc-exec">Exec joined</a></li>
-      </ul></li>
-      <li class="job"><span class="anchor-spot" id="running-a-task"></span>
-      <a class="job-main" href="playbooks/where-are-we.html"><strong>Where Are We?</strong><span>Ask what people are working on and get the real status.</span></a>
-      <ul class="chips" aria-label="Status shortcuts">
-      <li><a href="playbooks/where-are-we.html#weekly-sweep">Weekly sweep</a></li>
-      <li><a href="playbooks/where-are-we.html#decode">Decode "almost done"</a></li>
-      <li><a href="playbooks/running-a-task.html#when-its-slipping">It's slipping</a></li>
-      </ul></li>
+      <p class="summary">Lead reliability by asking the right questions. Start with the framework for the moment you're in. Every question is one you can ask without writing code.</p>
+      <h2 class="jobs-title" id="jobs">Your Three Frameworks</h2>
+      <p class="fw-intro">One word for each moment. Each letter is a question you ask out loud. Tap a letter to go deeper, or <a href="playbooks/frameworks.html">print all three</a>.</p>
+
+      <div class="fw-grid">
+      <section class="fw fw-incident" aria-labelledby="fw-lead"><span class="anchor-spot" id="right-now"></span>
+      <div class="fw-head"><h3 id="fw-lead"><span class="fw-word">LEAD</span> <span class="fw-title">Running an incident</span></h3><p class="fw-when">Join the bridge, then repeat every 15 minutes.</p></div>
+      <ol class="fw-steps">
+      <li><a href="playbooks/incident-driver.html#inc-owner"><span class="fw-letter" aria-hidden="true">L</span><span class="fw-text"><strong>Leader.</strong> Who's leading this? If nobody, I'll lead.</span></a></li>
+      <li><a href="playbooks/incident-driver.html#inc-impact"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>Effect.</strong> What are users seeing, since when, getting worse?</span></a></li>
+      <li><a href="playbooks/incident-driver.html#inc-act"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Action.</strong> What's ruled out, best guess, safest step in 15 minutes?</span></a></li>
+      <li><a href="playbooks/incident-driver.html#inc-waiting"><span class="fw-letter" aria-hidden="true">D</span><span class="fw-text"><strong>Deadline.</strong> Who are we waiting on, when do we escalate, next update?</span></a></li>
+      </ol>
+      <p class="fw-more"><a href="playbooks/incident-driver.html">Stuck? Questions by how it's stuck</a></p>
+      </section>
+
+      <section class="fw fw-pm" aria-labelledby="fw-safer">
+      <div class="fw-head"><h3 id="fw-safer"><span class="fw-word">SAFER</span> <span class="fw-title">Postmortem or RCA</span></h3><p class="fw-when">Follows the 45-minute postmortem agenda.</p></div>
+      <ol class="fw-steps">
+      <li><a href="playbooks/meeting-starter.html#rules-postmortem"><span class="fw-letter" aria-hidden="true">S</span><span class="fw-text"><strong>Set the rules.</strong> Blameless, facts first, owned actions.</span></a></li>
+      <li><a href="playbooks/frameworks.html#safer"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Agree the impact.</strong> Who, how long, how did we find out?</span></a></li>
+      <li><a href="rca/worked-example.html"><span class="fw-letter" aria-hidden="true">F</span><span class="fw-text"><strong>Follow the timeline.</strong> What did you know, what made sense?</span></a></li>
+      <li><a href="rca/index.html"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>Explain what let it happen.</strong> Trigger, weak spots, why not caught?</span></a></li>
+      <li><a href="rca/judge-an-rca.html"><span class="fw-letter" aria-hidden="true">R</span><span class="fw-text"><strong>Rank the actions.</strong> If only one, which? Owner, date, done.</span></a></li>
+      </ol>
+      <p class="fw-more"><a href="playbooks/postmortem-meeting.html">Run the postmortem meeting</a></p>
+      </section>
+
+      <section class="fw fw-pace" aria-labelledby="fw-pace"><span class="anchor-spot" id="running-a-task"></span>
+      <div class="fw-head"><h3 id="fw-pace"><span class="fw-word">PACE</span> <span class="fw-title">Tracking people's work</span></h3><p class="fw-when">Ask each owner, then write the E line down.</p></div>
+      <ol class="fw-steps">
+      <li><a href="playbooks/where-are-we.html#decode"><span class="fw-letter" aria-hidden="true">P</span><span class="fw-text"><strong>Progress.</strong> What moved since last time?</span></a></li>
+      <li><a href="playbooks/where-are-we.html#questions"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Asks.</strong> What's blocking you? Who's waiting on you?</span></a></li>
+      <li><a href="playbooks/running-a-task.html#when-its-slipping"><span class="fw-letter" aria-hidden="true">C</span><span class="fw-text"><strong>Confidence.</strong> Date confidence 1 to 10? What makes it a 9?</span></a></li>
+      <li><a href="playbooks/where-are-we.html#tracking"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>End with owners.</strong> Who does what by when; I'll check on…</span></a></li>
+      </ol>
+      <p class="fw-more"><a href="playbooks/where-are-we.html">Run the weekly status sweep</a></p>
+      </section>
+      </div>
+
+      <h2 id="more-jobs">Also in Your Week</h2>
+      <ul class="job-grid job-grid-2">
       <li class="job"><span class="anchor-spot" id="in-a-meeting"></span>
       <a class="job-main" href="playbooks/meeting-starter.html"><strong>Run a Meeting Fast</strong><span>A 60-second agenda, ground rules, and lines to hold the room.</span></a>
       <ul class="chips" aria-label="Meeting shortcuts">
+      <li><a href="playbooks/meeting-starter.html#agenda-fast">60-second agenda</a></li>
       <li><a href="playbooks/meeting-starter.html#ground-rules">Ground rules</a></li>
-      <li><a href="playbooks/postmortem-meeting.html">Postmortem</a></li>
       <li><a href="meetings/sre-daily.html">SRE Daily</a></li>
       </ul></li>
       <li class="job">
@@ -62,7 +85,6 @@
       <li><a href="playbooks/running-a-task.html#kickoff">Kick off a task</a></li>
       <li><a href="playbooks/vendor-demo.html">Vendor demo</a></li>
       <li><a href="rca/day-one.html">Start an RCA</a></li>
-      <li><a href="rca/judge-an-rca.html">Review an RCA</a></li>
       <li><a href="questions/offshore-noc.html">The offshore NOC</a></li>
       <li><a href="guides/saying-i-dont-know.html">Saying "I don't know"</a></li>
       <li><a href="power/index.html">Power &amp; politics</a></li>
