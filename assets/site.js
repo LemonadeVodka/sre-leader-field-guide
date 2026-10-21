@@ -12,6 +12,7 @@
     ]},
     { section: "Do", hint: "In the moment", items: [
       { label: "Start here" },
+      { id: "today", href: "today.html", title: "Questions for Today" },
       { id: "p-fw", href: "playbooks/frameworks.html", title: "Pocket Frameworks" },
       { label: "See it used: one week" },
       { id: "x-incident", href: "playbooks/example-incident.html", title: "Tue: The Incident (LEAD)" },

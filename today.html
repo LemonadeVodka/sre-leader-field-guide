@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Questions for Today · SRE Leader's Field Guide</title>
+  <meta name="description" content="Exact words for the moments in your week: the incident bridge, stuck incidents, the NOC, postmortems, status check-ins, the perf meeting, peers and your VP, and when you don't know. Each with the follow-up for the weak answer.">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="./" data-page="today">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="./index.html">SRE Leader's Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Questions for Today</h1>
+      <p class="summary">Exact words for the moments in your week: the incident bridge, stuck incidents, the NOC, postmortems, status check-ins, the perf meeting, peers and your VP, and when you don't know. Each with the follow-up for the weak answer.</p>
+      <div class="callout"><p class="callout-title">How to Use This Page</p>
+      <p>Find the moment you're in. Say the question exactly as written. If you get the weak answer, use the follow-up. Bring three, not eight. Each section has a <strong>Copy</strong> button so you can paste the list into your notes before you walk in.</p>
+      </div>
+
+      <h2 id="bridge">1. On an Incident Bridge</h2>
+      <p class="today-when">The moment you join, in this order. Then repeat the last four every 15 minutes. (This is <a href="playbooks/frameworks.html#lead">LEAD</a>.)</p>
+      <ol class="today-list">
+      <li><p class="t-q">"Who's leading this right now?"</p><p class="t-if"><span class="t-label">If they say</span> "We're all looking at it" <span class="t-label">→ say</span> "Then I'll lead until the owning team joins. [Name], can you drive the technical side?"</p></li>
+      <li><p class="t-q">"What are users seeing, in one sentence?"</p><p class="t-if"><span class="t-label">If they say</span> the alert name <span class="t-label">→ ask</span> "In plain words: what can't users do, and roughly how many?"</p></li>
+      <li><p class="t-q">"When did it start, and how do we know?"</p><p class="t-if"><span class="t-label">If they say</span> "A while ago" <span class="t-label">→ ask</span> "Can someone check the first error in App Insights or Grafana and post the time?"</p></li>
+      <li><p class="t-q">"Is it getting worse, better, or flat in the last 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "Hard to say" <span class="t-label">→ ask</span> "Can someone post the error-rate graph in the channel every 15 minutes?"</p></li>
+      <li><p class="t-q">"What changed in the last 24 hours?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Did anyone check Grafana annotations, deploys, config, and the model provider's status page?"</p></li>
+      <li><p class="t-q">"What have we ruled out, and how?"</p><p class="t-if"><span class="t-label">If they say</span> "We've looked at everything" <span class="t-label">→ say</span> "Let's write the ruled-out list in the channel so we stop re-checking."</p></li>
+      <li><p class="t-q">"What's the safest thing we can do in the next 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "We're still investigating" <span class="t-label">→ ask</span> "Is there a rollback, failover, or flag we could use while we investigate?"</p></li>
+      <li><p class="t-q">"Who are we waiting on, and did they acknowledge in PagerDuty?"</p><p class="t-if"><span class="t-label">If they say</span> "We pinged them in Slack" <span class="t-label">→ say</span> "Let's page them properly now. If no acknowledgement in 10 minutes, I'll call their manager."</p></li>
+      <li><p class="t-q">"When's the next update, and who's sending it?"</p><p class="t-if"><span class="t-label">If they say</span> nothing <span class="t-label">→ say</span> "I'll send updates every 15 minutes. Next one at [time]. Team, keep working."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: incident bridge</div><pre>Who's leading this right now?
+What are users seeing, in one sentence?
+When did it start, and how do we know?
+Is it getting worse, better, or flat in the last 15 minutes?
+What changed in the last 24 hours?
+What have we ruled out, and how?
+What's the safest thing we can do in the next 15 minutes?
+Who are we waiting on, and did they acknowledge in PagerDuty?
+When's the next update, and who's sending it?</pre></div>
+      <p class="today-more">Deeper: <a href="playbooks/incident-driver.html">Move a Stuck Incident</a> · <a href="playbooks/example-incident.html">See it used</a></p>
+
+      <h2 id="stuck">2. When It's Been Stuck for 30+ Minutes</h2>
+      <p class="today-when">No progress, no theory, or nobody who can change it.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"Let's pause for 60 seconds. What do we know, what don't we know, what's next?"</p><p class="t-if"><span class="t-label">If they say</span> nobody can summarize <span class="t-label">→ say</span> "I'll write it in the channel. Correct me if I'm wrong."</p></li>
+      <li><p class="t-q">"If you had to bet: our code, our infrastructure, or something we depend on?"</p><p class="t-if"><span class="t-label">If they say</span> "Could be anything" <span class="t-label">→ say</span> "It's a bet, not a promise. What's the quickest way to check it?"</p></li>
+      <li><p class="t-q">"If we only had 10 minutes before this got much worse, what would we try?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing's safe" <span class="t-label">→ ask</span> "What's worse: trying it and being wrong, or waiting another 30 minutes?"</p></li>
+      <li><p class="t-q">"Who else knows this system, even if they're not on call?"</p><p class="t-if"><span class="t-label">If they say</span> "Only one person, and they're off" <span class="t-label">→ say</span> "I'll call their manager. That's also going in the postmortem."</p></li>
+      <li><p class="t-q">"Who has the access to change this, and are they on the bridge?"</p><p class="t-if"><span class="t-label">If they say</span> "Not us" <span class="t-label">→ ask</span> "Which team, and what do they need from us so they can start immediately?"</p></li>
+      <li><p class="t-q">"Are we still fixing it, or should we be working around it?"</p><p class="t-if"><span class="t-label">If they say</span> "We're close" <span class="t-label">→ ask</span> "What result would prove it, and by what time? If not by then, we work around it."</p></li>
+      <li><p class="t-q">"If there's no fix in an hour, whose decision is it what we do?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ say</span> "Then I'll get [director] on the thread now, so the decision is ready if we need it."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: stuck incident</div><pre>Let's pause for 60 seconds. What do we know, what don't we know, what's next?
+If you had to bet: our code, our infrastructure, or something we depend on?
+If we only had 10 minutes before this got much worse, what would we try?
+Who else knows this system, even if they're not on call?
+Who has the access to change this, and are they on the bridge?
+Are we still fixing it, or should we be working around it?
+If there's no fix in an hour, whose decision is it what we do?</pre></div>
+      <p class="today-more">Deeper: <a href="playbooks/stuck-incident.html">Stuck Incident: Deep Dive</a></p>
+
+      <h2 id="noc">3. Talking to the NOC</h2>
+      <p class="today-when">Kind, specific, and firm. They're your eyes; help them be good ones.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"In your own words, what have you seen? Not what the alert says."</p><p class="t-if"><span class="t-label">If they</span> read the alert back <span class="t-label">→ ask</span> "Can you check one thing: does it fail for everyone, or only some users?"</p></li>
+      <li><p class="t-q">"Which runbook step are you on, and what happened when you did it?"</p><p class="t-if"><span class="t-label">If they say</span> "We followed the runbook" <span class="t-label">→ ask</span> "Which step exactly? Please post what you did in the channel."</p></li>
+      <li><p class="t-q">"Who did you escalate to, and what exactly did you send them?"</p><p class="t-if"><span class="t-label">If they say</span> "We told SRE" <span class="t-label">→ say</span> "Let's resend it with impact, start time, what you tried, and a link."</p></li>
+      <li><p class="t-q">"What do you need from me to take the next step?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" while nothing moves <span class="t-label">→ say</span> "Then here's your next step: page [team] now and paste this summary."</p></li>
+      <li><p class="t-q">"What would have made you escalate sooner?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Was there a moment you weren't sure? What stopped you asking?"</p></li>
+      <li><p class="t-q">(At handoff) "What's the one thing the next shift must not miss?"</p><p class="t-if"><span class="t-label">If they say</span> "All quiet" <span class="t-label">→ ask</span> "Anything you saw but didn't escalate? Even small?"</p></li>
+      <li><p class="t-q">(To the shift lead) "Where did the team get stuck this week, and what would help?"</p><p class="t-if"><span class="t-label">If they say</span> "Everything's fine" <span class="t-label">→ say</span> "Let's look at last Tuesday's escalation together. I'd like to understand it."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: NOC</div><pre>In your own words, what have you seen? Not what the alert says.
+Which runbook step are you on, and what happened when you did it?
+Who did you escalate to, and what exactly did you send them?
+What do you need from me to take the next step?
+What would have made you escalate sooner?
+(Handoff) What's the one thing the next shift must not miss?
+(Shift lead) Where did the team get stuck this week, and what would help?</pre></div>
+      <p class="today-more">Deeper: <a href="questions/offshore-noc.html">With the Offshore NOC</a></p>
+
+      <h2 id="postmortem">4. Running a Postmortem</h2>
+      <p class="today-when">Before, during, and after. (This is <a href="playbooks/postmortem-program.html">PREP → SAFER → CLOSE</a>.)</p>
+      <ol class="today-list">
+      <li><p class="t-q">(To the author, the day before) "Does the draft have impact numbers, a tool timeline, and more than one factor?"</p><p class="t-if"><span class="t-label">If it says</span> "Root cause: X. Factors: none" <span class="t-label">→ ask</span> "Can we add [the change / the gap]? Not to blame; it's the part we can fix."</p></li>
+      <li><p class="t-q">(Opening) "Blameless, facts first, and we leave with owned actions. OK with everyone?"</p><p class="t-if"><span class="t-label">If</span> someone smirks <span class="t-label">→ say</span> "If anyone hears blame, including from me, call it out."</p></li>
+      <li><p class="t-q">"Who was affected, for how long, and how did we find out: us or customers?"</p><p class="t-if"><span class="t-label">If they</span> dispute the numbers <span class="t-label">→ ask</span> "What do the dashboards say? Let's agree the number before we go on."</p></li>
+      <li><p class="t-q">"What did you know at that point, and what made sense to do?"</p><p class="t-if"><span class="t-label">If they</span> go quiet <span class="t-label">→ say</span> "[Name], you were on shift. What did you see first?"</p></li>
+      <li><p class="t-q">"What made that easy to get wrong?"</p><p class="t-if"><span class="t-label">If they say</span> "Human error" <span class="t-label">→ ask</span> "What check would have caught it? If none exists, that's our action."</p></li>
+      <li><p class="t-q">"Why didn't we catch it sooner?"</p><p class="t-if"><span class="t-label">If they say</span> "The NOC should have" <span class="t-label">→ ask</span> "Partly true. Where did the alert go, and could they see it?"</p></li>
+      <li><p class="t-q">"If we only did one thing, which?"</p><p class="t-if"><span class="t-label">If they</span> list ten <span class="t-label">→ say</span> "Let's rank them. Top four get owners today; the rest we park or drop."</p></li>
+      <li><p class="t-q">"Who owns it, by when, and what does done mean?"</p><p class="t-if"><span class="t-label">If they say</span> "The team" <span class="t-label">→ ask</span> "Which one person? If nobody can say yes today, it goes on the risk register."</p></li>
+      <li><p class="t-q">(30 days later) "Is it done with evidence, and has it happened again?"</p><p class="t-if"><span class="t-label">If they say</span> "Merged" <span class="t-label">→ ask</span> "Has it been tested for real, like a drill or a test alert?"</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: postmortem</div><pre>(Draft) Does it have impact numbers, a tool timeline, and more than one factor?
+(Opening) Blameless, facts first, and we leave with owned actions. OK with everyone?
+Who was affected, for how long, and how did we find out: us or customers?
+What did you know at that point, and what made sense to do?
+What made that easy to get wrong?
+Why didn't we catch it sooner?
+If we only did one thing, which?
+Who owns it, by when, and what does done mean?
+(30 days) Is it done with evidence, and has it happened again?</pre></div>
+      <p class="today-more">Deeper: <a href="playbooks/postmortem-program.html">Owning Postmortems</a> · <a href="playbooks/example-postmortem.html">See it used</a></p>
+
+      <h2 id="status">5. Status Check-Ins and 1:1s</h2>
+      <p class="today-when">Ask every owner the same way, every week. (This is <a href="playbooks/frameworks.html#pace">PACE</a>.)</p>
+      <ol class="today-list">
+      <li><p class="t-q">"What moved since last time?"</p><p class="t-if"><span class="t-label">If they say</span> "Working on it" <span class="t-label">→ ask</span> "What's the next thing that will be done, and when?"</p></li>
+      <li><p class="t-q">"What's blocking you, or who are you waiting on?"</p><p class="t-if"><span class="t-label">If they say</span> "Waiting on them" <span class="t-label">→ ask</span> "Who exactly, since when? Want me to chase it?"</p></li>
+      <li><p class="t-q">"How confident are you in the date, 1 to 10?"</p><p class="t-if"><span class="t-label">If they say</span> under 7 <span class="t-label">→ ask</span> "What would make it a 9?"</p></li>
+      <li><p class="t-q">"What are you doing that isn't on the board?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Any interrupts, favors, or NOC escalations eating your week?"</p></li>
+      <li><p class="t-q">"Is anyone waiting on you?"</p><p class="t-if"><span class="t-label">If they say</span> "Not that I know of" <span class="t-label">→ say</span> "Let's check with [team] so they know when to expect it."</p></li>
+      <li><p class="t-q">"It's been 'almost done' for a while. What's actually left?"</p><p class="t-if"><span class="t-label">If they</span> list the hard part <span class="t-label">→ ask</span> "What's the smallest version that still solves the problem?"</p></li>
+      <li><p class="t-q">"If this slips, when will we know, and how will you tell me?"</p><p class="t-if"><span class="t-label">If they say</span> "It won't slip" <span class="t-label">→ say</span> "Telling me early that it's late is always safe."</p></li>
+      <li><p class="t-q">(Closing) "So: you'll do [next step] by [date], and I'll check on [date]. Right?"</p><p class="t-if"><span class="t-label">If they</span> hesitate <span class="t-label">→ ask</span> "What date would you actually commit to?"</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: status and 1:1s</div><pre>What moved since last time?
+What's blocking you, or who are you waiting on?
+How confident are you in the date, 1 to 10? (Under 7: What would make it a 9?)
+What are you doing that isn't on the board?
+Is anyone waiting on you?
+It's been "almost done" for a while. What's actually left?
+If this slips, when will we know, and how will you tell me?
+So: you'll do [next step] by [date], and I'll check on [date]. Right?</pre></div>
+      <p class="today-more">Deeper: <a href="playbooks/where-are-we.html">Where Are We?</a> · <a href="playbooks/example-status.html">See it used</a></p>
+
+      <h2 id="perf">6. Performance Engineering Meeting</h2>
+      <p class="today-when">You don't need to read a flame graph. You need these.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"What's the one number users would feel this week, and is it better or worse?"</p><p class="t-if"><span class="t-label">If they</span> show CPU graphs <span class="t-label">→ ask</span> "Which graph would prove a customer right if they said it's slow?"</p></li>
+      <li><p class="t-q">"What's p95 time to first token this week versus last, and against target?"</p><p class="t-if"><span class="t-label">If they say</span> "We don't track that" <span class="t-label">→ ask</span> "Can we start? It's what users feel first in the assistant."</p></li>
+      <li><p class="t-q">"What got slower, and what changed right before it?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ ask</span> "Can we check deploys and Grafana annotations from that day?"</p></li>
+      <li><p class="t-q">"Is it our code, more load, or the model provider?"</p><p class="t-if"><span class="t-label">If they say</span> "The provider" <span class="t-label">→ ask</span> "What would we see if it were ours? Let's check that first."</p></li>
+      <li><p class="t-q">"How much slower can this get before users complain?"</p><p class="t-if"><span class="t-label">If they say</span> "Faster is better" <span class="t-label">→ say</span> "Let's agree a target and put it on the scorecard."</p></li>
+      <li><p class="t-q">"What's coming in 30 days that changes load or cost?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing planned" <span class="t-label">→ ask</span> "Any launches, campaigns, or model changes from product?"</p></li>
+      <li><p class="t-q">"If we fix only one thing before next week, which, and who owns it?"</p><p class="t-if"><span class="t-label">If they</span> list seven <span class="t-label">→ say</span> "Pick one. We'll check next week whether it moved the number."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: performance engineering</div><pre>What's the one number users would feel this week, and is it better or worse?
+What's p95 time to first token this week versus last, and against target?
+What got slower, and what changed right before it?
+Is it our code, more load, or the model provider?
+How much slower can this get before users complain?
+What's coming in 30 days that changes load or cost?
+If we fix only one thing before next week, which, and who owns it?</pre></div>
+      <p class="today-more">Deeper: <a href="meetings/performance-engineering.html">Performance Engineering</a> · <a href="ai/latency.html">AI latency</a></p>
+
+      <h2 id="peers">7. With Peers, Pods, and Your VP</h2>
+      <p class="today-when">You have no authority over most of these people. These questions work anyway.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"Help me understand what's in the way."</p><p class="t-if"><span class="t-label">If they say</span> "It's not a priority" <span class="t-label">→ ask</span> "What would have to be true for it to make the list?"</p></li>
+      <li><p class="t-q">"What's the smallest part my team could take off your plate?"</p><p class="t-if"><span class="t-label">If they say</span> "None of it" <span class="t-label">→ ask</span> "Then whose decision is it to make room for it?"</p></li>
+      <li><p class="t-q">"Whose decision is this really: yours, mine, or someone above us?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ say</span> "Let's take it to them together with a short write-up."</p></li>
+      <li><p class="t-q">(To the decider) "Fix it, fund it, or accept it until a date? Any is fine."</p><p class="t-if"><span class="t-label">If they say</span> "Yeah fine" <span class="t-label">→ say</span> "To confirm: accepted until [date], with these mitigations. Shout if wrong."</p></li>
+      <li><p class="t-q">"What do you need from SRE that you're not getting?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "When did we last slow you down?"</p></li>
+      <li><p class="t-q">(To your VP) "Here's what I know, what I don't, and when I'll know more. What else do you need?"</p><p class="t-if"><span class="t-label">If they say</span> "I need an ETA" <span class="t-label">→ say</span> "I can't give a reliable one yet. Next update at [time]."</p></li>
+      <li><p class="t-q">(To your VP) "Are you OK with amber and a plan, rather than green that turns red?"</p><p class="t-if"><span class="t-label">If they</span> push for green <span class="t-label">→ say</span> "Here's what would make it green, and what it costs."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: peers, pods, and your VP</div><pre>Help me understand what's in the way.
+What's the smallest part my team could take off your plate?
+Whose decision is this really: yours, mine, or someone above us?
+(Decider) Fix it, fund it, or accept it until a date? Any is fine.
+What do you need from SRE that you're not getting?
+(VP) Here's what I know, what I don't, and when I'll know more. What else do you need?
+(VP) Are you OK with amber and a plan, rather than green that turns red?</pre></div>
+      <p class="today-more">Deeper: <a href="playbooks/risk-register.html">Risk Register</a> · <a href="questions/peers-leaders.html">With Peers &amp; Leaders</a></p>
+
+      <h2 id="dont-know">8. When You Don't Know the Answer</h2>
+      <p class="today-when">Lines to say, not questions to avoid. Saying them well builds credibility.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"I don't know yet. I'll find out and get back to you by [time]."</p><p class="t-if"><span class="t-label">If they</span> push <span class="t-label">→ say</span> "I'd rather give you the right answer at 3 than a wrong one now."</p></li>
+      <li><p class="t-q">"Walk me through it like I'm new to this service."</p><p class="t-if"><span class="t-label">If they</span> use jargon <span class="t-label">→ ask</span> "What does that mean for users?"</p></li>
+      <li><p class="t-q">"What would you do if it were your call?"</p><p class="t-if"><span class="t-label">If they say</span> "It's not my call" <span class="t-label">→ say</span> "Understood. I'd still like your view before I decide."</p></li>
+      <li><p class="t-q">"I'm not the right person to judge the fix. Who is, and what do you need from me?"</p><p class="t-if"><span class="t-label">If they say</span> "Just you" <span class="t-label">→ ask</span> "Then what are the options and the risk of each, in plain words?"</p></li>
+      <li><p class="t-q">"What would we expect to see if that's true?"</p><p class="t-if"><span class="t-label">If they say</span> "It's obvious" <span class="t-label">→ say</span> "Humor me. Show me the graph."</p></li>
+      <li><p class="t-q">"What's the risk if we're wrong?"</p><p class="t-if"><span class="t-label">If they say</span> "There isn't one" <span class="t-label">→ ask</span> "Then how do we undo it if there is?"</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: when you don't know</div><pre>I don't know yet. I'll find out and get back to you by [time].
+Walk me through it like I'm new to this service.
+What would you do if it were your call?
+I'm not the right person to judge the fix. Who is, and what do you need from me?
+What would we expect to see if that's true?
+What's the risk if we're wrong?</pre></div>
+      <p class="today-more">Deeper: <a href="guides/saying-i-dont-know.html">Saying "I Don't Know"</a></p>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="./assets/store.js"></script>
+<script src="./assets/site.js"></script>
+</body>
+</html>

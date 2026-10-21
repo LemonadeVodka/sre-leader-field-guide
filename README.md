@@ -6,7 +6,9 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 ## What's Inside
 
-The home page opens with three one-word frameworks, each letter a question to ask out loud (the [Pocket Frameworks](https://lemonadevodka.github.io/sre-leader-field-guide/playbooks/frameworks.html) page prints all three):
+**[Questions for Today](https://lemonadevodka.github.io/sre-leader-field-guide/today.html)** is the first thing on the home page: exact words for 8 moments (the incident bridge, stuck incidents, the NOC, postmortems, status check-ins and 1:1s, the perf meeting, peers and your VP, and when you don't know). Each question has the follow-up for the weak answer, and each section has a Copy button.
+
+Below it, the home page shows three one-word frameworks, each letter a question to ask out loud (the [Pocket Frameworks](https://lemonadevodka.github.io/sre-leader-field-guide/playbooks/frameworks.html) page prints all three):
 
 - **LEAD**, running an incident: Leader · Effect · Action · Deadline. Repeat every 15 minutes.
 - **PREP → SAFER → CLOSE**, owning postmortems end to end. Before: Pick · Request · Evidence · Pre-wire. The meeting: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions. After: Capture · Log · Own the follow-up · Share · End it. Every invite and follow-up message is on the Owning Postmortems page.

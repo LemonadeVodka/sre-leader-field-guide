@@ -400,3 +400,18 @@ code { overflow-wrap: anywhere; }
 .fw-phase a strong { color: var(--fw-bar); }
 .fw-phase a:hover { background: var(--fw-bg); color: var(--ink); }
 @media (max-width: 640px) { .fw-phase a { min-height: 44px; } }
+
+/* ---------- Questions for Today ---------- */
+.today-bar { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; margin: 0 0 24px; border-radius: var(--radius); background: var(--accent); color: var(--accent-ink); text-decoration: none; }
+.today-bar strong { font-size: 22px; }
+.today-bar strong::after { content: " →"; }
+.today-bar span { font-size: 15px; opacity: .92; }
+.today-bar:hover strong { text-decoration: underline; text-underline-offset: 4px; }
+.today-when { color: var(--ink-2); margin: 0 0 10px; }
+.prose .today-list { padding-left: 1.6em; margin: 0 0 12px; }
+.prose .today-list li { margin: 0 0 12px; max-width: none; }
+.t-q { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.4; }
+.t-if { margin: 2px 0 0; font-size: 15px; color: var(--ink-2); }
+.t-label { font-weight: 600; color: var(--accent); }
+.today-more { font-size: 15px; margin: 4px 0 0; }
+@media print { .today-list li { break-inside: avoid; } .today-more { display: none; } }
