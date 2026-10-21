@@ -6,7 +6,7 @@ A handbook for leading Site Reliability Engineering **without a software enginee
 
 ## What's Inside
 
-**[Questions for Today](https://lemonadevodka.github.io/sre-leader-field-guide/today.html)** is the first thing on the home page: exact words for 8 moments (the incident bridge, stuck incidents, the NOC, postmortems, status check-ins and 1:1s, the perf meeting, peers and your VP, and when you don't know). Each question has the follow-up for the weak answer, and each section has a Copy button.
+**[Questions for Today](https://lemonadevodka.github.io/sre-leader-field-guide/today.html)** is the first thing on the home page: exact words for 9 moments (the incident bridge, stuck incidents, the NOC, postmortems, status check-ins and 1:1s, the perf meeting, peers and your VP, and when you don't know). Each question has the follow-up for the weak answer, and each section has a Copy button. A ninth section, **Keep It With the Owner**, holds to one rule: own decisions, not work. You own decisions, escalations, exec comms, and naming owners; everything else gets a named owner.
 
 Below it, the home page shows three one-word frameworks, each letter a question to ask out loud (the [Pocket Frameworks](https://lemonadevodka.github.io/sre-leader-field-guide/playbooks/frameworks.html) page prints all three):
 
@@ -37,7 +37,7 @@ The sidebar has four sections:
 | Section | Pages |
 |---|---|
 | **Do** (in the moment) | Pocket Frameworks · the one-week walkthroughs · Owning Postmortems · Risk Register · Move a Stuck Incident · Where Are We? · Meeting Starter · Performance Engineering · Postmortem Meeting · SRE Daily · Running a Task · Stuck Incident Deep Dive · Vendor Demos · Running an RCA · Judging an RCA · RCA Template |
-| **Ask** (Question Bank, 290 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
+| **Ask** (Question Bank, 298 questions) | During & After Incidents · Running Tasks & Projects · In Technical Meetings · With Peers & Leaders · With the Offshore NOC · With Your SRE Team · Supporting the AI Product · With Vendors · Building Credibility |
 | **Learn** (study time) | RCA Day One · Observability Day One · RCA the SRE Way · Worked Example · 25 SRE concepts · AI reliability (5 pages) · Implementation programs grounded in the SRE Workbook (8 pages) |
 | **People** (credibility and politics) | Saying "I Don't Know" · How to Ask · From IT Ops to SRE Leader · Power & Politics (4 pages, 39 tactics) |
 

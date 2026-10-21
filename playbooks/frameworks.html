@@ -19,6 +19,10 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Pocket Frameworks</h1>
       <p class="summary">Three one-word frameworks you can grab under pressure: LEAD for incidents, SAFER for postmortems and RCAs, and PACE for tracking people's work.</p>
+      <div class="callout"><p class="callout-title">One Rule Behind All of These: Own Decisions, Not Work</p>
+      <p>You own decisions, escalations, exec comms, and naming owners. Investigation, fixes, chasing, and write-ups get a named owner, usually not you. Before you say "I'll…", ask: is this only something I can do? If not, name an owner. <a href="../today.html#owner">Questions that keep it with the owner</a>.</p>
+      </div>
+
       <div class="callout"><p class="callout-title">How to Use These</p>
       <p>Each letter is one question you ask out loud. You don't need the technical answer; you need the next question. The "Sounds like" column is taken from <a href="example-incident.html">one realistic week</a> where all of these get used, messily. Print this page, or keep it open on a second screen.</p>
       </div>
@@ -28,13 +32,13 @@
       <div class="table-wrap fw-table fw-incident"><table>
       <thead><tr><th>Letter</th><th>Ask</th><th>Sounds like in real life</th><th>Go deeper</th></tr></thead>
       <tbody>
-      <tr><td><span class="fw-letter">L</span> <strong>Leader</strong></td><td>"Who's leading this? If nobody, I'll lead until the owning team takes over."</td><td><em>"Marco's incident commander. I'll take comms and escalations so Marco can stay on the problem."</em></td><td><a href="incident-driver.html#inc-owner">Nobody owns it</a></td></tr>
+      <tr><td><span class="fw-letter">L</span> <strong>Leader</strong></td><td>"Who's leading this? If nobody: [Name], can you lead until the owning team joins? I'll handle exec updates."</td><td><em>"Marco's incident commander. I'll take comms and escalations so Marco can stay on the problem."</em></td><td><a href="incident-driver.html#inc-owner">Nobody owns it</a></td></tr>
       <tr><td><span class="fw-letter">E</span> <strong>Effect</strong></td><td>"What are users seeing, how many, since when, and is it getting worse?"</td><td><em>"About 30% of requests timing out, mostly EU. Started around 21:25. It's climbing."</em></td><td><a href="incident-driver.html#inc-impact">Impact is unclear</a></td></tr>
       <tr><td><span class="fw-letter">A</span> <strong>Action</strong></td><td>"What have we ruled out, what's our best guess, and what's the safest thing we can do in the next 15 minutes?"</td><td><em>"A third of EU users failing now, against that bug for a handful of enterprise users for an hour. Your call, Sam."</em></td><td><a href="incident-driver.html#inc-circles">Going in circles</a> · <a href="incident-driver.html#inc-act">Afraid to act</a></td></tr>
       <tr><td><span class="fw-letter">D</span> <strong>Deadline</strong></td><td>"Who are we waiting on, when do we escalate if they don't answer, and when's the next update?"</td><td><em>"A channel post isn't a page. I'm paging them now. If nobody acknowledges by 21:56, I'll call their managers."</em></td><td><a href="incident-driver.html#inc-waiting">Waiting on someone</a> · <a href="incident-driver.html#inc-exec">Exec heat</a></td></tr>
       </tbody></table></div>
       <div class="code-card"><div class="code-head">LEAD pocket version</div><pre>LEAD: every 15 minutes until resolved
-L  Leader    Who's leading this? (If nobody: I'll lead until the owning team takes over.)
+L  Leader    Who's leading this? (If nobody: name someone. You take exec updates, not the fix.)
 E  Effect    What are users seeing, how many, since when, getting worse?
 A  Action    What's ruled out, best guess, safest thing in the next 15 minutes?
 D  Deadline  Who are we waiting on, when do we escalate, when's the next update?</pre></div>

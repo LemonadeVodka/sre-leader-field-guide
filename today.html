@@ -19,6 +19,10 @@
       <nav class="crumbs" id="crumbs"></nav>
       <h1>Questions for Today</h1>
       <p class="summary">Exact words for the moments in your week: the incident bridge, stuck incidents, the NOC, postmortems, status check-ins, the perf meeting, peers and your VP, and when you don't know. Each with the follow-up for the weak answer.</p>
+      <div class="callout"><p class="callout-title">One Rule: Own Decisions, Not Work</p>
+      <p>You own decisions, escalations, exec comms, and naming owners. Investigation, fixes, chasing, and write-ups get a named owner, usually not you. Before you say "I'll…", ask yourself: <strong>is this only something I can do?</strong> If not, name an owner. Section 9 has the words.</p>
+      </div>
+
       <div class="callout"><p class="callout-title">How to Use This Page</p>
       <p>Find the moment you're in. Say the question exactly as written. If you get the weak answer, use the follow-up. Bring three, not eight. Each section has a <strong>Copy</strong> button so you can paste the list into your notes before you walk in.</p>
       </div>
@@ -26,14 +30,14 @@
       <h2 id="bridge">1. On an Incident Bridge</h2>
       <p class="today-when">The moment you join, in this order. Then repeat the last four every 15 minutes. (This is <a href="playbooks/frameworks.html#lead">LEAD</a>.)</p>
       <ol class="today-list">
-      <li><p class="t-q">"Who's leading this right now?"</p><p class="t-if"><span class="t-label">If they say</span> "We're all looking at it" <span class="t-label">→ say</span> "Then I'll lead until the owning team joins. [Name], can you drive the technical side?"</p></li>
+      <li><p class="t-q">"Who's leading this right now?"</p><p class="t-if"><span class="t-label">If they say</span> "We're all looking at it" <span class="t-label">→ say</span> "[Name], can you lead until the owning team joins? I'll handle exec updates."</p></li>
       <li><p class="t-q">"What are users seeing, in one sentence?"</p><p class="t-if"><span class="t-label">If they say</span> the alert name <span class="t-label">→ ask</span> "In plain words: what can't users do, and roughly how many?"</p></li>
       <li><p class="t-q">"When did it start, and how do we know?"</p><p class="t-if"><span class="t-label">If they say</span> "A while ago" <span class="t-label">→ ask</span> "Can someone check the first error in App Insights or Grafana and post the time?"</p></li>
       <li><p class="t-q">"Is it getting worse, better, or flat in the last 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "Hard to say" <span class="t-label">→ ask</span> "Can someone post the error-rate graph in the channel every 15 minutes?"</p></li>
       <li><p class="t-q">"What changed in the last 24 hours?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Did anyone check Grafana annotations, deploys, config, and the model provider's status page?"</p></li>
       <li><p class="t-q">"What have we ruled out, and how?"</p><p class="t-if"><span class="t-label">If they say</span> "We've looked at everything" <span class="t-label">→ say</span> "Let's write the ruled-out list in the channel so we stop re-checking."</p></li>
       <li><p class="t-q">"What's the safest thing we can do in the next 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "We're still investigating" <span class="t-label">→ ask</span> "Is there a rollback, failover, or flag we could use while we investigate?"</p></li>
-      <li><p class="t-q">"Who are we waiting on, and did they acknowledge in PagerDuty?"</p><p class="t-if"><span class="t-label">If they say</span> "We pinged them in Slack" <span class="t-label">→ say</span> "Let's page them properly now. If no acknowledgement in 10 minutes, I'll call their manager."</p></li>
+      <li><p class="t-q">"Who are we waiting on, and did they acknowledge in PagerDuty?"</p><p class="t-if"><span class="t-label">If they say</span> "We pinged them in Slack" <span class="t-label">→ say</span> "[Name], page them properly now. If no acknowledgement in 10 minutes, I'll call their manager."</p></li>
       <li><p class="t-q">"When's the next update, and who's sending it?"</p><p class="t-if"><span class="t-label">If they say</span> nothing <span class="t-label">→ say</span> "I'll send updates every 15 minutes. Next one at [time]. Team, keep working."</p></li>
       </ol>
       <div class="code-card"><div class="code-head">Copy: incident bridge</div><pre>Who's leading this right now?
@@ -50,13 +54,13 @@ When's the next update, and who's sending it?</pre></div>
       <h2 id="stuck">2. When It's Been Stuck for 30+ Minutes</h2>
       <p class="today-when">No progress, no theory, or nobody who can change it.</p>
       <ol class="today-list">
-      <li><p class="t-q">"Let's pause for 60 seconds. What do we know, what don't we know, what's next?"</p><p class="t-if"><span class="t-label">If they say</span> nobody can summarize <span class="t-label">→ say</span> "I'll write it in the channel. Correct me if I'm wrong."</p></li>
+      <li><p class="t-q">"Let's pause for 60 seconds. What do we know, what don't we know, what's next?"</p><p class="t-if"><span class="t-label">If they say</span> nobody can summarize <span class="t-label">→ say</span> "[Name], can you post it in the channel? Everyone else, correct anything wrong."</p></li>
       <li><p class="t-q">"If you had to bet: our code, our infrastructure, or something we depend on?"</p><p class="t-if"><span class="t-label">If they say</span> "Could be anything" <span class="t-label">→ say</span> "It's a bet, not a promise. What's the quickest way to check it?"</p></li>
       <li><p class="t-q">"If we only had 10 minutes before this got much worse, what would we try?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing's safe" <span class="t-label">→ ask</span> "What's worse: trying it and being wrong, or waiting another 30 minutes?"</p></li>
-      <li><p class="t-q">"Who else knows this system, even if they're not on call?"</p><p class="t-if"><span class="t-label">If they say</span> "Only one person, and they're off" <span class="t-label">→ say</span> "I'll call their manager. That's also going in the postmortem."</p></li>
+      <li><p class="t-q">"Who else knows this system, even if they're not on call?"</p><p class="t-if"><span class="t-label">If they say</span> "Only one person, and they're off" <span class="t-label">→ ask</span> "Who's their manager? I'll make that one call. It's also going in the postmortem."</p></li>
       <li><p class="t-q">"Who has the access to change this, and are they on the bridge?"</p><p class="t-if"><span class="t-label">If they say</span> "Not us" <span class="t-label">→ ask</span> "Which team, and what do they need from us so they can start immediately?"</p></li>
       <li><p class="t-q">"Are we still fixing it, or should we be working around it?"</p><p class="t-if"><span class="t-label">If they say</span> "We're close" <span class="t-label">→ ask</span> "What result would prove it, and by what time? If not by then, we work around it."</p></li>
-      <li><p class="t-q">"If there's no fix in an hour, whose decision is it what we do?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ say</span> "Then I'll get [director] on the thread now, so the decision is ready if we need it."</p></li>
+      <li><p class="t-q">"If there's no fix in an hour, whose decision is it what we do?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ ask</span> "Who has the authority? Let's get them on the thread now, so the decision is ready."</p></li>
       </ol>
       <div class="code-card"><div class="code-head">Copy: stuck incident</div><pre>Let's pause for 60 seconds. What do we know, what don't we know, what's next?
 If you had to bet: our code, our infrastructure, or something we depend on?
@@ -115,7 +119,7 @@ Who owns it, by when, and what does done mean?
       <p class="today-when">Ask every owner the same way, every week. (This is <a href="playbooks/frameworks.html#pace">PACE</a>.)</p>
       <ol class="today-list">
       <li><p class="t-q">"What moved since last time?"</p><p class="t-if"><span class="t-label">If they say</span> "Working on it" <span class="t-label">→ ask</span> "What's the next thing that will be done, and when?"</p></li>
-      <li><p class="t-q">"What's blocking you, or who are you waiting on?"</p><p class="t-if"><span class="t-label">If they say</span> "Waiting on them" <span class="t-label">→ ask</span> "Who exactly, since when? Want me to chase it?"</p></li>
+      <li><p class="t-q">"What's blocking you, or who are you waiting on?"</p><p class="t-if"><span class="t-label">If they say</span> "Waiting on them" <span class="t-label">→ ask</span> "Who exactly, since when, and what have you tried? If it's stuck by Thursday, tell me and I'll escalate."</p></li>
       <li><p class="t-q">"How confident are you in the date, 1 to 10?"</p><p class="t-if"><span class="t-label">If they say</span> under 7 <span class="t-label">→ ask</span> "What would make it a 9?"</p></li>
       <li><p class="t-q">"What are you doing that isn't on the board?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Any interrupts, favors, or NOC escalations eating your week?"</p></li>
       <li><p class="t-q">"Is anyone waiting on you?"</p><p class="t-if"><span class="t-label">If they say</span> "Not that I know of" <span class="t-label">→ say</span> "Let's check with [team] so they know when to expect it."</p></li>
@@ -157,7 +161,7 @@ If we fix only one thing before next week, which, and who owns it?</pre></div>
       <p class="today-when">You have no authority over most of these people. These questions work anyway.</p>
       <ol class="today-list">
       <li><p class="t-q">"Help me understand what's in the way."</p><p class="t-if"><span class="t-label">If they say</span> "It's not a priority" <span class="t-label">→ ask</span> "What would have to be true for it to make the list?"</p></li>
-      <li><p class="t-q">"What's the smallest part my team could take off your plate?"</p><p class="t-if"><span class="t-label">If they say</span> "None of it" <span class="t-label">→ ask</span> "Then whose decision is it to make room for it?"</p></li>
+      <li><p class="t-q">"What's the smallest version of this, and who on your side would own it?"</p><p class="t-if"><span class="t-label">If they say</span> "Nobody has time" <span class="t-label">→ ask</span> "Then whose decision is it to make room for it?"</p></li>
       <li><p class="t-q">"Whose decision is this really: yours, mine, or someone above us?"</p><p class="t-if"><span class="t-label">If they say</span> "Not sure" <span class="t-label">→ say</span> "Let's take it to them together with a short write-up."</p></li>
       <li><p class="t-q">(To the decider) "Fix it, fund it, or accept it until a date? Any is fine."</p><p class="t-if"><span class="t-label">If they say</span> "Yeah fine" <span class="t-label">→ say</span> "To confirm: accepted until [date], with these mitigations. Shout if wrong."</p></li>
       <li><p class="t-q">"What do you need from SRE that you're not getting?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "When did we last slow you down?"</p></li>
@@ -165,7 +169,7 @@ If we fix only one thing before next week, which, and who owns it?</pre></div>
       <li><p class="t-q">(To your VP) "Are you OK with amber and a plan, rather than green that turns red?"</p><p class="t-if"><span class="t-label">If they</span> push for green <span class="t-label">→ say</span> "Here's what would make it green, and what it costs."</p></li>
       </ol>
       <div class="code-card"><div class="code-head">Copy: peers, pods, and your VP</div><pre>Help me understand what's in the way.
-What's the smallest part my team could take off your plate?
+What's the smallest version of this, and who on your side would own it?
 Whose decision is this really: yours, mine, or someone above us?
 (Decider) Fix it, fund it, or accept it until a date? Any is fine.
 What do you need from SRE that you're not getting?
@@ -176,20 +180,42 @@ What do you need from SRE that you're not getting?
       <h2 id="dont-know">8. When You Don't Know the Answer</h2>
       <p class="today-when">Lines to say, not questions to avoid. Saying them well builds credibility.</p>
       <ol class="today-list">
-      <li><p class="t-q">"I don't know yet. I'll find out and get back to you by [time]."</p><p class="t-if"><span class="t-label">If they</span> push <span class="t-label">→ say</span> "I'd rather give you the right answer at 3 than a wrong one now."</p></li>
+      <li><p class="t-q">"I don't know yet. [Name] will find out; you'll have it by [time]."</p><p class="t-if"><span class="t-label">If they</span> push <span class="t-label">→ say</span> "I'd rather give you the right answer at 3 than a wrong one now."</p></li>
       <li><p class="t-q">"Walk me through it like I'm new to this service."</p><p class="t-if"><span class="t-label">If they</span> use jargon <span class="t-label">→ ask</span> "What does that mean for users?"</p></li>
       <li><p class="t-q">"What would you do if it were your call?"</p><p class="t-if"><span class="t-label">If they say</span> "It's not my call" <span class="t-label">→ say</span> "Understood. I'd still like your view before I decide."</p></li>
       <li><p class="t-q">"I'm not the right person to judge the fix. Who is, and what do you need from me?"</p><p class="t-if"><span class="t-label">If they say</span> "Just you" <span class="t-label">→ ask</span> "Then what are the options and the risk of each, in plain words?"</p></li>
       <li><p class="t-q">"What would we expect to see if that's true?"</p><p class="t-if"><span class="t-label">If they say</span> "It's obvious" <span class="t-label">→ say</span> "Humor me. Show me the graph."</p></li>
       <li><p class="t-q">"What's the risk if we're wrong?"</p><p class="t-if"><span class="t-label">If they say</span> "There isn't one" <span class="t-label">→ ask</span> "Then how do we undo it if there is?"</p></li>
       </ol>
-      <div class="code-card"><div class="code-head">Copy: when you don't know</div><pre>I don't know yet. I'll find out and get back to you by [time].
+      <div class="code-card"><div class="code-head">Copy: when you don't know</div><pre>I don't know yet. [Name] will find out; you'll have it by [time].
 Walk me through it like I'm new to this service.
 What would you do if it were your call?
 I'm not the right person to judge the fix. Who is, and what do you need from me?
 What would we expect to see if that's true?
 What's the risk if we're wrong?</pre></div>
       <p class="today-more">Deeper: <a href="guides/saying-i-dont-know.html">Saying "I Don't Know"</a></p>
+
+      <h2 id="owner">9. Keep It With the Owner</h2>
+      <p class="today-when">For the moment someone hands you work that isn't yours. You own the decision; someone else owns the work.</p>
+      <ol class="today-list">
+      <li><p class="t-q">"Who owns this today?"</p><p class="t-if"><span class="t-label">If they say</span> "You?" <span class="t-label">→ say</span> "I'll own the decision. Who owns the work?"</p></li>
+      <li><p class="t-q">"What would you do if I weren't here?"</p><p class="t-if"><span class="t-label">If they say</span> "Wait for you" <span class="t-label">→ say</span> "Do what you'd do, and tell me if it goes wrong."</p></li>
+      <li><p class="t-q">"What do you need from me: a decision, an introduction, or air cover?"</p><p class="t-if"><span class="t-label">If they say</span> "Just help" <span class="t-label">→ ask</span> "Which one of those three?"</p></li>
+      <li><p class="t-q">"Can you bring me a recommendation, not just the problem?"</p><p class="t-if"><span class="t-label">If they say</span> "I don't know what to do" <span class="t-label">→ say</span> "Bring two options and your pick by [time]."</p></li>
+      <li><p class="t-q">"Is this mine to fix, or mine to escalate?"</p><p class="t-if"><span class="t-label">If they say</span> "Yours to fix" <span class="t-label">→ ask</span> "Then who on my team owns it, with me as backup?"</p></li>
+      <li><p class="t-q">"Who on my team could own this, with me as backup?"</p><p class="t-if"><span class="t-label">If they say</span> "Only you know it" <span class="t-label">→ say</span> "Then that's a gap. Who could learn it this month?"</p></li>
+      <li><p class="t-q">"What happens if this waits until next week?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing much" <span class="t-label">→ say</span> "Then it goes on the list, not my desk today."</p></li>
+      <li><p class="t-q">"Whose name goes on this before we leave?"</p><p class="t-if"><span class="t-label">If they say</span> "The team" <span class="t-label">→ say</span> "One name, please. I'll check in on [date]."</p></li>
+      </ol>
+      <div class="code-card"><div class="code-head">Copy: keep it with the owner</div><pre>Who owns this today?
+What would you do if I weren't here?
+What do you need from me: a decision, an introduction, or air cover?
+Can you bring me a recommendation, not just the problem?
+Is this mine to fix, or mine to escalate?
+Who on my team could own this, with me as backup?
+What happens if this waits until next week?
+Whose name goes on this before we leave?</pre></div>
+      <p class="today-more">Deeper: <a href="questions/credibility.html#plate">Without Taking It All On</a> · <a href="playbooks/risk-register.html">When nobody will own it</a></p>
     </article>
     <nav class="pager" id="pager"></nav>
   </main>

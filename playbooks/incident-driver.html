@@ -21,7 +21,7 @@
       <p class="summary">Questions that keep an incident moving when the NOC can't, organized by how it's stuck. You don't need to know the fix; you need to know what to ask next.</p>
       <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: LEAD, Every 15 Minutes</h2>
       <ol class="fw-steps fw-incident">
-      <li><span class="fw-letter" aria-hidden="true">L</span> <strong>Leader:</strong> "Who's leading this?" If nobody: "I'll lead until the owning team takes over."</li>
+      <li><span class="fw-letter" aria-hidden="true">L</span> <strong>Leader:</strong> "Who's leading this?" If nobody: "[Name], can you lead until the owning team joins? I'll handle exec updates."</li>
       <li><span class="fw-letter" aria-hidden="true">E</span> <strong>Effect:</strong> "What are users seeing, how many, since when, and is it getting worse?"</li>
       <li><span class="fw-letter" aria-hidden="true">A</span> <strong>Action:</strong> "What's ruled out, what's our best guess, and what's the safest thing we can do in the next 15 minutes?"</li>
       <li><span class="fw-letter" aria-hidden="true">D</span> <strong>Deadline:</strong> "Who are we waiting on, when do we escalate, and when's the next update?"</li>
@@ -142,7 +142,7 @@ Next update: [time], or sooner if it changes.</pre></div>
       <div class="fold-body">
       <div class="callout example"><p class="callout-title">Twenty Minutes of Nothing, Then Movement</p>
       <p>The assistant is timing out for about a third of users. The NOC opened the incident and is relaying alert text. Four engineers are on the bridge, all looking at the same dashboard.</p>
-      <p>You ask who's leading. Silence. "OK, I'll lead until the platform team joins." You ask what users are seeing: "a third of requests fail, since 09:40, getting worse." You ask for a bet: "the model provider; our servers look fine." You ask who's checking it: nobody. One engineer takes it. You ask who we're waiting on: platform was "pinged in Slack." You page them properly and set a 10-minute deadline. At 09:58 platform joins, confirms provider throttling, and switches traffic to the backup region. You send the exec update and hand over IC.</p>
+      <p>You ask who's leading. Silence. "Marco, can you lead until the platform team joins? I'll handle exec updates." You ask what users are seeing: "a third of requests fail, since 09:40, getting worse." You ask for a bet: "the model provider; our servers look fine." You ask who's checking it: nobody. One engineer takes it. You ask who we're waiting on: platform was "pinged in Slack." You page them properly and set a 10-minute deadline. At 09:58 platform joins, confirms provider throttling, and switches traffic to the backup region. You send the exec update and hand over IC.</p>
       <p>You didn't diagnose anything. You named a leader, got the impact clear, turned a guess into a check, and escalated on a clock.</p>
       </div>
       <div class="callout watch"><p class="callout-title">What Actually Happens</p>

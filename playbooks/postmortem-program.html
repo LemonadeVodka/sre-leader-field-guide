@@ -63,7 +63,7 @@
       <tr><td><strong>Usually</strong></td><td>Near misses that could have been a Sev 1</td><td>20-minute <a href="postmortem-meeting.html#variants">lightweight review</a></td></tr>
       <tr><td><strong>Rarely</strong></td><td>Sev 3 with a known cause and a fix already done</td><td>Written summary only; counted in the monthly pattern review</td></tr>
       </tbody></table></div>
-      <p><strong>Author:</strong> usually someone from the owning pod who was involved but isn't the most senior person. <strong>Facilitator:</strong> you, or an SRE you've trained. The author and facilitator should never be the same person.</p>
+      <p><strong>Author:</strong> usually someone from the owning pod who was involved but isn't the most senior person. <strong>Facilitator:</strong> an SRE you've trained, or you for the big ones. You sponsor every one; you don't have to run every one. The author and facilitator should never be the same person.</p>
 
       <h3 id="prep-request">R: Request</h3>
       <div class="code-card"><div class="code-head">Calendar invite</div><pre>Postmortem: [incident title], [date]. 45 min.
@@ -137,7 +137,7 @@ Thanks [names] for walking us through it.</pre></div>
       <div class="code-card"><div class="code-head">Action tracker row</div><pre>ID      Incident     Action                          Owner (team)     Due      Done means                      Status
 PM-14   [incident]   [action]                        [name] ([pod])   [date]   [evidence that proves it]       open</pre></div>
       <h3 id="close-own">O: Own the Follow-Up</h3>
-      <p>Check every open action in your weekly <a href="where-are-we.html">PACE sweep</a>. For your own team, ask directly. For other pods' owners, ask lightly and go through their manager if it slips. You can't hold them accountable, but you can make progress visible.</p>
+      <p>Action owners report progress; you check, you don't chase. Look at every open action in your weekly <a href="where-are-we.html">PACE sweep</a>. For your own team, ask directly. For other pods' owners, ask lightly and go through their manager if it slips. You can't hold them accountable, but you can make progress visible.</p>
       <div class="code-card"><div class="code-head">Overdue nudge: your team</div><pre>Hi [name], [PM-14: action] was due [date]. What's left, and what's your confidence in a new date, 1 to 10?
 If something else got more urgent, that's fine. Tell me and we'll reset it publicly.</pre></div>
       <div class="code-card"><div class="code-head">Overdue nudge: another pod, via their manager</div><pre>Hi [manager], [action] from the [incident] postmortem was due [date], owner [name] on your team.
