@@ -5,37 +5,50 @@
   "use strict";
 
   var UPDATED = "October 20, 2026"; /* bump on each release */
-  /* Four sections by what you're doing (Do / Ask / Learn / People). Items with "label" are sub-headings inside a section (not links). */
+  /* The rail: sections by moment, incident first. "tone" colors the section (incident amber, postmortem blue, projects green...).
+     Items with "label" are sub-headings inside a section (not links). "reference" sections sit below a divider. */
   var NAV = [
-    { section: "", items: [
-      { id: "home", href: "index.html", title: "Home" }
-    ]},
-    { section: "Do", hint: "In the moment", items: [
-      { label: "Start here" },
+    { section: "Today", tone: "today", hint: "Start here", items: [
+      { id: "home", href: "index.html", title: "Today" },
       { id: "today", href: "today.html", title: "Questions for Today" },
-      { id: "p-fw", href: "playbooks/frameworks.html", title: "Pocket Frameworks" },
-      { label: "See it used: one week" },
-      { id: "x-incident", href: "playbooks/example-incident.html", title: "Tue: The Incident (LEAD)" },
-      { id: "x-postmortem", href: "playbooks/example-postmortem.html", title: "Thu: The Postmortem (SAFER)" },
-      { id: "x-status", href: "playbooks/example-status.html", title: "Mon: The Status Sweep (PACE)" },
-      { id: "x-risk", href: "playbooks/example-risk.html", title: "Wed: Nobody Will Fix It" },
-      { label: "Playbooks" },
+      { id: "lessons", href: "lessons.html", title: "Daily Lessons" },
+      { id: "paths", href: "learn/paths.html", title: "Learning Paths" },
+      { id: "p-fw", href: "playbooks/frameworks.html", title: "Pocket Frameworks" }
+    ]},
+    { section: "Incident", tone: "incident", hint: "LEAD", items: [
       { id: "p-driver", href: "playbooks/incident-driver.html", title: "Move a Stuck Incident" },
-      { id: "p-where", href: "playbooks/where-are-we.html", title: "Where Are We? (Status)" },
-      { id: "p-starter", href: "playbooks/meeting-starter.html", title: "Meeting Starter" },
-      { id: "p-risk", href: "playbooks/risk-register.html", title: "Risk Register" },
-      { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" },
-      { id: "p-pmprog", href: "playbooks/postmortem-program.html", title: "Owning Postmortems" },
-      { id: "p-pm", href: "playbooks/postmortem-meeting.html", title: "Postmortem Meeting" },
-      { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
-      { id: "p-task", href: "playbooks/running-a-task.html", title: "Running a Task" },
       { id: "p-stuck", href: "playbooks/stuck-incident.html", title: "Stuck Incident: Deep Dive" },
-      { id: "p-vendor", href: "playbooks/vendor-demo.html", title: "Vendor Demos" },
+      { id: "p-debrief", href: "playbooks/leader-debrief.html", title: "Leader Debrief" },
+      { id: "x-incident", href: "playbooks/example-incident.html", title: "Example: Tuesday's Incident" }
+    ]},
+    { section: "Request Map", tone: "map", hint: "Where things live", items: [
+      { id: "ai-map", href: "ai/request-map.html", title: "Request Map" }
+    ]},
+    { section: "Postmortem", tone: "pm", hint: "PREP · SAFER · CLOSE", items: [
+      { id: "p-pmprog", href: "playbooks/postmortem-program.html", title: "Owning Postmortems" },
+      { id: "p-pm", href: "playbooks/postmortem-meeting.html", title: "The Postmortem Meeting" },
+      { id: "x-postmortem", href: "playbooks/example-postmortem.html", title: "Example: Thursday's Postmortem" },
+      { id: "rca-day1", href: "rca/day-one.html", title: "RCA Day One" },
       { id: "rca-run", href: "rca/run-an-rca.html", title: "Running an RCA" },
       { id: "rca-judge", href: "rca/judge-an-rca.html", title: "Judging an RCA" },
       { id: "rca-template", href: "rca/template.html", title: "RCA Template" }
     ]},
-    { section: "Ask", hint: "Question Bank", items: [
+    { section: "Projects", tone: "projects", hint: "PACE · Linear", items: [
+      { id: "p-where", href: "playbooks/where-are-we.html", title: "Where Are We?" },
+      { id: "p-waiting", href: "playbooks/waiting-on.html", title: "\"I'm Waiting On…\"" },
+      { id: "p-linear", href: "playbooks/linear.html", title: "Running Projects in Linear" },
+      { id: "p-task", href: "playbooks/running-a-task.html", title: "Running a Task" },
+      { id: "p-risk", href: "playbooks/risk-register.html", title: "Risk Register" },
+      { id: "x-status", href: "playbooks/example-status.html", title: "Example: Monday's Sweep" },
+      { id: "x-risk", href: "playbooks/example-risk.html", title: "Example: Nobody Will Fix It" }
+    ]},
+    { section: "Meetings", tone: "meetings", hint: "Agendas · rules", items: [
+      { id: "p-starter", href: "playbooks/meeting-starter.html", title: "Meeting Starter" },
+      { id: "m-daily", href: "meetings/sre-daily.html", title: "SRE Daily" },
+      { id: "m-perf", href: "meetings/performance-engineering.html", title: "Performance Engineering" },
+      { id: "p-vendor", href: "playbooks/vendor-demo.html", title: "Vendor Demos" }
+    ]},
+    { section: "Ask", tone: "ref", hint: "Question Bank", reference: true, items: [
       { id: "q-incidents", href: "questions/incidents.html", title: "During & After Incidents" },
       { id: "q-projects", href: "questions/projects.html", title: "Running Tasks & Projects" },
       { id: "q-meetings", href: "questions/technical-meetings.html", title: "In Technical Meetings" },
@@ -46,11 +59,9 @@
       { id: "q-vendors", href: "questions/vendors.html", title: "With Vendors" },
       { id: "q-cred", href: "questions/credibility.html", title: "Building Credibility" }
     ]},
-    { section: "Learn", hint: "Study time", items: [
+    { section: "Learn", tone: "ref", hint: "Study time", reference: true, items: [
       { label: "Start here" },
-      { id: "rca-day1", href: "rca/day-one.html", title: "RCA Day One" },
       { id: "c-obs-day1", href: "concepts/observability-day-one.html", title: "Observability Day One" },
-      { label: "Root cause analysis" },
       { id: "rca", href: "rca/index.html", title: "RCA the SRE Way" },
       { id: "rca-example", href: "rca/worked-example.html", title: "RCA Worked Example" },
       { label: "SRE concepts" },
@@ -62,7 +73,6 @@
       { id: "c-capacity", href: "concepts/capacity-readiness.html", title: "Capacity & Readiness" },
       { label: "AI reliability" },
       { id: "ai", href: "ai/index.html", title: "What's Different About AI" },
-      { id: "ai-map", href: "ai/request-map.html", title: "Request Map: Where Things Live" },
       { id: "ai-latency", href: "ai/latency.html", title: "Latency: TTFT & TTLT" },
       { id: "ai-tokens", href: "ai/tokens-quotas-cost.html", title: "Tokens, Quotas & Cost" },
       { id: "ai-quality", href: "ai/quality-safety.html", title: "Quality & Safety" },
@@ -77,7 +87,7 @@
       { id: "impl-change", href: "implement/safe-change.html", title: "Safe Change" },
       { id: "impl-toil", href: "implement/toil-automation.html", title: "Toil & Automation" }
     ]},
-    { section: "People", hint: "Credibility & politics", items: [
+    { section: "People", tone: "ref", hint: "Credibility & politics", reference: true, items: [
       { id: "g-idk", href: "guides/saying-i-dont-know.html", title: "Saying \"I Don't Know\"" },
       { id: "g-ask", href: "guides/how-to-ask.html", title: "How to Ask" },
       { id: "g-path", href: "guides/it-ops-to-sre.html", title: "From IT Ops to SRE Leader" },
@@ -87,8 +97,20 @@
       { id: "pw-scenarios", href: "power/scenarios.html", title: "Political Playbooks" }
     ]}
   ];
-  /* Links only (sub-headings removed), for breadcrumbs, the pager, and counts. */
+  /* Links only (sub-headings removed), for breadcrumbs, the pager, counts, and search. */
   NAV.forEach(function (s) { s.links = s.items.filter(function (i) { return i.href; }); });
+
+  /* Request map cards, so search can jump straight to one (keywords help "429", "cosmos", "cdn"). */
+  var MAP_INDEX = [
+    ["c-client", "App on PC or phone", "client device on-device ttft t0 t4 t5"], ["c-cdn", "CDN and edge (Front Door)", "cdn front door waf edge timeout certificate dns"],
+    ["c-entra", "Sign-in (Entra ID)", "entra sign-in 401 403 token"], ["c-apim", "API gateway (API Management)", "apim gateway 429 rate limit quota t1"],
+    ["c-orch", "Orchestrator", "orchestrator container apps aks app service cold start t2 prep"], ["c-appconfig", "Settings and feature flags", "app configuration flags prompt version"],
+    ["c-safety", "Safety filters", "content safety filter blocked"], ["c-cosmos", "Cosmos DB (memory)", "cosmos db ru 429 partition replication history"],
+    ["c-search", "Search (retrieval)", "ai search rag index retrieval"], ["c-model", "The model", "model azure openai foundry tpm rpm 429 ttft t3 quota"],
+    ["c-tools", "Tools and agents", "tools agents functions"], ["c-ipaas", "Integration platform (Workato)", "ipaas workato recipe connector"],
+    ["c-partners", "Partner services", "partner third-party api"], ["c-messaging", "Background messaging", "service bus event hubs queue dead letter"],
+    ["c-keyvault", "Keys and secrets (Key Vault)", "key vault secret certificate expiry 401"], ["c-telemetry", "Telemetry", "telemetry otel app insights grafana pagerduty pendo"]
+  ];
 
   var body = document.body;
   var root = body.getAttribute("data-root") || "./";
@@ -96,21 +118,30 @@
   var esc = SRL.esc;
   var curSection = null, curItem = null;
   NAV.forEach(function (s) { s.links.forEach(function (i) { if (i.id === page) { curSection = s; curItem = i; } }); });
+  if (curSection) body.setAttribute("data-tone", curSection.tone);
 
-  var LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--accent)"/>' +
-    '<path d="M5 18h5l3-8 4 13 3-9 2 4h5" fill="none" stroke="var(--accent-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var LOGO = '<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--logo-bg)"/>' +
+    '<path d="M5 18h5l3-8 4 13 3-9 2 4h5" fill="none" stroke="var(--logo-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
   var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
   var MENU = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+  var SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>';
 
-  /* ---------- Header ---------- */
+  /* ---------- Header: menu, brand, global search, theme ---------- */
   var header = document.getElementById("site-header");
-  var menuBtn = null;
+  var menuBtn = null, searchInput = null, searchBox = null, searchBtn = null;
   if (header) {
     header.innerHTML =
       '<button class="icon-btn menu-btn" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">' + MENU + '</button>' +
-      '<a class="brand" href="' + root + 'index.html">' + LOGO + '<span class="brand-full">SRE Leader\'s Field Guide</span><span class="brand-short" aria-hidden="true">SRE Field Guide</span></a>' +
-      '<div class="header-spacer"></div>' +
+      '<a class="brand" href="' + root + 'index.html">' + LOGO + '<span class="brand-full">Reliability Field Guide</span><span class="brand-short" aria-hidden="true">Field Guide</span></a>' +
+      '<div class="site-search" id="site-search-wrap">' +
+        '<label class="visually-hidden" for="site-search">Search pages, questions, lessons, and the request map</label>' +
+        '<span class="site-search-icon">' + SEARCH + '</span>' +
+        '<input type="search" id="site-search" autocomplete="off" spellcheck="false" placeholder="Search pages, questions, map…" role="combobox" aria-expanded="false" aria-controls="site-search-list" aria-autocomplete="list">' +
+        '<kbd aria-hidden="true">/</kbd>' +
+        '<div class="site-search-pop" id="site-search-pop" hidden><ul id="site-search-list" role="listbox" aria-label="Search results"></ul><p class="site-search-status" id="site-search-status" role="status"></p></div>' +
+      '</div>' +
+      '<button class="icon-btn search-btn" type="button" aria-label="Open search" aria-expanded="false" aria-controls="site-search-wrap">' + SEARCH + '</button>' +
       '<button class="icon-btn theme-btn" type="button"></button>';
     var themeBtn = header.querySelector(".theme-btn");
     var isDark = function () {
@@ -131,124 +162,153 @@
       paintTheme();
     });
     menuBtn = header.querySelector(".menu-btn");
+    searchInput = header.querySelector("#site-search");
+    searchBox = header.querySelector("#site-search-wrap");
+    searchBtn = header.querySelector(".search-btn");
   }
 
-  /* ---------- Sidebar: one icon per section so sections are easy to tell apart ---------- */
-  function icon(d) { return '<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + d + '</svg>'; }
-  var SECTION_ICONS = {
-    "Do": icon('<path d="M13 2L4.5 13.5H11L10 22l8.5-11.5H12z"/>'),
-    "Ask": icon('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M10 9.5a2.2 2.2 0 1 1 3 2c-.6.3-1 .8-1 1.5"/><path d="M12 16h.01"/>'),
-    "Learn": icon('<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/>'),
-    "People": icon('<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>')
-  };
-
-  /* ---------- Sidebar: "Find a page" filter + collapsible sections ----------
-     Only the current page's section starts open (all collapsed on Home). Opened/closed sections are remembered in
-     srl-nav-open as a convenience; the current section is always open. */
+  /* ---------- The rail ---------- */
   var CHEVRON = '<svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
   var sidebar = document.getElementById("sidebar");
-  var navFilter = null;
   if (sidebar) {
     sidebar.setAttribute("aria-label", "Site");
     var remembered = SRL.get("nav-open", null);
-    var html = '<div class="nav-tools"><label class="nav-filter-label" for="nav-filter">Find a page</label>' +
-      '<input type="search" id="nav-filter" class="nav-filter" autocomplete="off" placeholder="e.g. stuck, status, SLO">' +
-      '<div class="nav-bulk"><button type="button" class="link-btn" data-nav-all="open">Expand all</button><span aria-hidden="true">·</span><button type="button" class="link-btn" data-nav-all="close">Collapse all</button></div>' +
-      '<p class="nav-status" id="nav-status" role="status"></p></div>';
-    html += NAV.map(function (s, n) {
+    var html = "", dividerDone = false;
+    NAV.forEach(function (s, n) {
+      if (s.reference && !dividerDone) { html += '<p class="rail-divider">Reference</p>'; dividerDone = true; }
+      var isCur = s === curSection;
+      var dot = '<span class="rail-dot" aria-hidden="true"></span>';
+      if (s.links.length === 1) {
+        var only = s.links[0];
+        html += '<div class="nav-section nav-single tone-' + s.tone + (isCur ? " is-current" : "") + '" data-section="' + esc(s.section) + '">' +
+          '<a class="nav-toggle nav-direct" href="' + root + only.href + '"' + (only.id === page ? ' aria-current="page"' : "") + ' data-title="' + esc(only.title) + '">' + dot +
+          '<span class="nav-toggle-text">' + esc(s.section) + '<span class="nav-hint">' + esc(s.hint) + '</span></span></a></div>';
+        return;
+      }
+      var open = isCur || (remembered ? remembered.indexOf(s.section) >= 0 : false);
+      var listId = "nav-list-" + n;
       var links = s.items.map(function (i) {
         if (i.label) return '<li class="nav-sub">' + esc(i.label) + '</li>';
         return '<li><a href="' + root + i.href + '"' + (i.id === page ? ' aria-current="page"' : "") + ' data-title="' + esc(i.title) + '">' + esc(i.title) + '</a></li>';
       }).join("");
-      if (!s.section) return '<div class="nav-section nav-home"><ul>' + links + '</ul></div>';
-      var isCur = s === curSection;
-      var open = isCur || (remembered ? remembered.indexOf(s.section) >= 0 : false);
-      var listId = "nav-list-" + n;
-      return '<div class="nav-section' + (isCur ? " is-current" : "") + '" data-section="' + esc(s.section) + '">' +
-        '<div class="nav-heading"><button type="button" class="nav-toggle" aria-expanded="' + open + '" aria-controls="' + listId + '">' +
-        (SECTION_ICONS[s.section] || "") + '<span class="nav-toggle-text">' + esc(s.section) + (s.hint ? '<span class="nav-hint">' + esc(s.hint) + '</span>' : "") + '</span><span class="nav-count" aria-hidden="true">' + s.links.length + '</span><span class="visually-hidden">, ' + s.links.length + ' pages</span>' + CHEVRON + '</button></div>' +
+      html += '<div class="nav-section tone-' + s.tone + (isCur ? " is-current" : "") + '" data-section="' + esc(s.section) + '">' +
+        '<div class="nav-heading"><button type="button" class="nav-toggle" aria-expanded="' + open + '" aria-controls="' + listId + '">' + dot +
+        '<span class="nav-toggle-text">' + esc(s.section) + '<span class="nav-hint">' + esc(s.hint) + '</span></span><span class="nav-count" aria-hidden="true">' + s.links.length + '</span><span class="visually-hidden">, ' + s.links.length + ' pages</span>' + CHEVRON + '</button></div>' +
         '<ul id="' + listId + '"' + (open ? "" : " hidden") + '>' + links + '</ul></div>';
-    }).join("");
+    });
     sidebar.innerHTML = html;
-    navFilter = sidebar.querySelector("#nav-filter");
-
-    var setOpen = function (sec, open) {
-      var btn = sec.querySelector(".nav-toggle"), list = sec.querySelector("ul");
-      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    sidebar.addEventListener("click", function (e) {
+      var t = e.target.closest("button.nav-toggle");
+      if (!t) return;
+      var sec = t.closest(".nav-section"), list = sec.querySelector("ul"), open = t.getAttribute("aria-expanded") !== "true";
+      t.setAttribute("aria-expanded", open ? "true" : "false");
       list.hidden = !open;
-    };
-    var saveOpen = function () {
       var openNames = [];
-      Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) {
-        if (sec.querySelector(".nav-toggle").getAttribute("aria-expanded") === "true" && !sec.classList.contains("is-current")) openNames.push(sec.getAttribute("data-section"));
+      Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section"), function (s2) {
+        var b = s2.querySelector("button.nav-toggle");
+        if (b && b.getAttribute("aria-expanded") === "true" && !s2.classList.contains("is-current")) openNames.push(s2.getAttribute("data-section"));
       });
       SRL.set("nav-open", openNames);
-    };
-    sidebar.addEventListener("click", function (e) {
-      var t = e.target.closest(".nav-toggle");
-      if (t) { var sec = t.closest(".nav-section"); setOpen(sec, t.getAttribute("aria-expanded") !== "true"); saveOpen(); return; }
-      var bulk = e.target.closest("[data-nav-all]");
-      if (bulk) {
-        var openAll = bulk.getAttribute("data-nav-all") === "open";
-        Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) { setOpen(sec, openAll || sec.classList.contains("is-current")); });
-        saveOpen(); return;
-      }
-      if (e.target.closest("[data-nav-clear]")) { navFilter.value = ""; applyFilter(); navFilter.focus(); }
-    });
-
-    /* Filter: match link titles or section names; auto-expand matches; highlight; announce the count. */
-    var status = sidebar.querySelector("#nav-status");
-    var markText = function (text, term) {
-      var i = text.toLowerCase().indexOf(term);
-      if (!term || i < 0) return esc(text);
-      return esc(text.slice(0, i)) + "<mark>" + esc(text.slice(i, i + term.length)) + "</mark>" + esc(text.slice(i + term.length));
-    };
-    var applyFilter = function () {
-      var term = navFilter.value.trim().toLowerCase(), total = 0;
-      sidebar.classList.toggle("is-filtering", !!term);
-      Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section"), function (sec) {
-        var secName = (sec.getAttribute("data-section") || "").toLowerCase();
-        var secMatch = term && secName.indexOf(term) >= 0, shown = 0;
-        Array.prototype.forEach.call(sec.querySelectorAll("li.nav-sub"), function (li) { li.hidden = !!term; });
-        Array.prototype.forEach.call(sec.querySelectorAll("li:not(.nav-sub)"), function (li) {
-          var a = li.querySelector("a"), title = a.getAttribute("data-title");
-          var hit = !term || secMatch || title.toLowerCase().indexOf(term) >= 0;
-          li.hidden = !hit;
-          a.innerHTML = term && !secMatch ? markText(title, term) : esc(title);
-          if (hit) shown++;
-        });
-        if (term) {
-          sec.hidden = shown === 0;
-          if (sec.getAttribute("data-section")) { var list = sec.querySelector("ul"); list.hidden = shown === 0; sec.querySelector(".nav-toggle").setAttribute("aria-expanded", shown ? "true" : "false"); }
-          if (sec.getAttribute("data-section")) total += shown;
-        } else {
-          sec.hidden = false;
-        }
-      });
-      if (!term) {
-        /* Restore the normal collapsed state. */
-        var rem = SRL.get("nav-open", []) || [];
-        Array.prototype.forEach.call(sidebar.querySelectorAll(".nav-section[data-section]"), function (sec) {
-          setOpen(sec, sec.classList.contains("is-current") || rem.indexOf(sec.getAttribute("data-section")) >= 0);
-        });
-        status.innerHTML = "";
-      } else {
-        status.innerHTML = total ? total + " page" + (total === 1 ? "" : "s") + " match" : 'No pages match. <button type="button" class="link-btn" data-nav-clear>Clear</button>';
-      }
-    };
-    navFilter.addEventListener("input", applyFilter);
-    navFilter.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && navFilter.value) { e.stopPropagation(); navFilter.value = ""; applyFilter(); }
     });
   }
 
-  /* ---------- Mobile menu: focus moves to the filter; Esc closes and returns focus ---------- */
+  /* ---------- Global search: pages, map cards, lessons, and questions (loaded on first use) ----------
+     Combobox pattern: arrows move, Enter opens, Esc closes. "/" focuses it from anywhere. */
+  if (searchInput) {
+    var pop = document.getElementById("site-search-pop"), listEl = document.getElementById("site-search-list"), statusEl = document.getElementById("site-search-status");
+    var active = -1, results = [], loading = false;
+    var loadScript = function (src, cb) {
+      var s = document.createElement("script"); s.src = root + src; s.onload = cb; s.onerror = cb; document.head.appendChild(s);
+    };
+    var ensureData = function (cb) {
+      if (loading) return;
+      var need = [];
+      if (!window.SRL_QUESTIONS) need.push("assets/questions.js");
+      if (!window.SRL_LESSONS) need.push("assets/lessons.js");
+      if (!need.length) return cb();
+      loading = true;
+      var left = need.length;
+      need.forEach(function (src) { loadScript(src, function () { if (--left === 0) { loading = false; cb(); } }); });
+    };
+    var sitUrl = function (sid) {
+      var S = window.SRL_SITUATIONS || [], G = window.SRL_GROUPS || [];
+      var s = S.filter(function (x) { return x.id === sid; })[0]; if (!s) return null;
+      if (s.playbook) return root + s.playbook + "#questions";
+      var g = G.filter(function (x) { return x.id === s.group; })[0];
+      return g ? root + g.page + "#" + s.id : null;
+    };
+    var match = function (hay, terms) { hay = hay.toLowerCase(); return terms.every(function (t) { return hay.indexOf(t) >= 0; }); };
+    var run = function () {
+      var raw = searchInput.value.trim();
+      if (raw.length < 2) { close(); return; }
+      var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+      results = [];
+      NAV.forEach(function (s) { s.links.forEach(function (i) { if (match(i.title + " " + s.section + " " + s.hint, terms)) results.push({ kind: "Page", tone: s.tone, label: i.title, sub: s.section, href: root + i.href }); }); });
+      MAP_INDEX.forEach(function (m) { if (match(m[1] + " " + m[2], terms)) results.push({ kind: "Map", tone: "map", label: m[1], sub: "Request Map card", href: root + "ai/request-map.html#" + m[0] }); });
+      (window.SRL_LESSONS || []).forEach(function (l) { if (match([l.title, l.situation, l.todo, l.say, l.check, l.why, l.link.t].join(" "), terms)) results.push({ kind: "Lesson", tone: "today", label: l.title, sub: l.type + " · daily lesson", href: root + "lessons.html#" + l.id }); });
+      var qn = 0;
+      (window.SRL_QUESTIONS || []).forEach(function (q) {
+        if (qn >= 8 || !match(q.q + " " + q.next + " " + q.signal, terms)) return;
+        var u = sitUrl(q.tags[0]); if (!u) return;
+        results.push({ kind: "Question", tone: "ref", label: q.q, sub: "Question Bank", href: u }); qn++;
+      });
+      results = results.slice(0, 14);
+      active = -1;
+      listEl.innerHTML = results.map(function (r, n) {
+        return '<li role="option" id="ss-' + n + '" aria-selected="false" data-n="' + n + '"><a href="' + r.href + '" tabindex="-1"><span class="ss-kind tone-' + r.tone + '">' + r.kind + '</span><span class="ss-label">' + esc(r.label) + '</span><span class="ss-sub">' + esc(r.sub) + '</span></a></li>';
+      }).join("");
+      statusEl.textContent = results.length ? results.length + " result" + (results.length === 1 ? "" : "s") + ". Use up and down arrows, then Enter." : "No matches. Try: stuck, 429, waiting, postmortem, cosmos.";
+      pop.hidden = false;
+      searchInput.setAttribute("aria-expanded", "true");
+      searchInput.removeAttribute("aria-activedescendant");
+    };
+    var close = function () { pop.hidden = true; searchInput.setAttribute("aria-expanded", "false"); searchInput.removeAttribute("aria-activedescendant"); active = -1; };
+    var move = function (d) {
+      if (!results.length) return;
+      active = (active + d + results.length) % results.length;
+      Array.prototype.forEach.call(listEl.children, function (li, n) { li.setAttribute("aria-selected", n === active ? "true" : "false"); });
+      searchInput.setAttribute("aria-activedescendant", "ss-" + active);
+      listEl.children[active].scrollIntoView({ block: "nearest" });
+    };
+    var timer = null;
+    searchInput.addEventListener("focus", function () { ensureData(function () { if (searchInput.value.trim().length >= 2) run(); }); });
+    searchInput.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () { ensureData(run); }, 120); });
+    searchInput.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown") { e.preventDefault(); if (pop.hidden) run(); move(1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+      else if (e.key === "Enter") { var r = results[active >= 0 ? active : 0]; if (r && !pop.hidden) { e.preventDefault(); location.href = r.href; } }
+      else if (e.key === "Escape") {
+        if (!pop.hidden) { e.stopPropagation(); close(); }
+        else if (body.classList.contains("search-open")) { e.stopPropagation(); setSearch(false); searchBtn.focus(); }
+      }
+    });
+    listEl.addEventListener("mousedown", function (e) { if (e.target.closest("a")) e.preventDefault(); });
+    listEl.addEventListener("click", function (e) { var a = e.target.closest("a"); if (a) location.href = a.getAttribute("href"); });
+    document.addEventListener("click", function (e) { if (!searchBox.contains(e.target) && e.target !== searchBtn && !searchBtn.contains(e.target)) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
+      var t = e.target.tagName;
+      if (t === "INPUT" || t === "TEXTAREA" || e.target.isContentEditable) return;
+      e.preventDefault();
+      if (getComputedStyle(searchBox).display === "none") setSearch(true); else searchInput.focus();
+    });
+    /* Small screens: the search box opens from the header button. */
+    var setSearch = function (open) {
+      body.classList.toggle("search-open", open);
+      searchBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      searchBtn.setAttribute("aria-label", open ? "Close search" : "Open search");
+      if (open) searchInput.focus(); else close();
+    };
+    searchBtn.addEventListener("click", function () { setSearch(!body.classList.contains("search-open")); });
+  }
+
+  /* ---------- Mobile menu: focus moves into the rail; Esc closes and returns focus ---------- */
   function setMenu(open) {
     body.classList.toggle("nav-open", open);
     if (!menuBtn) return;
     menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
     menuBtn.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
-    if (open && navFilter) navFilter.focus();
+    if (open && sidebar) { var first = sidebar.querySelector('[aria-current="page"]') || sidebar.querySelector("a, button"); if (first) first.focus(); }
   }
   if (menuBtn) menuBtn.addEventListener("click", function () { setMenu(!body.classList.contains("nav-open")); });
   document.addEventListener("keydown", function (e) {
@@ -283,7 +343,7 @@
 
   /* ---------- Footer ---------- */
   var footer = document.getElementById("footer");
-  if (footer) footer.innerHTML = "SRE Leader's Field Guide · Examples are fictional · Updated " + UPDATED;
+  if (footer) footer.innerHTML = "Reliability Field Guide · Examples are fictional · Updated " + UPDATED;
 
   /* ---------- Copy buttons on .code-card blocks ---------- */
   Array.prototype.forEach.call(document.querySelectorAll(".code-card"), function (card) {

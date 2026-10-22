@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Running Projects in Linear · Reliability Field Guide</title>
+  <meta name="description" content="A 15-minute weekly sweep, the hygiene to ask for, a check-in that walks the board, and a five-line project update your VP will read.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-linear" data-toc="deferred">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Running Projects in Linear Without a PM</h1>
+      <p class="summary">A 15-minute weekly sweep, the hygiene to ask for, a check-in that walks the board, and a five-line project update your VP will read.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Your Weekly 15 Minutes in Linear</h2>
+      <ol>
+      <li><strong>Quiet:</strong> In Progress with no update in 5+ days. Ask the owner for the next step and date.</li>
+      <li><strong>Blocked:</strong> every one has a "blocked by" link, a who, and a follow-up date.</li>
+      <li><strong>Unowned:</strong> issues in active projects with no assignee. Leads assign or close.</li>
+      <li><strong>Undated:</strong> active projects with no target date. Ask for a date and a confidence number.</li>
+      <li><strong>Update:</strong> post a 5-line project update for your VP.</li>
+      </ol>
+      </section>
+
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>You lost your project manager and you're holding the work together in Linear. You don't need to become a PM. You need a short, predictable routine that finds stuck work early, keeps owners clear, and gives your leadership an honest picture. This page is that routine.</p>
+      </div>
+
+      <section class="fold">
+      <h2 id="sweep">The Weekly Sweep (15 Minutes)</h2>
+      <div class="fold-body">
+      <p>Save these as Linear views once (filters on status, assignee, due date, and last updated), then run them every Monday before your team check-in.</p>
+      <div class="table-wrap agenda"><table>
+      <thead><tr><th>Minutes</th><th>View</th><th>What you do</th></tr></thead>
+      <tbody>
+      <tr><td>4 min</td><td><strong>Quiet:</strong> In Progress, not updated in 5+ days</td><td>Pick the top 3 by importance. Ask each owner: "What's the next thing that will be done, and when?"</td></tr>
+      <tr><td>4 min</td><td><strong>Blocked</strong></td><td>Check each has a "blocked by" link, a who, and a follow-up date. Anything older than a week gets an escalation from you.</td></tr>
+      <tr><td>2 min</td><td><strong>Unowned</strong> in active projects</td><td>Send the list to the relevant lead: assign or close by Friday.</td></tr>
+      <tr><td>2 min</td><td><strong>Overdue and undated</strong></td><td>Ask for a new date and confidence, 1 to 10.</td></tr>
+      <tr><td>3 min</td><td><strong>Project updates</strong></td><td>Post or check the weekly update on each active project.</td></tr>
+      </tbody>
+      <tfoot><tr><td>15 min</td><td colspan="2">Total. Do it before your team meeting, so the meeting is about decisions, not discovery.</td></tr></tfoot>
+      </table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="hygiene">Linear Hygiene to Ask For</h2>
+      <div class="fold-body">
+      <p>You don't enforce these by doing them yourself. Ask your leads to make them the team's habit, and check in the sweep.</p>
+      <ul>
+      <li><strong>One owner per issue.</strong> "The team" isn't an owner.</li>
+      <li><strong>Blocked issues have a "blocked by" link</strong> to the issue they're waiting on, and a comment with who, since when, and the follow-up date. See <a href="waiting-on.html#linear">the blocked comment template</a>.</li>
+      <li><strong>Every active project has a target date</strong> and a weekly project update.</li>
+      <li><strong>Done means done:</strong> verified and handed to operations (runbook updated, NOC told), not just merged.</li>
+      <li><strong>Interrupts get an issue too,</strong> even small ones, so hidden work is visible.</li>
+      </ul>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="cycle-check-in">The Cycle Check-In: Walk the Board, Not the People</h2>
+      <div class="fold-body">
+      <p>Run your team check-in from the Linear board, right to left: closest to done first. It keeps the focus on finishing work instead of a round of status reports. For each item, PACE:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Letter</th><th>Ask</th><th>If the answer is weak</th></tr></thead>
+      <tbody>
+      <tr><td><span class="fw-letter">P</span> Progress</td><td>"What moved since last time?"</td><td>"What's the next thing that will be done, and when?"</td></tr>
+      <tr><td><span class="fw-letter">A</span> Asks</td><td>"What's blocking it, or who are you waiting on?"</td><td>Use <a href="waiting-on.html">the six kinds of waiting</a>.</td></tr>
+      <tr><td><span class="fw-letter">C</span> Confidence</td><td>"Confidence in the date, 1 to 10?"</td><td>Under 7: "What would make it a 9?"</td></tr>
+      <tr><td><span class="fw-letter">E</span> End with owners</td><td>"So [owner] does [next step] by [date]."</td><td>Make sure it's written in the issue, not just said.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="update">The Weekly Project Update</h2>
+      <div class="fold-body">
+      <p>Linear projects can carry a status update with a health (on track, at risk, off track). Keep yours to five lines, so your VP can read it in 20 seconds.</p>
+      <div class="code-card"><div class="code-head">Project update (5 lines)</div><pre>Health: [on track / at risk / off track]
+Moved: [what finished this week]
+Next: [what finishes next week]
+Blocked: [what, on whom, since when, escalated to whom]
+Date: [target date], confidence [n]/10</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="end-of-cycle">End of Cycle: 10-Minute Look Back</h2>
+      <div class="fold-body">
+      <p>When a cycle ends, look at what rolled over and group it. One change per cycle is plenty.</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Most rollovers were…</th><th>Try next cycle</th></tr></thead>
+      <tbody>
+      <tr><td>Blocked by other teams</td><td>Ask for cross-team dates at the start of the cycle, not mid-way.</td></tr>
+      <tr><td>Underestimated</td><td>Split anything bigger than a few days before the cycle starts.</td></tr>
+      <tr><td>Interrupted (incidents, favors)</td><td>Reserve capacity for interrupts, and track them as issues.</td></tr>
+      <tr><td>Deprioritized</td><td>Fine, if it was a decision. Close or move them honestly.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="questions">Questions to Ask</h2>
+      <div class="fold-body">
+      <div data-qsit="status-ask"></div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>The board drifts from reality within two weeks</strong> unless someone looks every week. That someone is you, for 15 minutes.</li>
+      <li><strong>Engineers hate updating tickets.</strong> Ask for one comment when status changes, not daily updates.</li>
+      <li><strong>You'll be tempted to update issues yourself.</strong> Don't; ask the owner. Otherwise you become the team's admin.</li>
+      <li><strong>Leadership reads the project update, not the board.</strong> Make the five lines honest.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/questions.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/qbank.js"></script>
+</body>
+</html>

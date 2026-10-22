@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Lessons · Reliability Field Guide</title>
+  <meta name="description" content="One practical action a day, about 15 minutes, done in your real work: check something, ask one question, fix one gap, practice, or reflect.">
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="./" data-page="lessons">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="./index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Daily Lessons</h1>
+      <p class="summary">One practical action a day, about 15 minutes, done in your real work: check something, ask one question, fix one gap, practice, or reflect.</p>
+      <div class="callout"><p class="callout-title">How to Use These</p>
+      <p>One lesson a day, about 15 minutes, done in your real work. The home page shows today's lesson; this page has all 61. Every lesson is an action, not reading: <strong>Check</strong> something real, <strong>Ask</strong> one question, <strong>Fix</strong> one small gap through its owner, <strong>Practice</strong> on the next incident or meeting, or <strong>Reflect</strong> for five minutes.</p>
+      </div>
+
+      <h2 id="track-incident">Incident response (35)</h2>
+
+      <article class="lesson" id="ir-secondary" aria-labelledby="ir-secondary-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-secondary-h">Does Anyone Back Up the On-Call?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A Sev 2 at 02:00. The owning team's on-call doesn't answer, and their escalation policy has one person on it.</dd>
+      <dt>Do this today</dt><dd>Open PagerDuty. For your top 3 services, check each escalation policy. Write down any with no secondary or no manager step.</dd>
+      <dt>Say this</dt><dd>"[Pod lead], your policy for [service] has one person. Can we add a secondary by Friday?"</dd>
+      <dt>Check it worked</dt><dd>Each of the 3 has a secondary, or a named owner and a date to add one.</dd>
+      <dt>Why it makes you better</dt><dd>Most 'nobody answered' delays are visible in advance. Finding them before 2 a.m. is what great incident leaders do.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/stuck-incident.html">Stuck incident: the escalation clock</a></p>
+      </article>
+      <article class="lesson" id="ir-name-ic" aria-labelledby="ir-name-ic-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-name-ic-h">Name the Incident Commander Out Loud</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>You join a bridge. Four people are investigating; nobody is leading.</dd>
+      <dt>Do this today</dt><dd>Rehearse the line out loud twice today, then use it on the next bridge in the first two minutes.</dd>
+      <dt>Say this</dt><dd>"[Name], can you lead until the owning team joins? I'll handle exec updates."</dd>
+      <dt>Check it worked</dt><dd>On your next incident, an IC was named within 2 minutes of you joining.</dd>
+      <dt>Why it makes you better</dt><dd>Naming a leader is the highest-value move on a bridge, and it needs no technical knowledge.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-owner">LEAD: Leader</a></p>
+      </article>
+      <article class="lesson" id="ir-time-to-ic" aria-labelledby="ir-time-to-ic-h">
+      <p class="lesson-meta"><span class="lesson-type type-reflect">Reflect</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-time-to-ic-h">How Long Until Someone Led?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Last week's Sev 2 felt chaotic at the start.</dd>
+      <dt>Do this today</dt><dd>Open the incident channel or PagerDuty timeline. Note when it was declared and when someone was clearly leading. Write the gap down.</dd>
+      <dt>Say this</dt><dd>(To your team) "Last Sev 2 took [N] minutes to have a lead. Let's get it under 5."</dd>
+      <dt>Check it worked</dt><dd>You have one number: minutes from declare to IC. Track it for the next three incidents.</dd>
+      <dt>Why it makes you better</dt><dd>What gets measured improves. Few leaders measure their own bridge.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/leader-debrief.html">After the incident: leader debrief</a></p>
+      </article>
+      <article class="lesson" id="ir-impact-sentence" aria-labelledby="ir-impact-sentence-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-impact-sentence-h">Impact in One Sentence</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The bridge argues about severity because nobody has said who's affected.</dd>
+      <dt>Do this today</dt><dd>Write a fill-in template and pin it in the incident channel: '[What users can't do], [how many / %], since [time], [getting worse/better/flat].'</dd>
+      <dt>Say this</dt><dd>"Before we go on: what are users seeing, how many, since when, and is it getting worse?"</dd>
+      <dt>Check it worked</dt><dd>The template is pinned, and the next incident's first update uses it.</dd>
+      <dt>Why it makes you better</dt><dd>A clear impact statement ends severity debates and makes every later decision faster.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-impact">LEAD: Effect</a></p>
+      </article>
+      <article class="lesson" id="ir-severity" aria-labelledby="ir-severity-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-severity-h">Are the Severity Rules Written Down?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Two people on the same bridge call the same incident a Sev 2 and a Sev 3.</dd>
+      <dt>Do this today</dt><dd>Find your written severity definitions. If they don't exist or don't mention user impact, list who could write them.</dd>
+      <dt>Say this</dt><dd>"Can we agree severity by user impact, in writing, so it's never a debate on the bridge?"</dd>
+      <dt>Check it worked</dt><dd>You know where the definitions live, or there's an owner and a date to write them.</dd>
+      <dt>Why it makes you better</dt><dd>Written severity criteria are the foundation of every incident program.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="implement/incident-program.html">Incident Program</a></p>
+      </article>
+      <article class="lesson" id="ir-declare-early" aria-labelledby="ir-declare-early-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-declare-early-h">Declare Early, Downgrade Later</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The NOC waited 20 minutes to declare because they 'weren't sure it was real.'</dd>
+      <dt>Do this today</dt><dd>Message your NOC shift lead today with the rule and ask what would make it easier to follow.</dd>
+      <dt>Say this</dt><dd>"If you're not sure, declare. Downgrading is free; declaring late isn't. What would make that easier for your team?"</dd>
+      <dt>Check it worked</dt><dd>The shift lead confirmed the rule and named one blocker you can remove.</dd>
+      <dt>Why it makes you better</dt><dd>Early declaration is the cheapest reliability improvement there is.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/offshore-noc.html">With the offshore NOC</a></p>
+      </article>
+      <article class="lesson" id="ir-rhythm" aria-labelledby="ir-rhythm-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-rhythm-h">The 15-Minute Rhythm</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An incident drifts for an hour with no structure.</dd>
+      <dt>Do this today</dt><dd>Put a recurring 15-minute timer on your phone for the next incident. Each time it goes off, ask the four rhythm questions.</dd>
+      <dt>Say this</dt><dd>"Quick check: what changed, what's next, who are we waiting on, and is the severity still right?"</dd>
+      <dt>Check it worked</dt><dd>On the next incident, you asked the rhythm questions at least three times.</dd>
+      <dt>Why it makes you better</dt><dd>A steady rhythm is what makes a bridge feel led.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#rhythm">The 15-minute rhythm</a></p>
+      </article>
+      <article class="lesson" id="ir-ruled-out" aria-labelledby="ir-ruled-out-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-ruled-out-h">What Have We Ruled Out?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The same dashboards get re-checked again and again.</dd>
+      <dt>Do this today</dt><dd>On the next bridge (or in today's ops review of a recent one), ask for the ruled-out list and have someone post it.</dd>
+      <dt>Say this</dt><dd>"What have we ruled out, and how? [Name], can you post that list in the channel?"</dd>
+      <dt>Check it worked</dt><dd>A ruled-out list exists in the channel within 30 minutes of the next incident starting.</dd>
+      <dt>Why it makes you better</dt><dd>Writing down what's ruled out stops circles. You add rigor without touching a keyboard.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-circles">Going in circles</a></p>
+      </article>
+      <article class="lesson" id="ir-mitigate-first" aria-labelledby="ir-mitigate-first-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-mitigate-first-h">Know Your Levers Before You Need Them</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A rollback was possible but nobody was sure they were allowed to do it.</dd>
+      <dt>Do this today</dt><dd>For your noisiest service, ask its owner: what can on-call do without approval (rollback, failover, feature flag)? Write the answer down.</dd>
+      <dt>Say this</dt><dd>"What's the safest thing on-call can do at 2 a.m. without asking anyone?"</dd>
+      <dt>Check it worked</dt><dd>You have a written list of pre-approved levers for one service, or a gap logged on the risk register.</dd>
+      <dt>Why it makes you better</dt><dd>Mitigating before fixing is the core incident principle. Pre-approved levers make it real.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/stuck-incident.html">Pre-approved levers</a></p>
+      </article>
+      <article class="lesson" id="ir-failover-approver" aria-labelledby="ir-failover-approver-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-failover-approver-h">Who Can Approve Failover at 2 A.M.?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Failover needed a manager's approval and took 20 minutes to get.</dd>
+      <dt>Do this today</dt><dd>Ask platform which approvals any mitigation needs at night, and who gives them. Add the names to your escalation sheet.</dd>
+      <dt>Say this</dt><dd>"If we need to fail over at 2 a.m., who says yes, and how do we reach them?"</dd>
+      <dt>Check it worked</dt><dd>Your escalation sheet names the approver and their contact path.</dd>
+      <dt>Why it makes you better</dt><dd>Approval gaps are invisible until an incident. You're closing one in daylight.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/example-risk.html">Wednesday: nobody will fix it</a></p>
+      </article>
+      <article class="lesson" id="ir-exec-template" aria-labelledby="ir-exec-template-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-exec-template-h">Pin Your Exec Update Template</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Your VP joins the bridge and starts asking engineers questions.</dd>
+      <dt>Do this today</dt><dd>Write a 4-line exec update template (impact, what we're doing, confidence, next update) and pin it where you'll find it in seconds.</dd>
+      <dt>Say this</dt><dd>"[VP], I've got the updates. Next one at [time]. Can I take your questions in the thread?"</dd>
+      <dt>Check it worked</dt><dd>The template is saved and you can paste it within 10 seconds.</dd>
+      <dt>Why it makes you better</dt><dd>Owning exec comms protects your engineers and is exactly what leaders expect of you.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-exec">Exec heat</a></p>
+      </article>
+      <article class="lesson" id="ir-honest-eta" aria-labelledby="ir-honest-eta-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-honest-eta-h">The Honest 'I Don't Have an ETA'</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An exec demands an ETA you can't honestly give.</dd>
+      <dt>Do this today</dt><dd>Write your version of the line below in your own words and say it out loud twice.</dd>
+      <dt>Say this</dt><dd>"I can't give a reliable ETA yet. Here's what I can say: decision by [time], next update at [time]."</dd>
+      <dt>Check it worked</dt><dd>You can say it calmly without notes.</dd>
+      <dt>Why it makes you better</dt><dd>A wrong ETA costs more trust than an honest 'not yet.'</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/example-incident.html#exec-heat">Example: exec heat</a></p>
+      </article>
+      <article class="lesson" id="ir-waiting-page" aria-labelledby="ir-waiting-page-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-waiting-page-h">A Slack Message Is Not a Page</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>"We pinged them in Slack" 15 minutes ago, and nobody's joined.</dd>
+      <dt>Do this today</dt><dd>Ask your NOC lead and on-call SREs to page through PagerDuty for any owning team, every time, and to note the time.</dd>
+      <dt>Say this</dt><dd>"If we need a team, we page them, not message them. Can we make that the rule?"</dd>
+      <dt>Check it worked</dt><dd>The rule is in the NOC runbook or the incident channel pinned post.</dd>
+      <dt>Why it makes you better</dt><dd>Small rules like this cut minutes off every incident.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-waiting">Waiting on someone</a></p>
+      </article>
+      <article class="lesson" id="ir-escalate-clock" aria-labelledby="ir-escalate-clock-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-escalate-clock-h">Escalate on a Clock</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>People wait too long to escalate because it feels rude.</dd>
+      <dt>Do this today</dt><dd>Agree the escalation clock with one pod lead: no acknowledgement in 15 minutes goes to their secondary, then to their manager at 30.</dd>
+      <dt>Say this</dt><dd>"So nobody has to decide in the moment: if there's no ack in 15, we go to your secondary; at 30, to you. OK?"</dd>
+      <dt>Check it worked</dt><dd>One pod lead has agreed the clock in writing.</dd>
+      <dt>Why it makes you better</dt><dd>A pre-agreed clock makes escalation fair, fast, and impersonal.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/stuck-incident.html">The stuck clock</a></p>
+      </article>
+      <article class="lesson" id="ir-noc-own-words" aria-labelledby="ir-noc-own-words-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-noc-own-words-h">Get the NOC's Own Words</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The NOC reads alert text back without understanding it.</dd>
+      <dt>Do this today</dt><dd>In your next NOC sync, ask one analyst to describe a recent incident in their own words, then coach one improvement.</dd>
+      <dt>Say this</dt><dd>"In your own words, what did you see? Not what the alert said."</dd>
+      <dt>Check it worked</dt><dd>One analyst described an incident in plain words and got one specific tip.</dd>
+      <dt>Why it makes you better</dt><dd>The NOC is your eyes. Better eyes mean faster incidents.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/incident-driver.html#inc-noc">The NOC is lost</a></p>
+      </article>
+      <article class="lesson" id="ir-noc-runbook" aria-labelledby="ir-noc-runbook-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-noc-runbook-h">Find the Missing Pager in the Runbook</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The NOC didn't know which team to page, so they posted in a channel.</dd>
+      <dt>Do this today</dt><dd>Open the NOC runbook for your noisiest alert. Check it names the owning team, how to page them, and what to include.</dd>
+      <dt>Say this</dt><dd>"[Owner], this runbook doesn't say who to page. Can we add it this week?"</dd>
+      <dt>Check it worked</dt><dd>The runbook names a team, a page method, and an escalation packet, or has an owner and a date.</dd>
+      <dt>Why it makes you better</dt><dd>Runbooks that work at 3 a.m. are built in daylight by leaders who check them.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/example-postmortem.html">Thursday's postmortem</a></p>
+      </article>
+      <article class="lesson" id="ir-handoff" aria-labelledby="ir-handoff-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-handoff-h">Does the Handoff Survive the Time Zone?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A long incident hands over to the offshore shift, and context gets lost.</dd>
+      <dt>Do this today</dt><dd>Look at the last shift handoff note. Does it say: status, what's been tried, who's engaged, next step, next update time?</dd>
+      <dt>Say this</dt><dd>"Can every handoff answer five things: status, tried, who, next, next update?"</dd>
+      <dt>Check it worked</dt><dd>You've shared a 5-line handoff template with the NOC shift lead.</dd>
+      <dt>Why it makes you better</dt><dd>Handoffs are where long incidents go wrong. Fixing the template fixes many incidents.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/incidents.html#inc-long">Long-running incidents</a></p>
+      </article>
+      <article class="lesson" id="ir-fatigue" aria-labelledby="ir-fatigue-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-fatigue-h">Who's Been on This the Longest?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Hour three. The same engineer has been leading since the start.</dd>
+      <dt>Do this today</dt><dd>On the next long incident, at the 2-hour mark, ask the fatigue question and arrange relief.</dd>
+      <dt>Say this</dt><dd>"Who's been on this the longest, and who relieves them?"</dd>
+      <dt>Check it worked</dt><dd>On the next long incident, someone was relieved before hour four.</dd>
+      <dt>Why it makes you better</dt><dd>Tired people make mistakes. Leaders who notice earn loyalty.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/incidents.html#inc-long">Long-running incidents</a></p>
+      </article>
+      <article class="lesson" id="ir-resolved" aria-labelledby="ir-resolved-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-resolved-h">Mitigated or Resolved?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The graph went green and someone wants to close the incident.</dd>
+      <dt>Do this today</dt><dd>On your next close, ask for the resolved criteria and the watch period before closing.</dd>
+      <dt>Say this</dt><dd>"Is this mitigated or resolved? What would we need to see to call it resolved?"</dd>
+      <dt>Check it worked</dt><dd>The next incident has written resolved criteria before it's closed.</dd>
+      <dt>Why it makes you better</dt><dd>Quiet isn't fixed. This question prevents re-opened incidents.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/incidents.html#inc-close">Closing it out</a></p>
+      </article>
+      <article class="lesson" id="ir-customer-comms" aria-labelledby="ir-customer-comms-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-customer-comms-h">Who Tells Customers?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Support is flooded and nobody decided whether to post a status update.</dd>
+      <dt>Do this today</dt><dd>Find out who decides on customer-facing comms during an incident and where the template lives. Add both to your escalation sheet.</dd>
+      <dt>Say this</dt><dd>"During a Sev 1 or 2, who decides whether customers hear from us, and how fast?"</dd>
+      <dt>Check it worked</dt><dd>Your escalation sheet names the decider and links the template.</dd>
+      <dt>Why it makes you better</dt><dd>Customer comms are often the most visible part of an incident to executives.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/incidents.html#inc-comms">Escalation and exec comms</a></p>
+      </article>
+      <article class="lesson" id="ir-which-429" aria-labelledby="ir-which-429-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-which-429-h">Which 429 Is It?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An alert fires: '429 rate above threshold.'</dd>
+      <dt>Do this today</dt><dd>On the next 429 alert (or in today's ops review), ask which of the three sources it came from.</dd>
+      <dt>Say this</dt><dd>"Which 429 is it: our gateway, the model's quota, or Cosmos DB?"</dd>
+      <dt>Check it worked</dt><dd>Your team can split 429s by source on one dashboard, or there's an owner to add it.</dd>
+      <dt>Why it makes you better</dt><dd>Knowing there are three 429s halves troubleshooting time and signals real understanding.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#errors">Request Map: error codes</a></p>
+      </article>
+      <article class="lesson" id="ir-ttft-segments" aria-labelledby="ir-ttft-segments-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-ttft-segments-h">Which TTFT Pieces Can You See?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>"The assistant is slow" and nobody can say where the time goes.</dd>
+      <dt>Do this today</dt><dd>Ask an engineer which of T0 to T5 are on your dashboards today. Mark the missing ones.</dd>
+      <dt>Say this</dt><dd>"Can we see edge, prep, model, and stream-back time separately?"</dd>
+      <dt>Check it worked</dt><dd>You know which timing points are missing, and there's an owner for the first one.</dd>
+      <dt>Why it makes you better</dt><dd>Splitting time to first word into four pieces turns 'it's slow' into a specific owner.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#seconds">Request Map: where the seconds go</a></p>
+      </article>
+      <article class="lesson" id="ir-provider" aria-labelledby="ir-provider-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-provider-h">Know Your Model Provider's Status Page</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The model provider has an outage and you find out from users.</dd>
+      <dt>Do this today</dt><dd>Find the model provider's status page and subscribe the incident channel or your team to it.</dd>
+      <dt>Say this</dt><dd>"Are we subscribed to the provider's status page, and does it post where on-call sees it?"</dd>
+      <dt>Check it worked</dt><dd>Provider status updates arrive somewhere on-call watches.</dd>
+      <dt>Why it makes you better</dt><dd>Finding out before users do is a core SRE goal.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-model">Request Map: the model</a></p>
+      </article>
+      <article class="lesson" id="ir-quota-peak" aria-labelledby="ir-quota-peak-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-quota-peak-h">How Close Are We to the Token Limit?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A launch is coming, and nobody knows how close you are to the model's limits.</dd>
+      <dt>Do this today</dt><dd>Ask the AI platform owner for last week's peak tokens-per-minute as a percentage of your limit.</dd>
+      <dt>Say this</dt><dd>"What was our peak TPM last week as a percentage of our limit, and what happens at 100%?"</dd>
+      <dt>Check it worked</dt><dd>You have one percentage and know what users would see at the limit.</dd>
+      <dt>Why it makes you better</dt><dd>Quota is the most common AI outage cause. Asking ahead is credible.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#tokens">Token limits</a></p>
+      </article>
+      <article class="lesson" id="ir-cosmos" aria-labelledby="ir-cosmos-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-cosmos-h">Is Cosmos DB Near Its Limit?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Chat history loads slowly at peak, and nobody checked the database.</dd>
+      <dt>Do this today</dt><dd>Ask the owner for peak normalized request-unit (RU) consumption last week, and whether any partition is hot.</dd>
+      <dt>Say this</dt><dd>"What was peak RU consumption, and is any partition hot?"</dd>
+      <dt>Check it worked</dt><dd>You know whether Cosmos DB throttled at peak.</dd>
+      <dt>Why it makes you better</dt><dd>Database throttling is a hidden source of slow first words.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-cosmos">Request Map: Cosmos DB</a></p>
+      </article>
+      <article class="lesson" id="ir-cdn-timeout" aria-labelledby="ir-cdn-timeout-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-cdn-timeout-h">Do Long Answers Get Cut Off?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Users report answers stopping mid-sentence.</dd>
+      <dt>Do this today</dt><dd>Ask the platform owner for the edge's streaming timeout and compare it with your slowest answers this week.</dd>
+      <dt>Say this</dt><dd>"Is our streaming timeout longer than our longest real answer?"</dd>
+      <dt>Check it worked</dt><dd>You have both numbers, and the timeout is longer, or there's an owner to fix it.</dd>
+      <dt>Why it makes you better</dt><dd>You connected an edge setting to a user symptom, which is how good diagnosis works.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-cdn">Request Map: CDN and edge</a></p>
+      </article>
+      <article class="lesson" id="ir-keyvault" aria-labelledby="ir-keyvault-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-keyvault-h">What Expires in the Next 30 Days?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Sudden 401 errors at midnight. A certificate expired.</dd>
+      <dt>Do this today</dt><dd>Ask platform or security for a list of keys and certificates expiring in the next 30 days, with owners.</dd>
+      <dt>Say this</dt><dd>"What expires in the next 30 days, and who gets warned?"</dd>
+      <dt>Check it worked</dt><dd>You have the list, or an owner and a date to produce it.</dd>
+      <dt>Why it makes you better</dt><dd>Expiry outages are completely preventable. Leaders who ask avoid them.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-keyvault">Request Map: Key Vault</a></p>
+      </article>
+      <article class="lesson" id="ir-ipaas" aria-labelledby="ir-ipaas-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-ipaas-h">Who Hears When a Recipe Fails?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A partner integration quietly stopped working three days ago.</dd>
+      <dt>Do this today</dt><dd>Ask the integrations owner how recipe and connector failures are alerted, and to whom.</dd>
+      <dt>Say this</dt><dd>"When a recipe fails, who gets told, and how fast?"</dd>
+      <dt>Check it worked</dt><dd>Failures alert a person or channel, or it's logged as a gap with an owner.</dd>
+      <dt>Why it makes you better</dt><dd>Silent integration failures are a major source of 'it just stopped working.'</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-ipaas">Request Map: integration platform</a></p>
+      </article>
+      <article class="lesson" id="ir-telemetry-gap" aria-labelledby="ir-telemetry-gap-h">
+      <p class="lesson-meta"><span class="lesson-type type-reflect">Reflect</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-telemetry-gap-h">Where Were We Blind Last Time?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>During the last incident, a key graph was missing or empty.</dd>
+      <dt>Do this today</dt><dd>List one place in the last incident where you couldn't see what was happening. Turn it into a postmortem action or a lesson for the team.</dd>
+      <dt>Say this</dt><dd>"Last time we couldn't see [X]. Who can add it before the next one?"</dd>
+      <dt>Check it worked</dt><dd>One blind spot has an owner and a date.</dd>
+      <dt>Why it makes you better</dt><dd>Every incident shows you a blind spot. Closing one per incident compounds fast.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-telemetry">Request Map: telemetry</a></p>
+      </article>
+      <article class="lesson" id="ir-tabletop" aria-labelledby="ir-tabletop-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-tabletop-h">Run a 10-Minute Tabletop</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Your team has never practiced a provider outage.</dd>
+      <dt>Do this today</dt><dd>Grab one SRE for 10 minutes. Say: 'The model provider is throttling EU at peak. Go.' Walk through LEAD together.</dd>
+      <dt>Say this</dt><dd>"Ten minutes, no laptops: the provider is throttling EU. Who leads, what do users see, what do we do first?"</dd>
+      <dt>Check it worked</dt><dd>You found at least one gap (a missing name, lever, or dashboard) and logged it.</dd>
+      <dt>Why it makes you better</dt><dd>Teams that practice handle the real thing calmly. Running drills marks you as an incident leader.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="implement/incident-program.html">Implementation: incident program</a></p>
+      </article>
+      <article class="lesson" id="ir-noisy-alert" aria-labelledby="ir-noisy-alert-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-noisy-alert-h">Kill One Noisy Alert</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The NOC gets paged for an alert nobody acts on.</dd>
+      <dt>Do this today</dt><dd>Ask the NOC lead for the alert that fired most last week with no action. Ask its owner to fix, tune, or delete it.</dd>
+      <dt>Say this</dt><dd>"This alert fired [N] times with no action. Can we fix, tune, or delete it by next week?"</dd>
+      <dt>Check it worked</dt><dd>One noisy alert has an owner and a date.</dd>
+      <dt>Why it makes you better</dt><dd>Alert fatigue hides real incidents. Every alert removed sharpens the rest.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="implement/alerting-paging.html">Alerting and paging</a></p>
+      </article>
+      <article class="lesson" id="ir-oncall-health" aria-labelledby="ir-oncall-health-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-oncall-health-h">How Was Last Week's On-Call?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>On-call is quietly burning people out.</dd>
+      <dt>Do this today</dt><dd>Ask last week's on-call engineer three questions in a 1:1 or message.</dd>
+      <dt>Say this</dt><dd>"How many times were you woken up, how many were real, and what one thing would make next week better?"</dd>
+      <dt>Check it worked</dt><dd>You have the numbers and one improvement to pursue.</dd>
+      <dt>Why it makes you better</dt><dd>Sustainable on-call keeps your best people. Asking signals you care about them, not just uptime.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="concepts/alerting-incidents.html#on-call">On-call</a></p>
+      </article>
+      <article class="lesson" id="ir-mttr-trap" aria-labelledby="ir-mttr-trap-h">
+      <p class="lesson-meta"><span class="lesson-type type-reflect">Reflect</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-mttr-trap-h">Don't Let MTTR Fool You</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Your VP asks for mean time to resolve as the incident metric.</dd>
+      <dt>Do this today</dt><dd>Look at your last five incidents' times. Note whether one long incident distorts the average. Prepare a one-line explanation.</dd>
+      <dt>Say this</dt><dd>"The average hides the story. Here's the median, and here's the one incident that drove it."</dd>
+      <dt>Check it worked</dt><dd>You can explain your incident numbers without the average misleading anyone.</dd>
+      <dt>Why it makes you better</dt><dd>Knowing the limits of MTTx metrics is a mark of a mature reliability leader.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="concepts/alerting-incidents.html">Alerting and incidents</a></p>
+      </article>
+      <article class="lesson" id="ir-blameless" aria-labelledby="ir-blameless-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-blameless-h">Catch Blame and Turn It</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Someone says 'the NOC should have caught it.'</dd>
+      <dt>Do this today</dt><dd>Write your own version of the turn-around line and practice it once out loud.</dd>
+      <dt>Say this</dt><dd>"Partly true. What made it easy to miss? Where did the alert go?"</dd>
+      <dt>Check it worked</dt><dd>You can say it without sounding defensive.</dd>
+      <dt>Why it makes you better</dt><dd>Holding the blameless line is what makes people tell you the truth.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/meeting-starter.html#hold-the-room">Meeting starter: holding the room</a></p>
+      </article>
+      <article class="lesson" id="ir-debrief" aria-labelledby="ir-debrief-h">
+      <p class="lesson-meta"><span class="lesson-type type-reflect">Reflect</span> <span class="lesson-track">Incident response</span></p>
+      <h3 id="ir-debrief-h">Your 5-Minute Leader Debrief</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An incident just ended. You're tired and want to move on.</dd>
+      <dt>Do this today</dt><dd>Spend 5 minutes on the leader debrief for the most recent incident you were part of.</dd>
+      <dt>Say this</dt><dd>(To yourself) "What's one thing I'll do differently on the next bridge?"</dd>
+      <dt>Check it worked</dt><dd>You've written one specific thing to practice next time.</dd>
+      <dt>Why it makes you better</dt><dd>The best incident leaders debrief themselves, not just the system.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/leader-debrief.html">Leader debrief</a></p>
+      </article>
+
+      <h2 id="track-project">Projects and Linear (18)</h2>
+
+      <article class="lesson" id="pm-stale-view" aria-labelledby="pm-stale-view-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-stale-view-h">Find the Quiet Issues</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Issues sit 'In Progress' for weeks without updates.</dd>
+      <dt>Do this today</dt><dd>In Linear, filter for In Progress issues with no update in 5+ days. Pick the top 3 to ask about.</dd>
+      <dt>Say this</dt><dd>"[Name], [issue] hasn't moved in a week. What's the next thing that will be done, and when?"</dd>
+      <dt>Check it worked</dt><dd>You've asked about 3 quiet issues and each has a next step and date.</dd>
+      <dt>Why it makes you better</dt><dd>Quiet issues are where projects die. Finding them weekly is the PM's core habit.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/linear.html">Running projects in Linear</a></p>
+      </article>
+      <article class="lesson" id="pm-blocked-by" aria-labelledby="pm-blocked-by-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-blocked-by-h">Turn 'Waiting On' Into a Link and a Date</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An engineer says 'I'm waiting on platform' in standup.</dd>
+      <dt>Do this today</dt><dd>Ask them to add a Linear 'blocked by' link to the other team's issue and a date they'll chase by.</dd>
+      <dt>Say this</dt><dd>"Can you link the issue you're blocked by, and put the date you'll follow up?"</dd>
+      <dt>Check it worked</dt><dd>The issue has a 'blocked by' link and a follow-up date.</dd>
+      <dt>Why it makes you better</dt><dd>Blocked work you can see is blocked work you can unblock.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/waiting-on.html">When they say 'I'm waiting on…'</a></p>
+      </article>
+      <article class="lesson" id="pm-move-today" aria-labelledby="pm-move-today-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-move-today-h">What Can You Move Today?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Half the standup answers are 'waiting on someone.'</dd>
+      <dt>Do this today</dt><dd>In today's standup or sweep, ask the question below of everyone who's waiting.</dd>
+      <dt>Say this</dt><dd>"While you wait, what can you move forward today?"</dd>
+      <dt>Check it worked</dt><dd>Every 'waiting' person named one thing they'll do today.</dd>
+      <dt>Why it makes you better</dt><dd>Keeping people moving while they wait is how you guide progress without micromanaging.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/waiting-on.html">Waiting on…</a></p>
+      </article>
+      <article class="lesson" id="pm-split" aria-labelledby="pm-split-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-split-h">Split It So Part Ships Now</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A whole feature is stuck because one piece depends on another team.</dd>
+      <dt>Do this today</dt><dd>Pick one blocked issue and ask its owner whether the independent part can be split out.</dd>
+      <dt>Say this</dt><dd>"Can we split this so the part that doesn't depend on them ships now?"</dd>
+      <dt>Check it worked</dt><dd>One blocked issue became two: one moving, one waiting with a link.</dd>
+      <dt>Why it makes you better</dt><dd>Splitting work is the simplest way to turn 'blocked' into progress.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/running-a-task.html#when-its-slipping">Running a task</a></p>
+      </article>
+      <article class="lesson" id="pm-who-exactly" aria-labelledby="pm-who-exactly-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-who-exactly-h">Who Exactly, Since When?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>"I'm waiting on them" with no name and no date.</dd>
+      <dt>Do this today</dt><dd>Use the three-part question on the next 'waiting on' you hear.</dd>
+      <dt>Say this</dt><dd>"Who exactly, since when, and what did you ask for?"</dd>
+      <dt>Check it worked</dt><dd>The answer had a name, a date, and the request.</dd>
+      <dt>Why it makes you better</dt><dd>Specific questions make you sound confident and make the wait fixable.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/waiting-on.html">Waiting on…</a></p>
+      </article>
+      <article class="lesson" id="pm-deadline-escalate" aria-labelledby="pm-deadline-escalate-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-deadline-escalate-h">Set the Escalation Date Out Loud</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A request to another team has been ignored for a week.</dd>
+      <dt>Do this today</dt><dd>Pick one stale cross-team request and set the date with the owner.</dd>
+      <dt>Say this</dt><dd>"If there's no answer by Thursday, tell me and I'll raise it with their manager."</dd>
+      <dt>Check it worked</dt><dd>The owner knows the date, and you've put a reminder in your calendar.</dd>
+      <dt>Why it makes you better</dt><dd>You stay the escalation path without taking the work.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="today.html#owner">Own decisions, not work</a></p>
+      </article>
+      <article class="lesson" id="pm-no-owner" aria-labelledby="pm-no-owner-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-no-owner-h">Issues With No Owner</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Linear has issues nobody is assigned to, including some urgent ones.</dd>
+      <dt>Do this today</dt><dd>Filter Linear for unassigned issues in active projects. Send the list to the relevant leads to assign.</dd>
+      <dt>Say this</dt><dd>"These [N] issues have no owner. Can you assign each by Friday, or close the ones we won't do?"</dd>
+      <dt>Check it worked</dt><dd>The unassigned count in active projects went down.</dd>
+      <dt>Why it makes you better</dt><dd>Unowned work drifts to you by default. Assigning it protects your time.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/linear.html">Running projects in Linear</a></p>
+      </article>
+      <article class="lesson" id="pm-no-date" aria-labelledby="pm-no-date-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-no-date-h">Projects With No Target Date</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Nobody can say when a project will finish.</dd>
+      <dt>Do this today</dt><dd>In Linear, list active projects without a target date. Ask each lead for a date and a confidence level.</dd>
+      <dt>Say this</dt><dd>"What's the target date, and how confident are you, 1 to 10?"</dd>
+      <dt>Check it worked</dt><dd>Every active project has a date and a confidence number.</dd>
+      <dt>Why it makes you better</dt><dd>A date with a confidence number is honest planning. Leaders respect it.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/where-are-we.html">Where are we?</a></p>
+      </article>
+      <article class="lesson" id="pm-update" aria-labelledby="pm-update-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-update-h">Write This Week's Project Update in 5 Lines</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Your VP asks 'where are we on the reliability work?'</dd>
+      <dt>Do this today</dt><dd>Write one project update in Linear (or a message) using five lines: status, moved, next, blocked, date confidence.</dd>
+      <dt>Say this</dt><dd>(In the update) "Amber. Moved: [X]. Next: [Y]. Blocked: [Z], escalated to [name]. Date confidence: 6/10."</dd>
+      <dt>Check it worked</dt><dd>The update is posted where your VP will see it.</dd>
+      <dt>Why it makes you better</dt><dd>A crisp weekly update is how leaders judge whether a project is in good hands.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/linear.html">Running projects in Linear</a></p>
+      </article>
+      <article class="lesson" id="pm-confidence" aria-labelledby="pm-confidence-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-confidence-h">Ask for the Confidence Number</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Everything is 'on track' until the week it's due.</dd>
+      <dt>Do this today</dt><dd>In today's check-ins, ask everyone for date confidence on their main item.</dd>
+      <dt>Say this</dt><dd>"Confidence in the date, 1 to 10? What would make it a 9?"</dd>
+      <dt>Check it worked</dt><dd>You have a confidence number for each main item, and acted on anything under 7.</dd>
+      <dt>Why it makes you better</dt><dd>The confidence number is the single best early-warning signal in project work.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/frameworks.html#pace">PACE</a></p>
+      </article>
+      <article class="lesson" id="pm-hidden-work" aria-labelledby="pm-hidden-work-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-hidden-work-h">What's Not on the Board?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An engineer is 'behind,' but they're actually doing interrupt work nobody tracked.</dd>
+      <dt>Do this today</dt><dd>In one 1:1 today, ask about hidden work and put it in Linear.</dd>
+      <dt>Say this</dt><dd>"What are you doing that isn't on the board?"</dd>
+      <dt>Check it worked</dt><dd>One piece of hidden work is now a Linear issue.</dd>
+      <dt>Why it makes you better</dt><dd>Making hidden work visible is fair to your people and explains your real capacity.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/example-status.html#lin">Monday's sweep</a></p>
+      </article>
+      <article class="lesson" id="pm-almost-done" aria-labelledby="pm-almost-done-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-almost-done-h">Decode 'Almost Done'</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An issue has been 'almost done' for a week.</dd>
+      <dt>Do this today</dt><dd>Ask the follow-up below on one 'almost done' item today.</dd>
+      <dt>Say this</dt><dd>"What's actually left, and what's the riskiest part?"</dd>
+      <dt>Check it worked</dt><dd>You got a specific remaining list and a date.</dd>
+      <dt>Why it makes you better</dt><dd>Translating status words is how you sound confident without needing technical depth.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/where-are-we.html#decode">Decode the answer</a></p>
+      </article>
+      <article class="lesson" id="pm-done-means" aria-labelledby="pm-done-means-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-done-means-h">Merged Isn't Done</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Issues are closed when code merges, but the runbook and the NOC never heard.</dd>
+      <dt>Do this today</dt><dd>Pick 3 recently closed issues. Check whether 'done' included verification and the handover to operations.</dd>
+      <dt>Say this</dt><dd>"For this kind of work, done means verified and handed to the NOC, not just merged. Can we add that to the issue template?"</dd>
+      <dt>Check it worked</dt><dd>Your team's issue template (or definition of done) includes verification.</dd>
+      <dt>Why it makes you better</dt><dd>A real definition of done prevents the next incident.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/running-a-task.html#closing">Running a task: closing</a></p>
+      </article>
+      <article class="lesson" id="pm-say-late" aria-labelledby="pm-say-late-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-say-late-h">Say 'This Is Late' Upward</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A project will miss its date and you're dreading telling your VP.</dd>
+      <dt>Do this today</dt><dd>Write the three-line message below for one late item and send it before anyone asks.</dd>
+      <dt>Say this</dt><dd>"[Project] will be late. New date: [date], because [one reason]. Here's what we're doing about it."</dd>
+      <dt>Check it worked</dt><dd>You told your VP before they found out another way.</dd>
+      <dt>Why it makes you better</dt><dd>Leaders trust people who deliver bad news early and with a plan.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/example-status.html#artifacts">Monday's sweep: the Friday update</a></p>
+      </article>
+      <article class="lesson" id="pm-say-no" aria-labelledby="pm-say-no-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-say-no-h">Say No to a New Request, Kindly</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Another team asks your engineers for 'a quick favor' mid-cycle.</dd>
+      <dt>Do this today</dt><dd>Use the trade-off line on the next request that would push planned work.</dd>
+      <dt>Say this</dt><dd>"We can do that. What should we drop from this cycle to make room?"</dd>
+      <dt>Check it worked</dt><dd>The request was either traded for something, or scheduled for the next cycle.</dd>
+      <dt>Why it makes you better</dt><dd>Protecting your team's focus is a leadership responsibility, not being difficult.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/peers-leaders.html">With peers and leaders</a></p>
+      </article>
+      <article class="lesson" id="pm-cycle-review" aria-labelledby="pm-cycle-review-h">
+      <p class="lesson-meta"><span class="lesson-type type-reflect">Reflect</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-cycle-review-h">End-of-Cycle: What Slipped and Why?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>A Linear cycle ends with half the issues rolled over.</dd>
+      <dt>Do this today</dt><dd>Look at the issues that rolled over. Group them: blocked, underestimated, interrupted, or deprioritized.</dd>
+      <dt>Say this</dt><dd>(To the team) "Most rollovers this cycle were [category]. One change for next cycle: [X]."</dd>
+      <dt>Check it worked</dt><dd>You named the biggest category and one change.</dd>
+      <dt>Why it makes you better</dt><dd>Learning from each cycle is how a team without a PM still gets better.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/linear.html">Running projects in Linear</a></p>
+      </article>
+      <article class="lesson" id="pm-risk" aria-labelledby="pm-risk-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-risk-h">Stop Chasing, Log the Risk</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>You've chased another team three times and nothing moves.</dd>
+      <dt>Do this today</dt><dd>Write one risk entry (if/then/because) for the stuck item and send it to the decision owner.</dd>
+      <dt>Say this</dt><dd>"Fix it, fund it, or accept it until [date]. Any is fine; I just want a decision."</dd>
+      <dt>Check it worked</dt><dd>The item has a named decision owner and a dated decision request.</dd>
+      <dt>Why it makes you better</dt><dd>Turning endless chasing into a decision is a senior-manager move.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/risk-register.html">Risk register</a></p>
+      </article>
+      <article class="lesson" id="pm-walk-board" aria-labelledby="pm-walk-board-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Projects and Linear</span></p>
+      <h3 id="pm-walk-board-h">Walk the Board, Not the People</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Standup has become a round of status reports.</dd>
+      <dt>Do this today</dt><dd>Run tomorrow's check-in by walking the Linear board from right to left (closest to done first).</dd>
+      <dt>Say this</dt><dd>"Let's start with what's closest to done. What does it need to finish?"</dd>
+      <dt>Check it worked</dt><dd>The meeting focused on finishing work, and ended on time.</dd>
+      <dt>Why it makes you better</dt><dd>Finishing beats starting. Walking the board shows you know how to run delivery.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/linear.html#cycle-check-in">Running projects in Linear</a></p>
+      </article>
+
+      <h2 id="track-other">Leadership habits (8)</h2>
+
+      <article class="lesson" id="ot-own-decisions" aria-labelledby="ot-own-decisions-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-own-decisions-h">Own the Decision, Not the Work</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Someone hands you a task in a meeting: 'Can you look into it?'</dd>
+      <dt>Do this today</dt><dd>Use the line below the next time work is handed to you that isn't yours.</dd>
+      <dt>Say this</dt><dd>"Happy to make the call. Who owns the work?"</dd>
+      <dt>Check it worked</dt><dd>The work left the meeting with someone else's name on it.</dd>
+      <dt>Why it makes you better</dt><dd>Senior leaders are judged by what they get others to own.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="today.html#owner">Keep it with the owner</a></p>
+      </article>
+      <article class="lesson" id="ot-pm-actions" aria-labelledby="ot-pm-actions-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-pm-actions-h">Do Postmortem Actions Have Owners?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Postmortems happen, but nothing changes.</dd>
+      <dt>Do this today</dt><dd>Open your last 3 postmortems. For each action, check: one owner, a date, and a done-means.</dd>
+      <dt>Say this</dt><dd>"These [N] actions have no owner or date. Can we fix that this week?"</dd>
+      <dt>Check it worked</dt><dd>Every open action has an owner and a date, or is closed honestly.</dd>
+      <dt>Why it makes you better</dt><dd>Actions that land are the only point of a postmortem.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/postmortem-program.html#close">Owning postmortems: CLOSE</a></p>
+      </article>
+      <article class="lesson" id="ot-pm-invite" aria-labelledby="ot-pm-invite-h">
+      <p class="lesson-meta"><span class="lesson-type type-fix">Fix</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-pm-invite-h">Book the Next Postmortem in 5 Days</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>The last Sev 2 is a week old and no postmortem is booked.</dd>
+      <dt>Do this today</dt><dd>Use the PREP invite to book it, request the draft, and ask the NOC for its timeline.</dd>
+      <dt>Say this</dt><dd>"Postmortem for [incident] on [date]. Draft by [day], please. Blameless, 45 minutes."</dd>
+      <dt>Check it worked</dt><dd>The invite is sent and the author has confirmed.</dd>
+      <dt>Why it makes you better</dt><dd>Running postmortems on time is what makes the program credible.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="playbooks/postmortem-program.html#prep">PREP: before the meeting</a></p>
+      </article>
+      <article class="lesson" id="ot-slo" aria-labelledby="ot-slo-h">
+      <p class="lesson-meta"><span class="lesson-type type-ask">Ask</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-slo-h">What's the Target for the Top Journey?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Nobody can say how reliable the assistant is supposed to be.</dd>
+      <dt>Do this today</dt><dd>Ask the assistant's product owner and an engineer: what's our target for the most important user journey?</dd>
+      <dt>Say this</dt><dd>"For our most important journey, what's 'reliable enough' as a number?"</dd>
+      <dt>Check it worked</dt><dd>You have a number, or agreement that it needs one, with an owner.</dd>
+      <dt>Why it makes you better</dt><dd>SLOs start with this question. Asking it marks you as a reliability leader.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="implement/slos.html">SLOs from zero</a></p>
+      </article>
+      <article class="lesson" id="ot-change-history" aria-labelledby="ot-change-history-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-change-history-h">Where's the Change History?</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Every incident starts with 'did anything change?' and nobody knows where to look.</dd>
+      <dt>Do this today</dt><dd>Find where deploys, config, flag, and prompt changes are recorded. Bookmark it.</dd>
+      <dt>Say this</dt><dd>"Where do I look to see everything that changed in the last 24 hours?"</dd>
+      <dt>Check it worked</dt><dd>You have a bookmark, or a known gap with an owner.</dd>
+      <dt>Why it makes you better</dt><dd>Change history is the first place most incidents are solved.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html#c-appconfig">Request Map: settings and flags</a></p>
+      </article>
+      <article class="lesson" id="ot-dont-know" aria-labelledby="ot-dont-know-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-dont-know-h">Say 'I Don't Know' With Confidence</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>An executive asks a technical question you can't answer.</dd>
+      <dt>Do this today</dt><dd>Practice the line below until it feels natural.</dd>
+      <dt>Say this</dt><dd>"I don't know yet. [Name] will find out; you'll have it by [time]."</dd>
+      <dt>Check it worked</dt><dd>You used it once this week without apologizing.</dd>
+      <dt>Why it makes you better</dt><dd>A confident 'I don't know' with a plan builds more trust than a guess.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="guides/saying-i-dont-know.html">Saying 'I don't know'</a></p>
+      </article>
+      <article class="lesson" id="ot-vp-amber" aria-labelledby="ot-vp-amber-h">
+      <p class="lesson-meta"><span class="lesson-type type-practice">Practice</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-vp-amber-h">Report Amber, Not Green</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>Your VP prefers green, and something is at risk.</dd>
+      <dt>Do this today</dt><dd>In this week's update, mark one at-risk item amber with a plan.</dd>
+      <dt>Say this</dt><dd>"Amber, with a plan: here's what would make it green, and what it costs."</dd>
+      <dt>Check it worked</dt><dd>The update shows real status and a plan.</dd>
+      <dt>Why it makes you better</dt><dd>Honest status earns trust that lasts longer than a green week.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="questions/peers-leaders.html">With peers and leaders</a></p>
+      </article>
+      <article class="lesson" id="ot-map-session" aria-labelledby="ot-map-session-h">
+      <p class="lesson-meta"><span class="lesson-type type-check">Check</span> <span class="lesson-track">Leadership habits</span></p>
+      <h3 id="ot-map-session-h">Map One Box With an Engineer</h3>
+      <dl class="lesson-dl">
+      <dt>The situation</dt><dd>You don't know what your real system looks like behind the app.</dd>
+      <dt>Do this today</dt><dd>Spend 15 minutes with an engineer on one box of the request map: what's ours called, who owns it, where's the dashboard?</dd>
+      <dt>Say this</dt><dd>"For this box, what's ours called, who owns it, and where would I look when it breaks?"</dd>
+      <dt>Check it worked</dt><dd>One box on your private map is filled in.</dd>
+      <dt>Why it makes you better</dt><dd>Knowing your own system box by box is the foundation of incident leadership.</dd>
+      </dl>
+      <p class="lesson-more">Go deeper: <a href="ai/request-map.html">Request Map</a></p>
+      </article>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="./assets/store.js"></script>
+<script src="./assets/site.js"></script>
+</body>
+</html>

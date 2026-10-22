@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pocket Frameworks: LEAD, SAFER, PACE · SRE Leader's Field Guide</title>
+  <title>Pocket Frameworks: LEAD, SAFER, PACE · Reliability Field Guide</title>
   <meta name="description" content="Three one-word frameworks you can grab under pressure: LEAD for incidents, SAFER for postmortems and RCAs, and PACE for tracking people's work.">
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/style.css">
@@ -11,7 +11,7 @@
 </head>
 <body data-root="../" data-page="p-fw">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="site-header"><a class="brand" href="../index.html">SRE Leader's Field Guide</a></header>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
   <main class="content" id="main">
@@ -34,7 +34,7 @@
       <tbody>
       <tr><td><span class="fw-letter">L</span> <strong>Leader</strong></td><td>"Who's leading this? If nobody: [Name], can you lead until the owning team joins? I'll handle exec updates."</td><td><em>"Marco's incident commander. I'll take comms and escalations so Marco can stay on the problem."</em></td><td><a href="incident-driver.html#inc-owner">Nobody owns it</a></td></tr>
       <tr><td><span class="fw-letter">E</span> <strong>Effect</strong></td><td>"What are users seeing, how many, since when, and is it getting worse?"</td><td><em>"About 30% of requests timing out, mostly EU. Started around 21:25. It's climbing."</em></td><td><a href="incident-driver.html#inc-impact">Impact is unclear</a></td></tr>
-      <tr><td><span class="fw-letter">A</span> <strong>Action</strong></td><td>"What have we ruled out, what's our best guess, and what's the safest thing we can do in the next 15 minutes?"</td><td><em>"A third of EU users failing now, against that bug for a handful of enterprise users for an hour. Your call, Sam."</em></td><td><a href="incident-driver.html#inc-circles">Going in circles</a> · <a href="incident-driver.html#inc-act">Afraid to act</a></td></tr>
+      <tr><td><span class="fw-letter">A</span> <strong>Action</strong></td><td>"What have we ruled out, what's our best guess, and what's the safest thing we can do in the next 15 minutes?"</td><td><em>"A third of EU users failing now, against that bug for a handful of enterprise users for an hour. Your call, Sam."</em></td><td><a href="incident-driver.html#inc-circles">Going in circles</a> · <a href="incident-driver.html#inc-act">Afraid to act</a> · <a href="../ai/request-map.html#symptoms">Where to look</a></td></tr>
       <tr><td><span class="fw-letter">D</span> <strong>Deadline</strong></td><td>"Who are we waiting on, when do we escalate if they don't answer, and when's the next update?"</td><td><em>"A channel post isn't a page. I'm paging them now. If nobody acknowledges by 21:56, I'll call their managers."</em></td><td><a href="incident-driver.html#inc-waiting">Waiting on someone</a> · <a href="incident-driver.html#inc-exec">Exec heat</a></td></tr>
       </tbody></table></div>
       <div class="code-card"><div class="code-head">LEAD pocket version</div><pre>LEAD: every 15 minutes until resolved

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Paths · Reliability Field Guide</title>
+  <meta name="description" content="The Incident Leader Path (8 weeks) and the De Facto PM Path (3 weeks). About 15 minutes a day, built around practice in real incidents and real meetings.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="paths">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Learning Paths</h1>
+      <p class="summary">The Incident Leader Path (8 weeks) and the De Facto PM Path (3 weeks). About 15 minutes a day, built around practice in real incidents and real meetings.</p>
+      <div class="callout"><p class="callout-title">How the Paths Work</p>
+      <p>About 15 minutes a day. Each week has one goal, a short reading list from this site, <strong>one behavior to practice on a real bridge or in a real meeting</strong>, and the daily lessons that go with it. Practice beats reading: the week only counts if you did the practice.</p>
+      <div class="path-start" data-path-start>
+      <p class="path-start-note">Set the day you started, and the home page will show which week you're on. (Saved only in this browser.)</p>
+      </div>
+      </div>
+
+      <h2 id="incident-leader">The Incident Leader Path (8 Weeks)</h2>
+
+      <section class="path-week" id="ir-week-1" data-week="1" aria-labelledby="ir-week-1-h">
+      <h3 id="ir-week-1-h"><span class="path-num">Week 1</span> Command Basics</h3>
+      <p><strong>Goal:</strong> on every bridge you join, a leader is named in the first two minutes, and it's usually not you.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/frameworks.html#lead">LEAD</a> · <a href="../today.html#bridge">Questions for the bridge</a> · <a href="../playbooks/example-incident.html">Tuesday's incident</a></p>
+      <p><strong>Practice this week:</strong> say the IC line out loud on your next incident: "[Name], can you lead until the owning team joins? I'll handle exec updates."</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-name-ic">Name the IC out loud</a> · <a href="../lessons.html#ir-time-to-ic">How long until someone led?</a> · <a href="../lessons.html#ir-rhythm">The 15-minute rhythm</a></p>
+      <p><strong>You'll know it's working when:</strong> engineers start naming an IC before you ask.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-2" data-week="2" aria-labelledby="ir-week-2-h">
+      <h3 id="ir-week-2-h"><span class="path-num">Week 2</span> Impact and Severity</h3>
+      <p><strong>Goal:</strong> the impact is stated in one sentence by minute 10, and severity is never a debate.</p>
+      <p><strong>Read:</strong> <a href="../concepts/observability-day-one.html">Observability Day One</a> · <a href="../playbooks/incident-driver.html#inc-impact">Impact is unclear</a> · <a href="../implement/incident-program.html">Incident Program</a></p>
+      <p><strong>Practice this week:</strong> on every incident, ask "what are users seeing, how many, since when, and is it getting worse?" before anything technical.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-impact-sentence">Impact in one sentence</a> · <a href="../lessons.html#ir-severity">Are the severity rules written down?</a> · <a href="../lessons.html#ir-declare-early">Declare early</a></p>
+      <p><strong>You'll know it's working when:</strong> updates lead with user impact without you prompting.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-3" data-week="3" aria-labelledby="ir-week-3-h">
+      <h3 id="ir-week-3-h"><span class="path-num">Week 3</span> When It's Stuck</h3>
+      <p><strong>Goal:</strong> you recognize the stuck pattern within a few minutes and use the matching question.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/incident-driver.html">Move a Stuck Incident</a> · <a href="../playbooks/stuck-incident.html">Stuck Incident: Deep Dive</a></p>
+      <p><strong>Practice this week:</strong> agree an escalation clock (15 minutes to secondary, 30 to manager) with one pod lead.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-ruled-out">What have we ruled out?</a> · <a href="../lessons.html#ir-escalate-clock">Escalate on a clock</a> · <a href="../lessons.html#ir-mitigate-first">Know your levers</a></p>
+      <p><strong>You'll know it's working when:</strong> no wait on another team goes past 15 minutes without a name and a backup.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-4" data-week="4" aria-labelledby="ir-week-4-h">
+      <h3 id="ir-week-4-h"><span class="path-num">Week 4</span> Communication Under Pressure</h3>
+      <p><strong>Goal:</strong> execs get calm, timed updates, and engineers never get pulled off the fix to answer them.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/incident-driver.html#inc-exec">Exec heat</a> · <a href="../playbooks/meeting-starter.html#rules-bridge">Incident bridge ground rules</a> · <a href="../questions/incidents.html#inc-comms">Escalation and exec comms</a></p>
+      <p><strong>Practice this week:</strong> send an exec update every 15–30 minutes on the next incident, using your pinned template.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-exec-template">Pin your exec update template</a> · <a href="../lessons.html#ir-honest-eta">The honest 'no ETA'</a> · <a href="../lessons.html#ir-customer-comms">Who tells customers?</a></p>
+      <p><strong>You'll know it's working when:</strong> your VP stops joining the bridge because your updates arrive first.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-5" data-week="5" aria-labelledby="ir-week-5-h">
+      <h3 id="ir-week-5-h"><span class="path-num">Week 5</span> The NOC and Handoffs</h3>
+      <p><strong>Goal:</strong> the NOC declares early, escalates with a good packet, and hands over cleanly across time zones.</p>
+      <p><strong>Read:</strong> <a href="../questions/offshore-noc.html">With the offshore NOC</a> · <a href="../playbooks/incident-driver.html#inc-noc">The NOC is lost</a> · <a href="../questions/incidents.html#inc-long">Long-running incidents</a></p>
+      <p><strong>Practice this week:</strong> in your NOC sync, have one analyst describe an incident in their own words; coach one thing.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-noc-own-words">The NOC's own words</a> · <a href="../lessons.html#ir-noc-runbook">Find the missing pager</a> · <a href="../lessons.html#ir-handoff">Handoffs across time zones</a></p>
+      <p><strong>You'll know it's working when:</strong> NOC escalations include impact, start time, and what was tried, every time.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-6" data-week="6" aria-labelledby="ir-week-6-h">
+      <h3 id="ir-week-6-h"><span class="path-num">Week 6</span> AI-Specific Incidents</h3>
+      <p><strong>Goal:</strong> when the assistant is slow or failing, you can point to the hop and ask the right owner.</p>
+      <p><strong>Read:</strong> <a href="../ai/request-map.html">Request Map</a> · <a href="../ai/latency.html">Latency: TTFT and TTLT</a> · <a href="../ai/request-map.html#tokens">Token limits</a> · <a href="../ai/agents-dependencies.html">Model providers</a></p>
+      <p><strong>Practice this week:</strong> spend 15 minutes with an engineer filling in one box of your private map.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-which-429">Which 429?</a> · <a href="../lessons.html#ir-ttft-segments">Which TTFT pieces can you see?</a> · <a href="../lessons.html#ir-quota-peak">How close to the token limit?</a> · <a href="../lessons.html#ir-cosmos">Is Cosmos DB near its limit?</a></p>
+      <p><strong>You'll know it's working when:</strong> "the assistant is slow" turns into "the model's first word got slower" or "our prep grew" within 10 minutes.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-7" data-week="7" aria-labelledby="ir-week-7-h">
+      <h3 id="ir-week-7-h"><span class="path-num">Week 7</span> Learning From Incidents</h3>
+      <p><strong>Goal:</strong> every Sev 1–2 gets a postmortem within 5 days, and its actions land.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/postmortem-program.html">Owning Postmortems</a> · <a href="../playbooks/example-postmortem.html">Thursday's postmortem</a> · <a href="../rca/judge-an-rca.html">Judging an RCA</a></p>
+      <p><strong>Practice this week:</strong> do the 5-minute leader debrief after every incident you're part of.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ot-pm-invite">Book the next postmortem</a> · <a href="../lessons.html#ot-pm-actions">Do actions have owners?</a> · <a href="../lessons.html#ir-debrief">Your leader debrief</a> · <a href="../lessons.html#ir-blameless">Catch blame and turn it</a></p>
+      <p><strong>You'll know it's working when:</strong> your debrief notes show the same mistake less often.</p>
+      </section>
+
+      <section class="path-week" id="ir-week-8" data-week="8" aria-labelledby="ir-week-8-h">
+      <h3 id="ir-week-8-h"><span class="path-num">Week 8</span> Building the Program</h3>
+      <p><strong>Goal:</strong> incidents get better because the system around them gets better: alerts, on-call, drills, and decisions about risk.</p>
+      <p><strong>Read:</strong> <a href="../implement/incident-program.html">Incident Program</a> · <a href="../implement/alerting-paging.html">Alerting and Paging</a> · <a href="../playbooks/risk-register.html">Risk Register</a></p>
+      <p><strong>Practice this week:</strong> run a 10-minute tabletop with one SRE: "the model provider is throttling EU."</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#ir-tabletop">Run a tabletop</a> · <a href="../lessons.html#ir-noisy-alert">Kill one noisy alert</a> · <a href="../lessons.html#ir-oncall-health">How was on-call?</a> · <a href="../lessons.html#ir-mttr-trap">Don't let MTTR fool you</a></p>
+      <p><strong>You'll know it's working when:</strong> you're coaching others to lead bridges, not leading every one yourself.</p>
+      </section>
+
+      <h2 id="pm-path">The De Facto PM Path (3 Weeks)</h2>
+
+      <section class="path-week" id="pm-week-1" data-week="1" aria-labelledby="pm-week-1-h">
+      <h3 id="pm-week-1-h"><span class="path-num">Week 1</span> PACE and the Weekly Sweep</h3>
+      <p><strong>Goal:</strong> you know where every active project stands, every week, in 15 minutes.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/linear.html">Running projects in Linear</a> · <a href="../playbooks/where-are-we.html">Where are we?</a> · <a href="../playbooks/example-status.html">Monday's sweep</a></p>
+      <p><strong>Practice this week:</strong> run the 15-minute Linear sweep on Monday, then walk the board in your check-in.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#pm-stale-view">Find the quiet issues</a> · <a href="../lessons.html#pm-confidence">Ask for the confidence number</a> · <a href="../lessons.html#pm-walk-board">Walk the board</a></p>
+      <p><strong>You'll know it's working when:</strong> nothing surprises you on its due date.</p>
+      </section>
+
+      <section class="path-week" id="pm-week-2" data-week="2" aria-labelledby="pm-week-2-h">
+      <h3 id="pm-week-2-h"><span class="path-num">Week 2</span> "Waiting On" and Linear Hygiene</h3>
+      <p><strong>Goal:</strong> every wait has a name, a date, and a next step, and you sound confident asking about it.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/waiting-on.html">When they say "I'm waiting on…"</a></p>
+      <p><strong>Practice this week:</strong> on every "waiting on" you hear, ask "who exactly, since when, what did you ask for?" and "what can you move today?"</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#pm-who-exactly">Who exactly, since when?</a> · <a href="../lessons.html#pm-blocked-by">Blocked-by link and a date</a> · <a href="../lessons.html#pm-move-today">What can you move today?</a> · <a href="../lessons.html#pm-split">Split it so part ships</a></p>
+      <p><strong>You'll know it's working when:</strong> engineers bring the who, when, and next step before you ask.</p>
+      </section>
+
+      <section class="path-week" id="pm-week-3" data-week="3" aria-labelledby="pm-week-3-h">
+      <h3 id="pm-week-3-h"><span class="path-num">Week 3</span> Updates Upward, Risks, and Saying No</h3>
+      <p><strong>Goal:</strong> your VP gets an honest five-line update weekly, and stuck cross-team work becomes a decision, not endless chasing.</p>
+      <p><strong>Read:</strong> <a href="../playbooks/linear.html#update">The weekly project update</a> · <a href="../playbooks/risk-register.html">Risk register</a> · <a href="../playbooks/waiting-on.html#upward">Saying "it's late" upward</a></p>
+      <p><strong>Practice this week:</strong> post one honest amber update with a plan.</p>
+      <p><strong>Lessons:</strong> <a href="../lessons.html#pm-update">Write the update in 5 lines</a> · <a href="../lessons.html#pm-say-late">Say "this is late"</a> · <a href="../lessons.html#pm-risk">Stop chasing, log the risk</a> · <a href="../lessons.html#pm-say-no">Say no, kindly</a></p>
+      <p><strong>You'll know it's working when:</strong> your VP asks you fewer status questions because the update already answered them.</p>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+<script src="../assets/lessons.js"></script>
+<script src="../assets/home.js"></script>
+</body>
+</html>

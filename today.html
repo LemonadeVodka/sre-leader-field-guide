@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Questions for Today · SRE Leader's Field Guide</title>
+  <title>Questions for Today · Reliability Field Guide</title>
   <meta name="description" content="Exact words for the moments in your week: the incident bridge, stuck incidents, the NOC, postmortems, status check-ins, the perf meeting, peers and your VP, and when you don't know. Each with the follow-up for the weak answer.">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/style.css">
@@ -11,7 +11,7 @@
 </head>
 <body data-root="./" data-page="today">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="site-header"><a class="brand" href="./index.html">SRE Leader's Field Guide</a></header>
+<header class="site-header" id="site-header"><a class="brand" href="./index.html">Reliability Field Guide</a></header>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
   <main class="content" id="main">
@@ -34,6 +34,7 @@
       <li><p class="t-q">"What are users seeing, in one sentence?"</p><p class="t-if"><span class="t-label">If they say</span> the alert name <span class="t-label">→ ask</span> "In plain words: what can't users do, and roughly how many?"</p></li>
       <li><p class="t-q">"When did it start, and how do we know?"</p><p class="t-if"><span class="t-label">If they say</span> "A while ago" <span class="t-label">→ ask</span> "Can someone check the first error in App Insights or Grafana and post the time?"</p></li>
       <li><p class="t-q">"Is it getting worse, better, or flat in the last 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "Hard to say" <span class="t-label">→ ask</span> "Can someone post the error-rate graph in the channel every 15 minutes?"</p></li>
+      <li><p class="t-q">"Which part is slow: the edge, our prep, the model, or the stream back?"</p><p class="t-if"><span class="t-label">If they say</span> "It's just slow" <span class="t-label">→ ask</span> "Can we see those four pieces separately? (<a href="ai/request-map.html#seconds">where the seconds go</a>)"</p></li>
       <li><p class="t-q">"What changed in the last 24 hours?"</p><p class="t-if"><span class="t-label">If they say</span> "Nothing" <span class="t-label">→ ask</span> "Did anyone check Grafana annotations, deploys, config, and the model provider's status page?"</p></li>
       <li><p class="t-q">"What have we ruled out, and how?"</p><p class="t-if"><span class="t-label">If they say</span> "We've looked at everything" <span class="t-label">→ say</span> "Let's write the ruled-out list in the channel so we stop re-checking."</p></li>
       <li><p class="t-q">"What's the safest thing we can do in the next 15 minutes?"</p><p class="t-if"><span class="t-label">If they say</span> "We're still investigating" <span class="t-label">→ ask</span> "Is there a rollback, failover, or flag we could use while we investigate?"</p></li>
@@ -44,6 +45,7 @@
 What are users seeing, in one sentence?
 When did it start, and how do we know?
 Is it getting worse, better, or flat in the last 15 minutes?
+Which part is slow: the edge, our prep, the model, or the stream back?
 What changed in the last 24 hours?
 What have we ruled out, and how?
 What's the safest thing we can do in the next 15 minutes?

@@ -3,28 +3,54 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SRE Leader's Field Guide</title>
-  <meta name="description" content="A field guide for leading SRE without a software engineering background: question bank, RCA guide, meeting playbooks, and SRE concepts.">
+  <title>Reliability Field Guide</title>
+  <meta name="description" content="A daily field guide for leading reliability and incident response without a software engineering background: frameworks, questions, practical lessons, and playbooks.">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/style.css">
   <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
 </head>
 <body data-root="./" data-page="home" data-toc="deferred">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header" id="site-header"><a class="brand" href="./index.html">SRE Leader's Field Guide</a></header>
+<header class="site-header" id="site-header"><a class="brand" href="./index.html">Reliability Field Guide</a></header>
 <div class="layout">
   <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
   <main class="content" id="main">
     <article class="prose">
-      <h1>SRE Leader's Field Guide</h1>
-      <p class="summary">Lead reliability by asking the right questions. Start with the framework for the moment you're in. Every question is one you can ask without writing code.</p>
-      <a class="today-bar" href="today.html"><strong>Questions for Today</strong><span>Exact words for the bridge, postmortems, status check-ins, the perf meeting, and keeping work with its owner. Copy them before you walk in.</span></a>
+      <h1>Today</h1>
+      <p class="summary">Incident first. What to do in the moment, one practical action for today, and where you are on your path to leading incidents well.</p>
+      <p class="today-date" data-today-date hidden></p>
 
-      <h2 class="jobs-title" id="jobs">Your Three Frameworks</h2>
-      <p class="fw-intro">One word for each moment. Each letter is a question you ask out loud. Tap a letter to go deeper, <a href="playbooks/frameworks.html">print them</a>, or <a href="playbooks/example-incident.html">watch them used across one realistic week</a>.</p>
+      <section class="incident-now" aria-labelledby="incident-now-h"><span class="anchor-spot" id="right-now"></span>
+      <h2 id="incident-now-h" class="visually-hidden">In an Incident Now?</h2>
+      <a class="incident-now-main" href="today.html#bridge"><span class="incident-now-kicker">In an incident now?</span><strong>Open the bridge questions (LEAD)</strong><span>Who's leading, what users see, the safest next step, who we're waiting on.</span></a>
+      <ul class="chips" aria-label="Incident shortcuts">
+      <li><a href="playbooks/incident-driver.html">It's stuck</a></li>
+      <li><a href="playbooks/incident-driver.html#inc-noc">The NOC is lost</a></li>
+      <li><a href="playbooks/incident-driver.html#inc-exec">An exec joined</a></li>
+      <li><a href="ai/request-map.html#symptoms">Where to look</a></li>
+      <li><a href="playbooks/leader-debrief.html">Just ended: debrief</a></li>
+      </ul>
+      </section>
+
+      <div class="today-grid">
+      <section class="today-card lesson-card" aria-labelledby="lesson-h">
+      <h2 id="lesson-h">Today's 15 Minutes</h2>
+      <div class="lesson-today" data-lesson aria-live="polite">
+      <p><a href="lessons.html">Open the daily lessons</a>: one practical action a day, in your real work.</p>
+      </div>
+      </section>
+      <section class="today-card path-card" aria-labelledby="path-h">
+      <h2 id="path-h">Your Path</h2>
+      <div data-path>
+      <p><a href="learn/paths.html">The Incident Leader Path</a>: eight weeks, about 15 minutes a day.</p>
+      </div>
+      </section>
+      </div>
+
+      <h2 class="jobs-title" id="jobs">Your Frameworks</h2>
 
       <div class="fw-grid">
-      <section class="fw fw-incident" aria-labelledby="fw-lead"><span class="anchor-spot" id="right-now"></span>
+      <section class="fw fw-incident" aria-labelledby="fw-lead">
       <div class="fw-head"><h3 id="fw-lead"><span class="fw-word">LEAD</span> <span class="fw-title">Running an incident</span></h3><p class="fw-when">Join the bridge, then repeat every 15 minutes.</p></div>
       <ol class="fw-steps">
       <li><a href="playbooks/incident-driver.html#inc-owner"><span class="fw-letter" aria-hidden="true">L</span><span class="fw-text"><strong>Leader.</strong> Who's leading this? If nobody, name someone.</span></a></li>
@@ -32,7 +58,7 @@
       <li><a href="playbooks/incident-driver.html#inc-act"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Action.</strong> What's ruled out, best guess, safest step in 15 minutes?</span></a></li>
       <li><a href="playbooks/incident-driver.html#inc-waiting"><span class="fw-letter" aria-hidden="true">D</span><span class="fw-text"><strong>Deadline.</strong> Who are we waiting on, when do we escalate, next update?</span></a></li>
       </ol>
-      <p class="fw-more"><a href="playbooks/example-incident.html">See it used: Tuesday's incident</a> · <a href="playbooks/incident-driver.html">Stuck? Questions by how it's stuck</a></p>
+      <p class="fw-more"><a href="playbooks/example-incident.html">See it used: Tuesday's incident</a> · <a href="ai/request-map.html#symptoms">Not sure where to look? Request Map</a></p>
       </section>
 
       <section class="fw fw-pm" aria-labelledby="fw-safer">
@@ -50,56 +76,32 @@
       </section>
 
       <section class="fw fw-pace" aria-labelledby="fw-pace"><span class="anchor-spot" id="running-a-task"></span>
-      <div class="fw-head"><h3 id="fw-pace"><span class="fw-word">PACE</span> <span class="fw-title">Tracking people's work</span></h3><p class="fw-when">Ask each owner, then write the E line down.</p></div>
+      <div class="fw-head"><h3 id="fw-pace"><span class="fw-word">PACE</span> <span class="fw-title">Projects and status</span></h3><p class="fw-when">Ask each owner in Linear check-ins, then write the E line down.</p></div>
       <ol class="fw-steps">
       <li><a href="playbooks/where-are-we.html#decode"><span class="fw-letter" aria-hidden="true">P</span><span class="fw-text"><strong>Progress.</strong> What moved since last time?</span></a></li>
-      <li><a href="playbooks/where-are-we.html#questions"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Asks.</strong> What's blocking you? Who's waiting on you?</span></a></li>
+      <li><a href="playbooks/waiting-on.html"><span class="fw-letter" aria-hidden="true">A</span><span class="fw-text"><strong>Asks.</strong> What's blocking you? Who exactly, since when?</span></a></li>
       <li><a href="playbooks/running-a-task.html#when-its-slipping"><span class="fw-letter" aria-hidden="true">C</span><span class="fw-text"><strong>Confidence.</strong> Date confidence 1 to 10? What makes it a 9?</span></a></li>
       <li><a href="playbooks/where-are-we.html#tracking"><span class="fw-letter" aria-hidden="true">E</span><span class="fw-text"><strong>End with owners.</strong> Who does what by when; I'll check on…</span></a></li>
       </ol>
-      <p class="fw-more"><a href="playbooks/example-status.html">See it used: Monday's sweep</a> · <a href="playbooks/where-are-we.html">Run the weekly status sweep</a></p>
+      <p class="fw-more"><a href="playbooks/example-status.html">See it used: Monday's sweep</a> · <a href="playbooks/linear.html">Your weekly Linear sweep</a> · <a href="playbooks/waiting-on.html">"I'm waiting on…"</a></p>
       </section>
       </div>
 
-      <h2 id="more-jobs">Also in Your Week</h2>
-      <ul class="job-grid">
-      <li class="job"><span class="anchor-spot" id="in-a-meeting"></span>
-      <a class="job-main" href="playbooks/meeting-starter.html"><strong>Run a Meeting Fast</strong><span>A 60-second agenda, ground rules, and lines to hold the room.</span></a>
-      <ul class="chips" aria-label="Meeting shortcuts">
-      <li><a href="playbooks/meeting-starter.html#agenda-fast">60-second agenda</a></li>
-      <li><a href="playbooks/meeting-starter.html#ground-rules">Ground rules</a></li>
-      <li><a href="meetings/sre-daily.html">SRE Daily</a></li>
-      </ul></li>
-      <li class="job">
-      <a class="job-main" href="meetings/performance-engineering.html"><strong>Performance Engineering</strong><span>Lead the weekly perf meeting without being the expert.</span></a>
-      <ul class="chips" aria-label="Performance shortcuts">
-      <li><a href="meetings/performance-engineering.html#questions">Questions</a></li>
-      <li><a href="ai/latency.html">AI latency</a></li>
-      </ul></li>
-      <li class="job">
-      <a class="job-main" href="playbooks/risk-register.html"><strong>Nobody Will Fix It</strong><span>Another team won't act and you have no authority. Make the risk visible and get a decision.</span></a>
-      <ul class="chips" aria-label="Risk shortcuts">
-      <li><a href="playbooks/risk-register.html#ladder">The ladder</a></li>
-      <li><a href="playbooks/example-risk.html">See it used</a></li>
-      </ul></li>
+      <h2 id="more-jobs">Quick Access</h2>
+      <ul class="quick-row">
+      <li><span class="anchor-spot" id="in-a-meeting"></span><a class="quick-tile tone-today" href="today.html"><strong>Questions for Today</strong><span>Exact words for 9 moments</span></a></li>
+      <li><a class="quick-tile tone-map" href="ai/request-map.html"><strong>Request Map</strong><span>Where TTFT lives, what breaks</span></a></li>
+      <li><a class="quick-tile tone-projects" href="playbooks/waiting-on.html"><strong>"I'm Waiting On…"</strong><span>Confident lines that unblock</span></a></li>
+      <li><a class="quick-tile tone-projects" href="playbooks/linear.html"><strong>Linear Sweep</strong><span>15 minutes every Monday</span></a></li>
+      <li><a class="quick-tile tone-incident" href="playbooks/leader-debrief.html"><strong>Leader Debrief</strong><span>5 minutes after every incident</span></a></li>
+      <li><a class="quick-tile tone-meetings" href="playbooks/meeting-starter.html"><strong>Meeting Starter</strong><span>Agenda in 60 seconds</span></a></li>
+      <li><a class="quick-tile tone-projects" href="playbooks/risk-register.html"><strong>Risk Register</strong><span>When nobody will fix it</span></a></li>
+      <li><a class="quick-tile tone-meetings" href="meetings/performance-engineering.html"><strong>Perf Meeting</strong><span>Lead it without being the expert</span></a></li>
       </ul>
 
-      <h2 id="search">Search 280+ Questions</h2>
+      <h2 id="search">Search 290+ Questions</h2>
       <div class="search" data-qsearch>
       <p><a href="questions/incidents.html">Browse the Question Bank</a> (search needs JavaScript).</p>
-      </div>
-
-      <div class="also">
-      <p style="margin:0"><strong>Also here when you need it:</strong></p>
-      <ul class="also-list">
-      <li><a href="playbooks/running-a-task.html#kickoff">Kick off a task</a></li>
-      <li><a href="ai/request-map.html">Request map: where things live</a></li>
-      <li><a href="playbooks/vendor-demo.html">Vendor demo</a></li>
-      <li><a href="rca/day-one.html">Start an RCA</a></li>
-      <li><a href="questions/offshore-noc.html">The offshore NOC</a></li>
-      <li><a href="guides/saying-i-dont-know.html">Saying "I don't know"</a></li>
-      <li><a href="power/index.html">Power &amp; politics</a></li>
-      </ul>
       </div>
     </article>
     <nav class="pager" id="pager"></nav>
@@ -111,5 +113,7 @@
 <script src="./assets/questions.js"></script>
 <script src="./assets/site.js"></script>
 <script src="./assets/qbank.js"></script>
+<script src="./assets/lessons.js"></script>
+<script src="./assets/home.js"></script>
 </body>
 </html>

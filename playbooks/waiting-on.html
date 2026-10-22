@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>When They Say "I'm Waiting On…" · Reliability Field Guide</title>
+  <meta name="description" content="Six kinds of waiting, the confident first line for each, and how to keep work moving without chasing it yourself.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-waiting">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>When They Say "I'm Waiting On…"</h1>
+      <p class="summary">Six kinds of waiting, the confident first line for each, and how to keep work moving without chasing it yourself.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: When You Hear "I'm Waiting On…"</h2>
+      <ol>
+      <li><strong>"Who exactly, since when, and what did you ask for?"</strong></li>
+      <li><strong>"While you wait, what can you move forward today?"</strong></li>
+      <li><strong>"Can we split it so the part that doesn't depend on them ships now?"</strong></li>
+      <li><strong>"Can you add a 'blocked by' link in Linear and a date you'll follow up?"</strong></li>
+      <li><strong>"If there's no answer by [day], tell me and I'll raise it with their manager."</strong></li>
+      </ol>
+      </section>
+
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>An engineer says "I'm waiting on platform," "I'm waiting on approval," or "I'm waiting on a decision," and you want to sound confident and help them move, without taking the chasing on yourself. The trick: <strong>name the kind of wait</strong>. Each kind has a different first question and a different fix.</p>
+      </div>
+
+      <section class="fold">
+      <h2 id="kinds">Six Kinds of Waiting</h2>
+      <div class="fold-body">
+      <div class="table-wrap"><table>
+      <thead><tr><th>Waiting on…</th><th>Say first</th><th>Then</th><th>Escalate when</th></tr></thead>
+      <tbody>
+      <tr><td><strong>A person or an answer</strong></td><td>"Who exactly, since when, and what did you ask for?"</td><td>The engineer re-asks with a specific deadline. Often the first ask was vague.</td><td>No answer by the deadline: you message their manager.</td></tr>
+      <tr><td><strong>A decision</strong></td><td>"Whose decision is it? Let's get it on their calendar this week."</td><td>The engineer writes two options and a recommendation; you get the decision-maker to choose.</td><td>Decisions are yours to unblock. Don't let one wait more than a week.</td></tr>
+      <tr><td><strong>Access or approval</strong></td><td>"What's the ticket, and who approves it?"</td><td>Link the ticket in Linear. Check it has everything the approver needs.</td><td>Older than 5 working days: manager to manager.</td></tr>
+      <tr><td><strong>Another team's work</strong></td><td>"Is it on their board, with a date?"</td><td>Linear "blocked by" link to their issue. If it's not on their board, it isn't happening.</td><td>No date from them: their manager. Still nothing: the <a href="risk-register.html">risk register</a>.</td></tr>
+      <tr><td><strong>A spec or information</strong></td><td>"What's the smallest assumption we can make and move on?"</td><td>Write the assumption in the issue. Confirm it later. Build what you can.</td><td>If the assumption is risky, it's a decision: see above.</td></tr>
+      <tr><td><strong>A vendor or partner</strong></td><td>"What's their response time in the contract, and when did we ask?"</td><td>Use the vendor contact, not a general support form.</td><td>Past their contracted time: vendor management, or log a risk.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="always">Always Ask These Two</h2>
+      <div class="fold-body">
+      <ul>
+      <li><strong>"While you wait, what can you move forward today?"</strong> This keeps people productive and makes "waiting" a status, not a day off.</li>
+      <li><strong>"Can we split it so the part that doesn't depend on them ships now?"</strong> Most blocked work has a piece that isn't blocked.</li>
+      </ul>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="confident">Sound Confident, Not Anxious</h2>
+      <div class="fold-body">
+      <p>Confidence comes from structure: <strong>state it, ask one specific question, set a date</strong>. Compare:</p>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Sounds anxious</th><th>Sounds confident</th></tr></thead>
+      <tbody>
+      <tr><td>"Any update on that? No pressure…"</td><td>"[Issue] is waiting on platform since Monday. What's the next step, and by when?"</td></tr>
+      <tr><td>"Hmm, OK, let me know when you hear back."</td><td>"Follow up Thursday. If there's no answer, tell me and I'll raise it with their manager."</td></tr>
+      <tr><td>"Should we maybe escalate? I don't know…"</td><td>"It's been a week. I'm taking it to Jordan today."</td></tr>
+      <tr><td>"I'll chase them for you."</td><td>"You own the follow-up; I own the escalation if it stalls."</td></tr>
+      <tr><td>"It's probably fine."</td><td>"What would make your date confidence a 9?"</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="linear">Make Waiting Visible in Linear</h2>
+      <div class="fold-body">
+      <ol>
+      <li>Every blocked issue gets a <strong>"blocked by"</strong> link to the issue it waits on (even in another team's workspace or project).</li>
+      <li>Add a comment with <strong>who, since when, what was asked</strong>, and the follow-up date.</li>
+      <li>Use a <strong>Blocked</strong> status or label consistently, so your weekly sweep can filter it.</li>
+      <li>Review blocked issues every week in <a href="linear.html">your Linear sweep</a>.</li>
+      </ol>
+      <div class="code-card"><div class="code-head">Blocked comment (paste into the Linear issue)</div><pre>Blocked by: [linked issue or team]
+Waiting on: [person], since [date]
+Asked for: [the specific thing]
+Meanwhile: [what we're moving forward]
+Follow up: [date]. If no answer, escalate to [manager].</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="escalate">When to Stop Chasing</h2>
+      <div class="fold-body">
+      <p>Chasing more than three times isn't persistence; it's a sign the wait needs a decision. Move it up:</p>
+      <ol>
+      <li>Engineer follows up with a deadline.</li>
+      <li>You message the other team's manager (one message, specific ask, date).</li>
+      <li>Still stuck: send a "fix, fund, or accept" request and log it on the <a href="risk-register.html">risk register</a>.</li>
+      </ol>
+      <div class="code-card"><div class="code-head">Manager-to-manager message</div><pre>Hi [manager], quick one: [engineer] has been waiting since [date] on [specific thing] from your team ([link]).
+It's blocking [what], which matters because [impact].
+Could someone on your side give us a date by [day]? If it can't happen this cycle, that's OK, I just need to know so we can plan around it.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="upward">Saying "It's Late" Upward</h2>
+      <div class="fold-body">
+      <div class="code-card"><div class="code-head">Late-project note to your VP</div><pre>[Project] will be late. New date: [date].
+Why: waiting on [team] for [thing] since [date]; escalated to [manager] on [date].
+Meanwhile: [what moved anyway].
+Need from you: [nothing / a decision / a word with their director].</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="example">Example in Practice</h2>
+      <div class="fold-body">
+      <div class="callout example"><p class="callout-title">Three 'Waiting On's in One Standup</p>
+      <p><strong>Marco:</strong> "Waiting on platform for a service account." You: "Ticket number, and since when?" Two weeks. "That's past five days; I'll message Jordan today. Meanwhile, can you finish the runbook part?" <strong>Lin:</strong> "Waiting on product for the alert threshold." You: "That's a decision. Can you write two options and your pick by tomorrow? I'll get product to choose Thursday." <strong>Tomás:</strong> "Waiting on the vendor's API docs." You: "What's the smallest assumption we can make and build against?" He picks one, writes it in the issue, and keeps going.</p>
+      <p>Three different waits, three different moves. Nobody left with "OK, let me know."</p>
+      </div>
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>"Waiting on" is sometimes "stuck and embarrassed."</strong> Ask "what's the next step?" kindly; sometimes they don't know it.</li>
+      <li><strong>Some teams never answer.</strong> That's what the risk register and the decision request are for.</li>
+      <li><strong>You'll want to chase it yourself.</strong> Don't. Own the escalation, not the follow-up.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,8 +1,20 @@
-# SRE Leader's Field Guide
+# Reliability Field Guide
 
 A handbook for leading Site Reliability Engineering **without a software engineering background**. It's written for leaders who came up through IT Operations and want to build credibility with engineers, peers, leadership, and their own teams by asking the right questions.
 
 **Live site:** https://lemonadevodka.github.io/sre-leader-field-guide/
+
+## Daily Use
+
+The site is built to open every morning, with **incident response first**.
+
+- **Today** (home): "In an incident now?" opens the bridge questions. Below it, **today's 15-minute lesson** (one practical action, picked by the date), **your path week**, the LEAD / PREP→SAFER→CLOSE / PACE frameworks, and quick access.
+- **Global search** in the header (press `/`) finds pages, Request Map cards, lessons, and all questions at once.
+- **The rail** is grouped by moment: Today, Incident, Request Map, Postmortem, Projects (PACE and Linear), Meetings, and then the reference sections Ask, Learn, and People. Each moment has its own color.
+- **Daily Lessons:** 61 practical lessons (35 incident response, 18 projects and Linear, 8 leadership habits). Each lesson has a situation, a 15-minute action in your real work, the exact words to say, how to check it worked, and why it makes you better.
+- **Learning Paths:** the Incident Leader Path (8 weeks) and the De Facto PM Path (3 weeks). Set a start date, and Today shows your week.
+- **For the de facto PM:** "When they say 'I'm waiting on…'" (six kinds of waiting, each with a confident first line) and "Running Projects in Linear Without a PM" (a 15-minute weekly sweep, the hygiene to ask for, and a five-line update).
+- **After every incident:** the 5-minute Leader Debrief.
 
 ## What's Inside
 

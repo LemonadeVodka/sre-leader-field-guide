@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leader Debrief · Reliability Field Guide</title>
+  <meta name="description" content="The postmortem improves the system. This improves you. Five questions, same day, after every incident you're part of.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-debrief">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>After the Incident: Your 5-Minute Leader Debrief</h1>
+      <p class="summary">The postmortem improves the system. This improves you. Five questions, same day, after every incident you're part of.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Five Minutes, Same Day</h2>
+      <ol>
+      <li><strong>Did I get a leader named fast, and was it someone other than me?</strong></li>
+      <li><strong>Was the impact clear by minute 10?</strong></li>
+      <li><strong>Did updates go out on time, and did I protect the engineers from exec heat?</strong></li>
+      <li><strong>Did I escalate on a clock, not a feeling?</strong></li>
+      <li><strong>What's one thing I'll do differently on the next bridge?</strong></li>
+      </ol>
+      </section>
+
+      <div class="callout"><p class="callout-title">Why This Matters</p>
+      <p>The postmortem improves the system. This debrief improves <strong>you</strong>. The best incident leaders spend five minutes after every incident asking how they led, not just what broke. Do it the same day, alone, while it's fresh. Nobody else needs to see it.</p>
+      </div>
+
+      <h2 id="questions">The Debrief</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>Ask yourself</th><th>Good looks like</th><th>If not, practice</th></tr></thead>
+      <tbody>
+      <tr><td><strong>Leader:</strong> how many minutes until someone was clearly leading? Was it me, when it didn't need to be?</td><td>Under 5 minutes, and someone else led while you handled comms and escalations.</td><td><a href="incident-driver.html#inc-owner">Name the IC out loud</a></td></tr>
+      <tr><td><strong>Effect:</strong> could anyone say what users saw, how many, and since when, by minute 10?</td><td>A one-sentence impact was posted and repeated in every update.</td><td><a href="incident-driver.html#inc-impact">Impact in one sentence</a></td></tr>
+      <tr><td><strong>Action:</strong> did we mitigate first, or investigate while users suffered?</td><td>A safe mitigation was tried within 30 minutes, even before the cause was known.</td><td><a href="incident-driver.html#inc-act">Afraid to act</a></td></tr>
+      <tr><td><strong>Deadline:</strong> did I escalate on a clock? Did anything wait more than 15 minutes on a 'ping'?</td><td>Every wait had a name, a time, and a backup.</td><td><a href="incident-driver.html#inc-waiting">Waiting on someone</a></td></tr>
+      <tr><td><strong>Comms:</strong> did updates go out on schedule, and did engineers stay focused?</td><td>Updates every 15–30 minutes; execs in a side thread, not on the bridge.</td><td><a href="incident-driver.html#inc-exec">Exec heat</a></td></tr>
+      <tr><td><strong>Ownership:</strong> did I take on work that should have been someone else's?</td><td>You owned decisions, escalations, and comms; others owned the fixes.</td><td><a href="../today.html#owner">Keep it with the owner</a></td></tr>
+      <tr><td><strong>Calm:</strong> how did I sound? Did my tone help or raise the temperature?</td><td>Steady, short sentences; people asked you for direction.</td><td><a href="../guides/saying-i-dont-know.html">Saying "I don't know"</a></td></tr>
+      </tbody></table></div>
+
+      <h2 id="note">Write It Down</h2>
+      <p>Keep these in one running note. After five incidents, read them back: the patterns tell you exactly what to work on.</p>
+      <div class="code-card"><div class="code-head">Leader debrief note</div><pre>Incident: [title], [date], Sev [x]
+Minutes to a named leader: [n]   Leader: [me / name]
+Impact clear by minute 10: [yes / no]
+Mitigation tried by minute 30: [yes / no]
+Longest unanswered wait: [n] minutes, on [who]
+Updates on schedule: [yes / no]
+Work I took that wasn't mine: [none / what]
+What went well: [one thing]
+One thing to do differently next time: [one specific behavior]</pre></div>
+
+      <h2 id="patterns">What Your Notes Will Tell You</h2>
+      <div class="table-wrap"><table>
+      <thead><tr><th>If you keep seeing…</th><th>Work on</th></tr></thead>
+      <tbody>
+      <tr><td>Slow to name a leader</td><td>Say the IC line in your first 60 seconds, every time, even if it feels awkward.</td></tr>
+      <tr><td>Long waits on other teams</td><td>Agree escalation clocks with pod leads in daylight. See <a href="stuck-incident.html">the stuck clock</a>.</td></tr>
+      <tr><td>Mitigation came late</td><td>Get pre-approved levers written down for your top services.</td></tr>
+      <tr><td>You ended up doing the work</td><td>The "own decisions, not work" lines. Ask "who owns the work?" out loud.</td></tr>
+      <tr><td>Exec pressure on engineers</td><td>Move execs to a side thread in the first minute they join, with a timed update.</td></tr>
+      <tr><td>Couldn't tell where it was slow</td><td>Learn the <a href="../ai/request-map.html">Request Map</a> and get the missing timing points measured.</td></tr>
+      </tbody></table></div>
+
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>You'll skip it after a bad night.</strong> That's when it's most useful. Five minutes, even rough.</li>
+      <li><strong>You'll be harder on yourself than anyone else would be.</strong> Write one thing that went well, every time.</li>
+      <li><strong>After a month, your notes become your best coaching material</strong> for the SREs and NOC leads you're developing into incident leaders.</li>
+      </ul>
+      </div>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -105,7 +105,7 @@
     box.innerHTML =
       '<label for="q-search">Search ' + Q.length + ' questions</label>' +
       '<div class="search-row"><input type="search" id="q-search" autocomplete="off" aria-describedby="q-search-hint" placeholder="Try: stuck, escalate, agenda, status"><kbd aria-hidden="true">/</kbd></div>' +
-      '<p class="search-hint" id="q-search-hint">Results appear as you type. Press <kbd>/</kbd> to jump here.</p>' +
+      '<p class="search-hint" id="q-search-hint">Results appear as you type, with coaching notes. For pages and the map, use the search at the top.</p>' +
       '<div class="results" id="q-results" aria-live="polite"></div>';
     var input = document.getElementById("q-search"), out = document.getElementById("q-results"), timer = null;
 
@@ -134,7 +134,8 @@
       var b = e.target.closest("[data-suggest]");
       if (b) { input.value = b.getAttribute("data-suggest"); run(); input.focus(); }
     });
-    document.addEventListener("keydown", function (e) {
+    /* "/" belongs to the header's global search when it exists. */
+    if (!document.getElementById("site-search")) document.addEventListener("keydown", function (e) {
       if (e.key !== "/" || e.ctrlKey || e.metaKey || e.altKey) return;
       var t = e.target.tagName;
       if (t === "INPUT" || t === "TEXTAREA" || e.target.isContentEditable) return;
