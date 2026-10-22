@@ -17,6 +17,8 @@
     ]},
     { section: "Incident", tone: "incident", hint: "LEAD", items: [
       { id: "p-driver", href: "playbooks/incident-driver.html", title: "Move a Stuck Incident" },
+      { id: "p-cases", href: "playbooks/incident-casebook.html", title: "Incident Casebook" },
+      { id: "p-exec", href: "playbooks/exec-comms.html", title: "Executive Communications" },
       { id: "p-stuck", href: "playbooks/stuck-incident.html", title: "Stuck Incident: Deep Dive" },
       { id: "p-debrief", href: "playbooks/leader-debrief.html", title: "Leader Debrief" },
       { id: "x-incident", href: "playbooks/example-incident.html", title: "Example: Tuesday's Incident" }
@@ -112,6 +114,9 @@
     ["c-keyvault", "Keys and secrets (Key Vault)", "key vault secret certificate expiry 401"], ["c-telemetry", "Telemetry", "telemetry otel app insights grafana pagerduty pendo"]
   ];
 
+  /* Incident casebook entries, so search finds "token", "latency", "cdn", "429"... */
+  var CASE_INDEX = [["case-availability","Availability Down","PagerDuty: assistant availability below target; users can't get any answer; support tickets spike."],["case-errors","Error Rate Up","Alert: 5xx errors above threshold; some requests fail, others work."],["case-ttft","Slow to Start Answering (TTFT Up)","Users: \"it takes forever to start.\" Dashboard: time to first token at p95 well above normal."],["case-ttlt","Slow to Finish (TTLT Up)","Answers start fine but take a long time to finish, or agents take ages to complete a task."],["case-model-429","Token-Rate Errors Up (Model 429s)","Alert: 429 rate climbing on model calls; slow starts and failures at peak."],["case-gateway-429","Gateway 429s (Our Own Limits)","Users, often heavy ones, get 'too many requests' while the model is fine."],["case-cosmos","Cosmos DB Throttling","Slow first word and 'history won't load' at peak; 429s from the database."],["case-cdn","CDN or Edge Errors","Errors before requests reach us, users blocked, or answers cut off mid-sentence."],["case-region","One Region Down","Everything works except for users in one region."],["case-auth","Sudden 401/403 Spike","'Not authorized' errors start suddenly, often at a round time."],["case-safety","Safety Filter Spike","Users report normal questions being refused; filtered-request count jumps."],["case-quality","Quality Regression","No errors, but complaints: answers are worse, wrong, or odd. Thumbs-down rate rises."],["case-partner","Partner or iPaaS Failure","Bookings or actions say done but nothing happens; a recipe stopped; a partner returns errors."],["case-cost","Token Cost Spike","Token usage or spend jumps; budget alerts fire. Service may be fine for now."],["case-ondevice","On-Device Model or Update Failures","Users can't download the on-device model, or an update breaks the app."],["case-telemetry","Telemetry Gap","Dashboards go empty or flat mid-incident; alerts stop firing."]];
+
   var body = document.body;
   var root = body.getAttribute("data-root") || "./";
   var page = body.getAttribute("data-page") || "";
@@ -125,6 +130,7 @@
   var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
   var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
   var MENU = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+  var PANEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg>';
   var SEARCH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>';
 
   /* ---------- Header: menu, brand, global search, theme ---------- */
@@ -142,6 +148,7 @@
         '<div class="site-search-pop" id="site-search-pop" hidden><ul id="site-search-list" role="listbox" aria-label="Search results"></ul><p class="site-search-status" id="site-search-status" role="status"></p></div>' +
       '</div>' +
       '<button class="icon-btn search-btn" type="button" aria-label="Open search" aria-expanded="false" aria-controls="site-search-wrap">' + SEARCH + '</button>' +
+      '<a class="icon-btn panel-btn" href="' + root + 'panel.html" target="srl-panel" aria-label="Open the side panel in a narrow window" title="Side panel">' + PANEL + '</a>' +
       '<button class="icon-btn theme-btn" type="button"></button>';
     var themeBtn = header.querySelector(".theme-btn");
     var isDark = function () {
@@ -162,6 +169,13 @@
       paintTheme();
     });
     menuBtn = header.querySelector(".menu-btn");
+    /* The side panel opens as its own narrow window, to sit beside a bridge or Teams. Phones just follow the link. */
+    document.addEventListener("click", function (e) {
+      var link = e.target.closest(".panel-btn, [data-open-panel]");
+      if (!link || (window.matchMedia && window.matchMedia("(max-width: 640px)").matches)) return;
+      var w = window.open(link.href, "srl-panel", "popup,width=420,height=900");
+      if (w) { e.preventDefault(); try { w.focus(); } catch (err) {} }
+    });
     searchInput = header.querySelector("#site-search");
     searchBox = header.querySelector("#site-search-wrap");
     searchBtn = header.querySelector(".search-btn");
@@ -244,6 +258,7 @@
       var terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
       results = [];
       NAV.forEach(function (s) { s.links.forEach(function (i) { if (match(i.title + " " + s.section + " " + s.hint, terms)) results.push({ kind: "Page", tone: s.tone, label: i.title, sub: s.section, href: root + i.href }); }); });
+      CASE_INDEX.forEach(function (c) { if (match(c[1] + " " + c[2] + " incident case", terms)) results.push({ kind: "Case", tone: "incident", label: c[1], sub: "Incident Casebook", href: root + "playbooks/incident-casebook.html#" + c[0] }); });
       MAP_INDEX.forEach(function (m) { if (match(m[1] + " " + m[2], terms)) results.push({ kind: "Map", tone: "map", label: m[1], sub: "Request Map card", href: root + "ai/request-map.html#" + m[0] }); });
       (window.SRL_LESSONS || []).forEach(function (l) { if (match([l.title, l.situation, l.todo, l.say, l.check, l.why, l.link.t].join(" "), terms)) results.push({ kind: "Lesson", tone: "today", label: l.title, sub: l.type + " · daily lesson", href: root + "lessons.html#" + l.id }); });
       var qn = 0;

@@ -585,3 +585,39 @@ body[data-tone] .content { box-shadow: inset 0 4px 0 var(--page-tone); }
 .lesson-today .lesson-dl { grid-template-columns: 1fr; gap: 0; }
 .lesson-today .lesson-dl dt { margin-top: 8px; }
 .lesson-today .lesson-dl dt:first-child { margin-top: 0; }
+
+/* ---------- Side panel (narrow companion window) ---------- */
+.panel-body { font-size: 16px; }
+.panel-bar { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px; background: var(--header-bg); border-bottom: 1px solid var(--header-line); }
+.panel-bar .brand { color: var(--header-ink); font-size: 15px; }
+.panel-bar .brand svg { width: 24px; height: 24px; }
+.panel-full { margin-left: auto; color: var(--header-ink); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; }
+.panel-bar .icon-btn { background: transparent; color: var(--header-ink); border-color: var(--header-line); width: 40px; height: 40px; }
+.panel-bar :focus-visible { outline-color: var(--logo-bg); }
+.panel-main { max-width: 640px; margin: 0 auto; padding: 10px 12px 40px; }
+.panel-tip { font-size: 13px; color: var(--ink-2); margin: 4px 0 10px; }
+.panel-tablist { position: sticky; top: 52px; z-index: 20; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; background: var(--bg); padding: 6px 0; margin: 0 0 8px; }
+.panel-tabbtn { font: 600 13px/1.2 var(--font); min-height: 44px; padding: 6px 4px; border: 1px solid var(--line); border-bottom: 3px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink-2); cursor: pointer; }
+.panel-tabbtn[aria-selected="true"] { color: var(--ink); background: var(--tb); border-color: var(--t); border-bottom-color: var(--t); }
+.panel-tabs:not(.is-tabbed) .panel-tab { margin-bottom: 28px; }
+.panel-tab h2 { font-size: 20px; margin: 8px 0; }
+.panel-tab h3 { font-size: 13px; letter-spacing: .07em; text-transform: uppercase; color: var(--t); margin: 16px 0 6px; }
+.panel-tab:focus-visible { outline-offset: 4px; }
+.p-list { list-style: none; padding: 0; margin: 0 0 10px; }
+.p-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: start; padding: 8px 0; border-top: 1px solid var(--line); }
+.p-line:first-child { border-top: 0; }
+.p-text { font-weight: 600; line-height: 1.4; }
+.p-follow { grid-column: 1; font-size: 14px; color: var(--ink-2); }
+.p-copy { grid-column: 2; grid-row: 1 / span 2; font: 600 13px var(--font); min-height: 36px; min-width: 52px; border: 1px solid var(--line-strong); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.p-copy:hover { border-color: var(--accent); }
+.p-rhythm, .p-rule { font-size: 15px; background: var(--tb); border-left: 3px solid var(--t); padding: 8px 10px; border-radius: 0 6px 6px 0; }
+.p-case { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 0 10px; margin: 6px 0; }
+.p-case summary { min-height: 44px; display: flex; align-items: center; font-weight: 600; cursor: pointer; }
+.p-case[open] { padding-bottom: 8px; }
+.p-lever { font-size: 14px; }
+.p-more { font-size: 14px; margin: 8px 0 0; }
+.panel-main .code-card pre { font-size: 13px; }
+.incident-now-panel { margin: 10px 0 0; font-size: 14px; color: var(--ink-2); }
+.panel-btn { display: inline-grid; }
+@media (max-width: 400px) { .panel-tabbtn { font-size: 12px; } }
+@media print { .panel-bar, .panel-tablist, .p-copy { display: none !important; } .panel-tab[hidden] { display: block !important; } }

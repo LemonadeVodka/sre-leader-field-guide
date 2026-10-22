@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Side Panel · Reliability Field Guide</title>
+  <meta name="description" content="A narrow companion window for the bridge: incident questions, exec comms, projects, and meetings, with copy buttons.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="./" data-page="panel" class="panel-body">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="panel-bar">
+  <a class="brand" href="index.html" target="_blank" rel="noopener"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--logo-bg)"/><path d="M5 18h5l3-8 4 13 3-9 2 4h5" fill="none" stroke="var(--logo-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Side Panel</span><span class="visually-hidden"> (opens the full guide in a new tab)</span></a>
+  <a class="panel-full" href="index.html" target="_blank" rel="noopener">Full guide<span class="visually-hidden"> (opens in a new tab)</span></a>
+  <button class="icon-btn theme-btn" type="button" aria-label="Switch theme"></button>
+</header>
+<main class="panel-main" id="main">
+  <h1 class="visually-hidden">Side Panel</h1>
+<p class="panel-tip">Keep this window beside your bridge or Teams. On Windows, drag it to the screen edge or press Win + ← / →. Links open the full guide in a new tab.</p>
+<div class="panel-tabs" data-panel>
+
+<section class="panel-tab tone-incident" id="incident" aria-labelledby="incident-h">
+<h2 id="incident-h">Incident</h2>
+<h3>LEAD, then every 15 minutes</h3>
+<ol class="p-list p-lead">
+<li class="p-line" data-copy="Who's leading this?"><span class="p-text">Who's leading this?</span><span class="p-follow">If nobody: "[Name], can you lead until the owning team joins? I'll handle exec updates."</span></li>
+<li class="p-line" data-copy="What are users seeing, how many, since when, and is it getting worse?"><span class="p-text">What are users seeing, how many, since when, and is it getting worse?</span><span class="p-follow">If they read the alert: "In plain words, what can't users do?"</span></li>
+<li class="p-line" data-copy="What's ruled out, what's our best guess, and what's the safest thing we can do in 15 minutes?"><span class="p-text">What's ruled out, what's our best guess, and what's the safest thing we can do in 15 minutes?</span><span class="p-follow">If "still investigating": "Is there a rollback, failover, or flag we could use meanwhile?"</span></li>
+<li class="p-line" data-copy="Who are we waiting on, did they acknowledge in PagerDuty, and when's the next update?"><span class="p-text">Who are we waiting on, did they acknowledge in PagerDuty, and when's the next update?</span><span class="p-follow">If "pinged in Slack": "Page them now. No ack in 10 minutes, I'll call their manager."</span></li>
+</ol>
+<p class="p-rhythm"><strong>Every 15 min:</strong> what changed · what's next · who are we waiting on · severity still right?</p>
+<h3>Which kind of incident?</h3>
+<div class="p-cases"><details class="p-case" id="p-case-availability"><summary>Availability Down</summary>
+<ol class="p-list"><li class="p-line" data-copy="Who's leading, and is the owning pod on the bridge?"><span class="p-text">Who's leading, and is the owning pod on the bridge?</span></li><li class="p-line" data-copy="Is it everyone, or one region, app, or version?"><span class="p-text">Is it everyone, or one region, app, or version?</span></li><li class="p-line" data-copy="What changed in the last 24 hours, and can we roll it back?"><span class="p-text">What changed in the last 24 hours, and can we roll it back?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the last deploy or config; fail over the region; turn off the newest feature flag. Usually the owning pod or platform on-call.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 1: the assistant is unavailable for [most / all] users since [time]. We're [rolling back / failing over]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-availability" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-errors"><summary>Error Rate Up</summary>
+<ol class="p-list"><li class="p-line" data-copy="What percentage of requests fail, and is it rising?"><span class="p-text">What percentage of requests fail, and is it rising?</span></li><li class="p-line" data-copy="Did anything deploy or change in the hour before it started?"><span class="p-text">Did anything deploy or change in the hour before it started?</span></li><li class="p-line" data-copy="Which dependency do the errors point to?"><span class="p-text">Which dependency do the errors point to?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the change; switch a feature flag off; fall back to a backup model or skip a failing tool.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2: about [N]% of assistant requests are failing since [time]. Likely tied to [change / dependency]. We're [action]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-errors" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-ttft"><summary>Slow to Start Answering (TTFT Up)</summary>
+<ol class="p-list"><li class="p-line" data-copy="How slow at p95, versus normal, and for which region?"><span class="p-text">How slow at p95, versus normal, and for which region?</span></li><li class="p-line" data-copy="Which piece grew: edge, our prep, the model, or stream back?"><span class="p-text">Which piece grew: edge, our prep, the model, or stream back?</span></li><li class="p-line" data-copy="Did a prompt, model version, or tool change recently?"><span class="p-text">Did a prompt, model version, or tool change recently?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Shift traffic to a less busy region or deployment; turn off a slow tool or feature; keep more servers warm.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2/3: the assistant is slower to start answering ([N]s vs [N]s normal) since [time]. Cause: [model load / our prep]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-ttft" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-ttlt"><summary>Slow to Finish (TTLT Up)</summary>
+<ol class="p-list"><li class="p-line" data-copy="Is it all answers, or ones that use tools or agents?"><span class="p-text">Is it all answers, or ones that use tools or agents?</span></li><li class="p-line" data-copy="Did answers get longer, or did tool calls per request go up?"><span class="p-text">Did answers get longer, or did tool calls per request go up?</span></li><li class="p-line" data-copy="Is one tool or partner much slower than usual?"><span class="p-text">Is one tool or partner much slower than usual?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Cap tool calls per request; time out a slow tool and answer without it; roll back the prompt.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 3: answers are taking longer to complete ([N]s vs [N]s) since [time], mainly when [tools / agents] are used. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-ttlt" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-model-429"><summary>Token-Rate Errors Up (Model 429s)</summary>
+<ol class="p-list"><li class="p-line" data-copy="Which 429 is it: gateway, model, or Cosmos DB?"><span class="p-text">Which 429 is it: gateway, model, or Cosmos DB?</span></li><li class="p-line" data-copy="How close to our token limit are we, and in which region?"><span class="p-text">How close to our token limit are we, and in which region?</span></li><li class="p-line" data-copy="Are retries making it worse?"><span class="p-text">Are retries making it worse?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Shift traffic to another region or deployment; reduce retries; rate-limit the heaviest users; request more quota (slow).</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2: we're hitting the model provider's capacity limit in [region], so about [N]% of requests fail at peak. We're [shifting traffic / reducing load]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-model-429" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-gateway-429"><summary>Gateway 429s (Our Own Limits)</summary>
+<ol class="p-list"><li class="p-line" data-copy="Did a gateway policy change recently?"><span class="p-text">Did a gateway policy change recently?</span></li><li class="p-line" data-copy="Is it a few heavy users, or many?"><span class="p-text">Is it a few heavy users, or many?</span></li><li class="p-line" data-copy="Is a client version sending too many requests?"><span class="p-text">Is a client version sending too many requests?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the policy; raise the limit temporarily; block the misbehaving client version.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 3: some users are being rate-limited by our own gateway since [time] after [change]. We're [rolling back]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-gateway-429" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-cosmos"><summary>Cosmos DB Throttling</summary>
+<ol class="p-list"><li class="p-line" data-copy="Is normalized RU consumption near 100%?"><span class="p-text">Is normalized RU consumption near 100%?</span></li><li class="p-line" data-copy="Is one partition hot?"><span class="p-text">Is one partition hot?</span></li><li class="p-line" data-copy="Did a change increase how much we read per request?"><span class="p-text">Did a change increase how much we read per request?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Raise RU capacity (autoscale); roll back the change; reduce history loaded per request.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2/3: conversation history is slow or failing to load at peak because our database is at capacity. We're [raising capacity / rolling back]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-cosmos" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-cdn"><summary>CDN or Edge Errors</summary>
+<ol class="p-list"><li class="p-line" data-copy="Is it slow or failing at the edge, or behind it?"><span class="p-text">Is it slow or failing at the edge, or behind it?</span></li><li class="p-line" data-copy="Did caching, WAF rules, or routing change?"><span class="p-text">Did caching, WAF rules, or routing change?</span></li><li class="p-line" data-copy="Do certificates or DNS expire around now?"><span class="p-text">Do certificates or DNS expire around now?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the WAF or routing change; renew the certificate; fail over the origin; raise the streaming timeout.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev [x]: some users can't reach the assistant [or answers are cut off] due to an edge configuration issue since [time]. Fix: [action]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-cdn" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-region"><summary>One Region Down</summary>
+<ol class="p-list"><li class="p-line" data-copy="How many users does that region serve?"><span class="p-text">How many users does that region serve?</span></li><li class="p-line" data-copy="Can we fail over now, and who approves it?"><span class="p-text">Can we fail over now, and who approves it?</span></li><li class="p-line" data-copy="Is the provider's or Azure's status page reporting it?"><span class="p-text">Is the provider's or Azure's status page reporting it?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Fail over to another region; accept slower responses in the meantime.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2: users in [region] can't use the assistant since [time]. We're failing over to [region]; they may see slower responses. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-region" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-auth"><summary>Sudden 401/403 Spike</summary>
+<ol class="p-list"><li class="p-line" data-copy="Did it start at a round time, like midnight?"><span class="p-text">Did it start at a round time, like midnight?</span></li><li class="p-line" data-copy="What expired, or what permission changed?"><span class="p-text">What expired, or what permission changed?</span></li><li class="p-line" data-copy="Is it all users, or one feature or partner?"><span class="p-text">Is it all users, or one feature or partner?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Rotate or renew the expired key or certificate; roll back the permission change; reconnect the partner.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2: [feature] is failing with sign-in errors since [time], likely an expired credential. We're renewing it. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-auth" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-safety"><summary>Safety Filter Spike</summary>
+<ol class="p-list"><li class="p-line" data-copy="How many requests are blocked, versus normal?"><span class="p-text">How many requests are blocked, versus normal?</span></li><li class="p-line" data-copy="Did a filter, prompt, or model setting change?"><span class="p-text">Did a filter, prompt, or model setting change?</span></li><li class="p-line" data-copy="Are the blocked requests actually harmless?"><span class="p-text">Are the blocked requests actually harmless?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the setting change (with the Responsible AI owner's agreement).</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 3: some normal requests are being refused by our safety filters since [time]. We're reviewing [the change] with the responsible AI team. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-safety" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-quality"><summary>Quality Regression</summary>
+<ol class="p-list"><li class="p-line" data-copy="What's changed in thumbs-down or complaints, and since when?"><span class="p-text">What's changed in thumbs-down or complaints, and since when?</span></li><li class="p-line" data-copy="Did the model, prompt, or index change?"><span class="p-text">Did the model, prompt, or index change?</span></li><li class="p-line" data-copy="Can we compare a few bad answers before and after?"><span class="p-text">Can we compare a few bad answers before and after?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the prompt or model version; switch off the flag; rebuild the index.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 3: we're seeing lower answer quality since [time], likely from [change]. We're rolling it back. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-quality" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-partner"><summary>Partner or iPaaS Failure</summary>
+<ol class="p-list"><li class="p-line" data-copy="Which partner or action, and how many users?"><span class="p-text">Which partner or action, and how many users?</span></li><li class="p-line" data-copy="Did a connection expire, or did the partner change something?"><span class="p-text">Did a connection expire, or did the partner change something?</span></li><li class="p-line" data-copy="Who do we contact at the partner, and what does our contract say?"><span class="p-text">Who do we contact at the partner, and what does our contract say?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Reconnect; pause the feature and say 'partner unavailable'; contact the partner.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 3: [partner feature] isn't completing since [time] due to [partner issue]. We've paused it and contacted [partner]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-partner" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-cost"><summary>Token Cost Spike</summary>
+<ol class="p-list"><li class="p-line" data-copy="How much above normal, and since when?"><span class="p-text">How much above normal, and since when?</span></li><li class="p-line" data-copy="Did prompts, context, or tool calls per request grow?"><span class="p-text">Did prompts, context, or tool calls per request grow?</span></li><li class="p-line" data-copy="Is it a few users or clients, or everyone?"><span class="p-text">Is it a few users or clients, or everyone?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Roll back the change; cap tool calls; rate-limit abusive clients; set a spend alert.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Cost alert: token spend is [N]x normal since [time], driven by [cause]. Users aren't affected yet. We're [action]. I'll confirm by [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-cost" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-ondevice"><summary>On-Device Model or Update Failures</summary>
+<ol class="p-list"><li class="p-line" data-copy="Which app or model versions, and which devices?"><span class="p-text">Which app or model versions, and which devices?</span></li><li class="p-line" data-copy="Can we pause the rollout?"><span class="p-text">Can we pause the rollout?</span></li><li class="p-line" data-copy="Is the CDN serving the files, and what's the cache hit ratio?"><span class="p-text">Is the CDN serving the files, and what's the cache hit ratio?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Pause or roll back the staged rollout; fix CDN caching; fall back to the cloud path.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>Sev 2/3: [some] users on [version] can't [download / use] [feature] since [time]. We've paused the rollout. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-ondevice" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details>
+<details class="p-case" id="p-case-telemetry"><summary>Telemetry Gap</summary>
+<ol class="p-list"><li class="p-line" data-copy="Is the system down, or just our view of it? What do users and support say?"><span class="p-text">Is the system down, or just our view of it? What do users and support say?</span></li><li class="p-line" data-copy="Is ingestion working, and did instrumentation change?"><span class="p-text">Is ingestion working, and did instrumentation change?</span></li><li class="p-line" data-copy="What other signal can we use meanwhile: support tickets, synthetic checks, Pendo?"><span class="p-text">What other signal can we use meanwhile: support tickets, synthetic checks, Pendo?</span></li></ol>
+<p class="p-lever"><strong>Lever:</strong> Use backup signals (support, synthetic tests); fix ingestion; roll back instrumentation changes.</p>
+<div class="code-card"><div class="code-head">Exec line</div><pre>We've lost part of our monitoring since [time]. Users [are / aren't] affected as far as we can tell from [backup signal]. Next update [time].</pre></div>
+<p class="p-more"><a href="playbooks/incident-casebook.html#case-telemetry" target="_blank" rel="noopener">Full case<span class="visually-hidden"> (opens in a new tab)</span></a></p></details></div>
+<h3>How is it stuck?</h3>
+<ul class="p-list p-stuck">
+<li class="p-line" data-copy="Nobody owns it: &quot;Who's incident commander right now?&quot;"><span class="p-text">Nobody owns it: "Who's incident commander right now?"</span></li>
+<li class="p-line" data-copy="Impact unclear: &quot;What are users seeing, in one sentence?&quot;"><span class="p-text">Impact unclear: "What are users seeing, in one sentence?"</span></li>
+<li class="p-line" data-copy="Going in circles: &quot;What have we ruled out, and how?&quot;"><span class="p-text">Going in circles: "What have we ruled out, and how?"</span></li>
+<li class="p-line" data-copy="No theory: &quot;If you had to bet, where is it?&quot;"><span class="p-text">No theory: "If you had to bet, where is it?"</span></li>
+<li class="p-line" data-copy="Waiting on someone: &quot;Who exactly, when, and did they acknowledge?&quot;"><span class="p-text">Waiting on someone: "Who exactly, when, and did they acknowledge?"</span></li>
+<li class="p-line" data-copy="Afraid to act: &quot;What's worse: acting and being wrong, or waiting?&quot;"><span class="p-text">Afraid to act: "What's worse: acting and being wrong, or waiting?"</span></li>
+<li class="p-line" data-copy="The NOC is lost: &quot;In your own words, what have you seen?&quot;"><span class="p-text">The NOC is lost: "In your own words, what have you seen?"</span></li>
+<li class="p-line" data-copy="Which piece is slow: the edge, our prep, the model, or the stream back?"><span class="p-text">Which piece is slow: the edge, our prep, the model, or the stream back?</span></li>
+</ul>
+<div class="code-card"><div class="code-head">Manager-to-manager escalation</div><pre>Hi [name], Sev [x] on [service], [impact] since [time].
+Your on-call was paged at [time]; no acknowledgement yet.
+Can you get someone on the bridge in the next 10 minutes? [link]</pre></div>
+<div class="code-card"><div class="code-head">One clear instruction to the NOC</div><pre>[Name], your next step:
+1. Page [team] on-call in PagerDuty now.
+2. Post impact, start time, what you tried, and the graph link.
+3. Tell me when they acknowledge.</pre></div>
+<p class="p-more"><a href="playbooks/incident-driver.html" target="_blank" rel="noopener">Move a Stuck Incident<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="playbooks/incident-casebook.html" target="_blank" rel="noopener">Incident Casebook<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="ai/request-map.html" target="_blank" rel="noopener">Request Map<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+</section>
+
+<section class="panel-tab tone-pm" id="exec" aria-labelledby="exec-h">
+<h2 id="exec-h">Exec Comms</h2>
+<p class="p-rule"><strong>One voice, on a clock, execs in a thread.</strong> Impact · what we're doing · confidence · next update time.</p>
+<div class="code-card"><div class="code-head">1. First notice (within 10 min)</div><pre>Sev [x]: [what users can't do], [how many], since [time].
+What we know: [one line / investigating].
+Owner: [team]. Lead: [name]. I'm handling updates.
+Next update: [time].</pre></div>
+<div class="code-card"><div class="code-head">2. Regular update (every 15-30 min)</div><pre>Sev [x] update, [time]: impact [better / worse / same].
+Now: [what we're trying], owner [team].
+Confidence: [low / medium / high].
+Next update: [time].</pre></div>
+<div class="code-card"><div class="code-head">3. Mitigated</div><pre>Mitigated at [time]: [what users see now].
+Still at risk: [what].
+Watching until [time] before calling it resolved.</pre></div>
+<div class="code-card"><div class="code-head">4. Resolved</div><pre>Resolved at [time]. Impact: [who], [how many], [duration].
+Cause so far: [one line]. Postmortem: [date], owner [name].</pre></div>
+<div class="code-card"><div class="code-head">5. Next-day readout</div><pre>[Incident]: [impact in one line].
+Why: [2-3 factors].
+Done: [mitigation in place]. Next: postmortem [date].
+Need from you: [nothing / a decision].</pre></div>
+<h3>When they ask…</h3>
+<ul class="p-list p-hard">
+<li class="p-line" data-copy="&quot;When will it be fixed?&quot; → &quot;I can't give a reliable ETA yet. Decision on [next step] by [time]; I'll update you then.&quot;"><span class="p-text">"When will it be fixed?" → "I can't give a reliable ETA yet. Decision on [next step] by [time]; I'll update you then."</span></li>
+<li class="p-line" data-copy="&quot;Why did this happen?&quot; → &quot;What we know so far is [fact]. The full why comes from the postmortem.&quot;"><span class="p-text">"Why did this happen?" → "What we know so far is [fact]. The full why comes from the postmortem."</span></li>
+<li class="p-line" data-copy="&quot;Whose fault is it?&quot; → &quot;We'll look at what our systems allowed, blamelessly. Right now we're fixing it.&quot;"><span class="p-text">"Whose fault is it?" → "We'll look at what our systems allowed, blamelessly. Right now we're fixing it."</span></li>
+<li class="p-line" data-copy="&quot;Is it fixed?&quot; → &quot;Mitigated: users are OK. Resolved after [watch period].&quot;"><span class="p-text">"Is it fixed?" → "Mitigated: users are OK. Resolved after [watch period]."</span></li>
+<li class="p-line" data-copy="&quot;Will it happen again?&quot; → &quot;Not the same way if the fixes land. Owned, dated actions within a week.&quot;"><span class="p-text">"Will it happen again?" → "Not the same way if the fixes land. Owned, dated actions within a week."</span></li>
+<li class="p-line" data-copy="&quot;Should we tell customers?&quot; → &quot;Here's the impact. [Support / comms] decides; I've sent them the facts.&quot;"><span class="p-text">"Should we tell customers?" → "Here's the impact. [Support / comms] decides; I've sent them the facts."</span></li>
+<li class="p-line" data-copy="&quot;Do you need more people?&quot; → &quot;Yes: [team], because [reason].&quot; or &quot;No, the right people are on it.&quot;"><span class="p-text">"Do you need more people?" → "Yes: [team], because [reason]." or "No, the right people are on it."</span></li>
+<li class="p-line" data-copy="&quot;Why didn't SRE catch it?&quot; → &quot;We detected it at [time]. Fixing needed [team]'s access; that's a gap I'll raise.&quot;"><span class="p-text">"Why didn't SRE catch it?" → "We detected it at [time]. Fixing needed [team]'s access; that's a gap I'll raise."</span></li>
+</ul>
+<p class="p-more"><a href="playbooks/exec-comms.html" target="_blank" rel="noopener">Executive Communications, in full<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+</section>
+
+<section class="panel-tab tone-projects" id="projects" aria-labelledby="projects-h">
+<h2 id="projects-h">Projects</h2>
+<h3>PACE, for each owner</h3>
+<ol class="p-list">
+<li class="p-line" data-copy="What moved since last time?"><span class="p-text">What moved since last time?</span><span class="p-follow">If "working on it": "What's the next thing that will be done, and when?"</span></li>
+<li class="p-line" data-copy="What's blocking you, or who are you waiting on?"><span class="p-text">What's blocking you, or who are you waiting on?</span><span class="p-follow">If "waiting on them": "Who exactly, since when, and what did you ask for?"</span></li>
+<li class="p-line" data-copy="How confident are you in the date, 1 to 10?"><span class="p-text">How confident are you in the date, 1 to 10?</span><span class="p-follow">If under 7: "What would make it a 9?"</span></li>
+<li class="p-line" data-copy="So: [owner] does [next step] by [date]. I'll check on [date]."><span class="p-text">So: [owner] does [next step] by [date]. I'll check on [date].</span></li>
+</ol>
+<h3>"I'm waiting on…"</h3>
+<ul class="p-list">
+<li class="p-line" data-copy="A person: &quot;Who exactly, since when, and what did you ask for?&quot;"><span class="p-text">A person: "Who exactly, since when, and what did you ask for?"</span></li>
+<li class="p-line" data-copy="A decision: &quot;Whose decision is it? Let's get it on their calendar this week.&quot;"><span class="p-text">A decision: "Whose decision is it? Let's get it on their calendar this week."</span></li>
+<li class="p-line" data-copy="Access or approval: &quot;What's the ticket, and who approves it?&quot;"><span class="p-text">Access or approval: "What's the ticket, and who approves it?"</span></li>
+<li class="p-line" data-copy="Another team: &quot;Is it on their board, with a date?&quot;"><span class="p-text">Another team: "Is it on their board, with a date?"</span></li>
+<li class="p-line" data-copy="Information: &quot;What's the smallest assumption we can make and move on?&quot;"><span class="p-text">Information: "What's the smallest assumption we can make and move on?"</span></li>
+<li class="p-line" data-copy="A vendor: &quot;What's their response time in the contract?&quot;"><span class="p-text">A vendor: "What's their response time in the contract?"</span></li>
+<li class="p-line" data-copy="Always: &quot;While you wait, what can you move forward today?&quot;"><span class="p-text">Always: "While you wait, what can you move forward today?"</span></li>
+<li class="p-line" data-copy="Always: &quot;Can we split it so the part that doesn't depend on them ships now?&quot;"><span class="p-text">Always: "Can we split it so the part that doesn't depend on them ships now?"</span></li>
+</ul>
+<div class="code-card"><div class="code-head">Linear blocked comment</div><pre>Blocked by: [linked issue or team]
+Waiting on: [person], since [date]
+Asked for: [the specific thing]
+Meanwhile: [what we're moving]
+Follow up: [date]. If no answer, escalate to [manager].</pre></div>
+<div class="code-card"><div class="code-head">5-line project update</div><pre>Health: [on track / at risk / off track]
+Moved: [this week]
+Next: [next week]
+Blocked: [what, on whom, since when, escalated to]
+Date: [target], confidence [n]/10</pre></div>
+<div class="code-card"><div class="code-head">Manager-to-manager unblock</div><pre>Hi [manager], [engineer] has been waiting since [date] on [thing] from your team ([link]).
+It's blocking [what]. Could someone give us a date by [day]?</pre></div>
+<div class="code-card"><div class="code-head">"It's late" to your VP</div><pre>[Project] will be late. New date: [date].
+Why: [one reason]. Meanwhile: [what moved].
+Need from you: [nothing / a decision].</pre></div>
+<p class="p-more"><a href="playbooks/waiting-on.html" target="_blank" rel="noopener">Waiting On, in full<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="playbooks/linear.html" target="_blank" rel="noopener">Linear sweep<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+</section>
+
+<section class="panel-tab tone-meetings" id="meetings" aria-labelledby="meetings-h">
+<h2 id="meetings-h">Meetings</h2>
+<div class="code-card"><div class="code-head">60-second agenda</div><pre>[Meeting]: [date], [length] min
+Purpose: [one line]
+Decision: [the one decision we need today]
+[N] min  context
+[N] min  discussion
+[N] min  decide, owners, dates
+Notes: [name]</pre></div>
+<h3>Open and hold the room</h3>
+<ul class="p-list">
+<li class="p-line" data-copy="Opening: &quot;We have [30] minutes. The one decision we need is [X]. Anything that must be covered?&quot;"><span class="p-text">Opening: "We have [30] minutes. The one decision we need is [X]. Anything that must be covered?"</span></li>
+<li class="p-line" data-copy="Rambling: &quot;Let me pause you. What's the one thing you need from this group?&quot;"><span class="p-text">Rambling: "Let me pause you. What's the one thing you need from this group?"</span></li>
+<li class="p-line" data-copy="Tangent: &quot;Important. Let's park it and give it time. Who owns the follow-up?&quot;"><span class="p-text">Tangent: "Important. Let's park it and give it time. Who owns the follow-up?"</span></li>
+<li class="p-line" data-copy="Quiet person: &quot;[Name], you've been close to this. What are we missing?&quot;"><span class="p-text">Quiet person: "[Name], you've been close to this. What are we missing?"</span></li>
+<li class="p-line" data-copy="Blame: &quot;Let's look at what the system allowed, not who. What made that easy to get wrong?&quot;"><span class="p-text">Blame: "Let's look at what the system allowed, not who. What made that easy to get wrong?"</span></li>
+<li class="p-line" data-copy="No decision: &quot;Who's the decision-maker? If not today, what do you need, and by when?&quot;"><span class="p-text">No decision: "Who's the decision-maker? If not today, what do you need, and by when?"</span></li>
+<li class="p-line" data-copy="Handed the work: &quot;Happy to make the call. Who owns the work?&quot;"><span class="p-text">Handed the work: "Happy to make the call. Who owns the work?"</span></li>
+<li class="p-line" data-copy="Close: &quot;Five minutes left. What did we decide, who owns what, by when?&quot;"><span class="p-text">Close: "Five minutes left. What did we decide, who owns what, by when?"</span></li>
+</ul>
+<details class="p-case"><summary>Ground rules: postmortem</summary><div class="code-card"><div class="code-head">Postmortem ground rules</div><pre>1. Blameless: how our system let this happen, not who.
+2. Facts first; if not sure, say so.
+3. We leave with a few actions: one owner, a date, what done means.</pre></div></details>
+<details class="p-case"><summary>Ground rules: incident bridge</summary><div class="code-card"><div class="code-head">Bridge ground rules</div><pre>1. [Name] is incident commander; the IC decides.
+2. One conversation at a time; side chats in a thread.
+3. Say what you'll change before changing it.
+4. I'm handling exec updates every 15 minutes.</pre></div></details>
+<details class="p-case"><summary>Ground rules: SRE Daily and perf meeting</summary><div class="code-card"><div class="code-head">Daily and perf ground rules</div><pre>Daily: decisions and blockers, not status; over 2 minutes goes to the parking lot; end on time.
+Perf: start with the user-facing number; every regression gets a cause and an owner; leave with one owned fix.</pre></div></details>
+<h3>Postmortems</h3>
+<ul class="p-list">
+<li class="p-line" data-copy="PREP: Pick (author, date) · Request (invite, draft, NOC timeline) · Evidence (check the draft) · Pre-wire"><span class="p-text">PREP: Pick (author, date) · Request (invite, draft, NOC timeline) · Evidence (check the draft) · Pre-wire</span></li>
+<li class="p-line" data-copy="SAFER: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions"><span class="p-text">SAFER: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions</span></li>
+<li class="p-line" data-copy="CLOSE: Capture notes · Log actions · Own the follow-up · Share · End it at 30 days"><span class="p-text">CLOSE: Capture notes · Log actions · Own the follow-up · Share · End it at 30 days</span></li>
+</ul>
+<div class="code-card"><div class="code-head">Postmortem notes</div><pre>Postmortem: [incident], [dates]
+Impact: [who, how many, how long]
+What let it happen: [factor]; [factor]; [factor]
+Actions: [action], owner [name], due [date], done means [evidence]
+Not committed: [action], decision owner [name], risk [R-xx]</pre></div>
+<p class="p-more"><a href="playbooks/meeting-starter.html" target="_blank" rel="noopener">Meeting Starter<span class="visually-hidden"> (opens in a new tab)</span></a> · <a href="playbooks/postmortem-program.html" target="_blank" rel="noopener">Owning Postmortems<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+</section>
+
+</div>
+</main>
+<script src="assets/store.js"></script>
+<script src="assets/panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Executive Communications · Reliability Field Guide</title>
+  <meta name="description" content="One voice, on a clock, honest about uncertainty. Update templates for every moment, the hard questions execs ask and what to say, and the cadence by severity.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-exec">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Executive Communications During Incidents</h1>
+      <p class="summary">One voice, on a clock, honest about uncertainty. Update templates for every moment, the hard questions execs ask and what to say, and the cadence by severity.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Exec Comms in One Breath</h2>
+      <ol>
+      <li><strong>One voice:</strong> you (or a named comms lead) send every update. Engineers keep fixing.</li>
+      <li><strong>On a clock:</strong> first notice within 10 minutes of declaring, then every 15–30 minutes, even if nothing changed.</li>
+      <li><strong>Four parts:</strong> impact in user terms · what we're doing · how confident we are · next update time.</li>
+      <li><strong>Honest uncertainty:</strong> "I don't know yet. Next update at [time]." Never a guessed ETA.</li>
+      <li><strong>Execs in a thread, not on the bridge.</strong></li>
+      </ol>
+      </section>
+
+      <div class="callout"><p class="callout-title">Why This Is Your Job</p>
+      <p>During an incident, executive communication is where a senior manager adds the most visible value. Done well, it protects your engineers, keeps leaders calm, and builds the trust you'll need when you ask for budget, headcount, or controls. Done badly, it pulls engineers off the fix and makes every incident feel worse than it is.</p>
+      </div>
+
+      <section class="fold">
+      <h2 id="templates">Update Templates, by Moment</h2>
+      <div class="fold-body">
+      <p>Fill in the brackets. Keep each to four or five lines. Execs read the first line and the next update time.</p>
+      <div class="code-card" id="t-first"><div class="code-head">1. First notice (within 10 minutes of declaring)</div><pre>Sev [x]: [what users can't do], [how many / %], since [time].
+What we know: [one line, or "investigating; no cause yet"].
+Owner: [team]. Incident lead: [name]. I'm handling updates.
+Next update: [time] (in 15-30 minutes).</pre></div>
+      <div class="code-card" id="t-regular"><div class="code-head">2. Regular update (every 15–30 minutes)</div><pre>Sev [x] update, [time]: [impact now: better / worse / same as last update].
+Now: [what we're trying], owner [team].
+Confidence this fixes it: [low / medium / high].
+Next update: [time], or sooner if it changes.</pre></div>
+      <div class="code-card" id="t-mitigated"><div class="code-head">3. Mitigated</div><pre>Mitigated at [time]: [what changed for users, e.g. errors back under 1%].
+Still at risk: [what could bring it back, e.g. running on the backup region].
+We're watching until [time] before calling it resolved.
+Next update: [time] or at resolution.</pre></div>
+      <div class="code-card" id="t-resolved"><div class="code-head">4. Resolved</div><pre>Resolved at [time]. Impact: [who], [how many], [duration].
+Cause so far: [one plain line; full analysis in the postmortem].
+Follow-up: postmortem on [date], owner [name].
+Thanks to [teams] for the response.</pre></div>
+      <div class="code-card" id="t-readout"><div class="code-head">5. Next-day readout (five lines)</div><pre>[Incident], [date]: [impact in one line].
+Why: [the 2-3 factors that matter, in plain words].
+What we've already done: [mitigation still in place].
+What's next: postmortem [date]; [N] fixes expected, owners named there.
+What I need from you: [nothing / a decision / support with another team].</pre></div>
+      <div class="code-card" id="t-customer"><div class="code-head">6. Hand-off to support or customer comms</div><pre>For customer-facing comms (not for internal detail):
+What users experience: [plain description].
+Since: [time]. Workaround: [if any].
+Next update to you: [time]. Please don't share causes until confirmed.</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="hard-questions">The Hard Questions Execs Ask</h2>
+      <div class="fold-body">
+      <div class="table-wrap"><table>
+      <thead><tr><th>They ask</th><th>Say</th><th>Don't say</th><th>Why it builds trust</th></tr></thead>
+      <tbody>
+      <tr><td><strong>"When will it be fixed?"</strong></td><td>"I can't give a reliable ETA yet. We'll have a decision on [next step] by [time], and I'll update you then."</td><td>"Probably 20 minutes."</td><td>A guessed ETA that slips costs more trust than an honest "not yet."</td></tr>
+      <tr><td><strong>"Why did this happen?"</strong></td><td>"What we know so far is [fact]. The full why comes from the postmortem on [date]."</td><td>A theory presented as the cause.</td><td>Early causes are often wrong. Separating facts from guesses protects your credibility.</td></tr>
+      <tr><td><strong>"Whose fault is it?"</strong></td><td>"We'll look at what in our systems allowed it, in a blameless review. Right now the focus is fixing it."</td><td>A team's or person's name.</td><td>Blame during an incident makes people hide information. Leaders notice who holds the line.</td></tr>
+      <tr><td><strong>"Is it fixed?"</strong></td><td>"It's mitigated: users are [OK]. We call it resolved after [watch period] and [condition]."</td><td>"Yes" when it's only quiet.</td><td>Re-opened incidents damage trust. Mitigated vs resolved shows rigor.</td></tr>
+      <tr><td><strong>"Will it happen again?"</strong></td><td>"Not in the same way if the fixes land. We'll have owned, dated actions within a week of the postmortem."</td><td>"Never" or "can't promise anything."</td><td>Shows a plan without over-promising.</td></tr>
+      <tr><td><strong>"Should we tell customers?"</strong></td><td>"Here's the impact and who's affected. The decision sits with [support / comms lead]; I've sent them the facts."</td><td>Deciding it yourself, or ignoring it.</td><td>You make sure the right person decides quickly, with facts.</td></tr>
+      <tr><td><strong>"Do you need more people?"</strong></td><td>"Yes: [specific person or team], because [reason]." or "No, the right people are on it."</td><td>"I'll let you know."</td><td>A specific answer shows you're in command of the response.</td></tr>
+      <tr><td><strong>"Why didn't SRE catch or fix this?"</strong></td><td>"We detected it at [time]. Fixing it needed [team]'s access or approval, which we don't have today. That's one of the gaps I'll bring from the postmortem."</td><td>Defensiveness, or taking blame for things you don't control.</td><td>Honest about the no-controls reality, and it turns the moment into the case for change.</td></tr>
+      </tbody></table></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="cadence">Cadence and Channel</h2>
+      <div class="fold-body">
+      <div class="table-wrap"><table>
+      <thead><tr><th>Severity</th><th>First notice</th><th>Then every</th><th>Who sends</th><th>Where</th></tr></thead>
+      <tbody>
+      <tr><td>Sev 1</td><td>10 minutes</td><td>15 minutes</td><td>You, or a named comms lead so you can lead</td><td>Exec incident channel or thread; VP by direct message too</td></tr>
+      <tr><td>Sev 2</td><td>15 minutes</td><td>30 minutes</td><td>You</td><td>Exec incident channel or thread</td></tr>
+      <tr><td>Sev 3</td><td>When declared</td><td>At milestones (mitigated, resolved)</td><td>Incident lead or you</td><td>Team or incident channel</td></tr>
+      </tbody></table></div>
+      <p><strong>When an exec joins the bridge:</strong> welcome them in one line, offer the summary in the side thread, and keep the bridge for the people fixing it.</p>
+      <div class="code-card"><div class="code-head">When an exec joins the bridge</div><pre>"[Name], welcome. I've got the updates. Can I give you the full picture in the thread so the team can keep going? Next update at [time]."</pre></div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="tone">Tone Rules</h2>
+      <div class="fold-body">
+      <ul>
+      <li><strong>Short and factual.</strong> Four or five lines. No technical detail they'd need to ask about.</li>
+      <li><strong>User impact first,</strong> in plain words: "a third of EU users can't get answers," not "5xx on the gateway."</li>
+      <li><strong>Label uncertainty:</strong> "likely," "we think," "confirmed." Never a guess dressed as fact.</li>
+      <li><strong>No blame,</strong> no names attached to causes.</li>
+      <li><strong>Always a next update time,</strong> and keep it, even if the update is "no change."</li>
+      <li><strong>Silence reads as chaos.</strong> A late update is worse than a boring one.</li>
+      </ul>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="example">Example in Practice</h2>
+      <div class="fold-body">
+      <div class="callout example"><p class="callout-title">Two Real Updates From Tuesday's Incident</p>
+      <p><strong>22:00:</strong> "Sev 2, assistant: ~1 in 3 EU requests failing since 21:25 (worse at peak). Now: rolling back a retry change (Assistant pod) and reaching platform for the provider side. Confidence: medium that this improves it, low that it fully fixes it. Next update: 22:15."</p>
+      <p>Why it works: impact in user terms, two owners named, honest confidence, a time.</p>
+      <p><strong>22:45:</strong> "Failed over EU traffic to the backup region at 22:41. Errors now under 1%. Users in EU see slightly slower responses until we move back. Status: mitigated, not resolved. Next update: 23:15."</p>
+      <p>Why it works: says what users feel now, separates mitigated from resolved, and sets the next time. <a href="example-incident.html#messages">See the full incident.</a></p>
+      </div>
+      <div class="callout watch"><p class="callout-title">What Actually Happens</p>
+      <ul>
+      <li><strong>Execs will push for an ETA.</strong> Give the next decision time instead. Most accept it the second time.</li>
+      <li><strong>Someone senior will message an engineer directly.</strong> Reply in the same thread: "I've got updates for you; next at [time]." Then tell the engineer to keep going.</li>
+      <li><strong>You'll be tempted to wait for good news before updating.</strong> Don't. Send "no change" on time.</li>
+      <li><strong>Over-optimism costs more than bad news.</strong> Say "medium confidence" when you mean it.</li>
+      </ul>
+      </div>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

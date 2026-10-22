@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Incident Casebook · Reliability Field Guide</title>
+  <meta name="description" content="Sixteen incident types an AI assistant on Azure can have, from availability down to token-rate errors and CDN problems. For each: what you'll see, where to look, the first three questions, the levers, and the exec line.">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/style.css">
+  <script>try{var t=localStorage.getItem("srl-theme");if(t)document.documentElement.setAttribute("data-theme",JSON.parse(t))}catch(e){}</script>
+</head>
+<body data-root="../" data-page="p-cases">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" id="site-header"><a class="brand" href="../index.html">Reliability Field Guide</a></header>
+<div class="layout">
+  <nav class="sidebar" id="sidebar" aria-label="Site"></nav>
+  <main class="content" id="main">
+    <article class="prose">
+      <nav class="crumbs" id="crumbs"></nav>
+      <h1>Incident Casebook: What Goes Wrong in an AI Product</h1>
+      <p class="summary">Sixteen incident types an AI assistant on Azure can have, from availability down to token-rate errors and CDN problems. For each: what you'll see, where to look, the first three questions, the levers, and the exec line.</p>
+      <section class="quick-card" aria-labelledby="quick-card"><h2 id="quick-card">Quick Card: Name the Kind of Incident</h2>
+      <ol>
+      <li><strong>Match what you see</strong> to one of the 16 types below.</li>
+      <li><strong>Ask its three questions</strong> on the bridge.</li>
+      <li><strong>Ask about its levers:</strong> "Can we [roll back / fail over / turn off the flag]? Who can do it now?"</li>
+      <li><strong>Send its exec line,</strong> filled in, with a next update time.</li>
+      </ol>
+      <p>Every type links to the parts of the <a href="../ai/request-map.html">Request Map</a> where it usually lives.</p>
+      </section>
+
+      <div class="callout"><p class="callout-title">Use This When</p>
+      <p>Something's wrong with the assistant and you want to recognize the pattern fast. These are the incident types an AI product on Azure typically has. Each one gives you what you'll see, the likely causes, where to look, the first three questions, the levers to pull and who can pull them, who to page, an exec line, how to describe customer impact, and what the postmortem should focus on. Causes are typical, not certain; let the engineers confirm.</p>
+      </div>
+
+      <div class="table-wrap"><table>
+      <caption class="visually-hidden">Incident types and what you'll see</caption>
+      <thead><tr><th>Incident type</th><th>What you'll see</th></tr></thead>
+      <tbody><tr><td><a href="#case-availability">Availability Down</a></td><td>PagerDuty: assistant availability below target; users can't get any answer; support tickets spike.</td></tr><tr><td><a href="#case-errors">Error Rate Up</a></td><td>Alert: 5xx errors above threshold; some requests fail, others work.</td></tr><tr><td><a href="#case-ttft">Slow to Start Answering (TTFT Up)</a></td><td>Users: "it takes forever to start." Dashboard: time to first token at p95 well above normal.</td></tr><tr><td><a href="#case-ttlt">Slow to Finish (TTLT Up)</a></td><td>Answers start fine but take a long time to finish, or agents take ages to complete a task.</td></tr><tr><td><a href="#case-model-429">Token-Rate Errors Up (Model 429s)</a></td><td>Alert: 429 rate climbing on model calls; slow starts and failures at peak.</td></tr><tr><td><a href="#case-gateway-429">Gateway 429s (Our Own Limits)</a></td><td>Users, often heavy ones, get 'too many requests' while the model is fine.</td></tr><tr><td><a href="#case-cosmos">Cosmos DB Throttling</a></td><td>Slow first word and 'history won't load' at peak; 429s from the database.</td></tr><tr><td><a href="#case-cdn">CDN or Edge Errors</a></td><td>Errors before requests reach us, users blocked, or answers cut off mid-sentence.</td></tr><tr><td><a href="#case-region">One Region Down</a></td><td>Everything works except for users in one region.</td></tr><tr><td><a href="#case-auth">Sudden 401/403 Spike</a></td><td>'Not authorized' errors start suddenly, often at a round time.</td></tr><tr><td><a href="#case-safety">Safety Filter Spike</a></td><td>Users report normal questions being refused; filtered-request count jumps.</td></tr><tr><td><a href="#case-quality">Quality Regression</a></td><td>No errors, but complaints: answers are worse, wrong, or odd. Thumbs-down rate rises.</td></tr><tr><td><a href="#case-partner">Partner or iPaaS Failure</a></td><td>Bookings or actions say done but nothing happens; a recipe stopped; a partner returns errors.</td></tr><tr><td><a href="#case-cost">Token Cost Spike</a></td><td>Token usage or spend jumps; budget alerts fire. Service may be fine for now.</td></tr><tr><td><a href="#case-ondevice">On-Device Model or Update Failures</a></td><td>Users can't download the on-device model, or an update breaks the app.</td></tr><tr><td><a href="#case-telemetry">Telemetry Gap</a></td><td>Dashboards go empty or flat mid-incident; alerts stop firing.</td></tr></tbody></table></div>
+
+      <section class="fold">
+      <h2 id="case-availability">Availability Down</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> PagerDuty: assistant availability below target; users can't get any answer; support tickets spike.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 1 if most users are affected; Sev 2 if one region or platform.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A bad deploy or config change</li><li>Edge or gateway outage (Front Door, API Management)</li><li>Sign-in failing (Entra ID)</li><li>The orchestrator crashing or not scaling</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-cdn">CDN and edge</a> · <a href="../ai/request-map.html#c-apim">API gateway</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a> · <a href="../ai/request-map.html#c-entra">Sign-in</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">L</span> "Who's leading, and is the owning pod on the bridge?"</li><li><span class="fw-letter" aria-hidden="true">E</span> "Is it everyone, or one region, app, or version?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "What changed in the last 24 hours, and can we roll it back?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the last deploy or config; fail over the region; turn off the newest feature flag. Usually the owning pod or platform on-call.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod and platform; their managers at 15 minutes with no acknowledgement.</p>
+      <div class="code-card"><div class="code-head">Exec update: Availability Down</div><pre>Sev 1: the assistant is unavailable for [most / all] users since [time]. We're [rolling back / failing over]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "The assistant isn't responding right now. We're working on it."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Why did the change reach everyone at once? How long until we knew, and from where?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-errors">Error Rate Up</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Alert: 5xx errors above threshold; some requests fail, others work.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 2 typically; Sev 1 if most requests fail.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A recent deploy or prompt or config change</li><li>A dependency failing (model, Cosmos DB, search, a tool)</li><li>A partial regional problem</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-orch">Orchestrator</a> · <a href="../ai/request-map.html#c-appconfig">Settings and flags</a> · <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-cosmos">Cosmos DB (memory)</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "What percentage of requests fail, and is it rising?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did anything deploy or change in the hour before it started?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Which dependency do the errors point to?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the change; switch a feature flag off; fall back to a backup model or skip a failing tool.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; the owner of whichever dependency the errors point to.</p>
+      <div class="code-card"><div class="code-head">Exec update: Error Rate Up</div><pre>Sev 2: about [N]% of assistant requests are failing since [time]. Likely tied to [change / dependency]. We're [action]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some requests are failing. Retrying may work while we fix it."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Did the change have a safe rollout (small group first)? Why didn't a check catch it?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-ttft">Slow to Start Answering (TTFT Up)</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Users: "it takes forever to start." Dashboard: time to first token at p95 well above normal.</p>
+      <p class="case-sev"><strong>Severity:</strong> Usually Sev 2 or 3; Sev 2 if far above your target for many users.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>The model itself slower (provider load in that region)</li><li>Our prep grew: slow history, search, or tools</li><li>Cold starts after scaling</li><li>Edge or network delay</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a> · <a href="../ai/request-map.html#c-cosmos">Cosmos DB (memory)</a> · <a href="../ai/request-map.html#c-search">Search (retrieval)</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "How slow at p95, versus normal, and for which region?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Which piece grew: edge, our prep, the model, or stream back?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did a prompt, model version, or tool change recently?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Shift traffic to a less busy region or deployment; turn off a slow tool or feature; keep more servers warm.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; AI platform if the model's own time grew.</p>
+      <div class="code-card"><div class="code-head">Exec update: Slow to Start Answering (TTFT Up)</div><pre>Sev 2/3: the assistant is slower to start answering ([N]s vs [N]s normal) since [time]. Cause: [model load / our prep]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Responses are slower than usual. They're still arriving."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Do we measure each piece of TTFT separately, and alert on what users feel?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-ttlt">Slow to Finish (TTLT Up)</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Answers start fine but take a long time to finish, or agents take ages to complete a task.</p>
+      <p class="case-sev"><strong>Severity:</strong> Usually Sev 3; Sev 2 if tasks fail or time out.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>Longer answers after a prompt change</li><li>An agent looping through tools</li><li>One slow tool or partner</li><li>The model's per-word speed dropped</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-tools">Tools and agents</a> · <a href="../ai/request-map.html#c-partners">Partner services</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "Is it all answers, or ones that use tools or agents?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did answers get longer, or did tool calls per request go up?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is one tool or partner much slower than usual?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Cap tool calls per request; time out a slow tool and answer without it; roll back the prompt.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; the owner of the slow tool.</p>
+      <div class="code-card"><div class="code-head">Exec update: Slow to Finish (TTLT Up)</div><pre>Sev 3: answers are taking longer to complete ([N]s vs [N]s) since [time], mainly when [tools / agents] are used. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some answers take longer to complete."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Do agents have limits on steps and time? Who reviews prompt changes for length?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-model-429">Token-Rate Errors Up (Model 429s)</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Alert: 429 rate climbing on model calls; slow starts and failures at peak.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 2 typically; Sev 1 if widespread and sustained.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>Tokens-per-minute or requests-per-minute limit reached</li><li>The provider's capacity in one region is constrained</li><li>A traffic spike (launch, campaign, abuse)</li><li>Retries multiplying load</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-apim">API gateway</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">A</span> "Which 429 is it: gateway, model, or Cosmos DB?"</li><li><span class="fw-letter" aria-hidden="true">E</span> "How close to our token limit are we, and in which region?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Are retries making it worse?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Shift traffic to another region or deployment; reduce retries; rate-limit the heaviest users; request more quota (slow).</p>
+      <p class="case-page"><strong>Who to page:</strong> AI platform; the assistant pod for retries and traffic.</p>
+      <div class="code-card"><div class="code-head">Exec update: Token-Rate Errors Up (Model 429s)</div><pre>Sev 2: we're hitting the model provider's capacity limit in [region], so about [N]% of requests fail at peak. We're [shifting traffic / reducing load]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "The assistant is very busy right now. Please try again shortly."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Did we see the limit coming? Who watches quota usage, and is there an alert at 80%?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-gateway-429">Gateway 429s (Our Own Limits)</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Users, often heavy ones, get 'too many requests' while the model is fine.</p>
+      <p class="case-sev"><strong>Severity:</strong> Usually Sev 3; Sev 2 if many users are blocked.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A gateway policy change</li><li>Per-user limits too low for real usage</li><li>A client bug sending repeated requests</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-apim">API gateway</a> · <a href="../ai/request-map.html#c-client">App on PC or phone</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">A</span> "Did a gateway policy change recently?"</li><li><span class="fw-letter" aria-hidden="true">E</span> "Is it a few heavy users, or many?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is a client version sending too many requests?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the policy; raise the limit temporarily; block the misbehaving client version.</p>
+      <p class="case-page"><strong>Who to page:</strong> Platform or API team; the client app pod if a version is misbehaving.</p>
+      <div class="code-card"><div class="code-head">Exec update: Gateway 429s (Our Own Limits)</div><pre>Sev 3: some users are being rate-limited by our own gateway since [time] after [change]. We're [rolling back]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "You may be asked to wait before sending more messages."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> How were the limits chosen, and how do we test policy changes?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-cosmos">Cosmos DB Throttling</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Slow first word and 'history won't load' at peak; 429s from the database.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 2 if chats fail; Sev 3 if only slow.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>Request units (RU) used up at peak</li><li>A hot partition: one user or key overloaded</li><li>A change that reads much more data per request</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-cosmos">Cosmos DB (memory)</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">A</span> "Is normalized RU consumption near 100%?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is one partition hot?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did a change increase how much we read per request?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Raise RU capacity (autoscale); roll back the change; reduce history loaded per request.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; platform or data team.</p>
+      <div class="code-card"><div class="code-head">Exec update: Cosmos DB Throttling</div><pre>Sev 2/3: conversation history is slow or failing to load at peak because our database is at capacity. We're [raising capacity / rolling back]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Previous conversations may load slowly."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Is capacity sized for peak, with an alert before throttling?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-cdn">CDN or Edge Errors</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Errors before requests reach us, users blocked, or answers cut off mid-sentence.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 1 if everyone is blocked; Sev 2 if partial.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A WAF rule blocking real users</li><li>An expired certificate or DNS change</li><li>An unhealthy origin with no failover</li><li>A streaming timeout shorter than long answers</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-cdn">CDN and edge</a> · <a href="../ai/request-map.html#c-keyvault">Keys and secrets</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "Is it slow or failing at the edge, or behind it?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did caching, WAF rules, or routing change?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Do certificates or DNS expire around now?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the WAF or routing change; renew the certificate; fail over the origin; raise the streaming timeout.</p>
+      <p class="case-page"><strong>Who to page:</strong> Platform or networking; security for WAF rules.</p>
+      <div class="code-card"><div class="code-head">Exec update: CDN or Edge Errors</div><pre>Sev [x]: some users can't reach the assistant [or answers are cut off] due to an edge configuration issue since [time]. Fix: [action]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some users may be unable to connect, or see incomplete answers."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> How are edge changes reviewed, and who's warned before certificates expire?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-region">One Region Down</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Everything works except for users in one region.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 2 typically; Sev 1 for your largest region.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>The model provider's capacity or outage in that region</li><li>An Azure regional incident</li><li>A bad deploy that reached only that region first</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-cdn">CDN and edge</a> · <a href="../ai/request-map.html#c-cosmos">Cosmos DB (memory)</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "How many users does that region serve?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Can we fail over now, and who approves it?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is the provider's or Azure's status page reporting it?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Fail over to another region; accept slower responses in the meantime.</p>
+      <p class="case-page"><strong>Who to page:</strong> Platform; AI platform for model capacity; their manager for failover approval.</p>
+      <div class="code-card"><div class="code-head">Exec update: One Region Down</div><pre>Sev 2: users in [region] can't use the assistant since [time]. We're failing over to [region]; they may see slower responses. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Users in [region] may see errors or slower responses."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Was failover pre-approved and tested? How long did approval take?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-auth">Sudden 401/403 Spike</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> 'Not authorized' errors start suddenly, often at a round time.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 1 if everything fails; Sev 2 for one feature.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>An expired key, secret, or certificate</li><li>A permission or app registration change</li><li>A partner connection expired</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-keyvault">Keys and secrets</a> · <a href="../ai/request-map.html#c-entra">Sign-in</a> · <a href="../ai/request-map.html#c-ipaas">Integration platform</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">A</span> "Did it start at a round time, like midnight?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "What expired, or what permission changed?"</li><li><span class="fw-letter" aria-hidden="true">E</span> "Is it all users, or one feature or partner?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Rotate or renew the expired key or certificate; roll back the permission change; reconnect the partner.</p>
+      <p class="case-page"><strong>Who to page:</strong> Security or platform; the integrations team for partner connections.</p>
+      <div class="code-card"><div class="code-head">Exec update: Sudden 401/403 Spike</div><pre>Sev 2: [feature] is failing with sign-in errors since [time], likely an expired credential. We're renewing it. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some features are temporarily unavailable."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Why didn't an expiry warning reach anyone?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-safety">Safety Filter Spike</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Users report normal questions being refused; filtered-request count jumps.</p>
+      <p class="case-sev"><strong>Severity:</strong> Usually Sev 3; Sev 2 if a core feature is blocked.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A filter setting changed</li><li>A model or prompt change triggers filters more</li><li>A real spike in harmful attempts</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-safety">Safety filters</a> · <a href="../ai/request-map.html#c-appconfig">Settings and flags</a> · <a href="../ai/request-map.html#c-model">The model</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "How many requests are blocked, versus normal?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did a filter, prompt, or model setting change?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Are the blocked requests actually harmless?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the setting change (with the Responsible AI owner's agreement).</p>
+      <p class="case-page"><strong>Who to page:</strong> Responsible AI or trust team; the assistant pod.</p>
+      <div class="code-card"><div class="code-head">Exec update: Safety Filter Spike</div><pre>Sev 3: some normal requests are being refused by our safety filters since [time]. We're reviewing [the change] with the responsible AI team. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "The assistant may decline some requests it normally handles."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> How are filter changes tested, and who decides?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-quality">Quality Regression</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> No errors, but complaints: answers are worse, wrong, or odd. Thumbs-down rate rises.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 3 usually; Sev 2 if answers are harmful or badly wrong.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>A model version change</li><li>A prompt change</li><li>A stale or broken search index</li><li>A feature flag rolled out too widely</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-appconfig">Settings and flags</a> · <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-search">Search (retrieval)</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "What's changed in thumbs-down or complaints, and since when?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did the model, prompt, or index change?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Can we compare a few bad answers before and after?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the prompt or model version; switch off the flag; rebuild the index.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; AI platform for model versions.</p>
+      <div class="code-card"><div class="code-head">Exec update: Quality Regression</div><pre>Sev 3: we're seeing lower answer quality since [time], likely from [change]. We're rolling it back. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some answers may be less accurate than usual."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Do we test quality before rollout, and alert on quality, not just errors?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-partner">Partner or iPaaS Failure</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Bookings or actions say done but nothing happens; a recipe stopped; a partner returns errors.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 3 usually; Sev 2 if money or bookings are affected.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>An expired partner connection</li><li>The partner's outage or rate limits</li><li>A partner changed a field and the mapping broke</li><li>A recipe paused after errors</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-ipaas">Integration platform</a> · <a href="../ai/request-map.html#c-partners">Partner services</a> · <a href="../ai/request-map.html#c-tools">Tools and agents</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "Which partner or action, and how many users?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did a connection expire, or did the partner change something?"</li><li><span class="fw-letter" aria-hidden="true">D</span> "Who do we contact at the partner, and what does our contract say?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Reconnect; pause the feature and say 'partner unavailable'; contact the partner.</p>
+      <p class="case-page"><strong>Who to page:</strong> Integrations team; vendor management for the partner.</p>
+      <div class="code-card"><div class="code-head">Exec update: Partner or iPaaS Failure</div><pre>Sev 3: [partner feature] isn't completing since [time] due to [partner issue]. We've paused it and contacted [partner]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "[Feature] is temporarily unavailable."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Why didn't a failed recipe alert anyone? Does the user hear when an action fails?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-cost">Token Cost Spike</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Token usage or spend jumps; budget alerts fire. Service may be fine for now.</p>
+      <p class="case-sev"><strong>Severity:</strong> Usually not a Sev unless users are affected; treat as urgent.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>Prompts or retrieved context grew</li><li>An agent looping</li><li>Abuse or automated traffic</li><li>A retry storm</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-model">The model</a> · <a href="../ai/request-map.html#c-tools">Tools and agents</a> · <a href="../ai/request-map.html#c-orch">Orchestrator</a> · <a href="../ai/request-map.html#c-apim">API gateway</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "How much above normal, and since when?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Did prompts, context, or tool calls per request grow?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is it a few users or clients, or everyone?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Roll back the change; cap tool calls; rate-limit abusive clients; set a spend alert.</p>
+      <p class="case-page"><strong>Who to page:</strong> The assistant pod; AI platform.</p>
+      <div class="code-card"><div class="code-head">Exec update: Token Cost Spike</div><pre>Cost alert: token spend is [N]x normal since [time], driven by [cause]. Users aren't affected yet. We're [action]. I'll confirm by [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> None, unless limits affect users.</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Who's warned before the budget is hit, and what happens at the limit?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-ondevice">On-Device Model or Update Failures</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Users can't download the on-device model, or an update breaks the app.</p>
+      <p class="case-sev"><strong>Severity:</strong> Sev 2 if many users are broken; Sev 3 otherwise.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>Large downloads failing through the CDN</li><li>A bad over-the-air update</li><li>Unsupported hardware</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-client">App on PC or phone</a> · <a href="../ai/request-map.html#c-cdn">CDN and edge</a> · <a href="../ai/request-map.html#c-appconfig">Settings and flags</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "Which app or model versions, and which devices?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Can we pause the rollout?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is the CDN serving the files, and what's the cache hit ratio?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Pause or roll back the staged rollout; fix CDN caching; fall back to the cloud path.</p>
+      <p class="case-page"><strong>Who to page:</strong> The client app pod; platform for the CDN.</p>
+      <div class="code-card"><div class="code-head">Exec update: On-Device Model or Update Failures</div><pre>Sev 2/3: [some] users on [version] can't [download / use] [feature] since [time]. We've paused the rollout. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> "Some features may be unavailable after the latest update."</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Did the update go to a small group first? How fast could we stop it?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="case-telemetry">Telemetry Gap</h2>
+      <div class="fold-body">
+      <div class="case" data-case>
+      <p class="case-see"><strong>What you'll see:</strong> Dashboards go empty or flat mid-incident; alerts stop firing.</p>
+      <p class="case-sev"><strong>Severity:</strong> Treat as Sev 2 during an incident; Sev 3 otherwise.</p>
+      <p><strong>Likely causes</strong> (most likely first):</p>
+      <ol class="case-causes"><li>The telemetry pipeline itself is affected</li><li>Sampling or ingestion limits</li><li>An instrumentation change</li></ol>
+      <p class="case-look"><strong>Where to look:</strong> <a href="../ai/request-map.html#c-telemetry">Telemetry</a></p>
+      <p><strong>First three questions on the bridge:</strong></p>
+      <ol class="fw-steps fw-incident case-qs"><li><span class="fw-letter" aria-hidden="true">E</span> "Is the system down, or just our view of it? What do users and support say?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "Is ingestion working, and did instrumentation change?"</li><li><span class="fw-letter" aria-hidden="true">A</span> "What other signal can we use meanwhile: support tickets, synthetic checks, Pendo?"</li></ol>
+      <p class="case-levers"><strong>Levers to pull, and who:</strong> Use backup signals (support, synthetic tests); fix ingestion; roll back instrumentation changes.</p>
+      <p class="case-page"><strong>Who to page:</strong> SRE (likely your team); platform for the pipeline.</p>
+      <div class="code-card"><div class="code-head">Exec update: Telemetry Gap</div><pre>We've lost part of our monitoring since [time]. Users [are / aren't] affected as far as we can tell from [backup signal]. Next update [time].</pre></div>
+      <p class="case-customer"><strong>Customer impact, in plain words:</strong> None, unless the system is also affected.</p>
+      <p class="case-pm"><strong>The postmortem should ask:</strong> Does telemetry share a failure point with the system it watches?</p>
+      </div>
+
+      </div>
+      </section>
+      <section class="fold">
+      <h2 id="after">After Any of These</h2>
+      <div class="fold-body">
+      <ul>
+      <li>Send the resolved update, using <a href="exec-comms.html#t-resolved">the template</a>.</li>
+      <li>Book the postmortem within 5 working days: <a href="postmortem-program.html#prep">PREP</a>.</li>
+      <li>Do your 5-minute <a href="leader-debrief.html">leader debrief</a>.</li>
+      </ul>
+      </div>
+      </section>
+    </article>
+    <nav class="pager" id="pager"></nav>
+  </main>
+  <aside class="toc" id="toc"></aside>
+</div>
+<footer class="site-footer" id="footer"></footer>
+<script src="../assets/store.js"></script>
+<script src="../assets/site.js"></script>
+</body>
+</html>

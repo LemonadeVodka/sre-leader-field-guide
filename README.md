@@ -15,6 +15,9 @@ The site is built to open every morning, with **incident response first**.
 - **Learning Paths:** the Incident Leader Path (8 weeks) and the De Facto PM Path (3 weeks). Set a start date, and Today shows your week.
 - **For the de facto PM:** "When they say 'I'm waiting on…'" (six kinds of waiting, each with a confident first line) and "Running Projects in Linear Without a PM" (a 15-minute weekly sweep, the hygiene to ask for, and a five-line update).
 - **After every incident:** the 5-minute Leader Debrief.
+- **Side Panel** (the panel icon in the header, or [panel.html](https://lemonadevodka.github.io/sre-leader-field-guide/panel.html)): a narrow companion window to keep beside a bridge or Teams. Its four tabs are **Incident** (LEAD with follow-ups, 16 incident types, stuck patterns), **Exec Comms** (5 update templates and 8 hard questions), **Projects** (PACE, six kinds of waiting, Linear templates), and **Meetings** (agenda, ground rules, room lines, PREP/SAFER/CLOSE). Every line has a Copy button.
+- **Incident Casebook:** 16 incident types an AI product can have (availability down, error rate up, slow TTFT, model 429s, Cosmos DB throttling, CDN errors, region down, 401/403, safety filter, quality regression, partner/iPaaS, token cost, on-device updates, telemetry gap, and more). Each has what you'll see, where to look, the first 3 questions, levers, who to page, an exec line, and the postmortem focus.
+- **Executive Communications:** templates for each moment (first notice, regular, mitigated, resolved, readout, hand-off to customer comms), the 8 hard exec questions with what to say and what not to say, and cadence by severity.
 
 ## What's Inside
 
