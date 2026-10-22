@@ -62,6 +62,7 @@
       { id: "c-capacity", href: "concepts/capacity-readiness.html", title: "Capacity & Readiness" },
       { label: "AI reliability" },
       { id: "ai", href: "ai/index.html", title: "What's Different About AI" },
+      { id: "ai-map", href: "ai/request-map.html", title: "Request Map: Where Things Live" },
       { id: "ai-latency", href: "ai/latency.html", title: "Latency: TTFT & TTLT" },
       { id: "ai-tokens", href: "ai/tokens-quotas-cost.html", title: "Tokens, Quotas & Cost" },
       { id: "ai-quality", href: "ai/quality-safety.html", title: "Quality & Safety" },

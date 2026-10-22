@@ -14,6 +14,8 @@ Below it, the home page shows three one-word frameworks, each letter a question 
 - **PREP → SAFER → CLOSE**, owning postmortems end to end. Before: Pick · Request · Evidence · Pre-wire. The meeting: Set the rules · Agree the impact · Follow the timeline · Explain what let it happen · Rank the actions. After: Capture · Log · Own the follow-up · Share · End it. Every invite and follow-up message is on the Owning Postmortems page.
 - **PACE**, tracking people's work: Progress · Asks · Confidence · End with owners.
 
+**[Request Map](https://lemonadevodka.github.io/sre-leader-field-guide/ai/request-map.html):** a clickable map of a typical AI assistant on Azure (app, CDN/edge, sign-in, API gateway, orchestrator, Cosmos DB, AI Search, safety, the model, tools, integration platform, partners, messaging, Key Vault, telemetry). It marks where TTFT is measured (T0 to T5). Each part has an everyday analogy, common issues, signals to check, questions with follow-ups, and what you don't need to know. It also has symptom and error-code tables, token limits in plain words, 11 features and how they are probably built, and a glossary.
+
 **See it used: one realistic week.** Four walkthroughs follow one fictional incident from a central SRE team with no controls (it can see and escalate, but can't change production):
 
 - Tuesday: the incident, run with LEAD

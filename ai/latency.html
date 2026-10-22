@@ -59,6 +59,7 @@
       <p>Measure them per user journey: a quick question and a multi-step agent task deserve different targets. See <a href="../concepts/reliability-targets.html#slo">SLOs</a>.</p>
 
       <h2>How to Measure It on Your Stack</h2>
+      <p class="impl-link">See where each timing point lives, hop by hop: <a href="request-map.html">the Request Map</a>.</p>
       <ol>
       <li><strong>Pod engineers:</strong> wrap each model call in an OpenTelemetry span with the model name and token counts as attributes. Record the moment the first streamed chunk arrives as a span event or a metric, which gives you TTFT. The span's total duration gives you TTLT.</li>
       <li><strong>Standards note:</strong> OpenTelemetry's GenAI semantic conventions define names such as <code>gen_ai.request.model</code>, and server-side metrics such as <code>gen_ai.server.time_to_first_token</code>. They're still marked <em>Development</em> and changing, and the server metrics are for teams that run their own models. If you call a third-party provider, measure TTFT in your own client code. Use whatever names your SDK emits, consistently.</li>
